@@ -1,25 +1,44 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import dayjs from "dayjs";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Header from "./components/Header/Header";
+import Footer from "./components/Footer/Footer";
+import {
+  AdminPage,
+  Authorization,
+  CreatorLk,
+  CreatorTours,
+  HomePage,
+  NotificationsPage,
+  PaymentSettingsPage,
+  StatisticPage,
+  TourCalendarPage,
+  TouristLk,
+  TourListPage,
+} from "./pages";
 
 function App() {
+  dayjs.locale("ru");
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Header />
+      <main>
+        <Routes>
+          <Route path={"/"} element={<HomePage />} />
+          <Route path={"/admin"} element={<AdminPage />} />
+          <Route path={"/auth"} element={<Authorization />} />
+          <Route path={"/creatorLk"} element={<CreatorLk />} />
+          <Route path={"/myTours"} element={<CreatorTours />} />
+          <Route path={"/notifications"} element={<NotificationsPage />} />
+          <Route path={"/paymentSettings"} element={<PaymentSettingsPage />} />
+          <Route path={"/statistics"} element={<StatisticPage />} />
+          <Route path={"/tourCalendar"} element={<TourCalendarPage />} />
+          <Route path={"/touristLk"} element={<TouristLk />} />
+          <Route path={"/tourList"} element={<TourListPage />} />
+        </Routes>
+      </main>
+      <Footer />
+    </BrowserRouter>
   );
 }
 
