@@ -1,4 +1,3 @@
-import { defaultData } from "../../config/config";
 import dayjs from "dayjs";
 export const SET_TREE_WEEK = "SET_TREE_WEEK";
 export const SET_SERVICES = "SET_SERVICES";
@@ -12,7 +11,6 @@ export const SET_USER_INFO = "SET_USER_INFO";
 export const SET_USER_SETTINGS = "SET_USER_SETTINGS";
 
 const defaultState = {
-  treeWeek: defaultData,
   services: [],
   settingList: [],
   selectDate: dayjs().toISOString(),

@@ -1,20 +1,11 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import dayjs from "dayjs";
 import "dayjs/locale/ru";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import {
-  TextField,
-  Autocomplete,
-  Input,
-  Grid,
-  Slider,
-  Typography,
-  Stack,
-} from "@mui/material";
+import { TextField, Autocomplete } from "@mui/material";
 import { useSelector } from "react-redux";
 import { DatePicker, TimePicker } from "@mui/x-date-pickers";
-import { Box } from "@mui/system";
 
 function InputField({
   fieldID,

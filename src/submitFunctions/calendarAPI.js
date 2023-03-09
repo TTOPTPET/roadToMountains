@@ -12,7 +12,6 @@ export const sendSelectedDate = async (selectDate) => {
   let response = await axios.get(apiUrl, {
     params: { cal_date: dayjs(selectDate).toISOString() },
     headers: {
-      "X-API-KEY": apiKey,
       Authorization: `Bearer ${cookie.get(TOKEN)}`,
     },
   });
