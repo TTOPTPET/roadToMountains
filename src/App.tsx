@@ -7,7 +7,6 @@ import {
   AdminPage,
   Authorization,
   CreatorLk,
-  CreatorTours,
   HomePage,
   NotificationsPage,
   PaymentSettingsPage,
@@ -16,6 +15,7 @@ import {
   TouristLk,
   TourListPage,
 } from "./pages";
+import NavTool from "./components/NavTool/NavTool";
 
 function App() {
   dayjs.locale("ru");
@@ -28,7 +28,6 @@ function App() {
           <Route path={"/admin"} element={<AdminPage />} />
           <Route path={"/auth"} element={<Authorization />} />
           <Route path={"/creatorLk"} element={<CreatorLk />} />
-          <Route path={"/myTours"} element={<CreatorTours />} />
           <Route path={"/notifications"} element={<NotificationsPage />} />
           <Route path={"/paymentSettings"} element={<PaymentSettingsPage />} />
           <Route path={"/statistics"} element={<StatisticPage />} />
@@ -38,6 +37,8 @@ function App() {
         </Routes>
       </main>
       <Footer />
+      {/* HACK:Инструмент навигации для разработки */}
+      <NavTool />
     </BrowserRouter>
   );
 }
