@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { getMyTours } from "../../submitFunctions/creatorAPI";
+import AddTourButton from "../../components/AddTourButton/AddTourButton";
 
 export interface IMyTours {
   tourId: string;
@@ -24,7 +25,11 @@ function CreatorLk() {
   useEffect(() => {
     getMyTours((value) => setMyTours(value), undefined, true);
   }, []);
-  return <div>{JSON.stringify(myTours)}</div>;
+  return (
+    <div>
+      <AddTourButton />
+    </div>
+  );
 }
 
 export default CreatorLk;
