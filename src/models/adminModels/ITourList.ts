@@ -9,5 +9,5 @@ export interface ITourList {
     tourId: string;
     tourName: string;
     creatorInfo: ICreatorInfo;
-    banStatus: string;
+    banStatus: boolean;
 }

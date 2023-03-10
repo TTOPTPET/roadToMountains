@@ -4,6 +4,7 @@ import axios from "axios";
 import { TOKEN } from "../config/types";
 import { ITouristList } from "../models/adminModels/ITouristList";
 import { ITourList } from "../models/adminModels/ITourList";
+import { ICreatorList } from "../models/adminModels/ICreatorList";
 
 let cookie = new Cookies();
 
@@ -102,7 +103,7 @@ const tourDefault : ITourList[] = [
       phone: "141414",
       email: "gg_pominki@tagi.com"
     },
-    banStatus: "net"
+    banStatus: false
   }
 ]
 
@@ -117,6 +118,49 @@ export const getTourList = async(
   }
   try {
     let response = await axios.get(adminUrl + "/tourList ", {
+      headers: {
+        Authorization: `Bearer ${cookie.get(TOKEN)}`,
+      },
+    });
+    successCallback(response?.data);
+  } catch (e) {
+    console.error(e);
+    errorCallback && errorCallback();
+  } 
+}
+
+const creatorDefault : ICreatorList[] = [
+  {
+    phone: "12414",
+    email: "3242",
+    name: "amogus",
+    creatorId: "1",
+    dataUser: {
+      regisryId: "1",
+      ceratorType: "bb",
+      statusVerify: "1",
+      changeVerifyDate: "11.24.11",
+      creatorDocuments: [
+        {
+          documentName: "ss",
+          documentPath: "bb"
+        }
+      ]
+    }
+  }
+]
+
+export const getCreatorList = async(
+  successCallback: (prop: ICreatorList[]) => void,
+  errorCallback?: () => void,
+  useDefault?: boolean
+) => {
+  if (useDefault) {
+    successCallback(creatorDefault);
+    return;
+  }
+  try {
+    let response = await axios.get(adminUrl + "/creatorList ", {
       headers: {
         Authorization: `Bearer ${cookie.get(TOKEN)}`,
       },

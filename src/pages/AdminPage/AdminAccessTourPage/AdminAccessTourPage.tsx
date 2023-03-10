@@ -7,7 +7,7 @@ export const AdminAccessTourPage = () => {
 
   useEffect(() => {
     getTourList((value) => SetTourList(value), undefined, true);
-  });
+  }, []);
   console.log(TourList);
   return <>Управление доступом к турам</>;
 };
