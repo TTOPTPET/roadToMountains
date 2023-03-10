@@ -1,5 +1,3 @@
-import { FC } from "react";
-
-export const AdminVerifyTouroperator: FC = () => {
+export const AdminVerifyTouroperatorPage = () => {
   return <>Управление верификациями туроператоров</>;
 };
