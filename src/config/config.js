@@ -6,3 +6,4 @@ export const creatorUrl = "https://olegbackend.ru/users​/creator";
 export const mobileWidth = `${700}px`;
 
 export const darkTurquoiseColor = "#30ABC8";
+export const lightTurquoiseColor = "#D2F7FF";

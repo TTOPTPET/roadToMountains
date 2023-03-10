@@ -3,18 +3,19 @@ import { Cookies } from "react-cookie";
 import axios from "axios";
 import { TOKEN } from "../config/types";
 import { IMyTours } from "../pages/CreatorLk/CreatorLk";
+import photo from "../media/cardbg.png";
 
 let cookie = new Cookies();
 
 const defaultResponse = [
   {
     tourId: "12",
-    tourName: "aaa",
+    tourName: "Что-то на европейском",
     category: "aaa",
     complexity: "aaa",
     price: {
-      from: 2,
-      to: 2,
+      from: 10000,
+      to: 15000,
     },
     region: "aaa",
     tourDate: {
@@ -22,6 +23,9 @@ const defaultResponse = [
       to: "aaa",
     },
     personsNumber: 2,
+    photo: ["../media/cardbg.png"],
+    banStatus: true,
+    publicNum: 5,
   },
 ];
 

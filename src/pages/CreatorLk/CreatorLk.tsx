@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { getMyTours } from "../../submitFunctions/creatorAPI";
 import AddTourButton from "../../components/AddTourButton/AddTourButton";
+import TourCard from "../../components/TourCard/TourCard";
 
 export interface IMyTours {
   tourId: string;
@@ -17,6 +18,9 @@ export interface IMyTours {
     to: string;
   };
   personsNumber: number;
+  photo: string[];
+  banStatus: boolean;
+  publicNum: number;
 }
 
 function CreatorLk() {
@@ -28,6 +32,12 @@ function CreatorLk() {
   return (
     <div>
       <AddTourButton />
+      <TourCard
+        photo={myTours && myTours[0].photo}
+        tourName={myTours && myTours[0].tourName}
+        myTours={myTours}
+        price={myTours && myTours[0].price.from}
+      />
     </div>
   );
 }
