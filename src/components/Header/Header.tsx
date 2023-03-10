@@ -6,7 +6,7 @@ const Header = () => {
     <div
       className="header"
       style={{
-        position: "absolute",
+        position: "static",
         width: "100%",
         height: "100px",
       }}

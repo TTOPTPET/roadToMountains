@@ -19,12 +19,44 @@ export interface IMyTours {
 }
 
 function CreatorLk() {
-  const [myTours, setMyTours] = useState<Array<IMyTours>>();
+  const [myTours, setMyTours] = useState<IMyTours[]>();
+  const [def, setDef] = useState<any>();
 
   useEffect(() => {
     getMyTours((value) => setMyTours(value), undefined, true);
-  }, []);
-  return <div>{JSON.stringify(myTours)}</div>;
+  }, [myTours, def]);
+  return (
+    <>
+      <div>{JSON.stringify(myTours)}</div>
+      <div
+        className="btn"
+        style={{ marginTop: 200 }}
+        onClick={() => {
+          console.log("first");
+          setDef([
+            {
+              tourId: 2,
+              tourName: "aaa",
+              category: "aaa",
+              complexity: "aaa",
+              price: {
+                from: 2,
+                to: 2,
+              },
+              region: "aaa",
+              tourDate: {
+                from: "aaa",
+                to: "aaa",
+              },
+              personsNumber: 2,
+            },
+          ]);
+        }}
+      >
+        OOOOO
+      </div>
+    </>
+  );
 }
 
 export default CreatorLk;
