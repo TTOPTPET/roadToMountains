@@ -8,6 +8,7 @@ import StatisticPage from "./StatisticPage/StatisticPage";
 import TourCalendarPage from "./TourCalendarPage/TourCalendarPage";
 import TouristLk from "./TouristLk/TouristLk";
 import TourListPage from "./TourListPage/TourListPage";
+import AddTourPage from "./AddTourPage/AddTourPage";
 
 export {
   AdminPage,
@@ -20,4 +21,5 @@ export {
   TourCalendarPage,
   TouristLk,
   TourListPage,
+  AddTourPage,
 };

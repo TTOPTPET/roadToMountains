@@ -14,6 +14,7 @@ import {
   TourCalendarPage,
   TouristLk,
   TourListPage,
+  AddTourPage,
 } from "./pages";
 import NavTool from "./components/NavTool/NavTool";
 
@@ -28,6 +29,7 @@ function App() {
           <Route path={"/admin/*"} element={<AdminPage />} />
           <Route path={"/auth"} element={<Authorization />} />
           <Route path={"/creatorLk"} element={<CreatorLk />} />
+          <Route path={"/addTour"} element={<AddTourPage />} />
           <Route path={"/notifications"} element={<NotificationsPage />} />
           <Route path={"/paymentSettings"} element={<PaymentSettingsPage />} />
           <Route path={"/statistics"} element={<StatisticPage />} />
