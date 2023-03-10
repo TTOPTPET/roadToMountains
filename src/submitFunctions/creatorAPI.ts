@@ -34,12 +34,12 @@ export const getMyTours = async (
     successCallback(defaultResponse);
     return;
   }
-  let response = await axios.get(creatorUrl + "/myTours ", {
-    headers: {
-      Authorization: `Bearer ${cookie.get(TOKEN)}`,
-    },
-  });
   try {
+    let response = await axios.get(creatorUrl + "/myTours ", {
+      headers: {
+        Authorization: `Bearer ${cookie.get(TOKEN)}`,
+      },
+    });
     successCallback(response?.data);
   } catch (e) {
     console.error(e);
