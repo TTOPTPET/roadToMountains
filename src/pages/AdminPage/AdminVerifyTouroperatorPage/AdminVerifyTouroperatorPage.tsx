@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { ICreatorList } from "../../../models/adminModels/ICreatorList";
-import { getCreatorList } from "../../../submitFunctions/administrationAPI";
+import { getCreatorList } from "../../../submitFunctions/adminAPI";
 
 export const AdminVerifyTouroperatorPage = () => {
   const [CreatorList, SetCreatorList] = useState<ICreatorList[]>();

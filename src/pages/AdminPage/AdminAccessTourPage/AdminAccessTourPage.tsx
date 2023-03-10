@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { ITourList } from "../../../models/adminModels/ITourList";
-import { getTourList } from "../../../submitFunctions/administrationAPI";
+import { getTourList } from "../../../submitFunctions/adminAPI";
 
 export const AdminAccessTourPage = () => {
   const [TourList, SetTourList] = useState<ITourList[]>();
