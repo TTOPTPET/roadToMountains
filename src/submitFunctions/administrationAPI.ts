@@ -6,18 +6,30 @@ import { TOKEN } from "../config/types";
 let cookie = new Cookies();
 
 export const tourBan = async (
-  data: any,
-  successCallback: (prop: any) => {},
-  errorCallback: () => {}
+  params?: any,
+  successCallback?: (prop: any) => void,
+  errorCallback?: () => void
 ) => {
-  interface I {
-    a: string;
+  interface Iinterface {
+    tourId: string;
+    tourName: string;
+    category: string;
+    complexity: string;
+    price: {
+      from: number;
+      to: number;
+    };
+    region: string;
+    tourDate: {
+      from: string;
+      to: string;
+    };
+    personsNumber: number;
   }
 
   await axios
-    .get(adminUrl, {
-      params: {},
-      data: data,
+    .get(adminUrl + "/tourBan", {
+      params: params,
       headers: {
         Authorization: `Bearer ${cookie.get(TOKEN)}`,
       },
@@ -25,16 +37,16 @@ export const tourBan = async (
     .then(
       (value) => {
         try {
-          let retr: I = value?.data;
-          successCallback(retr);
+          let retr: [Iinterface] = value?.data;
+          successCallback && successCallback(retr);
         } catch (e) {
           console.error(e);
-          errorCallback();
+          errorCallback && errorCallback();
         }
       },
       (reason) => {
         console.error(reason);
-        errorCallback();
+        errorCallback && errorCallback();
       }
     );
 };
