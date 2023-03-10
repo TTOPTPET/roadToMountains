@@ -1,5 +1,3 @@
-import { FC } from "react";
-
-export const AdminConfirmAdmin: FC = () => {
+export const AdminConfirmAdminPage = () => {
   return <>Подтверждение регистрации администраторов</>;
 };

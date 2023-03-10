@@ -1,7 +1,6 @@
 import { Button, Stack } from "@mui/material";
-import { FC } from "react";
 
-export const AdminHeader: FC = () => {
+export const AdminHeader = () => {
   return (
     <Stack justifyContent={"space-between"} direction={"row"}>
       <p>Logo</p>

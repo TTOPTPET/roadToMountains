@@ -1,14 +1,11 @@
 import { Stack } from "@mui/material";
 import { Routes, Route, Outlet } from "react-router-dom";
-import {
-  AdminHeader,
-  AdminSideBar,
-  AdminAccessTour,
-  AdminAccessTourist,
-  AdminConfirmAdmin,
-  AdminMessages,
-  AdminVerifyTouroperator,
-} from "../../components/Admin";
+import { AdminHeader, AdminSideBar } from "../../components/Admin";
+import { AdminAccessTourPage } from "./AdminAccessTourPage/AdminAccessTourPage";
+import { AdminMessagesPage } from "./AdminMessagesPage/AdminMessagesPage";
+import { AdminAccessTouristPage } from "./AdminAccessTouristPage/AdminAccessTouristPage";
+import { AdminVerifyTouroperatorPage } from "./AdminVerifyTouroperatorPage/AdminVerifyTouroperatorPage";
+import { AdminConfirmAdminPage } from "./AdminConfirmAdminPage/AdminConfirmAdminPage";
 
 function AdminPage() {
   return (
@@ -19,14 +16,17 @@ function AdminPage() {
         <Outlet />
         <div className="admin-panels">
           <Routes>
-            <Route path={"access-tourist"} element={<AdminAccessTourist />} />
-            <Route path={"access-tour"} element={<AdminAccessTour />} />
+            <Route
+              path={"access-tourist"}
+              element={<AdminAccessTouristPage />}
+            />
+            <Route path={"access-tour"} element={<AdminAccessTourPage />} />
             <Route
               path={"verify-touroperator"}
-              element={<AdminVerifyTouroperator />}
+              element={<AdminVerifyTouroperatorPage />}
             />
-            <Route path={"messages"} element={<AdminMessages />} />
-            <Route path={"confirm-admin"} element={<AdminConfirmAdmin />} />
+            <Route path={"messages"} element={<AdminMessagesPage />} />
+            <Route path={"confirm-admin"} element={<AdminConfirmAdminPage />} />
           </Routes>
         </div>
       </Stack>
