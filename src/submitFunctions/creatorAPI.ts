@@ -8,7 +8,7 @@ let cookie = new Cookies();
 
 const defaultResponse = [
   {
-    tourId: 12,
+    tourId: "12",
     tourName: "aaa",
     category: "aaa",
     complexity: "aaa",
@@ -26,39 +26,23 @@ const defaultResponse = [
 ];
 
 export const getMyTours = async (
-  successCallback?: (prop: Array<IMyTours>) => void,
+  successCallback: (prop: IMyTours[]) => void,
   errorCallback?: () => void,
   useDefault?: boolean
 ) => {
   if (useDefault) {
-    try {
-      const reqData: Array<IMyTours> = defaultResponse;
-      successCallback && successCallback(reqData);
-    } catch (e) {
-      console.log("first");
-    }
-
+    successCallback(defaultResponse);
     return;
   }
-  await axios
-    .get(creatorUrl + "/myTours ", {
-      headers: {
-        Authorization: `Bearer ${cookie.get(TOKEN)}`,
-      },
-    })
-    .then(
-      (value) => {
-        try {
-          const reqData: [IMyTours] = value?.data;
-          successCallback && successCallback(reqData);
-        } catch (e) {
-          console.error(e);
-          errorCallback && errorCallback();
-        }
-      },
-      (reason) => {
-        console.error(reason);
-        errorCallback && errorCallback();
-      }
-    );
+  let response = await axios.get(creatorUrl + "/myTours ", {
+    headers: {
+      Authorization: `Bearer ${cookie.get(TOKEN)}`,
+    },
+  });
+  try {
+    successCallback(response?.data);
+  } catch (e) {
+    console.error(e);
+    errorCallback && errorCallback();
+  }
 };
