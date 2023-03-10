@@ -1,0 +1,16 @@
+.admin-sidebar__link,
+.admin-sidebar__link--active {
+  padding: 5px;
+  border-radius: 10px;
+  box-shadow: inset;
+  text-decoration: none;
+}
+
+.admin-sidebar__link:hover {
+  background-color: #30abc8;
+  color: #eefcff;
+}
+
+.admin-sidebar__link--active {
+  background-color: #d2f7ff;
+}
