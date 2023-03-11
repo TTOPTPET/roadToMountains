@@ -26,7 +26,7 @@ function App() {
       <main>
         <Routes>
           <Route path={"/"} element={<HomePage />} />
-          <Route path={"/admin"} element={<AdminPage />} />
+          <Route path={"/admin/*"} element={<AdminPage />} />
           <Route path={"/auth"} element={<Authorization />} />
           <Route path={"/creatorLk"} element={<CreatorLk />} />
           <Route path={"/addTour"} element={<AddTourPage />} />
