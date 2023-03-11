@@ -55,7 +55,8 @@ export const tourBan = async (
     return;
   }
   try {
-    let respone = await axios.put(adminUrl + "/tourBan/" + params, {
+    let respone = await axios.put(adminUrl + "/tourBan/", {
+      params: params,
       headers: {
         Authorization: `Bearer ${cookie.get(TOKEN)}`,
       },

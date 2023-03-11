@@ -7,29 +7,30 @@ import {
 } from "../../../submitFunctions/adminAPI";
 
 export const AdminVerifyTouroperatorPage = () => {
-  const [CreatorList, SetCreatorList] = useState<ICreatorList[]>();
+  const [creatorList, setCreatorList] = useState<ICreatorList[]>([]);
+  const [userBanId, setUserBan] = useState<string>();
+  const [verifyUser, setVerifyUser] = useState<string>();
 
   useEffect(() => {
-    getCreatorList((value) => SetCreatorList(value), undefined, true);
-  }, []);
-  console.log(CreatorList);
+    getCreatorList((value) => setCreatorList(value), undefined, true);
+    console.log(creatorList);
+  }, [creatorList]);
 
-  const [UserBan, SetUserBan] = useState<string>();
   const banClick = (operatorId: string) => {
-    userBan((value) => SetUserBan(value), operatorId, undefined, true);
+    userBan((value) => setUserBan(value), operatorId, undefined, true);
   };
 
-  const [VerifyUser, SetVerifyUser] = useState<string>();
   const verifyClick = (operatorId: string) => {
-    verifyCreator((value) => SetVerifyUser(value), operatorId, undefined, true);
+    verifyCreator((value) => setVerifyUser(value), operatorId, undefined, true);
   };
+
   return (
     <>
       <h1>Управление доступом туристов</h1>
       <input type="button" onClick={() => banClick("1")} value="BAN!!!" />
-      <h5>{UserBan}</h5>
+      <h5>{userBanId}</h5>
       <input type="button" onClick={() => verifyClick("2")} value="Verify" />
-      <h5>{VerifyUser}</h5>
+      <h5>{verifyUser}</h5>
     </>
   );
 };

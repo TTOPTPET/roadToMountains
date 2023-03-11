@@ -1,6 +1,5 @@
-import { List, ListItem, Stack, Link } from "@mui/material";
-import { Link as RouterLink } from "react-router-dom";
-import "./AdminSideBar.css";
+import { List, ListItem, Stack, Button } from "@mui/material";
+import { NavLink as RouterLink } from "react-router-dom";
 
 interface ISideBarNavItems {
   display: string;
@@ -36,9 +35,9 @@ export const AdminSideBar = () => {
       <List>
         {sideBarNavItems.map((item, index) => (
           <ListItem key={index}>
-            <Link to={item.to} component={RouterLink} variant="body1">
+            <Button to={item.to} component={RouterLink}>
               {item.display}
-            </Link>
+            </Button>
           </ListItem>
         ))}
       </List>
