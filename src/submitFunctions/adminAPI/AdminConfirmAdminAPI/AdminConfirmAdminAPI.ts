@@ -58,7 +58,8 @@ export const registerAdmin = async (
     return;
   }
   try {
-    let respone = await axios.post(adminUrl + "/register", params, {
+    let respone = await axios.post(adminUrl + "/register", {
+      params: params,
       headers: {
         Authorization: `Bearer ${cookie.get(TOKEN)}`,
       },
@@ -87,7 +88,8 @@ export const loginAdmin = async (
     return;
   }
   try {
-    let response = await axios.post(adminUrl + "/login", params, {
+    let response = await axios.post(adminUrl + "/login", {
+      params: params,
       headers: {
         Authorization: `Bearer ${cookie.get(TOKEN)}`,
       },

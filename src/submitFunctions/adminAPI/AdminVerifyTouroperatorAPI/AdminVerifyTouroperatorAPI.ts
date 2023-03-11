@@ -62,7 +62,8 @@ export const verifyCreator = async (
     return;
   }
   try {
-    let response = await axios.put(adminUrl + "/creatorVerify/" + params, {
+    let response = await axios.put(adminUrl + "/creatorVerify/", {
+      params: params,
       headers: {
         Authorization: `Bearer ${cookie.get(TOKEN)}`,
       },

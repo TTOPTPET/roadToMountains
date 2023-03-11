@@ -3,22 +3,26 @@ import { ITouristList } from "../../../models/adminModels/ITouristList";
 import { getTouristList, userBan } from "../../../submitFunctions/adminAPI";
 
 export const AdminAccessTouristPage = () => {
-  const [TouristList, SetTouristList] = useState<ITouristList[]>();
+  const [touristList, setTouristList] = useState<ITouristList[]>();
+  const [userBanId, setUserBan] = useState<string>();
 
   useEffect(() => {
-    getTouristList((value) => SetTouristList(value), undefined, true);
-  }, []);
-  console.log(TouristList);
+    getTouristList((value) => setTouristList(value), undefined, true);
+    console.log(touristList);
+  }, [touristList]);
 
-  const [UserBan, SetUserBan] = useState<string>();
-  const banClick = (touristId: string) => {
-    userBan((value) => SetUserBan(value), touristId, undefined, true);
+  const handlerBanClick = (touristId: string) => {
+    userBan((value) => setUserBan(value), touristId, undefined, true);
   };
   return (
     <>
       <h1>Управление доступом туристов</h1>
-      <input type="button" onClick={() => banClick("1")} value="BAN!!!" />
-      <h5>{UserBan}</h5>
+      <input
+        type="button"
+        onClick={() => handlerBanClick("1")}
+        value="BAN!!!"
+      />
+      <h5>{userBanId}</h5>
     </>
   );
 };

@@ -18,7 +18,8 @@ export const userBan = async (
     return;
   }
   try {
-    let response = await axios.put(adminUrl + "/usersBan/" + params, {
+    let response = await axios.put(adminUrl + "/usersBan/", {
+      params: params,
       headers: {
         Authorization: `Bearer ${cookie.get(TOKEN)}`,
       },

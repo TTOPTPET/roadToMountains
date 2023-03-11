@@ -7,16 +7,16 @@ import {
 import { IChangeStatus } from "../../../models/adminModels/IChangeStatus";
 
 export const AdminMessagesPage = () => {
-  const [UserMessages, SetUserMessages] = useState<IUserMessage[]>();
+  const [userMessages, setUserMessages] = useState<IUserMessage[]>([]);
+  const [messageStatus, setMessageStatus] = useState<IChangeStatus>();
   useEffect(() => {
-    getUserMessages((value) => SetUserMessages(value), undefined, true);
-  }, []);
+    getUserMessages((value) => setUserMessages(value), undefined, true);
+    console.log(userMessages);
+  }, [userMessages]);
 
-  console.log(UserMessages);
-  const [MessageStatus, SetMessageStatus] = useState<IChangeStatus>();
-  const changeStatusClick = (message: IChangeStatus) => {
+  const handlerChangeStatusClick = (message: IChangeStatus) => {
     changeMessageStatus(
-      (value) => SetMessageStatus(value),
+      (value) => setMessageStatus(value),
       message,
       undefined,
       true
@@ -31,11 +31,11 @@ export const AdminMessagesPage = () => {
       <h1>Сообщения от пользователей</h1>
       <input
         type="button"
-        onClick={() => changeStatusClick(message)}
+        onClick={() => handlerChangeStatusClick(message)}
         value="CHANGE STATUS"
       />
-      <h5>{MessageStatus?.messageId}</h5>
-      <h5>{MessageStatus?.statusMessage}</h5>
+      <h5>{messageStatus?.messageId}</h5>
+      <h5>{messageStatus?.statusMessage}</h5>
     </>
   );
 };

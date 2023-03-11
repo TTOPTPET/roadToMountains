@@ -3,57 +3,57 @@ import { IAdminList } from "../../../models/adminModels/IAdminList";
 import { getAdminList, registerAdmin } from "../../../submitFunctions/adminAPI";
 import { IRegister } from "../../../models/adminModels/IRegister";
 
+const inputData: IRegister = {
+  email: "",
+  name: "",
+  password: "",
+  phone: "",
+};
+
 export const AdminConfirmAdminPage = () => {
-  const [AdminList, SetAdminList] = useState<IAdminList[]>();
+  const [adminList, setAdminList] = useState<IAdminList[]>();
+  const [regAdmin, setRegAdmin] = useState<IRegister>(inputData);
+
   useEffect(() => {
-    getAdminList((value) => SetAdminList(value), undefined, true);
-  });
+    getAdminList((value) => setAdminList(value), undefined, true);
+    console.log(adminList);
+  }, [adminList]);
 
-  const inputData: IRegister = {
-    email: "",
-    name: "",
-    password: "",
-    phone: "",
-  };
-  const [RegAdmin, SetRegAdmin] = useState<IRegister>(inputData);
-
-  const updateField = (
+  const hadnlerUpdateField = (
     key: keyof IRegister,
     e: ChangeEvent<HTMLInputElement>
   ) => {
-    const { value } = e.target;
-    SetRegAdmin({ ...RegAdmin, [key]: value });
+    setRegAdmin({ ...regAdmin, [key]: e.target });
   };
 
-  const registerClick = () => {
-    registerAdmin((value) => SetRegAdmin(value), RegAdmin, undefined, true);
+  const handlerRegisterClick = () => {
+    registerAdmin((value) => setRegAdmin(value), regAdmin, undefined, true);
   };
 
-  console.log(AdminList);
   return (
     <>
       <h1>Подтверждение регистрации администраторов</h1>
       <input
         type="text"
-        value={RegAdmin.email}
-        onChange={(e) => updateField("email", e)}
+        value={regAdmin.email}
+        onChange={(e) => hadnlerUpdateField("email", e)}
       ></input>
       <input
         type="text"
-        value={RegAdmin.name}
-        onChange={(e) => updateField("name", e)}
+        value={regAdmin.name}
+        onChange={(e) => hadnlerUpdateField("name", e)}
       ></input>
       <input
         type="text"
-        value={RegAdmin.password}
-        onChange={(e) => updateField("password", e)}
+        value={regAdmin.password}
+        onChange={(e) => hadnlerUpdateField("password", e)}
       ></input>
       <input
         type="text"
-        value={RegAdmin.phone}
-        onChange={(e) => updateField("phone", e)}
+        value={regAdmin.phone}
+        onChange={(e) => hadnlerUpdateField("phone", e)}
       ></input>
-      <input type="button" value="Register" onClick={registerClick} />
+      <input type="button" value="Register" onClick={handlerRegisterClick} />
     </>
   );
 };
