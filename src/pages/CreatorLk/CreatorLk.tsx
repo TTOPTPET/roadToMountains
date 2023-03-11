@@ -3,7 +3,7 @@ import { getMyTours } from "../../submitFunctions/creatorAPI";
 import AddTourButton from "../../components/AddTourButton/AddTourButton";
 import TourCard from "../../components/TourCard/TourCard";
 
-export interface IMyTours {
+export interface IMyTour {
   tourId: string;
   tourName: string;
   category: string;
@@ -24,20 +24,29 @@ export interface IMyTours {
 }
 
 function CreatorLk() {
-  const [myTours, setMyTours] = useState<IMyTours[]>();
+  const [myTours, setMyTours] = useState<IMyTour[]>();
+  const [loadingStatus, setLoadingStatus] = useState<Boolean>(true);
+
+  console.log(myTours);
 
   useEffect(() => {
-    getMyTours((value) => setMyTours(value), undefined, true);
+    setLoadingStatus(true);
+    getMyTours(
+      (value) => {
+        setMyTours(value);
+        setLoadingStatus(false);
+      },
+      undefined,
+      true
+    );
   }, []);
+
+  const elements = myTours?.map((tour, i) => <TourCard tour={tour} key={i} />);
+
   return (
     <div>
       <AddTourButton />
-      <TourCard
-        photo={myTours && myTours[0].photo}
-        tourName={myTours && myTours[0].tourName}
-        myTours={myTours}
-        price={myTours && myTours[0].price.from}
-      />
+      {elements}
     </div>
   );
 }

@@ -2,8 +2,7 @@ import { creatorUrl } from "../config/config";
 import { Cookies } from "react-cookie";
 import axios from "axios";
 import { TOKEN } from "../config/types";
-import { IMyTours } from "../pages/CreatorLk/CreatorLk";
-import photo from "../media/cardbg.png";
+import { IMyTour } from "../pages/CreatorLk/CreatorLk";
 
 let cookie = new Cookies();
 
@@ -25,12 +24,31 @@ const defaultResponse = [
     personsNumber: 2,
     photo: ["../media/cardbg.png"],
     banStatus: true,
+    publicNum: 0,
+  },
+  {
+    tourId: "12",
+    tourName: "Что-то еще",
+    category: "aaa",
+    complexity: "aaa",
+    price: {
+      from: 500,
+      to: 15000,
+    },
+    region: "aaa",
+    tourDate: {
+      from: "aaa",
+      to: "aaa",
+    },
+    personsNumber: 2,
+    photo: [],
+    banStatus: false,
     publicNum: 5,
   },
 ];
 
 export const getMyTours = async (
-  successCallback: (prop: IMyTours[]) => void,
+  successCallback: (prop: IMyTour[]) => void,
   errorCallback?: () => void,
   useDefault?: boolean
 ) => {
