@@ -43,7 +43,26 @@ const defaultResponse = [
     personsNumber: 2,
     photo: [],
     banStatus: false,
-    publicNum: 5,
+    publicNum: 11,
+  },
+  {
+    tourId: "12",
+    tourName: "Самый дорогой тур",
+    category: "aaa",
+    complexity: "aaa",
+    price: {
+      from: 5312312300,
+      to: 15000,
+    },
+    region: "aaa",
+    tourDate: {
+      from: "aaa",
+      to: "aaa",
+    },
+    personsNumber: 2,
+    photo: [],
+    banStatus: true,
+    publicNum: 54,
   },
 ];
 

@@ -35,10 +35,9 @@ const StyledTooltip = styled(({ className, ...props }: TooltipProps) => (
 }));
 
 function TourCard({ tour }: TourCardProps) {
-  console.log(tour);
-
   return (
     <Box
+      className="tour_card"
       sx={{
         width: 325,
         height: 490,
@@ -47,16 +46,18 @@ function TourCard({ tour }: TourCardProps) {
       }}
     >
       <Box
+        className="tour_card_photo__wrapper"
         sx={{
           width: "100%",
           height: "261px",
           position: "relative",
           borderTopLeftRadius: "30px",
           borderTopRightRadius: "30px",
-          backgroundImage: `url(${tour.photo.length === 0 ? noPhoto : cardbg})`,
+          backgroundImage: `url(${tour.photo.length === 0 ? noPhoto : cardbg})`, //TODO: подставить картинку, которая приходит с бэка.
         }}
       >
         <Box
+          className="tour_card_photo__overlay"
           sx={{
             width: "100%",
             height: "100%",
@@ -68,6 +69,7 @@ function TourCard({ tour }: TourCardProps) {
           }}
         >
           <Box
+            className="tour_card_publicNum"
             sx={{
               width: "100%",
               textAlign: "center",
@@ -90,11 +92,12 @@ function TourCard({ tour }: TourCardProps) {
         </Box>
       </Box>
 
-      <Box>
+      <Box className="tour_card_banStatus">
         {tour.banStatus && (
           <>
             <StyledTooltip title="Тур заблокирован" arrow>
               <Box
+                className="tour_card_banStatus__wrapper"
                 sx={{
                   position: "absolute",
                   top: "25px",
@@ -107,6 +110,7 @@ function TourCard({ tour }: TourCardProps) {
                 }}
               >
                 <img
+                  className="tour_card_banStatus__icon"
                   src={cancelIcon}
                   alt="cancel icon"
                   style={{
@@ -125,6 +129,7 @@ function TourCard({ tour }: TourCardProps) {
       </Box>
 
       <Box
+        className="tour_card_content"
         sx={{
           width: "100%",
           height: "230px",
@@ -138,6 +143,7 @@ function TourCard({ tour }: TourCardProps) {
         }}
       >
         <Box
+          className="tour_card_content__title"
           sx={{
             fontFamily: "Jost",
             fontWeight: "800",
@@ -149,6 +155,7 @@ function TourCard({ tour }: TourCardProps) {
           {tour.tourName}
         </Box>
         <Box
+          className="tour_card_content__price"
           sx={{
             fontFamily: "Jost",
             fontWeight: "700",
@@ -161,8 +168,17 @@ function TourCard({ tour }: TourCardProps) {
         >
           {new Intl.NumberFormat("ru-RU").format(tour.price.from)}₽
         </Box>
-        <Box display={"flex"} flexDirection={"column"} flex={"0 0 auto"}>
-          <Box display="flex" justifyContent={"flex-end"}>
+        <Box
+          display={"flex"}
+          flexDirection={"column"}
+          flex={"0 0 auto"}
+          className="tour_card_content__button"
+        >
+          <Box
+            display="flex"
+            justifyContent={"flex-end"}
+            className="tour_card_content__button-edit"
+          >
             <Button
               component={Link}
               to={"/addTour"}
@@ -184,12 +200,14 @@ function TourCard({ tour }: TourCardProps) {
             </Button>
           </Box>
           <Box
+            className="tour_card_content__buttons"
             display="flex"
             justifyContent={"flex-end"}
             mt="10px"
             columnGap={"10px"}
           >
             <Button
+              className="tour_card_content__button-place"
               disabled={tour.banStatus ? true : false}
               sx={{
                 bgcolor: darkTurquoiseColor,
@@ -212,6 +230,7 @@ function TourCard({ tour }: TourCardProps) {
               Разместить
             </Button>
             <Button
+              className="tour_card_content__button-delete"
               sx={{
                 bgcolor: darkTurquoiseColor,
                 padding: "0px 16px",

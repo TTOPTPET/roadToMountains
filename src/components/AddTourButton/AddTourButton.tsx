@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 function AddTourButton() {
   return (
     <Box
+      className="tour_button"
       sx={{
         width: 325,
         height: 490,
@@ -28,6 +29,7 @@ function AddTourButton() {
             left: "50%",
             transform: "translate(-50%, -50%)",
           }}
+          className="tour_button_icon"
         />
       </Link>
     </Box>

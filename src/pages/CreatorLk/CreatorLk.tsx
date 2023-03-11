@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
 import { getMyTours } from "../../submitFunctions/creatorAPI";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import Skeleton from "@mui/material/Skeleton";
 import AddTourButton from "../../components/AddTourButton/AddTourButton";
 import TourCard from "../../components/TourCard/TourCard";
 
@@ -27,8 +30,6 @@ function CreatorLk() {
   const [myTours, setMyTours] = useState<IMyTour[]>();
   const [loadingStatus, setLoadingStatus] = useState<Boolean>(true);
 
-  console.log(myTours);
-
   useEffect(() => {
     setLoadingStatus(true);
     getMyTours(
@@ -41,13 +42,49 @@ function CreatorLk() {
     );
   }, []);
 
-  const elements = myTours?.map((tour, i) => <TourCard tour={tour} key={i} />);
+  const elements = myTours?.map((tour, i) => {
+    return (
+      <Grid item xs={1}>
+        <TourCard tour={tour} key={i} />
+      </Grid>
+    );
+  });
+
+  const skeleton = () => {
+    return (
+      <>
+        <Grid item xs={1}>
+          <Skeleton
+            variant="rounded"
+            width={326}
+            height={491}
+            animation="wave"
+            sx={{ borderRadius: "30px" }}
+          />
+        </Grid>
+        <Grid item xs={1}>
+          <Skeleton
+            variant="rounded"
+            width={326}
+            height={491}
+            animation="wave"
+            sx={{ borderRadius: "30px" }}
+          />
+        </Grid>
+      </>
+    );
+  };
 
   return (
-    <div>
-      <AddTourButton />
-      {elements}
-    </div>
+    //TODO: уточнить по поводу контейнера.
+    <Box className="myTours_grid" sx={{ width: "1024px", m: "0 auto" }}>
+      <Grid container spacing={"24px"} columns={3}>
+        <Grid item xs={1}>
+          <AddTourButton />
+        </Grid>
+        {loadingStatus ? skeleton() : elements}
+      </Grid>
+    </Box>
   );
 }
 
