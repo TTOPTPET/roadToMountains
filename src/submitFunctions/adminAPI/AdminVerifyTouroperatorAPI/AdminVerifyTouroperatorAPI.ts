@@ -48,3 +48,28 @@ export const getCreatorList = async (
     errorCallback && errorCallback();
   }
 };
+
+const creatorVerifyDefault: string = "2";
+
+export const verifyCreator = async (
+  successCallback: (prop: string) => void,
+  params: string,
+  errorCallback?: () => void,
+  useDefault?: boolean
+) => {
+  if (useDefault) {
+    successCallback(creatorVerifyDefault);
+    return;
+  }
+  try {
+    let response = await axios.put(adminUrl + "/creatorVerify/" + params, {
+      headers: {
+        Authorization: `Bearer ${cookie.get(TOKEN)}`,
+      },
+    });
+    successCallback(response?.data);
+  } catch (e) {
+    console.error(e);
+    errorCallback && errorCallback();
+  }
+};

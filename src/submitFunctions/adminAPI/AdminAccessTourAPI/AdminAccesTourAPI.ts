@@ -41,3 +41,28 @@ export const getTourList = async (
     errorCallback && errorCallback();
   }
 };
+
+const tourBanDefault: string = "1";
+
+export const tourBan = async (
+  successCallback: (prop: string) => void,
+  params: string,
+  errorCallback?: () => void,
+  useDefault?: boolean
+) => {
+  if (useDefault) {
+    successCallback(tourBanDefault);
+    return;
+  }
+  try {
+    let respone = await axios.put(adminUrl + "/tourBan/" + params, {
+      headers: {
+        Authorization: `Bearer ${cookie.get(TOKEN)}`,
+      },
+    });
+    successCallback(respone?.data);
+  } catch (e) {
+    console.error(e);
+    errorCallback && errorCallback();
+  }
+};

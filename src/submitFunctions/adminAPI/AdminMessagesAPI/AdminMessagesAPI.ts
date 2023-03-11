@@ -3,6 +3,7 @@ import { IUserMessage } from "../../../models/adminModels/IUsersMessage";
 import { adminUrl } from "../../../config/config";
 import { TOKEN } from "../../../config/types";
 import { Cookies } from "react-cookie";
+import { IChangeStatus } from "../../../models/adminModels/IChangeStatus";
 
 let cookie = new Cookies();
 
@@ -50,6 +51,35 @@ export const getUserMessages = async (
       },
     });
     successCallback(response?.data);
+  } catch (e) {
+    console.error(e);
+    errorCallback && errorCallback();
+  }
+};
+
+const changeStatusDefault: IChangeStatus = {
+  messageId: "1",
+  statusMessage: "Bugaga",
+};
+
+export const changeMessageStatus = async (
+  successCallback: (prop: IChangeStatus) => void,
+  params: IChangeStatus,
+  errorCallback?: () => void,
+  useDefault?: boolean
+) => {
+  if (useDefault) {
+    successCallback(changeStatusDefault);
+    return;
+  }
+  try {
+    let respone = await axios.put(adminUrl + "/errorMessage/changeStatus", {
+      params: params,
+      headers: {
+        Authorization: `Bearer ${cookie.get(TOKEN)}`,
+      },
+    });
+    successCallback(respone?.data);
   } catch (e) {
     console.error(e);
     errorCallback && errorCallback();
