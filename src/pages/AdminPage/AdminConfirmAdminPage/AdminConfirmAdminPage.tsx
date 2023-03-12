@@ -1,59 +1,23 @@
-import { ChangeEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { IAdminList } from "../../../models/adminModels/IAdminList";
-import { getAdminList, registerAdmin } from "../../../submitFunctions/adminAPI";
-import { IRegister } from "../../../models/adminModels/IRegister";
-
-const inputData: IRegister = {
-  email: "",
-  name: "",
-  password: "",
-  phone: "",
-};
+import { getAdminList } from "../../../submitFunctions/adminAPI";
+import { Stack } from "@mui/material";
+import { AdminComponent } from "../../../components/Admin/AdminFabric/AdminFabric";
 
 export const AdminConfirmAdminPage = () => {
   const [adminList, setAdminList] = useState<IAdminList[]>();
-  const [regAdmin, setRegAdmin] = useState<IRegister>(inputData);
 
   useEffect(() => {
     getAdminList((value) => setAdminList(value), undefined, true);
     console.log(adminList);
   }, [adminList]);
 
-  const hadnlerUpdateField = (
-    key: keyof IRegister,
-    e: ChangeEvent<HTMLInputElement>
-  ) => {
-    setRegAdmin({ ...regAdmin, [key]: e.target });
-  };
-
-  const handlerRegisterClick = () => {
-    registerAdmin((value) => setRegAdmin(value), regAdmin, undefined, true);
-  };
-
   return (
-    <>
-      <h1>Подтверждение регистрации администраторов</h1>
-      <input
-        type="text"
-        value={regAdmin.email}
-        onChange={(e) => hadnlerUpdateField("email", e)}
-      ></input>
-      <input
-        type="text"
-        value={regAdmin.name}
-        onChange={(e) => hadnlerUpdateField("name", e)}
-      ></input>
-      <input
-        type="text"
-        value={regAdmin.password}
-        onChange={(e) => hadnlerUpdateField("password", e)}
-      ></input>
-      <input
-        type="text"
-        value={regAdmin.phone}
-        onChange={(e) => hadnlerUpdateField("phone", e)}
-      ></input>
-      <input type="button" value="Register" onClick={handlerRegisterClick} />
-    </>
+    <Stack padding={1} gap={1}>
+      {adminList &&
+        adminList.map((admin, index) => (
+          <AdminComponent type="admin" {...admin} key={index} />
+        ))}
+    </Stack>
   );
 };
