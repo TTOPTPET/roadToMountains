@@ -5,7 +5,7 @@ import {
   lightTurquoiseColor,
   redColor,
   whiteColor,
-} from "../../../config/config";
+} from "../../color/color";
 
 export const themes = createTheme({
   components: {

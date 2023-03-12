@@ -1,5 +1,5 @@
 import { Button, Stack, Typography } from "@mui/material";
-import { lightTurquoiseColor } from "../../../config/config";
+import { lightTurquoiseColor } from "../../../config/MUI/color/color";
 
 export const AdminHeader = () => {
   return (

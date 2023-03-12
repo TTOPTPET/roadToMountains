@@ -8,7 +8,7 @@ function NavTool() {
       className="nav-tool"
       style={{
         width: "fit-content",
-        position: "absolute",
+        position: "fixed",
         right: 0,
         bottom: 0,
         paddingRight: "10px",

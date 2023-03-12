@@ -6,7 +6,7 @@ import { AdminMessagesPage } from "./AdminMessagesPage/AdminMessagesPage";
 import { AdminAccessTouristPage } from "./AdminAccessTouristPage/AdminAccessTouristPage";
 import { AdminVerifyTouroperatorPage } from "./AdminVerifyTouroperatorPage/AdminVerifyTouroperatorPage";
 import { AdminConfirmAdminPage } from "./AdminConfirmAdminPage/AdminConfirmAdminPage";
-import { themes } from "./themes/theme";
+import { themes } from "../../config/MUI/themes/adminTheme/adminTheme";
 
 function AdminPage() {
   return (

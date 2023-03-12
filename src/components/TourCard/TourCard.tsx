@@ -8,7 +8,7 @@ import {
   darkBlueColor,
   darkTurquoiseColor,
   whiteColor,
-} from "../../config/config";
+} from "../../config/MUI/color/color";
 import { IMyTour } from "../../models/creatorModels/IMyTour";
 import cancelIcon from "../../media/ban-status-icon.svg";
 import cardbg from "../../media/cardbg.png";

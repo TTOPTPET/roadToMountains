@@ -5,7 +5,7 @@ import Box from "@mui/material/Box";
 import Skeleton from "@mui/material/Skeleton";
 import AddTourButton from "../../components/AddTourButton/AddTourButton";
 import TourCard from "../../components/TourCard/TourCard";
-import { darkBlueColor } from "../../config/config";
+import { darkBlueColor } from "../../config/MUI/color/color";
 import { IMyTour } from "../../models/creatorModels/IMyTour";
 
 function CreatorLk() {
