@@ -14,6 +14,7 @@ export const themes = createTheme({
         root: {
           borderRadius: "15px",
           textTransform: "none",
+          maxHeight: "70px",
           color: darkBlueColor,
           "&:active": {
             backgroundColor: darkTurquoiseColor,
@@ -29,6 +30,19 @@ export const themes = createTheme({
           props: { color: "error" },
           style: {
             color: redColor,
+            "&:active": {
+              backgroundColor: redColor,
+            },
+          },
+        },
+        {
+          props: { color: "secondary" },
+          style: {
+            backgroundColor: lightTurquoiseColor,
+            "&:hover": {
+              backgroundColor: darkBlueColor,
+              color: whiteColor,
+            },
             "&:active": {
               backgroundColor: redColor,
             },

@@ -19,6 +19,7 @@ import {
   AddTourPage,
 } from "./pages";
 import NavTool from "./components/NavTool/NavTool";
+import { AdminAuth } from "./pages/AdminPage/AdminAuth/AdminAuth";
 
 function App() {
   dayjs.locale("ru");
@@ -29,6 +30,7 @@ function App() {
         <Routes>
           <Route path={"/"} element={<HomePage />} />
           <Route path={"/admin/*"} element={<AdminPage />} />
+          <Route path="/admin/auth" element={<AdminAuth />} />
           <Route path={"/auth"} element={<Authorization />} />
           <Route path={"/creatorLk"} element={<CreatorLk />} />
           <Route path={"/addTour"} element={<AddTourPage />} />
