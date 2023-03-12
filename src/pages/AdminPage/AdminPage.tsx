@@ -1,5 +1,5 @@
 import { Stack, ThemeProvider } from "@mui/material";
-import { Routes, Route, Outlet } from "react-router-dom";
+import { Routes, Route, Outlet, Navigate } from "react-router-dom";
 import { AdminHeader, AdminSideBar } from "../../components/Admin";
 import { AdminAccessTourPage } from "./AdminAccessTourPage/AdminAccessTourPage";
 import { AdminMessagesPage } from "./AdminMessagesPage/AdminMessagesPage";
@@ -18,6 +18,7 @@ function AdminPage() {
           <Outlet />
           <div className="admin-panels">
             <Routes>
+              <Route index element={<Navigate to={"access-tourist"} />} />
               <Route
                 path={"access-tourist"}
                 element={<AdminAccessTouristPage />}
