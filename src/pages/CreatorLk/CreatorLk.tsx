@@ -6,10 +6,10 @@ import Skeleton from "@mui/material/Skeleton";
 import AddTourButton from "../../components/AddTourButton/AddTourButton";
 import TourCard from "../../components/TourCard/TourCard";
 import { darkBlueColor } from "../../config/MUI/color/color";
-import { IMyTour } from "../../models/creatorModels/IMyTour";
+import { ITour } from "../../models/tourCardModel/ITour";
 
 function CreatorLk() {
-  const [myTours, setMyTours] = useState<IMyTour[]>();
+  const [myTours, setMyTours] = useState<ITour[]>([]);
   const [loadingStatus, setLoadingStatus] = useState<Boolean>(true);
 
   console.log(myTours);
@@ -26,11 +26,11 @@ function CreatorLk() {
     );
   }, []);
 
-  const elements = myTours ? (
+  const elements = myTours.length ? (
     myTours?.map((tour) => {
       return (
         <Grid item xs={1}>
-          <TourCard tour={tour} key={tour.tourId} />
+          <TourCard tour={tour} key={tour.tourId} tourCardType={"myTours"} />
         </Grid>
       );
     })
