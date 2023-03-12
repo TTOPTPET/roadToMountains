@@ -2,24 +2,24 @@ import { creatorUrl } from "../config/config";
 import { Cookies } from "react-cookie";
 import axios from "axios";
 import { TOKEN } from "../config/types";
-import { IMyTour } from "../models/creatorModels/IMyTour";
+import { ITour } from "../models/tourCardModel/ITour";
 
 let cookie = new Cookies();
 
-const defaultResponse : IMyTour[] = [
+const defaultResponse : ITour[] = [
   {
     tourId: "12",
     tourName: "Что-то на европейском",
-    category: "aaa",
+    category: "Рафтинг",
     complexity: "aaa",
     price: {
       from: 10000,
       to: 15000,
     },
-    region: "aaa",
+    region: "Алтайский край",
     tourDate: {
-      from: "aaa",
-      to: "aaa",
+      from: "16.09.2023",
+      to: "19.09.2023",
     },
     personsNumber: 2,
     photo: ["../media/cardbg.png"],
@@ -29,16 +29,16 @@ const defaultResponse : IMyTour[] = [
   {
     tourId: "13",
     tourName: "Что-то еще",
-    category: "aaa",
+    category: "Экскурсия",
     complexity: "aaa",
     price: {
       from: 500,
       to: 15000,
     },
-    region: "aaa",
+    region: "Московская область",
     tourDate: {
-      from: "aaa",
-      to: "aaa",
+      from: "13.03.2023",
+      to: "17.03.2023",
     },
     personsNumber: 2,
     photo: [],
@@ -48,16 +48,16 @@ const defaultResponse : IMyTour[] = [
   {
     tourId: "14",
     tourName: "Самый дорогой тур",
-    category: "aaa",
+    category: "Джип-тур",
     complexity: "aaa",
     price: {
-      from: 5312312300,
+      from: 531211123312300,
       to: 15000,
     },
-    region: "aaa",
+    region: "Владимирская область",
     tourDate: {
-      from: "aaa",
-      to: "aaa",
+      from: "01.01.1985",
+      to: "31.12.2023",
     },
     personsNumber: 2,
     photo: [],
@@ -67,12 +67,12 @@ const defaultResponse : IMyTour[] = [
 ];
 
 export const getMyTours = async (
-  successCallback: (prop: IMyTour[]) => void,
+  successCallback: (prop: ITour[]) => void,
   errorCallback?: () => void,
   useDefault?: boolean
 ) => {
   if (useDefault) {
-    successCallback(defaultResponse.length > 0 ? defaultResponse : null);
+    successCallback(defaultResponse);
     return;
   }
   try {

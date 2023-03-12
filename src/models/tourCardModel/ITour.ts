@@ -1,4 +1,4 @@
-export interface IMyTour {
+export interface ITour {
     tourId: string;
     tourName: string;
     category: string;
