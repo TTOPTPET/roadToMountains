@@ -9,8 +9,7 @@ export const AdminMessagesPage = () => {
 
   useEffect(() => {
     getUserMessages((value) => setUserMessages(value), undefined, true);
-    console.log(userMessages);
-  }, [userMessages]);
+  }, []);
 
   return (
     <Stack padding={1} gap={1}>

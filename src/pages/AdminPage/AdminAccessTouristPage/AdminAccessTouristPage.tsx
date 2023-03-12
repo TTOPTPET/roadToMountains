@@ -9,8 +9,7 @@ export const AdminAccessTouristPage = () => {
 
   useEffect(() => {
     getTouristList((value) => setTouristList(value), undefined, true);
-    console.log(touristList);
-  }, [touristList]);
+  }, []);
 
   return (
     <Stack padding={1} gap={1}>

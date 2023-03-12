@@ -9,8 +9,7 @@ export const AdminConfirmAdminPage = () => {
 
   useEffect(() => {
     getAdminList((value) => setAdminList(value), undefined, true);
-    console.log(adminList);
-  }, [adminList]);
+  }, []);
 
   return (
     <Stack padding={1} gap={1}>

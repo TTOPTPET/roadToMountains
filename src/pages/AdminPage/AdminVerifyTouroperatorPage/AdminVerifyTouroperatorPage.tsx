@@ -9,8 +9,7 @@ export const AdminVerifyTouroperatorPage = () => {
 
   useEffect(() => {
     getCreatorList((value) => setCreatorList(value), undefined, true);
-    console.log(creatorList);
-  }, [creatorList]);
+  }, []);
 
   return (
     <Stack padding={1} gap={1}>
