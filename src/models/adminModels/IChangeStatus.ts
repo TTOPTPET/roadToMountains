@@ -1,4 +1,4 @@
 export interface IChangeStatus {
-    messageId: string;
-    statusMessage: string;
+  messageId: string;
+  statusMessage: string;
 }
