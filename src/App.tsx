@@ -1,6 +1,8 @@
 import "./App.css";
 import dayjs from "dayjs";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Container from "@mui/material/Container";
+// import Box from "@mui/materialBox";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import {
@@ -23,7 +25,7 @@ function App() {
   return (
     <BrowserRouter>
       <Header />
-      <main>
+      <Container disableGutters maxWidth={false} sx={{ width: "1024px" }}>
         <Routes>
           <Route path={"/"} element={<HomePage />} />
           <Route path={"/admin/*"} element={<AdminPage />} />
@@ -37,7 +39,7 @@ function App() {
           <Route path={"/touristLk"} element={<TouristLk />} />
           <Route path={"/tourList"} element={<TourListPage />} />
         </Routes>
-      </main>
+      </Container>
       <Footer />
       {/* HACK:Инструмент навигации для разработки */}
       <NavTool />

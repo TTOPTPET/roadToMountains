@@ -2,11 +2,11 @@ import { creatorUrl } from "../config/config";
 import { Cookies } from "react-cookie";
 import axios from "axios";
 import { TOKEN } from "../config/types";
-import { IMyTour } from "../pages/CreatorLk/CreatorLk";
+import { IMyTour } from "../models/creatorModels/IMyTour";
 
 let cookie = new Cookies();
 
-const defaultResponse = [
+const defaultResponse : IMyTour[] = [
   {
     tourId: "12",
     tourName: "Что-то на европейском",
@@ -27,7 +27,7 @@ const defaultResponse = [
     publicNum: 0,
   },
   {
-    tourId: "12",
+    tourId: "13",
     tourName: "Что-то еще",
     category: "aaa",
     complexity: "aaa",
@@ -46,7 +46,7 @@ const defaultResponse = [
     publicNum: 11,
   },
   {
-    tourId: "12",
+    tourId: "14",
     tourName: "Самый дорогой тур",
     category: "aaa",
     complexity: "aaa",
@@ -72,7 +72,7 @@ export const getMyTours = async (
   useDefault?: boolean
 ) => {
   if (useDefault) {
-    successCallback(defaultResponse);
+    successCallback(defaultResponse.length > 0 ? defaultResponse : null);
     return;
   }
   try {

@@ -9,7 +9,7 @@ import {
   darkTurquoiseColor,
   whiteColor,
 } from "../../config/config";
-import { IMyTour } from "../../pages/CreatorLk/CreatorLk";
+import { IMyTour } from "../../models/creatorModels/IMyTour";
 import cancelIcon from "../../media/ban-status-icon.svg";
 import cardbg from "../../media/cardbg.png";
 import noPhoto from "../../media/noPhoto.png";
