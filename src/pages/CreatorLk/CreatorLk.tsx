@@ -5,30 +5,14 @@ import Box from "@mui/material/Box";
 import Skeleton from "@mui/material/Skeleton";
 import AddTourButton from "../../components/AddTourButton/AddTourButton";
 import TourCard from "../../components/TourCard/TourCard";
-
-export interface IMyTour {
-  tourId: string;
-  tourName: string;
-  category: string;
-  complexity: string;
-  price: {
-    from: number;
-    to: number;
-  };
-  region: string;
-  tourDate: {
-    from: string;
-    to: string;
-  };
-  personsNumber: number;
-  photo: string[];
-  banStatus: boolean;
-  publicNum: number;
-}
+import { darkBlueColor } from "../../config/config";
+import { IMyTour } from "../../models/creatorModels/IMyTour";
 
 function CreatorLk() {
   const [myTours, setMyTours] = useState<IMyTour[]>();
   const [loadingStatus, setLoadingStatus] = useState<Boolean>(true);
+
+  console.log(myTours);
 
   useEffect(() => {
     setLoadingStatus(true);
@@ -42,13 +26,33 @@ function CreatorLk() {
     );
   }, []);
 
-  const elements = myTours?.map((tour, i) => {
-    return (
-      <Grid item xs={1}>
-        <TourCard tour={tour} key={i} />
+  const elements = myTours ? (
+    myTours?.map((tour) => {
+      return (
+        <Grid item xs={1}>
+          <TourCard tour={tour} key={tour.tourId} />
+        </Grid>
+      );
+    })
+  ) : (
+    //TODO: изменить дизайн надписи, когда нет туров
+    <>
+      <Grid item xs={2} sx={{ display: "flex" }}>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            m: "0 auto",
+            fontFamily: "Jost",
+            fontWeight: "800",
+            fontSize: "40px",
+          }}
+        >
+          Еще нет созданных туров
+        </Box>
       </Grid>
-    );
-  });
+    </>
+  );
 
   const skeleton = () => {
     return (
@@ -76,15 +80,26 @@ function CreatorLk() {
   };
 
   return (
-    //TODO: уточнить по поводу контейнера.
-    <Box className="myTours_grid" sx={{ width: "1024px", m: "0 auto" }}>
+    <>
+      <Box
+        sx={{
+          fontFamily: "Jost",
+          fontWeight: "800",
+          fontSize: "24px",
+          lineHeight: "32px",
+          color: darkBlueColor,
+          mb: "19px",
+        }}
+      >
+        Мои туры
+      </Box>
       <Grid container spacing={"24px"} columns={3}>
         <Grid item xs={1}>
           <AddTourButton />
         </Grid>
         {loadingStatus ? skeleton() : elements}
       </Grid>
-    </Box>
+    </>
   );
 }
 
