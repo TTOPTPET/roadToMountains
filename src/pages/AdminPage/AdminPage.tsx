@@ -1,42 +1,17 @@
-import { Stack, ThemeProvider } from "@mui/material";
-import { Routes, Route, Outlet, Navigate } from "react-router-dom";
-import { AdminHeader, AdminSideBar } from "../../components/Admin";
-import { AdminAccessTourPage } from "./AdminAccessTourPage/AdminAccessTourPage";
-import { AdminMessagesPage } from "./AdminMessagesPage/AdminMessagesPage";
-import { AdminAccessTouristPage } from "./AdminAccessTouristPage/AdminAccessTouristPage";
-import { AdminVerifyTouroperatorPage } from "./AdminVerifyTouroperatorPage/AdminVerifyTouroperatorPage";
-import { AdminConfirmAdminPage } from "./AdminConfirmAdminPage/AdminConfirmAdminPage";
+import { ThemeProvider } from "@mui/material";
+import { Routes, Route, Navigate } from "react-router-dom";
 import { themes } from "../../config/MUI/themes/adminTheme/adminTheme";
+import { AdminAuth } from "./AdminAuth/AdminAuth";
+import { AdminPageProptected } from "./AdminPageProtected/AdminPageProtected";
 
 function AdminPage() {
   return (
     <ThemeProvider theme={themes}>
-      <Stack direction={"column"}>
-        <AdminHeader />
-        <Stack direction={"row"} height="100%">
-          <AdminSideBar />
-          <Outlet />
-          <div className="admin-panels">
-            <Routes>
-              <Route index element={<Navigate to={"access-tourist"} />} />
-              <Route
-                path={"access-tourist"}
-                element={<AdminAccessTouristPage />}
-              />
-              <Route path={"access-tour"} element={<AdminAccessTourPage />} />
-              <Route
-                path={"verify-touroperator"}
-                element={<AdminVerifyTouroperatorPage />}
-              />
-              <Route path={"messages"} element={<AdminMessagesPage />} />
-              <Route
-                path={"confirm-admin"}
-                element={<AdminConfirmAdminPage />}
-              />
-            </Routes>
-          </div>
-        </Stack>
-      </Stack>
+      <Routes>
+        <Route path={"auth"} element={<AdminAuth />} />
+        <Route index element={<Navigate to={"access-tourist"} />} />
+        <Route path={"*"} element={<AdminPageProptected />} />
+      </Routes>
     </ThemeProvider>
   );
 }

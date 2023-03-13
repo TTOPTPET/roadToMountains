@@ -17,7 +17,7 @@ const userMessageDefault: IUserMessage[] = [
     },
     messageId: "1",
     statusMessage: "work",
-    typeMessage: "spam",
+    typeMessage: "проблема с туром",
     dataMessage: {
       tourInfo: {
         tourDate: {
@@ -30,6 +30,32 @@ const userMessageDefault: IUserMessage[] = [
         creatorName: "amogus",
       },
       message: "214",
+    },
+    createAt: new Date(),
+  },
+  {
+    userId: "2",
+    userInfo: {
+      phone: "8-999-999-99-99",
+      email: "crazy_biker@mail.ru",
+      name: "SEREGGA",
+    },
+    messageId: "2",
+    statusMessage: "work",
+    typeMessage: "проблема с туром",
+    dataMessage: {
+      tourInfo: {
+        tourDate: {
+          from: "1",
+          to: "2",
+        },
+        tourId: "1",
+        publicTourId: "1000",
+        tourName: "PIVO",
+        creatorName: "VOVAN",
+      },
+      message:
+        "Пыхтит паровозик, гудит паровозик, покоя нет никому, устал паровозик, уснул паровозик, налейте пива ему",
     },
     createAt: new Date(),
   },
