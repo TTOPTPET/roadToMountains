@@ -8,6 +8,9 @@ import TourCard from "../../components/TourCard/TourCard";
 import { darkBlueColor } from "../../config/MUI/color/color";
 import { ITour } from "../../models/tourCardModel/ITour";
 
+import TextField from "@mui/material/TextField";
+import { Button } from "@mui/material";
+
 function CreatorLk() {
   const [myTours, setMyTours] = useState<ITour[]>([]);
   const [loadingStatus, setLoadingStatus] = useState<Boolean>(true);
@@ -99,6 +102,20 @@ function CreatorLk() {
         </Grid>
         {loadingStatus ? skeleton() : elements}
       </Grid>
+
+      <Box
+        sx={{
+          width: "1700px",
+          height: "700px",
+          bgcolor: darkBlueColor,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <TextField placeholder="Название компании" />
+        <Button variant="high">1231231</Button>
+      </Box>
     </>
   );
 }

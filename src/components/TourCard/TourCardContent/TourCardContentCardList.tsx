@@ -172,23 +172,7 @@ function TourCardContentCardList({ tour }: TourCardProps) {
           sx={{ display: "flex", justifyContent: "flex-end" }}
           className="tour-card__button-price"
         >
-          <Button
-            component={Link}
-            to={`/tour/${tour.tourId}`}
-            sx={{
-              bgcolor: darkTurquoiseColor,
-              padding: "0px 16px",
-              height: "30px",
-              borderRadius: "30px",
-              fontFamily: "Jost",
-              fontWeight: "700",
-              fontSize: "20px",
-              lineHeight: "20px",
-              color: whiteColor,
-              textTransform: "none",
-              "&:hover": { bgcolor: darkTurquoiseColor },
-            }}
-          >
+          <Button component={Link} to={`/tour/${tour.tourId}`}>
             {`от ${new Intl.NumberFormat("ru-RU").format(tour.price.from)}₽`}
           </Button>
         </Box>
