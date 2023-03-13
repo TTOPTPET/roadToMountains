@@ -39,6 +39,7 @@ export const themes = createTheme({
           props: { color: "secondary" },
           style: {
             backgroundColor: lightTurquoiseColor,
+            width: "100%",
             "&:hover": {
               backgroundColor: darkBlueColor,
               color: whiteColor,
@@ -46,6 +47,34 @@ export const themes = createTheme({
             "&:active": {
               backgroundColor: redColor,
             },
+          },
+        },
+        {
+          props: { color: "info" },
+          style: {
+            justifyContent: "left",
+            width: "250px",
+          },
+        },
+      ],
+    },
+    MuiTypography: {
+      styleOverrides: {
+        root: {},
+      },
+      variants: [
+        {
+          props: { variant: "h4" },
+          style: {
+            fontSize: 24,
+            marginTop: 5,
+          },
+        },
+        {
+          props: { variant: "h5" },
+          style: {
+            fontSize: 16,
+            marginTop: 10,
           },
         },
       ],

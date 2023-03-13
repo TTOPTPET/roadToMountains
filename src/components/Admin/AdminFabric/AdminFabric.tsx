@@ -63,32 +63,18 @@ export const AdminComponent: FC<IAdminComponent> = (props: IAdminComponent) => {
           padding={1}
           bgcolor={whiteColor}
         >
-          <Typography component={"h5"} mt={2}>
-            {name}
-          </Typography>
+          <Typography variant={"h4"}>{name}</Typography>
           <Stack direction={"column"} className="ban-user-info">
-            <Typography component={"p"} mt={2}>
-              Контакты:
-            </Typography>
-            <Typography component={"p"} mt={2}>
-              ⚫ {phone}
-            </Typography>
-            <Typography component={"p"} mt={2}>
-              ⚫ {email}
-            </Typography>
+            <Typography variant={"h5"}>Контакты:</Typography>
+            <Typography variant={"h5"}>⚫ {phone}</Typography>
+            <Typography variant={"h5"}>⚫ {email}</Typography>
           </Stack>
           <Stack direction={"column"} className="ban-info">
-            <Typography component={"p"} mt={2}>
-              Статус блокировки:
-            </Typography>
+            <Typography variant={"h5"}>Статус блокировки:</Typography>
             {banStatus ? (
-              <Typography component={"p"} mt={2}>
-                Живчик
-              </Typography>
+              <Typography variant={"h5"}>Живчик</Typography>
             ) : (
-              <Typography component={"p"} mt={2}>
-                Заблокирован
-              </Typography>
+              <Typography variant={"h5"}>Заблокирован</Typography>
             )}
           </Stack>
           <Stack alignItems={"center"} direction={"row"} className="ban-button">
@@ -116,26 +102,14 @@ export const AdminComponent: FC<IAdminComponent> = (props: IAdminComponent) => {
           bgcolor={whiteColor}
         >
           <Stack direction={"column"} className="tour-info">
-            <Typography component={"h5"} mt={2}>
-              {tourName}
-            </Typography>
-            <Typography component={"p"} mt={2}>
-              {name}
-            </Typography>
-            <Typography component={"p"} mt={2}>
-              Ссылки в апи не было:/
-            </Typography>
+            <Typography variant={"h4"}>{tourName}</Typography>
+            <Typography variant={"h5"}>{name}</Typography>
+            <Typography variant={"h5"}>Ссылки в апи не было:/</Typography>
           </Stack>
           <Stack direction={"column"} className="creator-info">
-            <Typography component={"p"} mt={2}>
-              ⚫ {phone}
-            </Typography>
-            <Typography component={"p"} mt={2}>
-              ⚫ {email}
-            </Typography>
-            <Typography component={"p"} mt={2}>
-              ⚫ {name}
-            </Typography>
+            <Typography variant={"h5"}>⚫ {phone}</Typography>
+            <Typography variant={"h5"}>⚫ {email}</Typography>
+            <Typography variant={"h5"}>⚫ {name}</Typography>
           </Stack>
           <Stack alignItems={"center"} direction={"row"} className="ban-button">
             <Button
@@ -157,41 +131,28 @@ export const AdminComponent: FC<IAdminComponent> = (props: IAdminComponent) => {
       const { from, to } = tourDate;
 
       return (
-        <Stack bgcolor={whiteColor}>
-          <Stack
-            direction={"row"}
-            minWidth={mobileWidth}
-            justifyContent={"space-between"}
-            borderRadius={5}
-            padding={1}
-          >
+        <Stack
+          bgcolor={whiteColor}
+          minWidth={mobileWidth}
+          maxWidth={"50%"}
+          borderRadius={5}
+        >
+          <Stack direction={"row"} justifyContent={"space-between"} padding={1}>
             <Stack direction={"column"} className="user-info">
-              <Typography component={"h1"} mt={2}>
-                {name}
-              </Typography>
-              <Typography component={"p"} mt={2}>
-                Контакты:
-              </Typography>
-              <Typography component={"p"} mt={2}>
-                ⚫ {phone}
-              </Typography>
-              <Typography component={"p"} mt={2}>
-                ⚫ {email}
-              </Typography>
+              <Typography variant={"h4"}>{name}</Typography>
+              <Typography variant={"h5"}>Контакты:</Typography>
+              <Typography variant={"h5"}>⚫ {phone}</Typography>
+              <Typography variant={"h5"}>⚫ {email}</Typography>
             </Stack>
             <Stack direction={"column"}>
-              <Typography component={"p"} mt={2}>
-                {typeMessage}
-              </Typography>
+              <Typography variant={"h5"}>Тип: {typeMessage}</Typography>
               {typeMessage === "проблема с туром" && (
                 <>
-                  <Typography component={"p"} mt={2}>
+                  <Typography variant={"h5"}>
                     ⚫ {tourName}, {publicTourId}
                   </Typography>
-                  <Typography component={"p"} mt={2}>
-                    ⚫ {creatorName}
-                  </Typography>
-                  <Typography component={"p"} mt={2}>
+                  <Typography variant={"h5"}>⚫ {creatorName}</Typography>
+                  <Typography variant={"h5"}>
                     ⚫ {from} - {to}
                   </Typography>
                 </>
@@ -224,9 +185,7 @@ export const AdminComponent: FC<IAdminComponent> = (props: IAdminComponent) => {
               {!expanded ? <>Расскрыть сообщение</> : <>Скрыть сообщение</>}
             </AccordionSummary>
             <AccordionDetails>
-              <Typography component={"p"} mt={2}>
-                {message}
-              </Typography>
+              <Typography variant={"h5"}>{message}</Typography>
             </AccordionDetails>
           </Accordion>
         </Stack>
@@ -242,34 +201,25 @@ export const AdminComponent: FC<IAdminComponent> = (props: IAdminComponent) => {
         creatorDocuments,
       } = dataUser;
       return (
-        <Stack direction={"column"} bgcolor={whiteColor}>
+        <Stack direction={"column"} bgcolor={whiteColor} borderRadius={5}>
           <Stack
             direction={"row"}
             minWidth={mobileWidth}
             justifyContent={"space-between"}
-            borderRadius={5}
             padding={1}
           >
             <Stack direction={"column"} className="creator-info">
-              <Typography component={"h1"} mt={2}>
-                {name}
-              </Typography>
+              <Typography variant={"h4"}>{name}</Typography>
               <Stack direction={"row"} flexWrap={"wrap"} gap={10}>
                 <Stack direction={"column"}>
-                  <Typography component={"p"} mt={2}>
-                    Телефон: {phone}
-                  </Typography>
-                  <Typography component={"p"} mt={2}>
-                    Почта: {email}
-                  </Typography>
+                  <Typography variant={"h5"}>Телефон: {phone}</Typography>
+                  <Typography variant={"h5"}>Почта: {email}</Typography>
                 </Stack>
                 <Stack direction={"column"}>
-                  <Typography component={"p"} mt={2}>
+                  <Typography variant={"h5"}>
                     Номер в реестре: {regisryId}
                   </Typography>
-                  <Typography component={"p"} mt={2}>
-                    Тип: {ceratorType}
-                  </Typography>
+                  <Typography variant={"h5"}>Тип: {ceratorType}</Typography>
                 </Stack>
               </Stack>
             </Stack>
@@ -279,7 +229,7 @@ export const AdminComponent: FC<IAdminComponent> = (props: IAdminComponent) => {
               className="buttons"
               gap={1}
             >
-              <Typography component={"p"} mt={2}>
+              <Typography variant={"h5"}>
                 {statusVerify}: {changeVerifyDate}
               </Typography>
               <Button
@@ -299,7 +249,6 @@ export const AdminComponent: FC<IAdminComponent> = (props: IAdminComponent) => {
           {creatorDocuments.map((document, index) => (
             <Stack direction={"row"} key={index}>
               <Button
-                variant="text"
                 onClick={() => handlerDownloadClick(document.documentPath)}
               >
                 <SvgIcon scale={0.1}>
@@ -325,19 +274,11 @@ export const AdminComponent: FC<IAdminComponent> = (props: IAdminComponent) => {
           bgcolor={whiteColor}
           padding={1}
         >
-          <Typography component={"h5"} mt={2}>
-            {name}
-          </Typography>
+          <Typography variant={"h4"}>{name}</Typography>
           <Stack direction={"column"} className="ban-user-info">
-            <Typography component={"p"} mt={2}>
-              Контакты:
-            </Typography>
-            <Typography component={"p"} mt={2}>
-              ⚫ {phone}
-            </Typography>
-            <Typography component={"p"} mt={2}>
-              ⚫ {email}
-            </Typography>
+            <Typography variant={"h5"}>Контакты:</Typography>
+            <Typography variant={"h5"}>⚫ {phone}</Typography>
+            <Typography variant={"h5"}>⚫ {email}</Typography>
           </Stack>
           <Stack alignItems={"center"} direction={"row"} className="ban-button">
             <Button color={banStatus ? "secondary" : "error"}>

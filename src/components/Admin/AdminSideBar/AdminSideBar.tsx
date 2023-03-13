@@ -31,11 +31,11 @@ const sideBarNavItems: ISideBarNavItems[] = [
 
 export const AdminSideBar = () => {
   return (
-    <Stack direction={"column"} width={"250px"}>
+    <Stack direction={"column"} width={"250"}>
       <List>
         {sideBarNavItems.map((item, index) => (
           <ListItem key={index}>
-            <Button to={item.to} component={RouterLink}>
+            <Button to={item.to} component={RouterLink} color="info">
               {item.display}
             </Button>
           </ListItem>
