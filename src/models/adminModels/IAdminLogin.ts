@@ -1,6 +1,5 @@
-export interface IRegister {
+export interface IAdminLogin {
   phone: string;
   email: string;
   password: string;
-  name: string;
 }

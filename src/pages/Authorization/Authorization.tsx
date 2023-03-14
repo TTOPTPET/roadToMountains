@@ -111,10 +111,47 @@
 
 // export default Authorization;
 
-import React from "react";
+import { useState } from "react";
+import { Stack } from "@mui/material";
+import { AuthComponent } from "../../components/AuthFabric/AuthFabic";
+import { IUserLogin } from "../../models/authModels/IUserLogin";
+import { IUserRegister } from "../../models/authModels/IUserRegister";
 
 function Authorization() {
-  return <div>Authorization</div>;
+  const loginDefault: IUserLogin = {
+    email: "",
+    password: "",
+    phone: "",
+  };
+  const registerDefault: IUserRegister = {
+    email: "",
+    name: "",
+    password: "",
+    phone: "",
+    typeUser: "",
+  };
+  const [userLoginData, setUserLoginData] = useState<IUserLogin>(loginDefault);
+  const [userRegisterData, setUserRegisterData] =
+    useState<IUserRegister>(registerDefault);
+  const [regState, setRegState] = useState<boolean>(true);
+
+  return (
+    <Stack width={"30%"} margin={"0 auto"}>
+      {regState ? (
+        <AuthComponent
+          props={{ ...userLoginData, type: "user-login" }}
+          setRegState={setRegState}
+          setUserData={setUserLoginData}
+        />
+      ) : (
+        <AuthComponent
+          props={{ ...userRegisterData, type: "user-register" }}
+          setRegState={setRegState}
+          setUserData={setUserRegisterData}
+        />
+      )}
+    </Stack>
+  );
 }
 
 export default Authorization;
