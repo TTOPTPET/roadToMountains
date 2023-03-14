@@ -5,11 +5,15 @@ import Box from "@mui/material/Box";
 import Skeleton from "@mui/material/Skeleton";
 import AddTourButton from "../../components/AddTourButton/AddTourButton";
 import TourCard from "../../components/TourCard/TourCard";
-import { darkBlueColor } from "../../config/MUI/color/color";
+import {
+  darkBlueColor,
+  lightTurquoiseColor,
+} from "../../config/MUI/color/color";
 import { ITour } from "../../models/tourCardModel/ITour";
 
-import TextField from "@mui/material/TextField";
-import { Button } from "@mui/material";
+import { Button, TextField } from "@mui/material";
+
+import Autocomplete from "@mui/material/Autocomplete";
 
 function CreatorLk() {
   const [myTours, setMyTours] = useState<ITour[]>([]);
@@ -33,7 +37,7 @@ function CreatorLk() {
     myTours?.map((tour) => {
       return (
         <Grid item xs={1}>
-          <TourCard tour={tour} key={tour.tourId} tourCardType={"myTours"} />
+          <TourCard tour={tour} key={tour.tourId} tourCardType={"tourList"} />
         </Grid>
       );
     })
@@ -109,13 +113,23 @@ function CreatorLk() {
           height: "700px",
           bgcolor: darkBlueColor,
           display: "flex",
+          flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
         }}
       >
+        <TextField
+          InputProps={{ color: "secondary" }}
+          placeholder="Название компании123"
+        />
+
         <TextField placeholder="Название компании" />
-        <Button variant="high">1231231</Button>
       </Box>
+      <TextField
+        InputProps={{ color: "primary" }}
+        placeholder="Название компании"
+      />
+      <Button variant="high">123123</Button>
     </>
   );
 }

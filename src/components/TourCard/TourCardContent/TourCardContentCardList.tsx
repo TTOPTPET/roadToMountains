@@ -1,7 +1,6 @@
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
-import Tooltip, { TooltipProps, tooltipClasses } from "@mui/material/Tooltip";
-import { styled } from "@mui/material/styles";
+import { StyledTooltip } from "../../../config/MUI/themes/mainTheme/mainTheme";
 
 import { ITour } from "../../../models/tourCardModel/ITour";
 
@@ -20,27 +19,6 @@ import categoryIcon from "../../../media/walking-guy.svg";
 type TourCardProps = {
   tour: ITour;
 };
-
-const StyledTooltip = styled(({ className, ...props }: TooltipProps) => (
-  <Tooltip
-    {...props}
-    classes={{ popper: className }}
-    enterDelay={500}
-    leaveDelay={300}
-  />
-))(({ theme }) => ({
-  [`& .${tooltipClasses.arrow}`]: {
-    color: darkTurquoiseColor,
-  },
-  [`& .${tooltipClasses.tooltip}`]: {
-    backgroundColor: darkTurquoiseColor,
-    color: whiteColor,
-    fontFamily: "Montserrat",
-    fontWeight: "400",
-    borderRadius: "4px",
-    fontSize: "14px",
-  },
-}));
 
 function TourCardContentCardList({ tour }: TourCardProps) {
   return (
