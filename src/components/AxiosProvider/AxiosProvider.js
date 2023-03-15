@@ -1,5 +1,4 @@
 import axios from "axios";
-import React from "react";
 import { useCookies } from "react-cookie";
 import { TOKEN } from "../../config/types";
 
@@ -12,7 +11,7 @@ function AxiosProvider({ children }) {
     },
     function (error) {
       console.log("res error", error);
-      if (error.response.status === 401) {
+      if (error.response.status === 401 || 422) {
         removeCookie(TOKEN);
       }
       return Promise.reject(error);

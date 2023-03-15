@@ -7,6 +7,9 @@ import AxiosProvider from "./components/AxiosProvider/AxiosProvider";
 import { Provider } from "react-redux";
 import store from "./redux/store";
 import { CookiesProvider } from "react-cookie";
+import "dayjs/locale/ru";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -16,7 +19,9 @@ root.render(
     <CookiesProvider>
       <Provider store={store}>
         <AxiosProvider>
-          <App />
+          <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={"ru"}>
+            <App />
+          </LocalizationProvider>
         </AxiosProvider>
       </Provider>
     </CookiesProvider>
