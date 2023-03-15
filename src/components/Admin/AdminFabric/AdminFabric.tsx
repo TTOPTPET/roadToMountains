@@ -5,6 +5,7 @@ import {
   AccordionDetails,
   AccordionSummary,
   Button,
+  Grid,
   Stack,
   SvgIcon,
   Typography,
@@ -55,51 +56,47 @@ export const AdminComponent: FC<IAdminComponent> = (props: IAdminComponent) => {
       const { touristId, name, phone, email, banStatus } = props;
 
       return (
-        <Stack
-          direction={"row"}
-          minWidth={mobileWidth}
-          justifyContent={"space-between"}
+        <Grid
+          container
           borderRadius={5}
+          gap={4}
           padding={1}
           bgcolor={whiteColor}
+          width={mobileWidth}
         >
-          <Typography component={"h5"} mt={2}>
-            {name}
-          </Typography>
-          <Stack direction={"column"} className="ban-user-info">
-            <Typography component={"p"} mt={2}>
-              Контакты:
-            </Typography>
-            <Typography component={"p"} mt={2}>
-              ⚫ {phone}
-            </Typography>
-            <Typography component={"p"} mt={2}>
-              ⚫ {email}
-            </Typography>
-          </Stack>
-          <Stack direction={"column"} className="ban-info">
-            <Typography component={"p"} mt={2}>
-              Статус блокировки:
-            </Typography>
+          <Grid item className="tourist__name">
+            <Typography variant={"h4"}>{name}</Typography>
+          </Grid>
+
+          <Grid item className="tourist__contacts">
+            <Typography variant={"h5"}>Контакты:</Typography>
+            <Typography variant={"h5"}>⚫ {phone}</Typography>
+            <Typography variant={"h5"}>⚫ {email}</Typography>
+          </Grid>
+
+          <Grid item className="tourist__ban">
+            <Typography variant={"h5"}>Статус блокировки:</Typography>
             {banStatus ? (
-              <Typography component={"p"} mt={2}>
-                Живчик
-              </Typography>
+              <Typography variant={"h5"}>Живчик</Typography>
             ) : (
-              <Typography component={"p"} mt={2}>
-                Заблокирован
-              </Typography>
+              <Typography variant={"h5"}>Заблокирован</Typography>
             )}
-          </Stack>
-          <Stack alignItems={"center"} direction={"row"} className="ban-button">
+          </Grid>
+
+          <Grid
+            item
+            textAlign={"center"}
+            marginY={"auto"}
+            className="user__ban"
+          >
             <Button
               color="secondary"
               onClick={() => handlerUserBanClick(touristId)}
             >
               Переключить статус блокировки
             </Button>
-          </Stack>
-        </Stack>
+          </Grid>
+        </Grid>
       );
     }
     case "tour": {
@@ -107,45 +104,38 @@ export const AdminComponent: FC<IAdminComponent> = (props: IAdminComponent) => {
       const { name, phone, email } = creatorInfo;
 
       return (
-        <Stack
-          direction={"row"}
+        <Grid
+          container
           minWidth={mobileWidth}
-          justifyContent={"space-between"}
+          gap={4}
           borderRadius={5}
           padding={1}
           bgcolor={whiteColor}
         >
-          <Stack direction={"column"} className="tour-info">
-            <Typography component={"h5"} mt={2}>
-              {tourName}
-            </Typography>
-            <Typography component={"p"} mt={2}>
-              {name}
-            </Typography>
-            <Typography component={"p"} mt={2}>
-              Ссылки в апи не было:/
-            </Typography>
-          </Stack>
-          <Stack direction={"column"} className="creator-info">
-            <Typography component={"p"} mt={2}>
-              ⚫ {phone}
-            </Typography>
-            <Typography component={"p"} mt={2}>
-              ⚫ {email}
-            </Typography>
-            <Typography component={"p"} mt={2}>
-              ⚫ {name}
-            </Typography>
-          </Stack>
-          <Stack alignItems={"center"} direction={"row"} className="ban-button">
+          <Grid item className="tour__info">
+            <Typography variant={"h4"}>{tourName}</Typography>
+            <Typography variant={"h5"}>{name}</Typography>
+            <Typography variant={"h5"}>Ссылки в апи не было:/</Typography>
+          </Grid>
+          <Grid item className="creator__info">
+            <Typography variant={"h5"}>⚫ {phone}</Typography>
+            <Typography variant={"h5"}>⚫ {email}</Typography>
+            <Typography variant={"h5"}>⚫ {name}</Typography>
+          </Grid>
+          <Grid
+            item
+            textAlign={"center"}
+            marginY={"auto"}
+            className="user__ban"
+          >
             <Button
               color="secondary"
               onClick={() => handlerTourBanClick(tourId)}
             >
               Переключить статус блокировки
             </Button>
-          </Stack>
-        </Stack>
+          </Grid>
+        </Grid>
       );
     }
     case "message": {
@@ -157,51 +147,34 @@ export const AdminComponent: FC<IAdminComponent> = (props: IAdminComponent) => {
       const { from, to } = tourDate;
 
       return (
-        <Stack bgcolor={whiteColor}>
-          <Stack
-            direction={"row"}
-            minWidth={mobileWidth}
-            justifyContent={"space-between"}
-            borderRadius={5}
-            padding={1}
-          >
-            <Stack direction={"column"} className="user-info">
-              <Typography component={"h1"} mt={2}>
-                {name}
-              </Typography>
-              <Typography component={"p"} mt={2}>
-                Контакты:
-              </Typography>
-              <Typography component={"p"} mt={2}>
-                ⚫ {phone}
-              </Typography>
-              <Typography component={"p"} mt={2}>
-                ⚫ {email}
-              </Typography>
-            </Stack>
-            <Stack direction={"column"}>
-              <Typography component={"p"} mt={2}>
-                {typeMessage}
-              </Typography>
+        <Stack
+          bgcolor={whiteColor}
+          minWidth={mobileWidth}
+          maxWidth={"50%"}
+          borderRadius={5}
+        >
+          <Grid container padding={1} gap={4}>
+            <Grid item xs={4} className="user__info">
+              <Typography variant={"h4"}>{name}</Typography>
+              <Typography variant={"h5"}>Контакты:</Typography>
+              <Typography variant={"h5"}>⚫ {phone}</Typography>
+              <Typography variant={"h5"}>⚫ {email}</Typography>
+            </Grid>
+            <Grid item xs={3} className="problem__info">
+              <Typography variant={"h5"}>Тип: {typeMessage}</Typography>
               {typeMessage === "проблема с туром" && (
                 <>
-                  <Typography component={"p"} mt={2}>
+                  <Typography variant={"h5"}>
                     ⚫ {tourName}, {publicTourId}
                   </Typography>
-                  <Typography component={"p"} mt={2}>
-                    ⚫ {creatorName}
-                  </Typography>
-                  <Typography component={"p"} mt={2}>
+                  <Typography variant={"h5"}>⚫ {creatorName}</Typography>
+                  <Typography variant={"h5"}>
                     ⚫ {from} - {to}
                   </Typography>
                 </>
               )}
-            </Stack>
-            <Stack
-              alignItems={"center"}
-              direction={"row"}
-              className="ban-button"
-            >
+            </Grid>
+            <Grid item marginY={"auto"} className="user__ban">
               <Button
                 color="secondary"
                 onClick={() =>
@@ -210,12 +183,12 @@ export const AdminComponent: FC<IAdminComponent> = (props: IAdminComponent) => {
               >
                 Переключить статус заявки
               </Button>
-            </Stack>
-          </Stack>
+            </Grid>
+          </Grid>
           <Accordion
             expanded={expanded === "panel4"}
             onChange={handleChange("panel4")}
-            className="message-panel"
+            className="message__panel"
           >
             <AccordionSummary
               aria-controls="panel4bh-content"
@@ -224,9 +197,7 @@ export const AdminComponent: FC<IAdminComponent> = (props: IAdminComponent) => {
               {!expanded ? <>Расскрыть сообщение</> : <>Скрыть сообщение</>}
             </AccordionSummary>
             <AccordionDetails>
-              <Typography component={"p"} mt={2}>
-                {message}
-              </Typography>
+              <Typography variant={"h5"}>{message}</Typography>
             </AccordionDetails>
           </Accordion>
         </Stack>
@@ -242,44 +213,38 @@ export const AdminComponent: FC<IAdminComponent> = (props: IAdminComponent) => {
         creatorDocuments,
       } = dataUser;
       return (
-        <Stack direction={"column"} bgcolor={whiteColor}>
-          <Stack
-            direction={"row"}
-            minWidth={mobileWidth}
-            justifyContent={"space-between"}
-            borderRadius={5}
-            padding={1}
-          >
-            <Stack direction={"column"} className="creator-info">
-              <Typography component={"h1"} mt={2}>
-                {name}
-              </Typography>
+        <Stack
+          direction={"column"}
+          bgcolor={whiteColor}
+          borderRadius={5}
+          minWidth={mobileWidth}
+        >
+          <Grid container padding={1} gap={4}>
+            <Grid item className="creator__info">
+              <Typography variant={"h4"}>{name}</Typography>
               <Stack direction={"row"} flexWrap={"wrap"} gap={10}>
                 <Stack direction={"column"}>
-                  <Typography component={"p"} mt={2}>
-                    Телефон: {phone}
-                  </Typography>
-                  <Typography component={"p"} mt={2}>
-                    Почта: {email}
-                  </Typography>
+                  <Typography variant={"h5"}>Телефон: {phone}</Typography>
+                  <Typography variant={"h5"}>Почта: {email}</Typography>
                 </Stack>
                 <Stack direction={"column"}>
-                  <Typography component={"p"} mt={2}>
+                  <Typography variant={"h5"}>
                     Номер в реестре: {regisryId}
                   </Typography>
-                  <Typography component={"p"} mt={2}>
-                    Тип: {ceratorType}
-                  </Typography>
+                  <Typography variant={"h5"}>Тип: {ceratorType}</Typography>
                 </Stack>
               </Stack>
-            </Stack>
-            <Stack
-              alignItems={"center"}
-              direction={"column"}
-              className="buttons"
+            </Grid>
+            <Grid
+              container
+              item
+              xs={5}
               gap={1}
+              justifyContent={"center"}
+              marginY={"auto"}
+              className="buttons"
             >
-              <Typography component={"p"} mt={2}>
+              <Typography variant={"h5"}>
                 {statusVerify}: {changeVerifyDate}
               </Typography>
               <Button
@@ -294,12 +259,11 @@ export const AdminComponent: FC<IAdminComponent> = (props: IAdminComponent) => {
               >
                 Переключить статус блокировки
               </Button>
-            </Stack>
-          </Stack>
+            </Grid>
+          </Grid>
           {creatorDocuments.map((document, index) => (
             <Stack direction={"row"} key={index}>
               <Button
-                variant="text"
                 onClick={() => handlerDownloadClick(document.documentPath)}
               >
                 <SvgIcon scale={0.1}>
@@ -317,34 +281,26 @@ export const AdminComponent: FC<IAdminComponent> = (props: IAdminComponent) => {
     case "admin": {
       const { phone, email, name, banStatus } = props;
       return (
-        <Stack
-          direction={"row"}
+        <Grid
+          container
           minWidth={mobileWidth}
           justifyContent={"space-between"}
           borderRadius={5}
           bgcolor={whiteColor}
           padding={1}
         >
-          <Typography component={"h5"} mt={2}>
-            {name}
-          </Typography>
-          <Stack direction={"column"} className="ban-user-info">
-            <Typography component={"p"} mt={2}>
-              Контакты:
-            </Typography>
-            <Typography component={"p"} mt={2}>
-              ⚫ {phone}
-            </Typography>
-            <Typography component={"p"} mt={2}>
-              ⚫ {email}
-            </Typography>
-          </Stack>
-          <Stack alignItems={"center"} direction={"row"} className="ban-button">
+          <Typography variant={"h4"}>{name}</Typography>
+          <Grid item className="ban__user-info">
+            <Typography variant={"h5"}>Контакты:</Typography>
+            <Typography variant={"h5"}>⚫ {phone}</Typography>
+            <Typography variant={"h5"}>⚫ {email}</Typography>
+          </Grid>
+          <Grid item marginY={"auto"} className="user__ban">
             <Button color={banStatus ? "secondary" : "error"}>
               В данных не было id, не заметил:/
             </Button>
-          </Stack>
-        </Stack>
+          </Grid>
+        </Grid>
       );
     }
 
