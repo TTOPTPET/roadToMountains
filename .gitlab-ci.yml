@@ -22,7 +22,6 @@ build-image-dev:
   stage: build-image-dev
   script:
     - docker login -u $CI_USERNAME -p $CI_PASSWORD registry.gitlab.com
-    - cp Dockerfile Dockerfile
     # - echo -e 'FROM nginx:alpine\nEXPOSE 80\nCOPY /build /usr/share/nginx/html\nCMD ["nginx","-g","daemon off;"]' > Dockerfile
     - docker build -t registry.gitlab.com/f3120/road-to-mountains-frontend$CI_COMMIT_SHA .
     - docker push registry.gitlab.com/f3120/road-to-mountains-frontend$CI_COMMIT_SHA
