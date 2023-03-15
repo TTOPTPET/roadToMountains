@@ -1,0 +1,6 @@
+version: '3.3'
+services:
+  web-front-dev:
+    image: registry.gitlab.com/f3120/road-to-mountains-frontend
+    ports:
+      - 80:80
