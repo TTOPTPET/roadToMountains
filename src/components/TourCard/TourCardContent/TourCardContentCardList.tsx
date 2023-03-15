@@ -1,6 +1,6 @@
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
-import { StyledTooltip } from "../../../config/MUI/themes/mainTheme/mainTheme";
+import { StyledTooltip } from "../../../config/MUI/styledComponents/StyledTooltip";
 
 import { ITour } from "../../../models/tourCardModel/ITour";
 
