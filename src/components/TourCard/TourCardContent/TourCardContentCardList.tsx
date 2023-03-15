@@ -1,7 +1,6 @@
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
-import Tooltip, { TooltipProps, tooltipClasses } from "@mui/material/Tooltip";
-import { styled } from "@mui/material/styles";
+import { StyledTooltip } from "../../../config/MUI/themes/mainTheme/mainTheme";
 
 import { ITour } from "../../../models/tourCardModel/ITour";
 
@@ -20,27 +19,6 @@ import categoryIcon from "../../../media/walking-guy.svg";
 type TourCardProps = {
   tour: ITour;
 };
-
-const StyledTooltip = styled(({ className, ...props }: TooltipProps) => (
-  <Tooltip
-    {...props}
-    classes={{ popper: className }}
-    enterDelay={500}
-    leaveDelay={300}
-  />
-))(({ theme }) => ({
-  [`& .${tooltipClasses.arrow}`]: {
-    color: darkTurquoiseColor,
-  },
-  [`& .${tooltipClasses.tooltip}`]: {
-    backgroundColor: darkTurquoiseColor,
-    color: whiteColor,
-    fontFamily: "Montserrat",
-    fontWeight: "400",
-    borderRadius: "4px",
-    fontSize: "14px",
-  },
-}));
 
 function TourCardContentCardList({ tour }: TourCardProps) {
   return (
@@ -172,23 +150,7 @@ function TourCardContentCardList({ tour }: TourCardProps) {
           sx={{ display: "flex", justifyContent: "flex-end" }}
           className="tour-card__button-price"
         >
-          <Button
-            component={Link}
-            to={`/tour/${tour.tourId}`}
-            sx={{
-              bgcolor: darkTurquoiseColor,
-              padding: "0px 16px",
-              height: "30px",
-              borderRadius: "30px",
-              fontFamily: "Jost",
-              fontWeight: "700",
-              fontSize: "20px",
-              lineHeight: "20px",
-              color: whiteColor,
-              textTransform: "none",
-              "&:hover": { bgcolor: darkTurquoiseColor },
-            }}
-          >
+          <Button component={Link} to={`/tour/${tour.tourId}`}>
             {`от ${new Intl.NumberFormat("ru-RU").format(tour.price.from)}₽`}
           </Button>
         </Box>

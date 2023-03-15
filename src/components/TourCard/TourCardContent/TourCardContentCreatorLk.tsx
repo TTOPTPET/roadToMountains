@@ -68,23 +68,7 @@ function TourCardContentCreatorLk({ tour }: TourCardProps) {
           justifyContent={"flex-end"}
           className="tour-card__button-edit"
         >
-          <Button
-            component={Link}
-            to={"/addTour"}
-            sx={{
-              bgcolor: darkTurquoiseColor,
-              padding: "0px 16px",
-              height: "30px",
-              borderRadius: "30px",
-              fontFamily: "Jost",
-              fontWeight: "700",
-              fontSize: "20px",
-              lineHeight: "20px",
-              color: whiteColor,
-              textTransform: "none",
-              "&:hover": { bgcolor: darkTurquoiseColor },
-            }}
-          >
+          <Button component={Link} to={"/addTour"}>
             Редактировать
           </Button>
         </Box>
@@ -98,44 +82,10 @@ function TourCardContentCreatorLk({ tour }: TourCardProps) {
           <Button
             className="tour-card__button-place"
             disabled={tour.banStatus ? true : false}
-            sx={{
-              bgcolor: darkTurquoiseColor,
-              padding: "0px 16px",
-              height: "30px",
-              borderRadius: "30px",
-              fontFamily: "Jost",
-              fontWeight: "700",
-              fontSize: "20px",
-              lineHeight: "20px",
-              color: whiteColor,
-              textTransform: "none",
-              "&:hover": { bgcolor: darkTurquoiseColor },
-              "&.Mui-disabled": {
-                background: "#97d5e4",
-                color: whiteColor,
-              },
-            }}
           >
             Разместить
           </Button>
-          <Button
-            className="tour-card__button-delete"
-            sx={{
-              bgcolor: darkTurquoiseColor,
-              padding: "0px 16px",
-              height: "30px",
-              borderRadius: "30px",
-              fontFamily: "Jost",
-              fontWeight: "700",
-              fontSize: "20px",
-              lineHeight: "20px",
-              color: whiteColor,
-              textTransform: "none",
-              "&:hover": { bgcolor: darkTurquoiseColor },
-            }}
-          >
-            Удалить
-          </Button>
+          <Button className="tour-card__button-delete">Удалить</Button>
         </Box>
       </Box>
     </Box>
