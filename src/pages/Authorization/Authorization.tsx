@@ -111,11 +111,16 @@
 
 // export default Authorization;
 
-import { useState } from "react";
-import { Stack } from "@mui/material";
+import { ChangeEvent, useState } from "react";
+import { Button, Link, Stack, TextField, Typography } from "@mui/material";
 import { AuthComponent } from "../../components/AuthFabric/AuthFabic";
 import { IUserLogin } from "../../models/authModels/IUserLogin";
 import { IUserRegister } from "../../models/authModels/IUserRegister";
+import {
+  ILoginComponent,
+  IRegisterComponent,
+  ITextProps,
+} from "../../components/AuthFabric/AuthTypes/AuthTypes";
 
 function Authorization() {
   const loginDefault: IUserLogin = {
@@ -135,21 +140,78 @@ function Authorization() {
     useState<IUserRegister>(registerDefault);
   const [regState, setRegState] = useState<boolean>(true);
 
+  const handlerUpdateLoginField = (
+    key: keyof IUserLogin,
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setUserLoginData({ ...userLoginData, [key]: e.target.value });
+  };
+
+  const handlerUpdateRegisterField = (
+    key: keyof IUserRegister,
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setUserRegisterData({ ...userRegisterData, [key]: e.target.value });
+  };
+
+  const hadnlerOnTransition = () => {
+    setUserLoginData(loginDefault);
+    setUserRegisterData(registerDefault);
+    setRegState(!regState);
+  };
+
   return (
     <Stack width={"30%"} margin={"0 auto"}>
-      {regState ? (
-        <AuthComponent
-          props={{ ...userLoginData, type: "user-login" }}
-          setRegState={setRegState}
-          setUserData={setUserLoginData}
-        />
-      ) : (
-        <AuthComponent
-          props={{ ...userRegisterData, type: "user-register" }}
-          setRegState={setRegState}
-          setUserData={setUserRegisterData}
-        />
-      )}
+      <Typography component={"h1"} fontSize={"50"}>
+        {regState ? "Вход" : "Регистрация"}
+      </Typography>
+      {regState
+        ? Object.entries<ITextProps>(
+            AuthComponent("login") as unknown as { [s: string]: ITextProps }
+          ).map(([key, value], index) => (
+            <TextField
+              key={index}
+              label={value.name}
+              type={value.type}
+              required={value.required}
+              value={userLoginData[key as keyof ILoginComponent]}
+              onChange={(e) =>
+                handlerUpdateLoginField(key as keyof ILoginComponent, e)
+              }
+            />
+          ))
+        : Object.entries<ITextProps>(
+            AuthComponent("register") as unknown as { [s: string]: ITextProps }
+          ).map(([key, value], index) => (
+            <TextField
+              key={index}
+              label={value.name}
+              type={value.type}
+              required={value.required}
+              value={userRegisterData[key as keyof IRegisterComponent]}
+              onChange={(e) =>
+                handlerUpdateRegisterField(key as keyof IRegisterComponent, e)
+              }
+            />
+          ))}
+      {regState ? <Button>Вход</Button> : <Button>Регистрация</Button>}
+      <Stack direction={"row"}>
+        {regState ? (
+          <>
+            <Typography component={"h5"}>Нет аккаунта?</Typography>
+            <Link component={"button"} onClick={hadnlerOnTransition}>
+              Зарегистрироваться
+            </Link>
+          </>
+        ) : (
+          <>
+            <Typography component={"h5"}>Уже есть аккаунт?</Typography>
+            <Link component={"button"} onClick={hadnlerOnTransition}>
+              Войти
+            </Link>
+          </>
+        )}
+      </Stack>
     </Stack>
   );
 }

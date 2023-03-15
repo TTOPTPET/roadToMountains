@@ -1,30 +1,19 @@
-import { IAdminLogin } from "../../../models/adminModels/IAdminLogin";
-import { IAdminRegister } from "../../../models/adminModels/IAdminRegister";
-import { IUserLogin } from "../../../models/authModels/IUserLogin";
-import { IUserRegister } from "../../../models/authModels/IUserRegister";
-
-interface IUserLoginComponent extends IUserLogin {
-  type: "user-login";
+export interface ITextProps {
+  name: string;
+  value: string;
+  type: string;
+  required: boolean;
 }
 
-interface IUserRegisterComponent extends IUserRegister {
-  type: "user-register";
+export interface ILoginComponent {
+  //phone: ITextProps;
+  email: ITextProps;
+  password: ITextProps;
 }
 
-interface IAdminLoginComponent extends IAdminLogin {
-  type: "admin-login";
+export interface IRegisterComponent {
+  phone: ITextProps;
+  email: ITextProps;
+  name: ITextProps;
+  password: ITextProps;
 }
-
-interface IAdminRegisterComponent extends IAdminRegister {
-  type: "admin-register";
-}
-
-export type IAuthComponent =
-  | IUserLoginComponent
-  | IUserRegisterComponent
-  | IAdminLoginComponent
-  | IAdminRegisterComponent;
-
-export type LoginTypes = IUserLogin | IAdminLogin;
-
-export type RegisterTypes = IUserRegister | IAdminRegister;
