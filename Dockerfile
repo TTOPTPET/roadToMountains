@@ -3,5 +3,5 @@ EXPOSE 80
 
 COPY ./nginx.conf /etc/nginx/conf.d/
 COPY ./mime.types /etc/nginx/
-COPY /build_back_dev /usr/share/nginx/html
+COPY /build_front_dev /usr/share/nginx/html
 CMD ["nginx", "-c", "/etc/nginx/conf.d/nginx.conf","-g","daemon off;"]
