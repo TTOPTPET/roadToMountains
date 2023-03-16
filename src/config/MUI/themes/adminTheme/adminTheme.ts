@@ -79,5 +79,21 @@ export const themes = createTheme({
         },
       ],
     },
+    MuiAccordion: {
+      styleOverrides: {
+        root: {
+          backgroundColor: whiteColor,
+          borderRadius: 20,
+        },
+      },
+    },
+    MuiAccordionSummary: {
+      styleOverrides: {
+        root: {
+          backgroundColor: lightTurquoiseColor,
+          borderRadius: 20,
+        },
+      },
+    },
   },
 });

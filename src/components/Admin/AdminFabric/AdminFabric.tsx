@@ -22,12 +22,8 @@ import { IChangeStatus } from "../../../models/adminModels/IChangeStatus";
 import { ReactComponent as DownloadIcon } from "../../../media/download.svg";
 
 export const AdminComponent: FC<IAdminComponent> = (props: IAdminComponent) => {
-  const [expanded, setExpanded] = useState<string | false>(false);
+  const [expanded, setExpanded] = useState<boolean>(false);
 
-  const handleChange =
-    (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
-      setExpanded(isExpanded ? panel : false);
-    };
   const handlerUserBanClick = (touristId: string) => {
     userBan((value) => value, touristId, undefined, true);
   };
@@ -147,60 +143,66 @@ export const AdminComponent: FC<IAdminComponent> = (props: IAdminComponent) => {
       const { from, to } = tourDate;
 
       return (
-        <Stack
-          bgcolor={whiteColor}
-          minWidth={mobileWidth}
-          maxWidth={"50%"}
-          borderRadius={5}
-        >
-          <Grid container padding={1} gap={4}>
-            <Grid item xs={4} className="user__info">
-              <Typography variant={"h4"}>{name}</Typography>
-              <Typography variant={"h5"}>Контакты:</Typography>
-              <Typography variant={"h5"}>⚫ {phone}</Typography>
-              <Typography variant={"h5"}>⚫ {email}</Typography>
-            </Grid>
-            <Grid item xs={3} className="problem__info">
-              <Typography variant={"h5"}>Тип: {typeMessage}</Typography>
-              {typeMessage === "проблема с туром" && (
-                <>
-                  <Typography variant={"h5"}>
-                    ⚫ {tourName}, {publicTourId}
-                  </Typography>
-                  <Typography variant={"h5"}>⚫ {creatorName}</Typography>
-                  <Typography variant={"h5"}>
-                    ⚫ {from} - {to}
-                  </Typography>
-                </>
-              )}
-            </Grid>
-            <Grid item marginY={"auto"} className="user__ban">
-              <Button
-                color="secondary"
-                onClick={() =>
-                  handlerMessageStatusClick({ messageId, statusMessage })
-                }
-              >
-                Переключить статус заявки
-              </Button>
-            </Grid>
-          </Grid>
+        <div>
           <Accordion
-            expanded={expanded === "panel4"}
-            onChange={handleChange("panel4")}
+            defaultExpanded
             className="message__panel"
+            expanded={expanded}
+            square={true}
           >
-            <AccordionSummary
-              aria-controls="panel4bh-content"
-              id="panel4bh-header"
-            >
-              {!expanded ? <>Расскрыть сообщение</> : <>Скрыть сообщение</>}
+            <AccordionSummary id="panel4bh-header">
+              <Grid
+                container
+                padding={1}
+                gap={4}
+                justifyContent={"space-between"}
+              >
+                <Grid item className="user__info">
+                  <Typography variant={"h4"}>{name}</Typography>
+                  <Typography variant={"h5"}>Контакты:</Typography>
+                  <Typography variant={"h5"}>⚫ {phone}</Typography>
+                  <Typography variant={"h5"}>⚫ {email}</Typography>
+                </Grid>
+                <Grid item className="problem__info">
+                  <Typography variant={"h5"}>Тип: {typeMessage}</Typography>
+                  {typeMessage === "проблема с туром" && (
+                    <>
+                      <Typography variant={"h5"}>
+                        ⚫ {tourName}, {publicTourId}
+                      </Typography>
+                      <Typography variant={"h5"}>⚫ {creatorName}</Typography>
+                      <Typography variant={"h5"}>
+                        ⚫ {from} - {to}
+                      </Typography>
+                    </>
+                  )}
+                </Grid>
+                <Grid item marginY={"auto"} className="user__ban">
+                  <Button
+                    color="secondary"
+                    onClick={() =>
+                      handlerMessageStatusClick({ messageId, statusMessage })
+                    }
+                  >
+                    Переключить статус заявки
+                  </Button>
+                </Grid>
+                <Grid item xs={10}>
+                  <Button onClick={() => setExpanded(!expanded)}>
+                    {!expanded ? (
+                      <>Расскрыть сообщение</>
+                    ) : (
+                      <>Скрыть сообщение</>
+                    )}
+                  </Button>
+                </Grid>
+              </Grid>
             </AccordionSummary>
             <AccordionDetails>
               <Typography variant={"h5"}>{message}</Typography>
             </AccordionDetails>
           </Accordion>
-        </Stack>
+        </div>
       );
     }
     case "creator": {
