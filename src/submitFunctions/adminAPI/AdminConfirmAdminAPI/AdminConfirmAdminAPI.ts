@@ -3,8 +3,8 @@ import { IAdminList } from "../../../models/adminModels/IAdminList";
 import { adminUrl } from "../../../config/config";
 import { TOKEN } from "../../../config/types";
 import { Cookies } from "react-cookie";
-import { IRegister } from "../../../models/adminModels/IRegister";
-import { ILogin } from "../../../models/adminModels/ILogin";
+import { IAdminRegister } from "../../../models/adminModels/IAdminRegister";
+import { IAdminLogin } from "../../../models/adminModels/IAdminLogin";
 
 let cookie = new Cookies();
 
@@ -40,7 +40,7 @@ export const getAdminList = async (
   }
 };
 
-const adminRegisterDefault: IRegister = {
+const adminRegisterDefault: IAdminRegister = {
   phone: "15155",
   email: "aaaa",
   password: "1414114124",
@@ -48,8 +48,8 @@ const adminRegisterDefault: IRegister = {
 };
 
 export const registerAdmin = async (
-  successCallback: (prop: IRegister) => void,
-  params: IRegister,
+  successCallback: (prop: IAdminRegister) => void,
+  data: IAdminRegister,
   errorCallback?: () => void,
   useDefault?: boolean
 ) => {
@@ -59,7 +59,7 @@ export const registerAdmin = async (
   }
   try {
     let respone = await axios.post(adminUrl + "/register", {
-      params: params,
+      data: data,
       headers: {
         Authorization: `Bearer ${cookie.get(TOKEN)}`,
       },
@@ -71,15 +71,15 @@ export const registerAdmin = async (
   }
 };
 
-const adminLoginDefault: ILogin = {
+const adminLoginDefault: IAdminLogin = {
   phone: "15155",
   email: "aaaa",
   password: "1414114124",
 };
 
 export const loginAdmin = async (
-  successCallback: (prop: ILogin) => void,
-  params: ILogin,
+  successCallback: (prop: IAdminLogin) => void,
+  data: IAdminLogin,
   errorCallback?: () => void,
   useDefault?: boolean
 ) => {
@@ -89,7 +89,7 @@ export const loginAdmin = async (
   }
   try {
     let response = await axios.post(adminUrl + "/login", {
-      params: params,
+      data: data,
       headers: {
         Authorization: `Bearer ${cookie.get(TOKEN)}`,
       },
