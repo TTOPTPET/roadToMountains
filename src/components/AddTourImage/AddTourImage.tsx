@@ -4,7 +4,7 @@ import { ReactComponent as AddImageLogo } from "../../media/add-image.svg";
 
 const MAXIMUM_UPLOAD = 20 * 1024 * 1024;
 
-export const AddImage = ({
+export const AddTourImage = ({
   images,
   setImage,
 }: {
