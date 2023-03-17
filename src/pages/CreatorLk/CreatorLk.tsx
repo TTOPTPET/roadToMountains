@@ -5,15 +5,10 @@ import Box from "@mui/material/Box";
 import Skeleton from "@mui/material/Skeleton";
 import AddTourButton from "../../components/AddTourButton/AddTourButton";
 import TourCard from "../../components/TourCard/TourCard";
-import {
-  darkBlueColor,
-  lightTurquoiseColor,
-} from "../../config/MUI/color/color";
+import { darkBlueColor, redColor } from "../../config/MUI/color/color";
 import { ITour } from "../../models/tourCardModel/ITour";
 
-import { Button, TextField } from "@mui/material";
-
-import Autocomplete from "@mui/material/Autocomplete";
+import { Typography } from "@mui/material";
 
 function CreatorLk() {
   const [myTours, setMyTours] = useState<ITour[]>([]);
@@ -37,7 +32,7 @@ function CreatorLk() {
     myTours?.map((tour) => {
       return (
         <Grid item xs={1}>
-          <TourCard tour={tour} key={tour.tourId} tourCardType={"tourList"} />
+          <TourCard tour={tour} key={tour.tourId} tourCardType={"myTours"} />
         </Grid>
       );
     })
@@ -107,29 +102,16 @@ function CreatorLk() {
         {loadingStatus ? skeleton() : elements}
       </Grid>
 
-      <Box
-        sx={{
-          width: "1700px",
-          height: "700px",
-          bgcolor: darkBlueColor,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <TextField
-          InputProps={{ color: "secondary" }}
-          placeholder="Название компании123"
-        />
-
-        <TextField placeholder="Название компании" />
-      </Box>
-      <TextField
-        InputProps={{ color: "primary" }}
-        placeholder="Название компании"
-      />
-      <Button variant="high">123123</Button>
+      <Typography variant="h3" color={redColor}>
+        123123123
+      </Typography>
+      <Typography variant="h4">123123123</Typography>
+      <Typography variant="h5">123123123</Typography>
+      <Typography variant="h6">123123123</Typography>
+      <Typography variant="button">123123123</Typography>
+      <Typography variant="caption">123123123</Typography>
+      <Typography variant="body2">123123123</Typography>
+      <Typography>12312312312</Typography>
     </>
   );
 }

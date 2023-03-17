@@ -21,19 +21,56 @@ declare module "@mui/material/InputBase" {
   }
 }
 
-// declare module "@mui/material/styles" {
-//   interface Palette {
-//     lightTurquoiseColor: Palette["primary"];
-//     whiteColor: Palette["secondary"];
-//   }
-
-//   interface PaletteOptions {
-//     lightTurquoiseColor?: PaletteOptions["primary"];
-//     whiteColor?: PaletteOptions["secondary"];
-//   }
-// }
-
 export const mainThemes = createTheme({
+  typography: {
+    fontFamily: "Montserrat",
+    h3: {
+      fontFamily: "Jost",
+      fontWeight: "800",
+      fontSize: "50px",
+      lineHeight: "50px",
+      "@media (min-width:700px)": {
+        fontSize: "100px",
+      },
+    },
+    h4: {
+      fontFamily: "Jost",
+      fontWeight: "800",
+      fontSize: "34px",
+      lineHeight: "40px",
+      letterSpacing: "0.25px",
+    },
+    h5: {
+      fontFamily: "Jost",
+      fontWeight: "800",
+      fontSize: "24px",
+      lineHeight: "32px",
+    },
+    h6: {
+      fontFamily: "Jost",
+      fontWeight: "800",
+      fontSize: "18px",
+      lineHeight: "18px",
+    },
+    button: {
+      fontFamily: "Jost",
+      fontWeight: "700",
+      fontSize: "20px",
+      lineHeight: "20px",
+    },
+    caption: {
+      fontFamily: "Montserrat",
+      fontWeight: "400",
+      fontSize: "16px",
+      lineHeight: "20px",
+    },
+    body2: {
+      fontFamily: "Montserrat",
+      fontWeight: "400",
+      fontSize: "14px",
+      lineHeight: "20px",
+    },
+  },
   palette: {
     primary: {
       main: "#D2F7FF",
@@ -159,6 +196,13 @@ export const mainThemes = createTheme({
           },
         },
       ],
+    },
+    MuiTypography: {
+      styleOverrides: {
+        root: {
+          color: darkBlueColor,
+        },
+      },
     },
   },
 });
