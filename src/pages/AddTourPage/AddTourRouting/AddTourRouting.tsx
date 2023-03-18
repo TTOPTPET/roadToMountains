@@ -1,29 +1,58 @@
-import React, { useMemo, useState, createContext, ReactNode } from "react";
+import { Button } from "@mui/material";
+import { Stack } from "@mui/system";
+import { useNavigate } from "react-router-dom";
+import { addTourStepsMap } from "../AddTourPage";
 
-export enum pagesMap {
-  description = "description",
-  travel = "travel",
-  control = "control",
+interface addTourRoutingProps {
+  page: addTourStepsMap;
+  setPage: (prop: any) => void;
 }
 
-interface IContext {
-  page: string;
-  setPage: (page: string) => void;
-}
-
-export const RoutingContext = createContext<IContext>({
-  page: pagesMap.description.toString(),
-  setPage: () => {},
-});
-
-export default function AddTourRouting({ children }: { children: ReactNode }) {
-  let urlPath = window.location.pathname.slice(1).toLowerCase();
-
-  const [page, setPage] = useState<string>(urlPath || pagesMap.description);
-
-  const value = useMemo(() => ({ page, setPage }), [page, setPage]);
+export default function AddTourRouting({ page, setPage }: addTourRoutingProps) {
+  const navigate = useNavigate();
+  // const newTour = useSelect(stat)
 
   return (
-    <RoutingContext.Provider value={value}>{children}</RoutingContext.Provider>
+    <>
+      <Stack direction={"row"} justifyContent={"space-between"}>
+        <Button
+          variant="text"
+          onClick={() =>
+            setPage((page: addTourStepsMap) => {
+              if (page > 0) {
+                return page - 1;
+              } else {
+                navigate("/creatorLk");
+                return page;
+              }
+            })
+          }
+        >
+          {"< "} Назад
+        </Button>
+        {page === addTourStepsMap.third ? (
+          <Button
+            variant="contained"
+            onClick={
+              () => {
+                return;
+              }
+              //TODO: Апи для создания тура
+            }
+          >
+            Добавить тур
+          </Button>
+        ) : (
+          <Button
+            variant="text"
+            onClick={() =>
+              setPage((page: addTourStepsMap) => (page < 2 ? page + 1 : page))
+            }
+          >
+            Вперёд {" >"}
+          </Button>
+        )}
+      </Stack>
+    </>
   );
 }

@@ -80,6 +80,14 @@ export const mainThemes = createTheme({
     },
   },
   components: {
+    MuiPaper: {
+      styleOverrides: {
+        root: {
+          borderRadius: 20,
+          padding: 30,
+        },
+      },
+    },
     MuiAutocomplete: {
       styleOverrides: {
         root: {
@@ -92,10 +100,10 @@ export const mainThemes = createTheme({
           borderRadius: "30px",
           border: "none",
           color: darkBlueColor,
-          fontSize: "16px",
-          lineHeight: "20px",
-          fontFamily: "Montserrat",
-          fontWeight: "400",
+          // fontSize: "16px",
+          // lineHeight: "20px",
+          // fontFamily: "Montserrat",
+          // fontWeight: "400",
           boxSizing: "border-box",
           "&::placeholder": {
             color: darkBlueColor,
@@ -133,6 +141,14 @@ export const mainThemes = createTheme({
           props: { variant: "high" },
           style: {
             height: "50px",
+          },
+        },
+        {
+          props: { variant: "text" },
+          style: {
+            backgroundColor: "transparent",
+            "&:hover": { backgroundColor: "transparent" },
+            color: darkBlueColor,
           },
         },
       ],

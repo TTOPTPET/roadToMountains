@@ -1,9 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { combineReducers } from "redux";
-import { DataReducer, ModalReducer } from "./reducers";
+import AddTourReducer from "./AddTour/AddTourReducer";
+import ModalReducer from "./Modal/ModalReducer";
 
 const rootReducer = combineReducers({
-  data: DataReducer,
+  addTour: AddTourReducer,
   modal: ModalReducer,
 });
 
