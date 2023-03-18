@@ -1,4 +1,4 @@
-import { Box, Button, Stack, SvgIcon } from "@mui/material";
+import { Box, Button, Skeleton, Stack, SvgIcon } from "@mui/material";
 import { Dispatch, SetStateAction, useState } from "react";
 import { ReactComponent as AddImageLogo } from "../../media/add-image.svg";
 
@@ -21,8 +21,10 @@ export const AddTourImage = ({
         if (files.size > MAXIMUM_UPLOAD) {
           return;
         }
-        setImage([...images, reader?.result]);
+        setImage([reader?.result, ...images]);
       });
+      images.pop();
+      setImage([...images]);
     }
   };
   return (
@@ -38,26 +40,38 @@ export const AddTourImage = ({
           onChange={fileHandler}
           hidden
         />
-        <SvgIcon scale={0.5}>
+        <SvgIcon viewBox="0 0 35 35" fontSize="large">
           <AddImageLogo color="#fff" />
         </SvgIcon>
       </Button>
       {images &&
         images.map((image, index) => (
           <Box
-            key={index}
             sx={{ width: 156, height: 156, margin: "0 auto 16px" }}
+            key={index}
           >
-            <img
-              src={image}
-              alt={`tour`}
-              style={{
-                width: "100%",
-                height: "100%",
-                objectFit: "cover",
-                borderRadius: 40,
-              }}
-            />
+            {image.loading ? (
+              <Skeleton
+                variant="rounded"
+                sx={{
+                  width: 156,
+                  height: 156,
+                  margin: "0 auto 16px",
+                  borderRadius: 8,
+                }}
+              />
+            ) : (
+              <img
+                src={image}
+                alt={`tour`}
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                  borderRadius: 40,
+                }}
+              />
+            )}
           </Box>
         ))}
     </Stack>

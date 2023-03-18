@@ -37,8 +37,15 @@ const tourCategory = [
   "Экскурсия",
 ];
 
+const loadImages = {
+  src: "",
+  loading: true,
+};
+
 export const AddTourFirstPage = () => {
-  const [images, setImage] = useState<any[]>([]);
+  const [images, setImage] = useState<any[]>(
+    new Array<typeof loadImages>(8).fill(loadImages)
+  );
   const dispatch = useDispatch();
 
   const tourInfo = useSelector((state: RootState) => state.addTour.tourFields);
