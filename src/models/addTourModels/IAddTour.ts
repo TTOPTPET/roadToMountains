@@ -6,25 +6,22 @@ export interface IAddTour {
   region?: string;
   price?: number;
   recommendedAge?: {
-                    from?: number
-                    to?: number
-                  }
-  mapPoints?: string[]
+    from?: number;
+    to?: number;
+  };
+  mapPoints?: string[];
   housingInclud?: {
-                    housingName: string
-                    housingAddress: string
-                    housingDescription?: string
-                  }
+    housingName: string;
+    housingAddress: string;
+    housingDescription?: string;
+  };
   insuranceInclude?: {
-                      insuranceNumber: number
-                      insuranceAmount: number
-                    }
-  recommendations?: string[]
+    insuranceNumber: number;
+    insuranceAmount: number;
+  };
+  recommendations?: string[];
   tourServices?: {
-                  freeServices?: string[]
-                  additionalServices?: string[]
-                }
+    freeServices?: string[];
+    additionalServices?: string[];
+  };
 }
-
-
-  
