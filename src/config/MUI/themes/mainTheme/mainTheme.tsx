@@ -220,5 +220,16 @@ export const mainThemes = createTheme({
         },
       },
     },
+    MuiRadio: {
+      styleOverrides: {
+        root: {
+          color: darkBlueColor,
+
+          "&.Mui-checked": {
+            color: darkBlueColor,
+          },
+        },
+      },
+    },
   },
 });

@@ -1,4 +1,5 @@
 import {
+  Autocomplete,
   FormControlLabel,
   Grid,
   Paper,
@@ -10,7 +11,7 @@ import {
   Typography,
 } from "@mui/material";
 import { AddTourImage } from "../../../components/AddTourImage/AddTourImage";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { ReactComponent as AttentionIcon } from "../../../media/Attention.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { setTourField } from "../../../redux/AddTour/AddTourReducer";
@@ -42,20 +43,28 @@ export const AddTourFirstPage = () => {
 
   const tourInfo = useSelector((state: RootState) => state.addTour.tourFields);
 
-  // dispatch(setTourField({ category: "a" }));
-
   return (
     <Stack gap={1}>
-      <TextField sx={{ width: 500, height: 50 }} label={"Название тура"} />
+      <TextField
+        sx={{ width: "48%" }}
+        label={"Название тура"}
+        onChange={(e) => dispatch(setTourField({ tourName: e.target.value }))}
+      />
       {JSON.stringify(tourInfo)}
       <Grid container spacing={6}>
         <Grid item xs={6}>
           <AddTourImage images={images} setImage={setImage} />
-          <Typography variant={"h6"}> Описание</Typography>
+          <Typography variant={"h6"} marginBottom={1}>
+            {" "}
+            Описание
+          </Typography>
           <TextField
-            sx={{ width: 500, height: 110 }}
+            fullWidth
             label={"Описание тура (не более 2500 символов)"}
             InputProps={{ inputProps: { maxLength: 2500 } }}
+            onChange={(e) =>
+              dispatch(setTourField({ tourDescription: e.target.value }))
+            }
           />
         </Grid>
         <Grid container item xs={6}>
@@ -75,27 +84,38 @@ export const AddTourFirstPage = () => {
             </Paper>
           </Grid>
 
-          <Grid container direction={"row"} marginTop={5}>
-            <Grid item xs={5}>
-              {/* <Typography component={"h5"}>Регион проведения</Typography>
-              <Select>
-                {regions.map((region, index) => (
-                  <MenuItem value={region} key={index}>
-                    {region}
-                  </MenuItem>
-                ))}
-              </Select> */}
-              {/* TODO: AutocompliteMui */}
+          <Grid container direction={"row"} marginTop={5} spacing={2}>
+            <Grid item xs={6}>
+              <Typography variant={"h6"} marginBottom={1}>
+                Регион проведения
+              </Typography>
+              <Autocomplete
+                freeSolo
+                disableClearable
+                options={regions.map((region) => region)}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    InputProps={{ ...params.InputProps, type: "search" }}
+                  />
+                )}
+                onChange={(e: any, value: string) =>
+                  dispatch(setTourField({ region: value }))
+                }
+              />
             </Grid>
             <Grid item xs={5}>
-              <Typography variant={"h5"}>Категория тура</Typography>
-              <RadioGroup>
+              <Typography variant={"h6"}>Категория тура</Typography>
+              <RadioGroup
+                onChange={(e) =>
+                  dispatch(setTourField({ category: e.target.value }))
+                }
+              >
                 {tourCategory.map((category, index) => (
                   <FormControlLabel
                     key={index}
                     value={category}
                     control={<Radio />}
-                    //TODO: Стилизация в mainTheme
                     label={category}
                   />
                 ))}
@@ -103,29 +123,51 @@ export const AddTourFirstPage = () => {
             </Grid>
           </Grid>
           <Grid item marginTop={1}>
-            <Typography variant={"h5"}>Рекомендуемый возраст</Typography>
-            <Stack direction={"row"} marginTop={2}>
+            <Typography variant={"h6"}>Рекомендуемый возраст</Typography>
+            <Stack direction={"row"} marginTop={1}>
               <TextField
                 InputProps={{ inputProps: { min: 0 } }}
                 type={"number"}
                 label={"От"}
+                onChange={(e) =>
+                  dispatch(
+                    setTourField({
+                      recommendedAge: {
+                        ...tourInfo.recommendedAge,
+                        from: +e.target.value,
+                      },
+                    })
+                  )
+                }
               />
               <TextField
                 InputProps={{ inputProps: { min: 0 } }}
                 type={"number"}
                 label={"До"}
+                onChange={(e) =>
+                  dispatch(
+                    setTourField({
+                      recommendedAge: {
+                        ...tourInfo.recommendedAge,
+                        to: +e.target.value,
+                      },
+                    })
+                  )
+                }
               />
             </Stack>
           </Grid>
           <Grid item marginTop={1}>
-            <Typography variant={"h5"}>Стоимость тура на человека</Typography>
+            <Typography variant={"h6"}>Стоимость тура на человека</Typography>
             <TextField
-              sx={{ marginTop: 2 }}
+              sx={{ marginTop: 1 }}
               fullWidth
               type={"number"}
               InputProps={{ inputProps: { min: 0 } }}
               label={"Стоимость тура"}
-              // onChange={(e)=>dispatch(setNewTour({date:e.target.value}))}
+              onChange={(e) =>
+                dispatch(setTourField({ price: +e.target.value }))
+              }
             />
           </Grid>
         </Grid>
