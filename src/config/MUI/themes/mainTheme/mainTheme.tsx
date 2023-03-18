@@ -29,9 +29,6 @@ export const mainThemes = createTheme({
       fontWeight: "800",
       fontSize: "50px",
       lineHeight: "50px",
-      "@media (min-width:700px)": {
-        fontSize: "100px",
-      },
     },
     h4: {
       fontFamily: "Jost",
@@ -76,7 +73,7 @@ export const mainThemes = createTheme({
       main: "#D2F7FF",
     },
     secondary: {
-      main: "#FFF",
+      main: whiteColor,
     },
   },
   components: {
@@ -119,6 +116,7 @@ export const mainThemes = createTheme({
     MuiButton: {
       styleOverrides: {
         root: {
+          width: "fit-content",
           padding: "0 16px",
           backgroundColor: darkTurquoiseColor,
           height: "30px",
@@ -169,7 +167,6 @@ export const mainThemes = createTheme({
           input: {
             width: "100%",
             height: "50px",
-            // backgroundColor: lightTurquoiseColor,
             padding: "12px 15px",
             borderRadius: "30px",
             border: "none",
@@ -214,6 +211,23 @@ export const mainThemes = createTheme({
       ],
     },
     MuiTypography: {
+      defaultProps: {
+        variantMapping: {
+          h1: "div",
+          h2: "div",
+          h3: "div",
+          h4: "div",
+          h5: "div",
+          h6: "div",
+          subtitle1: "div",
+          subtitle2: "div",
+          button: "div",
+          caption: "div",
+          body1: "div",
+          body2: "div",
+          inherit: "div",
+        },
+      },
       styleOverrides: {
         root: {
           color: darkBlueColor,

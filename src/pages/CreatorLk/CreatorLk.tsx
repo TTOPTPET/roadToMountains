@@ -8,13 +8,13 @@ import TourCard from "../../components/TourCard/TourCard";
 import { darkBlueColor, redColor } from "../../config/MUI/color/color";
 import { ITour } from "../../models/tourCardModel/ITour";
 
+import UserInfoFabric from "../../components/UserInfoFabric/UserInfoFabric";
+
 import { Typography } from "@mui/material";
 
 function CreatorLk() {
   const [myTours, setMyTours] = useState<ITour[]>([]);
   const [loadingStatus, setLoadingStatus] = useState<Boolean>(true);
-
-  console.log(myTours);
 
   useEffect(() => {
     setLoadingStatus(true);
@@ -29,9 +29,9 @@ function CreatorLk() {
   }, []);
 
   const elements = myTours.length ? (
-    myTours?.map((tour) => {
+    myTours?.map((tour, i) => {
       return (
-        <Grid item xs={1}>
+        <Grid key={i} item xs={1}>
           <TourCard tour={tour} key={tour.tourId} tourCardType={"myTours"} />
         </Grid>
       );
@@ -83,6 +83,7 @@ function CreatorLk() {
 
   return (
     <>
+      <UserInfoFabric />
       <Box
         sx={{
           fontFamily: "Jost",
