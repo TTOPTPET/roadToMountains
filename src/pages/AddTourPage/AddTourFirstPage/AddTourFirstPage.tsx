@@ -10,9 +10,11 @@ import {
   Typography,
 } from "@mui/material";
 import { AddTourImage } from "../../../components/AddTourImage/AddTourImage";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ReactComponent as AttentionIcon } from "../../../media/Attention.svg";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setTourField } from "../../../redux/AddTour/AddTourReducer";
+import { RootState } from "../../../redux/store";
 
 const regions = [
   "Регион РФ",
@@ -38,10 +40,14 @@ export const AddTourFirstPage = () => {
   const [images, setImage] = useState<any[]>([]);
   const dispatch = useDispatch();
 
+  const tourInfo = useSelector((state: RootState) => state.addTour.tourFields);
+
+  // dispatch(setTourField({ category: "a" }));
+
   return (
     <Stack gap={1}>
       <TextField sx={{ width: 500, height: 50 }} label={"Название тура"} />
-
+      {JSON.stringify(tourInfo)}
       <Grid container spacing={6}>
         <Grid item xs={6}>
           <AddTourImage images={images} setImage={setImage} />

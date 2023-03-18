@@ -42,7 +42,7 @@ export default AddTourReducer;
 export const setTourField = (props: IAddTour) => {
   return {
     type: actionTypes.SET_TOUR_FIELD,
-    payload: { props },
+    payload: props ,
   };
 };
 export const clearTourFields = () => {
