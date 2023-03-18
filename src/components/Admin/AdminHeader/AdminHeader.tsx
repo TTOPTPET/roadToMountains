@@ -12,9 +12,7 @@ export const AdminHeader = () => {
       <Typography component="p" mt={1}>
         🍔Admin page🍔
       </Typography>
-      <Button variant="text" color="error">
-        LogOut
-      </Button>
+      <Button>LogOut</Button>
     </Stack>
   );
 };

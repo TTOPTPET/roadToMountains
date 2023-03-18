@@ -35,7 +35,7 @@ export const AdminSideBar = () => {
       <List>
         {sideBarNavItems.map((item, index) => (
           <ListItem key={index}>
-            <Button to={item.to} component={RouterLink} color="info">
+            <Button to={item.to} component={RouterLink} variant="high">
               {item.display}
             </Button>
           </ListItem>
