@@ -245,5 +245,25 @@ export const mainThemes = createTheme({
         },
       },
     },
+    MuiAccordion: {
+      styleOverrides: {
+        root: {
+          backgroundColor: whiteColor,
+          borderRadius: 20,
+          "&.MuiPaper-root": {
+            borderRadius: 20,
+            padding: 0,
+          },
+        },
+      },
+    },
+    MuiAccordionSummary: {
+      styleOverrides: {
+        root: {
+          backgroundColor: lightTurquoiseColor,
+          borderRadius: 20,
+        },
+      },
+    },
   },
 });
