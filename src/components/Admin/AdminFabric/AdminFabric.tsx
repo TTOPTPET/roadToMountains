@@ -222,11 +222,16 @@ export const AdminComponent: FC<IAdminComponent> = (props: IAdminComponent) => {
           bgcolor={whiteColor}
           borderRadius={5}
           minWidth={mobileWidth}
+          padding={1}
         >
-          <Grid container padding={1} gap={4}>
-            <Grid item className="creator__info">
+          <Grid container justifyContent={"space-between"}>
+            <Grid item xs={5.5} className="creator__info">
               <Typography variant={"h5"}>{name}</Typography>
-              <Stack direction={"row"} flexWrap={"wrap"} gap={10}>
+              <Stack
+                direction={"row"}
+                flexWrap={"wrap"}
+                justifyContent={"space-between"}
+              >
                 <Stack direction={"column"}>
                   <Typography variant={"caption"}>Телефон: {phone}</Typography>
                   <Typography variant={"caption"}>Почта: {email}</Typography>
@@ -244,7 +249,7 @@ export const AdminComponent: FC<IAdminComponent> = (props: IAdminComponent) => {
             <Grid
               container
               item
-              xs={5}
+              xs={6.5}
               gap={1}
               justifyContent={"center"}
               marginY={"auto"}
@@ -268,15 +273,15 @@ export const AdminComponent: FC<IAdminComponent> = (props: IAdminComponent) => {
             </Grid>
           </Grid>
           {creatorDocuments.map((document, index) => (
-            <Stack direction={"row"} key={index}>
+            <Stack direction={"row"} key={index} alignItems={"center"}>
               <Button
                 onClick={() => handlerDownloadClick(document.documentPath)}
               >
                 <SvgIcon scale={0.1}>
                   <DownloadIcon />
-                </SvgIcon>
+                </SvgIcon>{" "}
               </Button>
-              <Typography variant="caption" mt={1}>
+              <Typography variant={"caption"}>
                 {document.documentName}
               </Typography>
             </Stack>
@@ -302,9 +307,7 @@ export const AdminComponent: FC<IAdminComponent> = (props: IAdminComponent) => {
             <Typography variant={"caption"}>⚫ {email}</Typography>
           </Grid>
           <Grid item marginY={"auto"} className="user__ban">
-            <Button variant={banStatus ? "text" : "high"}>
-              В данных не было id, не заметил:/
-            </Button>
+            <Button variant={"text"}>В данных не было id, не заметил:/</Button>
           </Grid>
         </Grid>
       );
