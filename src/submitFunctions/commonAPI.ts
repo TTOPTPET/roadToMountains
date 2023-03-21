@@ -3,7 +3,6 @@ import {
   IUserInfo,
   CreatorType,
   StatusVerify,
-  Sex,
   UserType,
   userTypes,
 } from "../models/userModels/IUserInfo";
@@ -16,7 +15,28 @@ let cookie = new Cookies();
 const userInfoDefault: IUserInfo = {
   type: userTypes.CreatorOOO,
   dataUser: {
-    documents: [{ docName: "ddd", docUrl: "fdff" }],
+    documents: [
+      { docName: "Имя файла", docUrl: "fdff" },
+      { docName: "Имя файла", docUrl: "fdff" },
+      { docName: "Имя файла", docUrl: "fdff" },
+      { docName: "Имя файла", docUrl: "fdff" },
+      { docName: "Имя файла", docUrl: "fdff" },
+      { docName: "Имя файла", docUrl: "fdff" },
+      { docName: "Имя файла", docUrl: "fdff" },
+      { docName: "Имя файла", docUrl: "fdff" },
+      { docName: "Имя файла", docUrl: "fdff" },
+      { docName: "Имя файла", docUrl: "fdff" },
+      { docName: "Имя файла", docUrl: "fdff" },
+      { docName: "Имя файла", docUrl: "fdff" },
+      { docName: "Имя файла", docUrl: "fdff" },
+      { docName: "Имя файла", docUrl: "fdff" },
+      { docName: "Имя файла", docUrl: "fdff" },
+      { docName: "Имя файла", docUrl: "fdff" },
+      { docName: "Имя файла", docUrl: "fdff" },
+      { docName: "Имя файла", docUrl: "fdff" },
+      { docName: "Имя файла", docUrl: "fdff" },
+      { docName: "Имя файла", docUrl: "fdff" },
+    ],
     dataVerify: "2023-03-15T16:47:46.915652+00:00",
     creatorType: CreatorType.OOO,
     statusVerify: StatusVerify.verified,
@@ -112,6 +132,29 @@ export const getUserInfo = async (
   }
   try {
     let response = await axios.get(urlUser + "/userInfo ", {
+      headers: {
+        Authorization: `Bearer ${cookie.get(TOKEN)}`,
+      },
+    });
+    successCallback(response?.data);
+  } catch (e) {
+    console.error(e);
+    errorCallback && errorCallback();
+  }
+};
+
+export const postUserInfo = async (
+  successCallback: (prop: IUserInfo) => void,
+  errorCallback?: () => void,
+  useDefault?: boolean
+) => {
+  if (useDefault) {
+    successCallback(userInfoDefault);
+    return;
+  }
+  const data = {};
+  try {
+    let response = await axios.post(urlUser + "/userInfo ", data, {
       headers: {
         Authorization: `Bearer ${cookie.get(TOKEN)}`,
       },

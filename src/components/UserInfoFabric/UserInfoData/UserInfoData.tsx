@@ -1,18 +1,10 @@
 import React from "react";
 
 import { Typography, Box } from "@mui/material";
-import {
-  IUserInfo,
-  CreatorType,
-  StatusVerify,
-  UserType,
-  userTypes,
-} from "../../../models/userModels/IUserInfo";
+import { IUserInfo, userTypes } from "../../../models/userModels/IUserInfo";
 
 function UserInfoData(props: IUserInfo) {
   const { type, name, phone, email, dataUser } = props;
-
-  console.log(name);
 
   return (
     <Box sx={{ ml: "30px" }}>
@@ -193,6 +185,8 @@ function UserInfoData(props: IUserInfo) {
                 okvedOOO,
                 urAdress,
               } = dataUser.fieldsCreator;
+
+              console.log(dataUser.documents);
               return (
                 <Box
                   className="userInfo__data"

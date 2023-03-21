@@ -32,7 +32,7 @@ interface IBaseUserInfo {
   createAt: string;
 }
 
-interface CreatorDocuments {
+export interface CreatorDocuments {
   docName: string;
   docUrl: string;
 }
