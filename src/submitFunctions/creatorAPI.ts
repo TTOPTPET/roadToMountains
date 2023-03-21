@@ -6,7 +6,7 @@ import { ITour } from "../models/tourCardModel/ITour";
 
 let cookie = new Cookies();
 
-const defaultResponse : ITour[] = [
+const defaultResponse: ITour[] = [
   {
     tourId: "12",
     tourName: "Что-то на европейском",

@@ -1,12 +1,11 @@
-import Tooltip, { TooltipProps, tooltipClasses } from "@mui/material/Tooltip";
-import { styled } from "@mui/material/styles";
-
 import Box from "@mui/material/Box";
 
 import {
   lightTurquoiseColor,
   darkBlueColor,
 } from "../../../config/MUI/color/color";
+
+import { LightStyledTooltip } from "../../../config/MUI/styledComponents/StyledTooltip";
 
 import cancelIcon from "../../../media/ban-status-icon.svg";
 import cardbg from "../../../media/cardbg.png";
@@ -19,22 +18,6 @@ type TourCardProps = {
   tour: ITour;
   tourCardType: CardType;
 };
-
-const StyledTooltip = styled(({ className, ...props }: TooltipProps) => (
-  <Tooltip {...props} classes={{ popper: className }} />
-))(({ theme }) => ({
-  [`& .${tooltipClasses.arrow}`]: {
-    color: lightTurquoiseColor,
-  },
-  [`& .${tooltipClasses.tooltip}`]: {
-    backgroundColor: lightTurquoiseColor,
-    color: darkBlueColor,
-    fontFamily: "Montserrat",
-    fontWeight: "400",
-    borderRadius: "4px",
-    fontSize: "14px",
-  },
-}));
 
 function TourCardPhoto({ tour, tourCardType }: TourCardProps) {
   return (
@@ -92,7 +75,11 @@ function TourCardPhoto({ tour, tourCardType }: TourCardProps) {
         <Box className="tour-card__photo-banStatus">
           {tour.banStatus && (
             <>
-              <StyledTooltip title="Тур заблокирован" arrow placement="right">
+              <LightStyledTooltip
+                title="Тур заблокирован"
+                arrow
+                placement="right"
+              >
                 <Box
                   className="tour-card__photo-banStatus-wrapper"
                   sx={{
@@ -120,7 +107,7 @@ function TourCardPhoto({ tour, tourCardType }: TourCardProps) {
                     }}
                   />
                 </Box>
-              </StyledTooltip>
+              </LightStyledTooltip>
             </>
           )}
         </Box>

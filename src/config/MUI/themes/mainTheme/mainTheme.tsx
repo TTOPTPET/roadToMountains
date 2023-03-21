@@ -11,6 +11,7 @@ import {
 declare module "@mui/material/Button" {
   interface ButtonPropsVariantOverrides {
     high: true;
+    textButton: true;
   }
 }
 
@@ -142,7 +143,7 @@ export const mainThemes = createTheme({
           },
         },
         {
-          props: { variant: "text" },
+          props: { variant: "textButton" },
           style: {
             backgroundColor: "transparent",
             "&:hover": { backgroundColor: "transparent" },

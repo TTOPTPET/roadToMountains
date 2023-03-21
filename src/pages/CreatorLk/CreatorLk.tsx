@@ -5,12 +5,10 @@ import Box from "@mui/material/Box";
 import Skeleton from "@mui/material/Skeleton";
 import AddTourButton from "../../components/AddTourButton/AddTourButton";
 import TourCard from "../../components/TourCard/TourCard";
-import { darkBlueColor, redColor } from "../../config/MUI/color/color";
+import { darkBlueColor } from "../../config/MUI/color/color";
 import { ITour } from "../../models/tourCardModel/ITour";
 
 import UserInfoFabric from "../../components/UserInfoFabric/UserInfoFabric";
-
-import { Typography } from "@mui/material";
 
 function CreatorLk() {
   const [myTours, setMyTours] = useState<ITour[]>([]);
@@ -92,6 +90,7 @@ function CreatorLk() {
           lineHeight: "32px",
           color: darkBlueColor,
           mb: "19px",
+          mt: "30px",
         }}
       >
         Мои туры
@@ -102,17 +101,6 @@ function CreatorLk() {
         </Grid>
         {loadingStatus ? skeleton() : elements}
       </Grid>
-
-      <Typography variant="h3" color={redColor}>
-        123123123
-      </Typography>
-      <Typography variant="h4">123123123</Typography>
-      <Typography variant="h5">123123123</Typography>
-      <Typography variant="h6">123123123</Typography>
-      <Typography variant="button">123123123</Typography>
-      <Typography variant="caption">123123123</Typography>
-      <Typography variant="body2">123123123</Typography>
-      <Typography>12312312312</Typography>
     </>
   );
 }

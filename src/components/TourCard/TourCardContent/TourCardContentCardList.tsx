@@ -1,6 +1,6 @@
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
-import { StyledTooltip } from "../../../config/MUI/styledComponents/StyledTooltip";
+import { DarkStyledTooltip } from "../../../config/MUI/styledComponents/StyledTooltip";
 
 import { ITour } from "../../../models/tourCardModel/ITour";
 
@@ -65,7 +65,7 @@ function TourCardContentCardList({ tour }: TourCardProps) {
           <Box className="tour-card__content-region-icon">
             <img src={mapMarker} alt="map marker" />
           </Box>
-          <StyledTooltip title="Регион" arrow placement="top">
+          <DarkStyledTooltip title="Регион" arrow placement="top">
             <Box
               className="tour-card__content-region-descr"
               sx={{
@@ -78,7 +78,7 @@ function TourCardContentCardList({ tour }: TourCardProps) {
             >
               {tour.region}
             </Box>
-          </StyledTooltip>
+          </DarkStyledTooltip>
         </Box>
 
         <Box
@@ -88,7 +88,7 @@ function TourCardContentCardList({ tour }: TourCardProps) {
           <Box className="tour-card__content-date-icon">
             <img src={calendar} alt="calendar" />
           </Box>
-          <StyledTooltip title="Даты ближайшего тура" arrow placement="top">
+          <DarkStyledTooltip title="Даты ближайшего тура" arrow placement="top">
             <Box
               className="tour-card__content-date-descr"
               sx={{
@@ -101,7 +101,7 @@ function TourCardContentCardList({ tour }: TourCardProps) {
             >
               {tour.tourDate.from} - {tour.tourDate.to}
             </Box>
-          </StyledTooltip>
+          </DarkStyledTooltip>
           {Boolean(tour.publicNum) && (
             <Box
               className="tour-card__content-date-publicNum"
@@ -126,7 +126,7 @@ function TourCardContentCardList({ tour }: TourCardProps) {
           <Box className="tour-card__content-category-icon">
             <img src={categoryIcon} alt="walking guy" />
           </Box>
-          <StyledTooltip title="Категория тура" arrow placement="top">
+          <DarkStyledTooltip title="Категория тура" arrow placement="top">
             <Box
               className="tour-card__content-category-descr"
               sx={{
@@ -139,7 +139,7 @@ function TourCardContentCardList({ tour }: TourCardProps) {
             >
               {tour.category}
             </Box>
-          </StyledTooltip>
+          </DarkStyledTooltip>
         </Box>
       </Box>
       <Box
