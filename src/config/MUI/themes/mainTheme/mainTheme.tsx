@@ -12,6 +12,7 @@ declare module "@mui/material/Button" {
   interface ButtonPropsVariantOverrides {
     high: true;
     textButton: true;
+    fileInput: true;
   }
 }
 
@@ -147,6 +148,18 @@ export const mainThemes = createTheme({
           style: {
             backgroundColor: "transparent",
             "&:hover": { backgroundColor: "transparent" },
+            color: darkBlueColor,
+          },
+        },
+        {
+          props: { variant: "fileInput" },
+          style: {
+            backgroundColor: lightTurquoiseColor,
+            width: "100%",
+            height: "50px",
+            display: "flex",
+            justifyContent: "space-between",
+            "&:hover": { backgroundColor: lightTurquoiseColor },
             color: darkBlueColor,
           },
         },

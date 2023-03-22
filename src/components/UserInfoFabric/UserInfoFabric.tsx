@@ -6,6 +6,7 @@ import {
   userTypes,
 } from "../../models/userModels/IUserInfo";
 import { Typography, Box, Button, Skeleton } from "@mui/material";
+import { Link } from "react-router-dom";
 import { darkTurquoiseColor } from "../../config/MUI/color/color";
 import userPhoto from "../../media/userPhoto.svg";
 import UserInfoData from "./UserInfoData/UserInfoData";
@@ -182,7 +183,7 @@ function UserInfoFabric() {
 
   return (
     <>
-      <Box className="userInfo__wrapper">
+      <Box className="userInfo__wrapper" sx={{ mt: "55px" }}>
         {loadingStatus ? (
           userInfoSkeleton()
         ) : (
@@ -264,7 +265,9 @@ function UserInfoFabric() {
                     Отправить на подтверждение
                   </Button>
                 )}
-                <Button>Изменить</Button>
+                <Button component={Link} to={"/changeCreatorInfo"}>
+                  Изменить
+                </Button>
               </Box>
             </Box>
             <Box className="userInfo__body-wrapper">

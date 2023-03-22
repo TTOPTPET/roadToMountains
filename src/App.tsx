@@ -20,6 +20,7 @@ import {
   TourListPage,
   AddTourPage,
 } from "./pages";
+import ChangeCreatorInfo from "./pages/CreatorLk/ChangeCreatorInfoPage/ChangeCreatorInfo";
 import NavTool from "./components/NavTool/NavTool";
 
 function App() {
@@ -34,6 +35,10 @@ function App() {
             <Route path={"/admin/*"} element={<AdminPage />} />
             <Route path={"/auth"} element={<Authorization />} />
             <Route path={"/creatorLk"} element={<CreatorLk />} />
+            <Route
+              path={"/changeCreatorInfo"}
+              element={<ChangeCreatorInfo />}
+            />
             <Route path={"/addTour"} element={<AddTourPage />} />
             <Route path={"/notifications"} element={<NotificationsPage />} />
             <Route

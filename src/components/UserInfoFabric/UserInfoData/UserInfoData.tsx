@@ -185,8 +185,6 @@ function UserInfoData(props: IUserInfo) {
                 okvedOOO,
                 urAdress,
               } = dataUser.fieldsCreator;
-
-              console.log(dataUser.documents);
               return (
                 <Box
                   className="userInfo__data"

@@ -34,7 +34,7 @@ interface IBaseUserInfo {
 
 export interface CreatorDocuments {
   docName: string;
-  docUrl: string;
+  docUrl?: string;
 }
 
 interface ICreatorOOOFields {
