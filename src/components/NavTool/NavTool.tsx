@@ -36,17 +36,17 @@ function NavTool() {
         }}
       >
         <Link to={"/"}>HomePage</Link>
-        <Link to={"admin"}>AdminPage</Link>
-        <Link to={"auth"}>Authorization</Link>
-        <Link to={"creatorLk"}>CreatorLk</Link>
-        <Link to={"myTours"}>CreatorTours</Link>
-        <Link to={"notifications"}>NotificationsPage</Link>
-        <Link to={"paymentSettings"}>PaymentSettingsPage</Link>
-        <Link to={"statistics"}>StatisticPage</Link>
-        <Link to={"tourCalendar"}>TourCalendarPage</Link>
-        <Link to={"touristLk"}>TouristLk</Link>
-        <Link to={"tourList"}>TourListPage</Link>
-        <Link to={"addTour"}>AddTourPage</Link>
+        <Link to={"/admin"}>AdminPage</Link>
+        <Link to={"/auth"}>Authorization</Link>
+        <Link to={"/creator/lk"}>CreatorLk</Link>
+        {/*<Link to={""}>CreatorTours</Link>-->*/}
+        <Link to={"/creator/notifications"}>NotificationsPage</Link>
+        <Link to={"/creator/payment"}>PaymentSettingsPage</Link>
+        <Link to={"/creator/stats"}>StatisticPage</Link>
+        <Link to={"/creator/calendar"}>TourCalendarPage</Link>
+        <Link to={"/tourist/lk"}>TouristLk</Link>
+        <Link to={"/tours/all"}>TourListPage</Link>
+        <Link to={"/creator/add"}>AddTourPage</Link>
       </div>
     </div>
   );
