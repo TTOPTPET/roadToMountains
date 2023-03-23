@@ -28,7 +28,7 @@ function App() {
     <BrowserRouter>
       <ThemeProvider theme={mainThemes}>
         <Header />
-        <Container>
+        <Container disableGutters maxWidth={false} sx={{ width: "1024px" }}>
           <Routes>
             <Route path={"/"} element={<HomePage />} />
             <Route path={"/admin/*"} element={<AdminPage />} />
