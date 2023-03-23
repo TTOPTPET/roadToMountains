@@ -33,17 +33,17 @@ function App() {
             <Route path={"/"} element={<HomePage />} />
             <Route path={"/admin/*"} element={<AdminPage />} />
             <Route path={"/auth"} element={<Authorization />} />
-            <Route path={"/creatorLk"} element={<CreatorLk />} />
-            <Route path={"/addTour"} element={<AddTourPage />} />
-            <Route path={"/notifications"} element={<NotificationsPage />} />
+            <Route path={"/creator/lk"} element={<CreatorLk />} />
+            <Route path={"/creator/add"} element={<AddTourPage />} />
+            <Route path={"/creator/notifications"} element={<NotificationsPage />} />
             <Route
-              path={"/paymentSettings"}
+              path={"/creator/payment"} // ???
               element={<PaymentSettingsPage />}
             />
-            <Route path={"/statistics"} element={<StatisticPage />} />
-            <Route path={"/tourCalendar"} element={<TourCalendarPage />} />
-            <Route path={"/touristLk"} element={<TouristLk />} />
-            <Route path={"/tourList"} element={<TourListPage />} />
+            <Route path={"/creator/stats"} element={<StatisticPage />} />
+            <Route path={"/creator/calendar"} element={<TourCalendarPage />} />
+            <Route path={"/tourist/lk"} element={<TouristLk />} />
+            <Route path={"/tours/all"} element={<TourListPage />} />
           </Routes>
         </Container>
         <Footer />
