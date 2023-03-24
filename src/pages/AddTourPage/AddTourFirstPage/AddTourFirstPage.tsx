@@ -54,20 +54,18 @@ export const AddTourFirstPage = () => {
     <Stack gap={1}>
       <TextField
         sx={{ width: "48%" }}
-        label={"Название тура"}
+        placeholder={"Название тура"}
         onChange={(e) => dispatch(setTourField({ tourName: e.target.value }))}
       />
-      {JSON.stringify(tourInfo)}
       <Grid container spacing={6}>
         <Grid item xs={6}>
           <AddTourImage images={images} setImage={setImage} />
           <Typography variant={"h6"} marginBottom={1}>
-            {" "}
             Описание
           </Typography>
           <TextField
             fullWidth
-            label={"Описание тура (не более 2500 символов)"}
+            placeholder={"Описание тура (не более 2500 символов)"}
             InputProps={{ inputProps: { maxLength: 2500 } }}
             onChange={(e) =>
               dispatch(setTourField({ tourDescription: e.target.value }))
@@ -102,6 +100,7 @@ export const AddTourFirstPage = () => {
                 options={regions.map((region) => region)}
                 renderInput={(params) => (
                   <TextField
+                    placeholder={"Регион"}
                     {...params}
                     InputProps={{ ...params.InputProps, type: "search" }}
                   />
@@ -135,7 +134,7 @@ export const AddTourFirstPage = () => {
               <TextField
                 InputProps={{ inputProps: { min: 0 } }}
                 type={"number"}
-                label={"От"}
+                placeholder={"От"}
                 onChange={(e) =>
                   dispatch(
                     setTourField({
@@ -150,7 +149,7 @@ export const AddTourFirstPage = () => {
               <TextField
                 InputProps={{ inputProps: { min: 0 } }}
                 type={"number"}
-                label={"До"}
+                placeholder={"До"}
                 onChange={(e) =>
                   dispatch(
                     setTourField({
@@ -171,7 +170,7 @@ export const AddTourFirstPage = () => {
               fullWidth
               type={"number"}
               InputProps={{ inputProps: { min: 0 } }}
-              label={"Стоимость тура"}
+              placeholder={"Стоимость тура"}
               onChange={(e) =>
                 dispatch(setTourField({ price: +e.target.value }))
               }

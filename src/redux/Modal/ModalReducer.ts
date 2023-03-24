@@ -1,5 +1,5 @@
 //HACK: Для того, чтобы задать новый id необходмо вписать его сюда :)
-type modalsId = "someModalId" | "anotherModalId";
+type modalsId = "filterModal" | "sortModal";
 
 enum actionTypes {
   SET_MODAL_ACTIVE = "SET_MODAL_ACTIVE",
@@ -46,7 +46,7 @@ const ModalReducer = (state = defaultState, action: IAction) => {
 
 export default ModalReducer;
 
-export const setModalActive = (id: modalsId, props: any) => {
+export const setModalActive = (id: modalsId, props?: any) => {
   return {
     type: actionTypes.SET_MODAL_ACTIVE,
     payload: { id, props },

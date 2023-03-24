@@ -185,6 +185,12 @@ export const mainThemes = createTheme({
               fontFamily: "Montserrat",
               fontWeight: "400",
             },
+            "&::-webkit-outer-spin-button": {
+              "-webkit-appearance": "none",
+            },
+            "&::-webkit-inner-spin-button": {
+              "-webkit-appearance": "none",
+            },
           },
         },
       },
