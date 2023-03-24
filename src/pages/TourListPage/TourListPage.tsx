@@ -1,12 +1,7 @@
-import { Button, Dialog, Grid, Modal, Stack, Typography } from "@mui/material";
+import { Button, Grid, Stack, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  isModalActive,
-  setModalActive,
-  setModalInactive,
-} from "../../redux/Modal/ModalReducer";
-import { RootState } from "../../redux/store";
+import { useDispatch } from "react-redux";
+import { setModalActive } from "../../redux/Modal/ModalReducer";
 import { BasicFilter, ComplexFilter, Sorter } from "../../components/TourList";
 import { IFilter } from "../../models/tourListModels/IFilter";
 import { getFilters } from "../../submitFunctions/tourListAPI";
@@ -19,9 +14,6 @@ const filterDefault: IFilter = {
 };
 
 function TourListPage() {
-  const activeModals = useSelector(
-    (state: RootState) => state.modal.activeModals
-  );
   const [filters, setFilters] = useState<IFilter>(filterDefault);
 
   useEffect(() => {

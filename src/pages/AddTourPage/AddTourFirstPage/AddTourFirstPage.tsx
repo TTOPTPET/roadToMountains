@@ -51,14 +51,15 @@ export const AddTourFirstPage = () => {
   const tourInfo = useSelector((state: RootState) => state.addTour.tourFields);
 
   return (
-    <Stack gap={1}>
+    <Stack gap={1} marginTop={2}>
       <TextField
-        sx={{ width: "48%" }}
+        sx={{ width: "45%" }}
         placeholder={"Название тура"}
+        value={tourInfo?.tourName ?? ""}
         onChange={(e) => dispatch(setTourField({ tourName: e.target.value }))}
       />
       <Grid container spacing={6}>
-        <Grid item xs={6}>
+        <Grid item sm={5.6}>
           <AddTourImage images={images} setImage={setImage} />
           <Typography variant={"h6"} marginBottom={1}>
             Описание
@@ -67,12 +68,13 @@ export const AddTourFirstPage = () => {
             fullWidth
             placeholder={"Описание тура (не более 2500 символов)"}
             InputProps={{ inputProps: { maxLength: 2500 } }}
+            value={tourInfo?.tourDescription ?? ""}
             onChange={(e) =>
               dispatch(setTourField({ tourDescription: e.target.value }))
             }
           />
         </Grid>
-        <Grid container item xs={6}>
+        <Grid container item sm={6}>
           <Grid item>
             <Paper elevation={5} sx={{ height: "136px" }}>
               <Stack gap={1} direction={"row"}>
@@ -98,6 +100,7 @@ export const AddTourFirstPage = () => {
                 freeSolo
                 disableClearable
                 options={regions.map((region) => region)}
+                value={tourInfo?.region ?? ""}
                 renderInput={(params) => (
                   <TextField
                     placeholder={"Регион"}
@@ -109,10 +112,62 @@ export const AddTourFirstPage = () => {
                   dispatch(setTourField({ region: value }))
                 }
               />
+              <Typography variant={"h6"} marginTop={30}>
+                Рекомендуемый возраст
+              </Typography>
+              <Stack direction={"row"} marginTop={1} gap={2}>
+                <TextField
+                  InputProps={{ inputProps: { min: 0 } }}
+                  type={"number"}
+                  placeholder={"От"}
+                  value={tourInfo?.recommendedAge?.from ?? ""}
+                  onChange={(e) =>
+                    dispatch(
+                      setTourField({
+                        recommendedAge: {
+                          ...tourInfo?.recommendedAge,
+                          from: +e.target.value,
+                        },
+                      })
+                    )
+                  }
+                />
+                <TextField
+                  InputProps={{ inputProps: { min: 0 } }}
+                  type={"number"}
+                  placeholder={"До"}
+                  value={tourInfo?.recommendedAge?.to ?? ""}
+                  onChange={(e) =>
+                    dispatch(
+                      setTourField({
+                        recommendedAge: {
+                          ...tourInfo?.recommendedAge,
+                          to: +e.target.value,
+                        },
+                      })
+                    )
+                  }
+                />
+              </Stack>
+              <Typography variant={"h6"} marginTop={2}>
+                Стоимость тура на человека
+              </Typography>
+              <TextField
+                sx={{ marginTop: 1 }}
+                fullWidth
+                type={"number"}
+                InputProps={{ inputProps: { min: 0 } }}
+                placeholder={"Стоимость тура"}
+                value={tourInfo?.price ?? ""}
+                onChange={(e) =>
+                  dispatch(setTourField({ price: +e.target.value }))
+                }
+              />
             </Grid>
             <Grid item xs={5}>
               <Typography variant={"h6"}>Категория тура</Typography>
               <RadioGroup
+                value={tourInfo?.category ?? ""}
                 onChange={(e) =>
                   dispatch(setTourField({ category: e.target.value }))
                 }
@@ -127,54 +182,6 @@ export const AddTourFirstPage = () => {
                 ))}
               </RadioGroup>
             </Grid>
-          </Grid>
-          <Grid item marginTop={1}>
-            <Typography variant={"h6"}>Рекомендуемый возраст</Typography>
-            <Stack direction={"row"} marginTop={1}>
-              <TextField
-                InputProps={{ inputProps: { min: 0 } }}
-                type={"number"}
-                placeholder={"От"}
-                onChange={(e) =>
-                  dispatch(
-                    setTourField({
-                      recommendedAge: {
-                        ...tourInfo.recommendedAge,
-                        from: +e.target.value,
-                      },
-                    })
-                  )
-                }
-              />
-              <TextField
-                InputProps={{ inputProps: { min: 0 } }}
-                type={"number"}
-                placeholder={"До"}
-                onChange={(e) =>
-                  dispatch(
-                    setTourField({
-                      recommendedAge: {
-                        ...tourInfo.recommendedAge,
-                        to: +e.target.value,
-                      },
-                    })
-                  )
-                }
-              />
-            </Stack>
-          </Grid>
-          <Grid item marginTop={1}>
-            <Typography variant={"h6"}>Стоимость тура на человека</Typography>
-            <TextField
-              sx={{ marginTop: 1 }}
-              fullWidth
-              type={"number"}
-              InputProps={{ inputProps: { min: 0 } }}
-              placeholder={"Стоимость тура"}
-              onChange={(e) =>
-                dispatch(setTourField({ price: +e.target.value }))
-              }
-            />
           </Grid>
         </Grid>
       </Grid>
