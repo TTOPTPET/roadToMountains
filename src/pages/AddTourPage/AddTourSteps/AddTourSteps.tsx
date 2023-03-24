@@ -1,5 +1,6 @@
 import { AddTourFirstPage } from "../AddTourFirstPage/AddTourFirstPage";
 import { addTourStepsMap } from "../AddTourPage";
+import { AddTourSecondPage } from "../AddTourSecondPage/AddTourSecondPage";
 
 interface addTourStepsProps {
   page: addTourStepsMap;
@@ -10,7 +11,7 @@ function AddTourSteps({ page }: addTourStepsProps) {
     case addTourStepsMap.first:
       return <AddTourFirstPage />;
     case addTourStepsMap.second:
-      break;
+      return <AddTourSecondPage />;
     case addTourStepsMap.third:
       break;
     default:
