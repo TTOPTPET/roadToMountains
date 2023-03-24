@@ -272,5 +272,12 @@ export const mainThemes = createTheme({
         },
       },
     },
+    MuiDialog: {
+      styleOverrides: {
+        paper: {
+          backgroundColor: whiteColor,
+        },
+      },
+    },
   },
 });
