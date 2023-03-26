@@ -22,7 +22,7 @@ export enum UserType {
 }
 
 interface IBaseUserInfo {
-  photo: string;
+  photo?: string;
   name: string;
   phone: string;
   email: string;
@@ -37,7 +37,7 @@ export interface CreatorDocuments {
   docUrl?: string;
 }
 
-interface ICreatorOOOFields {
+export interface ICreatorOOOFields {
   innOOO: string;
   kppOOO: string;
   ogrnOOO: string;
@@ -61,7 +61,7 @@ interface ICreatorSELFFields {
 export interface ICreatorOOOData extends IBaseUserInfo {
   type: userTypes.CreatorOOO;
   dataUser: {
-    documents: CreatorDocuments[];
+    documents?: CreatorDocuments[];
     dataVerify: string;
     creatorType: CreatorType;
     statusVerify: StatusVerify;
@@ -72,7 +72,7 @@ export interface ICreatorOOOData extends IBaseUserInfo {
 interface ICreatorIPData extends IBaseUserInfo {
   type: userTypes.CreatorIP;
   dataUser: {
-    documents: CreatorDocuments[];
+    documents?: CreatorDocuments[];
     dataVerify: string;
     creatorType: CreatorType;
     statusVerify: StatusVerify;
@@ -82,7 +82,7 @@ interface ICreatorIPData extends IBaseUserInfo {
 interface ICreatorSELFData extends IBaseUserInfo {
   type: userTypes.CreatorSELF;
   dataUser: {
-    documents: CreatorDocuments[];
+    documents?: CreatorDocuments[];
     dataVerify: string;
     creatorType: CreatorType;
     statusVerify: StatusVerify;
@@ -100,6 +100,8 @@ export type IUserInfo =
   | ICreatorIPData
   | ICreatorOOOData
   | ICreatorSELFData;
+
+export type ICreatorInfo = ICreatorIPData | ICreatorOOOData | ICreatorSELFData;
 
 export enum userTypes {
   Tourist,

@@ -18,10 +18,15 @@ import attachment from "../../../media/attachment.svg";
 import {
   darkTurquoiseColor,
   lightTurquoiseColor,
-} from "../../../config/MUI/color/color";
-import { IUserInfo } from "../../../models/userModels/IUserInfo";
+} from "../../config/MUI/color/color";
+import { IUserInfo } from "../../models/userModels/IUserInfo";
 
-function ChangeCreatorInfo() {
+type editUserInfoProps = {
+  fields: JSX.Element;
+  submitFuntion: (props: any) => void;
+};
+
+function EditUserInfo({ fields, submitFuntion }: editUserInfoProps) {
   const [fieldSet, setFieldSet] = useState("");
   const [files, setFiles] = useState<FileList>();
   const [userInfo, setUserInfo] = useState<IUserInfo>();
@@ -77,7 +82,7 @@ function ChangeCreatorInfo() {
     );
   };
 
-  const fields = () => {
+  const generfields = () => {
     switch (fieldSet) {
       case "OOO":
         return (
@@ -188,7 +193,7 @@ function ChangeCreatorInfo() {
               />
             </RadioGroup>
           </FormControl>
-          {fields()}
+          {generfields()}
           <Button variant="fileInput" component="label">
             <Typography variant="caption">
               Загрузить файлы размером до 2 Мб
@@ -209,4 +214,4 @@ function ChangeCreatorInfo() {
   );
 }
 
-export default ChangeCreatorInfo;
+export default EditUserInfo;
