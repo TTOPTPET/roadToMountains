@@ -1,12 +1,12 @@
 import { Box, Typography } from "@mui/material";
-import { IUserInfo, userTypes } from "../../models/userModels/IUserInfo";
+import { IUserInfo, strongUserType } from "../../models/userModels/IUserInfo";
 import CreatorDocumentItem from "./CreatorDocumentItem/CreatorDocumentItem";
 
 function CreatorDocumentsList(props: IUserInfo) {
   const { type, dataUser } = props;
   const elements =
     props &&
-    type !== userTypes.Tourist &&
+    type !== strongUserType.Tourist &&
     dataUser &&
     dataUser.documents.map((document, i) => {
       return <CreatorDocumentItem {...document} key={i} />;

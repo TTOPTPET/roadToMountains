@@ -22,9 +22,17 @@ import {
 } from "./pages";
 import ChangeCreatorInfo from "./pages/CreatorLk/ChangeCreatorInfoPage/ChangeCreatorInfo";
 import NavTool from "./components/NavTool/NavTool";
+import EditCreatorInfo from "./components/EditUserInfo/EditCreatorInfo/EditCreatorInfo";
+import { useSelector } from "react-redux";
+import { RootState } from "./redux/store";
+import { UserType } from "./models/userModels/IUserInfo";
+import EditTouristInfo from "./components/EditUserInfo/EditTouristInfo/EditTouristInfo";
 
 function App() {
   dayjs.locale("ru");
+  const userType = useSelector(
+    (state: RootState) => state.userInfo.userInfo.typeUser
+  );
   return (
     <BrowserRouter>
       <ThemeProvider theme={mainThemes}>
@@ -36,8 +44,14 @@ function App() {
             <Route path={"/auth"} element={<Authorization />} />
             <Route path={"/creatorLk"} element={<CreatorLk />} />
             <Route
-              path={"/changeCreatorInfo"}
-              element={<ChangeCreatorInfo />}
+              path={"/editUserInfo"}
+              element={
+                userType === UserType.creator ? (
+                  <EditCreatorInfo />
+                ) : (
+                  <EditTouristInfo />
+                )
+              }
             />
             <Route path={"/addTour"} element={<AddTourPage />} />
             <Route path={"/notifications"} element={<NotificationsPage />} />

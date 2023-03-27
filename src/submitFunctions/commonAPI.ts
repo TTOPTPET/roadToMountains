@@ -4,7 +4,7 @@ import {
   CreatorType,
   StatusVerify,
   UserType,
-  userTypes,
+  strongUserType,
 } from "../models/userModels/IUserInfo";
 import { urlUser } from "../config/config";
 import { TOKEN } from "../config/types";
@@ -13,7 +13,7 @@ import { Cookies } from "react-cookie";
 let cookie = new Cookies();
 
 const userInfoDefault: IUserInfo = {
-  type: userTypes.CreatorOOO,
+  type: strongUserType.CreatorOOO,
   dataUser: {
     documents: [
       { docName: "Имя файла", docUrl: "fdff" },
@@ -61,7 +61,7 @@ const userInfoDefault: IUserInfo = {
   createAt: "1975",
 };
 // {
-//   type: userTypes.CreatorIP,
+//   type: strongUserType.CreatorIP,
 //   dataUser: {
 //     documents: [{ docName: "ddd", docUrl: "fdff" }],
 //     dataVerify: "2011-02-28",
@@ -84,7 +84,7 @@ const userInfoDefault: IUserInfo = {
 //   createAt: "2007",
 // };
 // {
-//   type: userTypes.CreatorSELF,
+//   type: strongUserType.CreatorSELF,
 //   dataUser: {
 //     documents: [],
 //     dataVerify: "2001-12-11",
@@ -106,7 +106,7 @@ const userInfoDefault: IUserInfo = {
 //   createAt: "2018",
 // };
 // {
-//   type: userTypes.Tourist,
+//   type: strongUserType.Tourist,
 //   dataUser: {
 //     sex: Sex.male,
 //     region: "Владимирская область",

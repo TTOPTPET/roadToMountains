@@ -1,15 +1,22 @@
 import { TextField } from "@mui/material";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { fromModelsToFieldsName } from "../../../config/types";
-import { IUserInfo, userTypes } from "../../../models/userModels/IUserInfo";
+import {
+  IUserInfo,
+  strongUserType,
+} from "../../../models/userModels/IUserInfo";
+import { RootState } from "../../../redux/store";
+import { setUserInfo } from "../../../redux/UserInfo/UserInfoReducer";
 import Avatar from "../../Avatar/Avatar";
 import EditUserInfo from "../EditUserInfo";
 import { TOOOFields } from "./models/fieldsTypes";
 
-function EditCreatorInfo(props: IUserInfo) {
-  const { type, name, phone, email, dataUser } = props;
-
-  const [creatorInfo, setCreatorInfo] = useState<IUserInfo>(props);
+function EditCreatorInfo() {
+  const creatorInfo = useSelector(
+    (state: RootState) => state.userInfo.userInfo
+  );
+  let dispatch = useDispatch();
 
   return (
     <>
@@ -20,28 +27,26 @@ function EditCreatorInfo(props: IUserInfo) {
               placeholder="Имя"
               color="primary"
               value={creatorInfo?.name}
-              onChange={(e) =>
-                setCreatorInfo((info) => ({ ...info, name: e.target.value }))
-              }
+              onChange={(e) => dispatch(setUserInfo({ name: e.target.value }))}
             />
             <TextField
               placeholder="Телефон"
               color="primary"
-              value={creatorInfo?.name}
-              onChange={(e) =>
-                setCreatorInfo((info) => ({ ...info, name: e.target.value }))
-              }
+              value={creatorInfo?.phone}
+              onChange={(e) => dispatch(setUserInfo({ phone: e.target.value }))}
             />
             <TextField
               placeholder="Электронная почта"
               color="primary"
-              value={creatorInfo?.name}
-              onChange={(e) =>
-                setCreatorInfo((info) => ({ ...info, name: e.target.value }))
-              }
+              value={creatorInfo?.email}
+              onChange={(e) => dispatch(setUserInfo({ email: e.target.value }))}
             />
             {/* TODO: Здесь RadioButtonsGroup по выбору типа организации */}
-            {generateCreatorFields(props, setCreatorInfo)}
+            {generateCreatorFields(creatorInfo, (field: string, value: any) =>
+              dispatch(
+                setUserInfo({ dataUser: { fieldsCreator: { [field]: value } } })
+              )
+            )}
             {/* TODO: А здесь вывод документов */}
           </>
         }
@@ -53,7 +58,7 @@ function EditCreatorInfo(props: IUserInfo) {
           <Avatar
             photoUrl={creatorInfo.photo}
             setUserPhoto={(photoUrl) =>
-              setCreatorInfo((info) => ({ ...info, photoUrl }))
+              dispatch(setUserInfo({ photo: photoUrl }))
             }
           />
         }
@@ -66,10 +71,10 @@ export default EditCreatorInfo;
 
 const generateCreatorFields = (
   creatorInfo: IUserInfo,
-  setCreatorInfo: (propFunc: (prop: IUserInfo) => IUserInfo) => void
-): any => {
+  setCreatorInfo: (field: string, value: any) => void
+) => {
   switch (creatorInfo.type) {
-    case userTypes.CreatorOOO:
+    case strongUserType.CreatorOOO:
       const fieldsOOO: TOOOFields[] = [
         "innOOO",
         "kppOOO",
@@ -86,9 +91,7 @@ const generateCreatorFields = (
             placeholder={fromModelsToFieldsName.get(field)}
             color="primary"
             value={creatorInfo.dataUser.fieldsCreator[field]}
-            onChange={(e) =>
-              setCreatorInfo((info) => ({ ...info, field: e.target.value }))
-            }
+            onChange={(e) => setCreatorInfo(field, e.target.value)}
           />
         );
       });

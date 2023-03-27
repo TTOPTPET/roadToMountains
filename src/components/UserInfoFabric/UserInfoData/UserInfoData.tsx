@@ -1,7 +1,10 @@
 import React from "react";
 
 import { Typography, Box } from "@mui/material";
-import { IUserInfo, userTypes } from "../../../models/userModels/IUserInfo";
+import {
+  IUserInfo,
+  strongUserType,
+} from "../../../models/userModels/IUserInfo";
 
 function UserInfoData(props: IUserInfo) {
   const { type, name, phone, email, dataUser } = props;
@@ -10,11 +13,11 @@ function UserInfoData(props: IUserInfo) {
     <Box sx={{ ml: "30px" }}>
       <Box className="userInfo_title">
         <Typography variant="h5">
-          {type === userTypes.CreatorOOO
+          {type === strongUserType.CreatorOOO
             ? `ООО "${name}"`
-            : type === userTypes.CreatorIP
+            : type === strongUserType.CreatorIP
             ? `ИП "${name}"`
-            : type === userTypes.CreatorSELF
+            : type === strongUserType.CreatorSELF
             ? `"${name}"`
             : `${name}`}
         </Typography>
@@ -24,7 +27,7 @@ function UserInfoData(props: IUserInfo) {
           className="userInfo__commonData"
           sx={{
             display: "flex",
-            gap: type === userTypes.Tourist ? "10px" : "35px",
+            gap: type === strongUserType.Tourist ? "10px" : "35px",
             mt: "10px",
           }}
         >
@@ -33,7 +36,7 @@ function UserInfoData(props: IUserInfo) {
             sx={{
               display: "flex",
               flexDirection: "column",
-              width: type === userTypes.Tourist ? "190px" : "280px",
+              width: type === strongUserType.Tourist ? "190px" : "280px",
               gap: "5px",
             }}
           >
@@ -54,7 +57,7 @@ function UserInfoData(props: IUserInfo) {
         </Box>
         {(() => {
           switch (type) {
-            case userTypes.Tourist:
+            case strongUserType.Tourist:
               const { sex, region } = dataUser;
               return (
                 <Box
@@ -90,7 +93,7 @@ function UserInfoData(props: IUserInfo) {
                   </Box>
                 </Box>
               );
-            case userTypes.CreatorSELF:
+            case strongUserType.CreatorSELF:
               const { adressSELF, innSELF, pasportSELF } =
                 dataUser.fieldsCreator;
               return (
@@ -134,7 +137,7 @@ function UserInfoData(props: IUserInfo) {
                   </Box>
                 </Box>
               );
-            case userTypes.CreatorIP:
+            case strongUserType.CreatorIP:
               const { adressIP, egripIP, innIP, ogrnipIP } =
                 dataUser.fieldsCreator;
               return (
@@ -175,7 +178,7 @@ function UserInfoData(props: IUserInfo) {
                   </Box>
                 </Box>
               );
-            case userTypes.CreatorOOO:
+            case strongUserType.CreatorOOO:
               const {
                 innOOO,
                 kppOOO,

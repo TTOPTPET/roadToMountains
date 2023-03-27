@@ -3,7 +3,7 @@ import { getUserInfo } from "../../submitFunctions/commonAPI";
 import {
   IUserInfo,
   StatusVerify,
-  userTypes,
+  strongUserType,
 } from "../../models/userModels/IUserInfo";
 import { Typography, Box, Button, Skeleton } from "@mui/material";
 import { Link } from "react-router-dom";
@@ -202,7 +202,7 @@ function UserInfoFabric() {
               >
                 <Typography variant="h3">{title}</Typography>
                 {userInfo &&
-                userInfo.type !== userTypes.Tourist &&
+                userInfo.type !== strongUserType.Tourist &&
                 userInfo.dataUser.statusVerify === StatusVerify.verified ? (
                   <DarkStyledTooltip
                     title="Данные подтверждены"
@@ -216,7 +216,7 @@ function UserInfoFabric() {
                     />
                   </DarkStyledTooltip>
                 ) : userInfo &&
-                  userInfo.type !== userTypes.Tourist &&
+                  userInfo.type !== strongUserType.Tourist &&
                   userInfo.dataUser.statusVerify ===
                     StatusVerify.sendVerified ? (
                   <DarkStyledTooltip
@@ -252,7 +252,7 @@ function UserInfoFabric() {
                   mt: "40px",
                 }}
               >
-                {userInfo && userInfo.type !== userTypes.Tourist && (
+                {userInfo && userInfo.type !== strongUserType.Tourist && (
                   <Button
                     sx={{ mb: "10px" }}
                     disabled={
@@ -265,7 +265,7 @@ function UserInfoFabric() {
                     Отправить на подтверждение
                   </Button>
                 )}
-                <Button component={Link} to={"/changeCreatorInfo"}>
+                <Button component={Link} to={"/editUserInfo"}>
                   Изменить
                 </Button>
               </Box>
@@ -300,7 +300,7 @@ function UserInfoFabric() {
         )}
       </Box>
       {userInfo &&
-        userInfo.type !== userTypes.Tourist &&
+        userInfo.type !== strongUserType.Tourist &&
         (loadingStatus ? (
           userInfoDocumentsSkeleton
         ) : (
