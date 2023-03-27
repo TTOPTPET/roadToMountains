@@ -1,15 +1,8 @@
 import { TextField } from "@mui/material";
 import { useState } from "react";
-import { To } from "react-router-dom";
 import { fromModelsToFieldsName } from "../../../config/types";
-import {
-  CreatorType,
-  ICreatorOOOFields,
-  IUserInfo,
-  StatusVerify,
-  UserType,
-  userTypes,
-} from "../../../models/userModels/IUserInfo";
+import { IUserInfo, userTypes } from "../../../models/userModels/IUserInfo";
+import Avatar from "../../Avatar/Avatar";
 import EditUserInfo from "../EditUserInfo";
 import { TOOOFields } from "./models/fieldsTypes";
 
@@ -47,9 +40,23 @@ function EditCreatorInfo(props: IUserInfo) {
                 setCreatorInfo((info) => ({ ...info, name: e.target.value }))
               }
             />
+            {/* TODO: Здесь RadioButtonsGroup по выбору типа организации */}
+            {generateCreatorFields(props, setCreatorInfo)}
+            {/* TODO: А здесь вывод документов */}
           </>
         }
-        submitFuntion={() => {}}
+        submitFuntion={(creatorInfo) => {}}
+        // TODO: SubmitFunc - функция, срабатывающаяя на кнопку сохранить
+        header={"Личный кабинет"}
+        linkTo={"/creatorLk"}
+        avatarComponent={
+          <Avatar
+            photoUrl={creatorInfo.photo}
+            setUserPhoto={(photoUrl) =>
+              setCreatorInfo((info) => ({ ...info, photoUrl }))
+            }
+          />
+        }
       />
     </>
   );
