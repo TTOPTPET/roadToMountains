@@ -41,8 +41,52 @@ export const AddTourSecondPage = () => {
     }
   };
 
-  const handleDelete = () => {
-    console.info("You clicked the delete icon.");
+  const handleDeleteTourServices = (
+    e: string,
+    key: "free" | "additional" | "recommend"
+  ) => {
+    switch (key) {
+      case "free": {
+        dispatch(
+          setTourField({
+            tourServices: {
+              ...tourInfo?.tourServices,
+              freeServices: [
+                ...(tourInfo?.tourServices?.freeServices.filter(
+                  (item) => item !== e
+                ) ?? []),
+              ],
+            },
+          })
+        );
+        break;
+      }
+      case "additional": {
+        dispatch(
+          setTourField({
+            tourServices: {
+              ...tourInfo?.tourServices,
+              additionalServices: [
+                ...(tourInfo?.tourServices?.additionalServices.filter(
+                  (item) => item !== e
+                ) ?? []),
+              ],
+            },
+          })
+        );
+        break;
+      }
+      case "recommend": {
+        dispatch(
+          setTourField({
+            recommendations: [
+              ...(tourInfo?.recommendations.filter((item) => item !== e) ?? []),
+            ],
+          })
+        );
+        break;
+      }
+    }
   };
 
   const handleFreeServices = (e: any) => {
@@ -138,7 +182,7 @@ export const AddTourSecondPage = () => {
                   key={index}
                   label={tag}
                   variant={"outlined"}
-                  onDelete={handleDelete}
+                  onDelete={() => handleDeleteTourServices(tag, "free")}
                 />
               ))}
           </Stack>
@@ -190,7 +234,7 @@ export const AddTourSecondPage = () => {
                   key={index}
                   label={tag}
                   variant={"outlined"}
-                  onDelete={handleDelete}
+                  onDelete={() => handleDeleteTourServices(tag, "additional")}
                 />
               ))}
           </Stack>
@@ -226,7 +270,7 @@ export const AddTourSecondPage = () => {
                   key={index}
                   label={tag}
                   variant={"outlined"}
-                  onDelete={handleDelete}
+                  onDelete={() => handleDeleteTourServices(tag, "recommend")}
                 />
               ))}
           </Stack>
