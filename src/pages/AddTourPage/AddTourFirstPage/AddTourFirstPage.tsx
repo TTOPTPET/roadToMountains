@@ -2,20 +2,18 @@ import {
   Autocomplete,
   FormControlLabel,
   Grid,
-  Paper,
   Radio,
   RadioGroup,
   Stack,
-  SvgIcon,
   TextField,
   Typography,
 } from "@mui/material";
 import { AddTourImage } from "../../../components/AddTourImage/AddTourImage";
-import { useState } from "react";
-import { ReactComponent as AttentionIcon } from "../../../media/Attention.svg";
+import { Dispatch, SetStateAction } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setTourField } from "../../../redux/AddTour/AddTourReducer";
 import { RootState } from "../../../redux/store";
+import { Attention } from "../../../components/Attention/Attention";
 
 const regions = [
   "Регион РФ",
@@ -37,15 +35,13 @@ const tourCategory = [
   "Экскурсия",
 ];
 
-const loadImages = {
-  src: "",
-  loading: true,
-};
-
-export const AddTourFirstPage = () => {
-  const [images, setImage] = useState<any[]>(
-    new Array<typeof loadImages>(8).fill(loadImages)
-  );
+export const AddTourFirstPage = ({
+  images,
+  setImage,
+}: {
+  images: any[];
+  setImage: Dispatch<SetStateAction<any[]>>;
+}) => {
   const dispatch = useDispatch();
 
   const tourInfo = useSelector((state: RootState) => state.addTour.tourFields);
@@ -76,19 +72,7 @@ export const AddTourFirstPage = () => {
         </Grid>
         <Grid container item sm={6}>
           <Grid item>
-            <Paper elevation={5} sx={{ height: "136px" }}>
-              <Stack gap={1} direction={"row"}>
-                <SvgIcon viewBox="0 0 33.33 33.33" fontSize="large">
-                  <AttentionIcon />
-                </SvgIcon>
-                <Typography variant="caption" width={"auto"}>
-                  Обращаем Ваше внимание, что все <br />
-                  изменения будут применены только <br />
-                  к предстоящим записям. Забронированные <br /> туры
-                  обслуживаются по старому тарифу.
-                </Typography>
-              </Stack>
-            </Paper>
+            <Attention />
           </Grid>
 
           <Grid container direction={"row"} marginTop={5} spacing={2}>

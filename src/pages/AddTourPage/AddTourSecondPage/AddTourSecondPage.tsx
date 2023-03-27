@@ -86,6 +86,8 @@ export const AddTourSecondPage = () => {
         );
         break;
       }
+      default:
+        break;
     }
   };
 
@@ -136,7 +138,6 @@ export const AddTourSecondPage = () => {
 
   return (
     <Stack gap={1} marginTop={2}>
-      {JSON.stringify(tourInfo)}
       <Typography variant={"h3"}>
         {tourInfo?.tourName ?? "Название тура"}
       </Typography>
@@ -261,7 +262,7 @@ export const AddTourSecondPage = () => {
             ))}
           </RadioGroup>
           <Typography variant={"h5"} marginTop={0.5}>
-            Рекомаендации туристу
+            Рекомендации туристу
           </Typography>
           <Stack flexWrap={"wrap"} direction={"row"} gap={1} marginBottom={1}>
             {tourInfo?.recommendations &&
