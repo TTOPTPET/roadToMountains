@@ -31,8 +31,10 @@ import EditTouristInfo from "./components/EditUserInfo/EditTouristInfo/EditTouri
 function App() {
   dayjs.locale("ru");
   const userType = useSelector(
-    (state: RootState) => state.userInfo.userInfo.typeUser
+    (state: RootState) => state.userInfo.userInfo?.typeUser
   );
+
+  // const userType = "creator";
   return (
     <BrowserRouter>
       <ThemeProvider theme={mainThemes}>

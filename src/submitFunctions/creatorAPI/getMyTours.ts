@@ -1,8 +1,8 @@
-import { creatorUrl } from "../config/config";
+import { creatorUrl } from "../../config/config";
 import { Cookies } from "react-cookie";
 import axios from "axios";
-import { TOKEN } from "../config/types";
-import { ITour } from "../models/tourCardModel/ITour";
+import { TOKEN } from "../../config/types";
+import { ITour } from "../../models/tourCardModel/ITour";
 
 let cookie = new Cookies();
 

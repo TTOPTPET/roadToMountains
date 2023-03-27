@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 type editUserInfoProps = {
   fields: JSX.Element;
-  submitFuntion: (props: any) => void;
+  submitFuntion: Promise<void>;
   header: string;
   linkTo: string;
   avatarComponent: JSX.Element;
