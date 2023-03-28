@@ -24,16 +24,16 @@ const searchDefault: ISearchRequest = {
     from: 0,
     to: 0,
   },
-  complexity: "",
+  complexity: [],
   price: {
     from: 0,
-    to: 0,
+    to: 5000,
   },
   recommendedAge: {
     from: 0,
-    to: 0,
+    to: 14,
   },
-  regions: [],
+  region: "",
   tourDate: {
     from: "",
     to: "",
@@ -57,6 +57,7 @@ function TourListPage() {
   const dispatch = useDispatch();
   return (
     <Stack gap={1}>
+      {JSON.stringify(searchData)}
       <Grid container alignItems={"center"} spacing={1}>
         <Grid item sm={9}>
           <Typography variant={"h3"}>Все туры</Typography>
@@ -77,9 +78,17 @@ function TourListPage() {
         </Grid>
       </Grid>
 
-      <BasicFilter {...filters} />
-      <ComplexFilter {...filters} />
-      <Sorter />
+      <BasicFilter
+        filters={filters}
+        searchData={searchData}
+        setSearchData={setSearchData}
+      />
+      <ComplexFilter
+        filters={filters}
+        searchData={searchData}
+        setSearchData={setSearchData}
+      />
+      <Sorter tours={tours} setTours={setTours} />
 
       <Stack
         flexDirection={"row"}

@@ -5,7 +5,7 @@ export interface ISearchRequest {
     from: number;
     to: number;
   };
-  complexity: string;
+  complexity: string[];
   price: {
     from: number;
     to: number;
@@ -14,7 +14,7 @@ export interface ISearchRequest {
     from: number;
     to: number;
   };
-  regions: string[];
+  region: string;
   tourDate: {
     from: string;
     to: string;
