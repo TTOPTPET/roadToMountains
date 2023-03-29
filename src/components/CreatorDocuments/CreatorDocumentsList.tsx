@@ -1,12 +1,11 @@
 import { Box, Typography } from "@mui/material";
-import { IUserInfo, strongUserType } from "../../models/userModels/IUserInfo";
+import { ICreatorInfo } from "../../models/userModels/IUserInfo";
 import CreatorDocumentItem from "./CreatorDocumentItem/CreatorDocumentItem";
 
-function CreatorDocumentsList(props: IUserInfo) {
-  const { type, dataUser } = props;
+function CreatorDocumentsList(props: ICreatorInfo) {
+  const { dataUser } = props;
   const elements =
     props &&
-    type !== strongUserType.Tourist &&
     dataUser &&
     dataUser.documents.map((document, i) => {
       return <CreatorDocumentItem {...document} key={i} />;
@@ -15,7 +14,7 @@ function CreatorDocumentsList(props: IUserInfo) {
   return (
     <Box className="documents__list-wrapper" sx={{ mt: "30px" }}>
       <Typography variant="h5">Документы</Typography>
-      {elements.length === 0 ? (
+      {elements?.length === 0 ? (
         <Box
           className="documents__list-noDocument-text"
           sx={{ height: "100px", display: "flex", alignItems: "center" }}

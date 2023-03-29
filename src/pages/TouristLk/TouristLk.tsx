@@ -1,7 +1,8 @@
 import React from "react";
+import UserInfoFabric from "../../components/UserInfoFabric/UserInfoFabric";
 
 function TouristLk() {
-  return <div>TouristLk</div>;
+  return <UserInfoFabric />;
 }
 
 export default TouristLk;

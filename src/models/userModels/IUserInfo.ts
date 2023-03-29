@@ -22,17 +22,6 @@ export enum UserType {
   creator = "creator",
 }
 
-interface IBaseUserInfo {
-  photo?: string;
-  name?: string;
-  phone?: string;
-  email?: string;
-  banStatus?: boolean;
-  typeUser?: UserType;
-  id?: string;
-  createAt?: string;
-}
-
 export interface CreatorDocuments {
   docName?: string;
   docUrl?: string;
@@ -59,52 +48,49 @@ interface ICreatorSELFFields {
   adressSELF?: string;
   pasportSELF?: string;
 }
-export interface ICreatorOOOData extends IBaseUserInfo {
-  type?: strongUserType.CreatorOOO;
-  dataUser?: {
-    documents?: CreatorDocuments[];
-    dataVerify?: string;
-    creatorType?: CreatorType;
-    statusVerify?: StatusVerify;
-    fieldsCreator?: ICreatorOOOFields;
-  };
+export interface ICreatorOOOData {
+  documents?: CreatorDocuments[];
+  dataVerify?: string;
+  creatorType?: CreatorType.OOO;
+  statusVerify?: StatusVerify;
+  fieldsCreator?: ICreatorOOOFields;
 }
 
-interface ICreatorIPData extends IBaseUserInfo {
-  type?: strongUserType.CreatorIP;
-  dataUser?: {
-    documents?: CreatorDocuments[];
-    dataVerify?: string;
-    creatorType?: CreatorType;
-    statusVerify?: StatusVerify;
-    fieldsCreator?: ICreatorIPFields;
-  };
+export interface ICreatorIPData {
+  documents?: CreatorDocuments[];
+  dataVerify?: string;
+  creatorType?: CreatorType.IP;
+  statusVerify?: StatusVerify;
+  fieldsCreator?: ICreatorIPFields;
 }
-interface ICreatorSELFData extends IBaseUserInfo {
-  type?: strongUserType.CreatorSELF;
-  dataUser?: {
-    documents?: CreatorDocuments[];
-    dataVerify?: string;
-    creatorType?: CreatorType;
-    statusVerify?: StatusVerify;
-    fieldsCreator?: ICreatorSELFFields;
-  };
+export interface ICreatorSELFData {
+  documents?: CreatorDocuments[];
+  dataVerify?: string;
+  creatorType?: CreatorType.SELF;
+  statusVerify?: StatusVerify;
+  fieldsCreator?: ICreatorSELFFields;
 }
 
-interface ITouristData extends IBaseUserInfo {
-  type?: strongUserType.Tourist;
-  dataUser?: { sex: Sex; region: string };
+export interface ITouristData {
+  sex: Sex;
+  region: string;
 }
 
-export type IUserInfo =
-  | ITouristData
-  | ICreatorIPData
-  | ICreatorOOOData
-  | ICreatorSELFData;
+interface IUserInfo {
+  photo?: string;
+  name?: string;
+  phone?: string;
+  email?: string;
+  banStatus?: boolean;
+  id?: string;
+  createAt?: string;
+}
+export interface ICreatorInfo extends IUserInfo {
+  typeUser?: UserType.creator;
+  dataUser?: ICreatorOOOData | ICreatorIPData | ICreatorSELFData;
+}
 
-export enum strongUserType {
-  Tourist,
-  CreatorSELF,
-  CreatorIP,
-  CreatorOOO,
+export interface ITouristInfo extends IUserInfo {
+  typeUser?: UserType.tourist;
+  dataUser?: ITouristData;
 }

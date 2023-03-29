@@ -2,20 +2,16 @@ import axios from "axios";
 import { creatorUrl } from "../../config/config";
 import { TOKEN } from "../../config/types";
 import { Cookies } from "react-cookie";
-import { IUserInfo } from "../../models/userModels/IUserInfo";
+import { ICreatorInfo } from "../../models/userModels/IUserInfo";
 
 let cookie = new Cookies();
 
-const setCreatorInfoDefault: IUserInfo = {};
-
 export const setCreatorInfo = async (
-  data: IUserInfo,
-  successCallback: (prop: IUserInfo) => void,
+  data: ICreatorInfo,
   errorCallback?: () => void,
   useDefault?: boolean
 ) => {
   if (useDefault) {
-    successCallback(setCreatorInfoDefault);
     return;
   }
   try {
@@ -25,7 +21,6 @@ export const setCreatorInfo = async (
         Authorization: `Bearer ${cookie.get(TOKEN)}`,
       },
     });
-    successCallback(respone?.data);
   } catch (e) {
     console.error(e);
     errorCallback && errorCallback();

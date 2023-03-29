@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { getUserInfo } from "../../submitFunctions/commonAPI";
 import {
-  IUserInfo,
+  ITouristInfo,
+  ICreatorInfo,
   StatusVerify,
-  strongUserType,
+  UserType,
 } from "../../models/userModels/IUserInfo";
 import { Typography, Box, Button, Skeleton } from "@mui/material";
 import { Link } from "react-router-dom";
@@ -17,16 +18,22 @@ import checked from "../../media/checkedVerify.svg";
 import clock from "../../media/clockVerify.svg";
 import alert from "../../media/alertVerify.svg";
 import CreatorDocumentsList from "../CreatorDocuments/CreatorDocumentsList";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
+import { setUserInfo } from "../../redux/UserInfo/UserInfoReducer";
 
 function UserInfoFabric() {
-  const [userInfo, setUserInfo] = useState<IUserInfo>();
+  const userInfo: ITouristInfo | ICreatorInfo = useSelector(
+    (state: RootState) => state.userInfo.userInfo
+  );
+  const dispatch = useDispatch();
   const [loadingStatus, setLoadingStatus] = useState<Boolean>(true);
 
   useEffect(() => {
     setLoadingStatus(true);
     getUserInfo(
       (value) => {
-        setUserInfo(value);
+        dispatch(setUserInfo(value));
         setLoadingStatus(false);
       },
       undefined,
@@ -34,7 +41,7 @@ function UserInfoFabric() {
     );
   }, []);
 
-  const userInfoDocumentsSkeleton = () => {
+  const UserInfoDocumentsSkeleton = () => {
     return (
       <Box>
         <Typography variant="h5">Документы</Typography>
@@ -177,7 +184,7 @@ function UserInfoFabric() {
   };
 
   const title =
-    userInfo && userInfo.typeUser === "creator"
+    userInfo && userInfo?.typeUser === "creator"
       ? "Личный кабинет"
       : "Привет, турист!";
 
@@ -202,8 +209,8 @@ function UserInfoFabric() {
               >
                 <Typography variant="h3">{title}</Typography>
                 {userInfo &&
-                userInfo.type !== strongUserType.Tourist &&
-                userInfo.dataUser.statusVerify === StatusVerify.verified ? (
+                userInfo?.typeUser !== UserType.tourist &&
+                userInfo?.dataUser?.statusVerify === StatusVerify.verified ? (
                   <DarkStyledTooltip
                     title="Данные подтверждены"
                     arrow
@@ -216,8 +223,8 @@ function UserInfoFabric() {
                     />
                   </DarkStyledTooltip>
                 ) : userInfo &&
-                  userInfo.type !== strongUserType.Tourist &&
-                  userInfo.dataUser.statusVerify ===
+                  userInfo?.typeUser !== UserType.tourist &&
+                  userInfo?.dataUser?.statusVerify ===
                     StatusVerify.sendVerified ? (
                   <DarkStyledTooltip
                     title="Данные на проверке"
@@ -252,11 +259,11 @@ function UserInfoFabric() {
                   mt: "40px",
                 }}
               >
-                {userInfo && userInfo.type !== strongUserType.Tourist && (
+                {userInfo && userInfo?.typeUser !== UserType.tourist && (
                   <Button
                     sx={{ mb: "10px" }}
                     disabled={
-                      userInfo.dataUser.statusVerify ===
+                      userInfo?.dataUser?.statusVerify ===
                       StatusVerify.notVerified
                         ? false
                         : true
@@ -287,8 +294,8 @@ function UserInfoFabric() {
                     borderRadius: "50%",
                   }}
                 >
-                  {userInfo && userInfo.photo ? (
-                    <img src={userInfo.photo} alt="user avatar" />
+                  {userInfo && userInfo?.photo ? (
+                    <img src={userInfo?.photo} alt="user avatar" />
                   ) : (
                     <img src={userPhoto} alt="person icon" />
                   )}
@@ -300,9 +307,9 @@ function UserInfoFabric() {
         )}
       </Box>
       {userInfo &&
-        userInfo.type !== strongUserType.Tourist &&
+        userInfo?.typeUser !== UserType.tourist &&
         (loadingStatus ? (
-          userInfoDocumentsSkeleton
+          <UserInfoDocumentsSkeleton />
         ) : (
           <CreatorDocumentsList {...userInfo} />
         ))}

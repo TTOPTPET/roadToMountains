@@ -19,12 +19,12 @@ import {
   darkTurquoiseColor,
   lightTurquoiseColor,
 } from "../../../config/MUI/color/color";
-import { IUserInfo } from "../../../models/userModels/IUserInfo";
+import { ICreatorInfo } from "../../../models/userModels/IUserInfo";
 
 function ChangeCreatorInfo() {
   const [fieldSet, setFieldSet] = useState("");
   const [files, setFiles] = useState<FileList>();
-  const [userInfo, setUserInfo] = useState<IUserInfo>();
+  const [userInfo, setUserInfo] = useState<ICreatorInfo>();
 
   const handleRadioButtonChange = (event: { target: HTMLInputElement }) => {
     setFieldSet(event.target.value);
@@ -86,7 +86,7 @@ function ChangeCreatorInfo() {
               placeholder="ОГРН"
               color="primary"
               onChange={(e) =>
-                setUserInfo((userInfo) => ({
+                setUserInfo((userInfo: ICreatorInfo) => ({
                   ...userInfo,
                   ogrnOOO: e.target.value,
                 }))
