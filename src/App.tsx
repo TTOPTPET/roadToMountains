@@ -20,7 +20,6 @@ import {
   TourListPage,
   AddTourPage,
 } from "./pages";
-import ChangeCreatorInfo from "./pages/CreatorLk/ChangeCreatorInfoPage/ChangeCreatorInfo";
 import NavTool from "./components/NavTool/NavTool";
 import EditCreatorInfo from "./components/EditUserInfo/EditCreatorInfo/EditCreatorInfo";
 import { useSelector } from "react-redux";

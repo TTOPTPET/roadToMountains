@@ -42,7 +42,7 @@ function CreatorDocumentItem(data: CreatorDocuments) {
         </Paper>
       </Box>
       <Typography variant="caption" sx={{ textAlign: "center" }}>
-        {data.docName}
+        {data.name}
       </Typography>
     </Box>
   );

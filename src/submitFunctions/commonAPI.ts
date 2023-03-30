@@ -22,7 +22,10 @@ const userInfoDefault: ICreatorInfo = {
   id: "1",
   createAt: "10-10-2010",
   dataUser: {
-    documents: [],
+    documents: [
+      { name: "123123", docUrl: "asjkdha" },
+      { name: "qwerty", docUrl: "nvmc,x." },
+    ],
     dataVerify: "123",
     creatorType: CreatorType.OOO,
     statusVerify: StatusVerify.verified,

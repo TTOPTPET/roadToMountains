@@ -10,7 +10,7 @@ import { TIPFields, TOOOFields, TSELFFields } from "../models/fieldsTypes";
 
 type fieldsCreatorProps = {
   creatorInfo: ICreatorInfo;
-  setCreatorInfo: (field: string, value: any) => void;
+  setCreatorInfo: (field: string, value: any, text: any) => void;
 };
 
 function FieldsCreator({ creatorInfo, setCreatorInfo }: fieldsCreatorProps) {
@@ -38,7 +38,13 @@ function FieldsCreator({ creatorInfo, setCreatorInfo }: fieldsCreatorProps) {
                 placeholder={fromModelsToFieldsName.get(field)}
                 color="primary"
                 value={creatorInfo?.dataUser?.fieldsCreator?.[field]}
-                onChange={(e) => setCreatorInfo(field, e.target.value)}
+                onChange={(e) =>
+                  setCreatorInfo(
+                    field,
+                    e.target.value,
+                    creatorInfo?.dataUser?.fieldsCreator
+                  )
+                }
               />
             )
           );
@@ -58,7 +64,13 @@ function FieldsCreator({ creatorInfo, setCreatorInfo }: fieldsCreatorProps) {
                 placeholder={fromModelsToFieldsName.get(field)}
                 color="primary"
                 value={creatorInfo?.dataUser?.fieldsCreator?.[field] || ""}
-                onChange={(e) => setCreatorInfo(field, e.target.value)}
+                onChange={(e) => {
+                  setCreatorInfo(
+                    field,
+                    e.target.value,
+                    creatorInfo?.dataUser?.fieldsCreator
+                  );
+                }}
               />
             )
           );
@@ -77,7 +89,13 @@ function FieldsCreator({ creatorInfo, setCreatorInfo }: fieldsCreatorProps) {
                 placeholder={fromModelsToFieldsName.get(field)}
                 color="primary"
                 value={creatorInfo?.dataUser?.fieldsCreator?.[field] || ""}
-                onChange={(e) => setCreatorInfo(field, e.target.value)}
+                onChange={(e) =>
+                  setCreatorInfo(
+                    field,
+                    e.target.value,
+                    creatorInfo?.dataUser?.fieldsCreator
+                  )
+                }
               />
             )
           );

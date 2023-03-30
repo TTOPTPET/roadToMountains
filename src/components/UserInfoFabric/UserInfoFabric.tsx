@@ -17,10 +17,11 @@ import { DarkStyledTooltip } from "../../config/MUI/styledComponents/StyledToolt
 import checked from "../../media/checkedVerify.svg";
 import clock from "../../media/clockVerify.svg";
 import alert from "../../media/alertVerify.svg";
-import CreatorDocumentsList from "../CreatorDocuments/CreatorDocumentsList";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { setUserInfo } from "../../redux/UserInfo/UserInfoReducer";
+import UserInfoFabricSkeleton from "./UserInfoFabricSkeleton/UserInfoFabricSkeleton";
+import CreatorDocumentsList from "../CreatorDocumentsList/CreatorDocumentsList";
 
 function UserInfoFabric() {
   const userInfo: ITouristInfo | ICreatorInfo = useSelector(
@@ -28,6 +29,8 @@ function UserInfoFabric() {
   );
   const dispatch = useDispatch();
   const [loadingStatus, setLoadingStatus] = useState<Boolean>(true);
+
+  console.log(userInfo);
 
   useEffect(() => {
     setLoadingStatus(true);
@@ -41,148 +44,6 @@ function UserInfoFabric() {
     );
   }, []);
 
-  const UserInfoDocumentsSkeleton = () => {
-    return (
-      <Box>
-        <Typography variant="h5">Документы</Typography>
-        <Box sx={{ display: "flex", gap: "10px", mt: "10px" }}>
-          <Box>
-            <Skeleton
-              animation="wave"
-              variant="rounded"
-              width="100px"
-              height="100px"
-              sx={{ borderRadius: "30px" }}
-            />
-            <Skeleton
-              animation="wave"
-              variant="rounded"
-              width="100px"
-              height="20px"
-              sx={{ mt: "10px" }}
-            />
-          </Box>
-          <Box>
-            <Skeleton
-              animation="wave"
-              variant="rounded"
-              width="100px"
-              height="100px"
-              sx={{ borderRadius: "30px" }}
-            />
-            <Skeleton
-              animation="wave"
-              variant="rounded"
-              width="100px"
-              height="20px"
-              sx={{ mt: "10px" }}
-            />
-          </Box>
-          <Box>
-            <Skeleton
-              animation="wave"
-              variant="rounded"
-              width="100px"
-              height="100px"
-              sx={{ borderRadius: "30px" }}
-            />
-            <Skeleton
-              animation="wave"
-              variant="rounded"
-              width="100px"
-              height="20px"
-              sx={{ mt: "10px" }}
-            />
-          </Box>
-        </Box>
-      </Box>
-    );
-  };
-
-  const userInfoSkeleton = () => {
-    return (
-      <Box>
-        <Box>
-          <Skeleton
-            animation="wave"
-            variant="rounded"
-            width="100%"
-            height="50px"
-            sx={{ borderRadius: "20px" }}
-          />
-        </Box>
-        <Box className="skeleton-wrapper">
-          <Box
-            className="skeleton__content"
-            sx={{ mt: "50px", display: "flex" }}
-          >
-            <Skeleton
-              animation="wave"
-              variant="circular"
-              width="140px"
-              height="140px"
-            />
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                ml: "30px",
-              }}
-            >
-              <Box>
-                <Skeleton
-                  animation="wave"
-                  variant="rounded"
-                  width="400px"
-                  height="30px"
-                />
-              </Box>
-              <Box
-                sx={{
-                  mt: "30px",
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "5px",
-                }}
-              >
-                <Skeleton
-                  animation="wave"
-                  variant="rounded"
-                  width="550px"
-                  height="30px"
-                />
-                <Skeleton
-                  animation="wave"
-                  variant="rounded"
-                  width="550px"
-                  height="30px"
-                />
-                <Skeleton
-                  animation="wave"
-                  variant="rounded"
-                  width="550px"
-                  height="30px"
-                />
-                <Skeleton
-                  animation="wave"
-                  variant="rounded"
-                  width="550px"
-                  height="30px"
-                />
-                <Skeleton
-                  animation="wave"
-                  variant="rounded"
-                  width="550px"
-                  height="30px"
-                />
-              </Box>
-            </Box>
-          </Box>
-        </Box>
-      </Box>
-    );
-  };
-
   const title =
     userInfo && userInfo?.typeUser === "creator"
       ? "Личный кабинет"
@@ -192,7 +53,7 @@ function UserInfoFabric() {
     <>
       <Box className="userInfo__wrapper" sx={{ mt: "55px" }}>
         {loadingStatus ? (
-          userInfoSkeleton()
+          <UserInfoFabricSkeleton />
         ) : (
           <>
             <Box
@@ -306,13 +167,13 @@ function UserInfoFabric() {
           </>
         )}
       </Box>
-      {userInfo &&
-        userInfo?.typeUser !== UserType.tourist &&
-        (loadingStatus ? (
-          <UserInfoDocumentsSkeleton />
-        ) : (
-          <CreatorDocumentsList {...userInfo} />
-        ))}
+      {userInfo && userInfo?.typeUser !== UserType.tourist && (
+        <CreatorDocumentsList
+          files={userInfo.dataUser.documents}
+          loadingStatus={loadingStatus}
+          variant="displayInfo"
+        />
+      )}
     </>
   );
 }
