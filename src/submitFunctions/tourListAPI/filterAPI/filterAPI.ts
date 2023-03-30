@@ -28,7 +28,7 @@ export const getFilters = async (
     return;
   }
   try {
-    let response = await axios.get(urlUser + "/tours/filters ", {
+    let response = await axios.get(urlUser + "/tours/filters", {
       headers: {
         Authorization: `Bearer ${cookie.get(TOKEN)}`,
       },

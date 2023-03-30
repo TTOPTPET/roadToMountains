@@ -1,5 +1,4 @@
-import { FC } from "react";
-import { IFilter } from "../../../models/tourListModels/IFilter";
+import { ChangeEvent, FC, useState } from "react";
 import {
   Button,
   Checkbox,
@@ -20,24 +19,139 @@ import {
   setModalInactive,
 } from "../../../redux/Modal/ModalReducer";
 import { RootState } from "../../../redux/store";
+import { IFilterProps } from "../FilterTypes/IFilterProps";
+import { ISearchRequest } from "../../../models/tourListModels/ISearchRequest";
 
-const tourDuration: string[] = [
-  "Менее недели",
-  "1-2 недели",
-  "2 недели - 1 месяц",
-  "Более месяца",
-  "Другое:",
+interface ITourDuration {
+  label: string;
+  value?: number[];
+}
+
+const tourDuration: ITourDuration[] = [
+  {
+    label: "Менее недели",
+    value: [0, 7],
+  },
+  {
+    label: "1-2 недели",
+    value: [7, 14],
+  },
+  {
+    label: "2 недели - 1 месяц",
+    value: [14, 30],
+  },
+  {
+    label: "Более месяца",
+    value: [30, 0],
+  },
+  {
+    label: "Другое:",
+  },
 ];
 
-export const ComplexFilter: FC<IFilter> = ({
-  category,
-  complexity,
-  maxPrice,
+export const ComplexFilter: FC<IFilterProps> = ({
+  filters,
+  searchData,
+  setSearchData,
 }) => {
+  const [durationState, setDurationState] = useState<boolean>(true);
+  const [durationLabel, setDurationLabel] = useState<string>("");
+
+  const { maxPrice, category, complexity } = filters;
   const activeModals = useSelector(
     (state: RootState) => state.modal.activeModals
   );
   const dispatch = useDispatch();
+
+  const handlerCategoryChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (searchData.category.indexOf(e.target.value) === -1) {
+      setSearchData({
+        ...searchData,
+        category: [...searchData.category, e.target.value],
+      });
+    } else {
+      setSearchData({
+        ...searchData,
+        category: [
+          ...searchData.category.filter((item) => item !== e.target.value),
+        ],
+      });
+    }
+  };
+
+  const handlerComplexityChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (searchData.complexity.indexOf(e.target.value) === -1) {
+      setSearchData({
+        ...searchData,
+        complexity: [...searchData.complexity, e.target.value],
+      });
+    } else {
+      setSearchData({
+        ...searchData,
+        complexity: [
+          ...searchData.complexity.filter((item) => item !== e.target.value),
+        ],
+      });
+    }
+  };
+
+  const handlerDurationChange = (visibility: boolean, e: number[] | number) => {
+    if (visibility) {
+      let duration = Object.values(e);
+      setSearchData({
+        ...searchData,
+        tourDuration: {
+          from: duration[0],
+          to: duration[1],
+        },
+      });
+    } else {
+      setSearchData({
+        ...searchData,
+        tourDuration: {
+          from: e as number,
+          to: 0,
+        },
+      });
+    }
+
+    setDurationState(visibility);
+  };
+
+  const handleChangeField = (key: keyof ISearchRequest, e: number[]) => {
+    let numbers = Object.values(e);
+    setSearchData({
+      ...searchData,
+      [key]: { from: numbers[0], to: numbers[1] },
+    });
+  };
+
+  const handlerConfirmClick = () => {
+    dispatch(setModalInactive("filterModal"));
+  };
+
+  const handlerClearClick = () => {
+    setSearchData({
+      searchParam: searchData.searchParam,
+      category: [],
+      tourDuration: {
+        from: 0,
+        to: 0,
+      },
+      complexity: [],
+      price: {
+        from: 0,
+        to: 5000,
+      },
+      recommendedAge: {
+        from: 0,
+        to: 14,
+      },
+      region: searchData.region,
+      tourDate: searchData.tourDate,
+      maxPersonNumber: searchData.maxPersonNumber,
+    });
+  };
 
   const marks = [
     {
@@ -76,8 +190,11 @@ export const ComplexFilter: FC<IFilter> = ({
               {category.map((cat, index) => (
                 <FormControlLabel
                   key={index}
+                  checked={
+                    searchData.category.indexOf(cat) !== -1 ? true : false
+                  }
                   value={cat}
-                  control={<Checkbox />}
+                  control={<Checkbox onChange={handlerCategoryChange} />}
                   label={cat}
                 />
               ))}
@@ -86,23 +203,59 @@ export const ComplexFilter: FC<IFilter> = ({
           <Grid item sm={4}>
             <Typography variant={"h5"}>Длительность тура</Typography>
             <RadioGroup>
-              {tourDuration.map((duration, index) => (
-                <FormControlLabel
-                  key={index}
-                  value={duration}
-                  control={<Radio />}
-                  label={duration}
-                />
-              ))}
+              {tourDuration.map((duration, index) =>
+                tourDuration.length - 1 === index ? (
+                  <FormControlLabel
+                    key={index}
+                    value={duration.label}
+                    checked={durationLabel === duration.label}
+                    control={
+                      <Radio
+                        onChange={() => {
+                          handlerDurationChange(false, duration.value);
+                          setDurationLabel(duration.label);
+                        }}
+                      />
+                    }
+                    label={duration.label}
+                  />
+                ) : (
+                  <FormControlLabel
+                    key={index}
+                    value={duration.label}
+                    checked={durationLabel === duration.label}
+                    control={
+                      <Radio
+                        onChange={() => {
+                          handlerDurationChange(true, duration.value);
+                          setDurationLabel(duration.label);
+                        }}
+                      />
+                    }
+                    label={duration.label}
+                  />
+                )
+              )}
             </RadioGroup>
             <TextField
               color={"secondary"}
+              disabled={durationState}
+              type={"number"}
+              onChange={(e) => handlerDurationChange(false, +e.target.value)}
               placeholder="Введите колличество дней"
             />
             <Typography variant={"h5"} marginTop={2}>
               Стоимость
             </Typography>
-            <Slider max={maxPrice} marks={marks} valueLabelDisplay="auto" />
+            <Slider
+              max={maxPrice}
+              marks={marks}
+              value={[searchData.price.from, searchData.price.to]}
+              onChange={(e, value) =>
+                handleChangeField("price", value as number[])
+              }
+              valueLabelDisplay="auto"
+            />
           </Grid>
           <Grid item sm={3}>
             <Typography variant={"h5"}>Сложность маршрута</Typography>
@@ -110,8 +263,11 @@ export const ComplexFilter: FC<IFilter> = ({
               {complexity.map((compl, index) => (
                 <FormControlLabel
                   key={index}
+                  checked={
+                    searchData.complexity.indexOf(compl) !== -1 ? true : false
+                  }
                   value={compl}
-                  control={<Checkbox />}
+                  control={<Checkbox onChange={handlerComplexityChange} />}
                   label={compl}
                 />
               ))}
@@ -119,12 +275,23 @@ export const ComplexFilter: FC<IFilter> = ({
             <Typography variant={"h5"} marginTop={5}>
               Рекомендуемый возраст
             </Typography>
-            <Slider max={120} marks={age} valueLabelDisplay="auto" />
+            <Slider
+              max={120}
+              marks={age}
+              value={[
+                searchData.recommendedAge.from,
+                searchData.recommendedAge.to,
+              ]}
+              onChange={(_, value) =>
+                handleChangeField("recommendedAge", value as number[])
+              }
+              valueLabelDisplay="auto"
+            />
           </Grid>
         </Grid>
         <Stack direction={"row"} justifyContent={"end"} marginTop={4} gap={1}>
-          <Button>Применить</Button>
-          <Button>Сбросить</Button>
+          <Button onClick={handlerConfirmClick}>Применить</Button>
+          <Button onClick={handlerClearClick}>Сбросить</Button>
         </Stack>
       </DialogContent>
     </Dialog>

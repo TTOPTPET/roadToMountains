@@ -14,19 +14,81 @@ import {
   isModalActive,
   setModalInactive,
 } from "../../../redux/Modal/ModalReducer";
+import { ISortFilter } from "../FilterTypes/ISortFilter";
+import { ITour } from "../../../models/tourCardModel/ITour";
+import { SetStateAction, Dispatch, FC, useState } from "react";
+import { parse } from "date-fns";
 
-const sortDefault: string[] = [
-  "По возрастанию цены",
-  "По убыванию цены",
-  "По возрастанию длительности",
-  "По убыванию длительности",
-];
+interface ISorterProps {
+  tours: ITour[];
+  setTours: Dispatch<SetStateAction<ITour[]>>;
+}
 
-export const Sorter = () => {
+export const Sorter: FC<ISorterProps> = ({ tours, setTours }) => {
+  const [sortData, setSortData] = useState<ISortFilter>();
+
   const activeModals = useSelector(
     (state: RootState) => state.modal.activeModals
   );
   const dispatch = useDispatch();
+
+  const sortDefault: ISortFilter[] = [
+    {
+      name: "По возрастанию цены",
+      sort: function () {
+        setTours([...tours.sort((a, b) => a.price.from - b.price.from)]);
+      },
+    },
+    {
+      name: "По убыванию цены",
+      sort: function () {
+        setTours([...tours.sort((a, b) => b.price.from - a.price.from)]);
+      },
+    },
+    {
+      name: "По возрастанию длительности",
+      sort: function () {
+        setTours([
+          ...tours.sort((a, b) => {
+            return (
+              Number(parse(a.tourDate.to, "dd.MM.yyyy", new Date())) -
+              Number(parse(a.tourDate.from, "dd.MM.yyyy", new Date())) -
+              (Number(parse(b.tourDate.to, "dd.MM.yyyy", new Date())) -
+                Number(parse(b.tourDate.from, "dd.MM.yyyy", new Date())))
+            );
+          }),
+        ]);
+      },
+    },
+    {
+      name: "По убыванию длительности",
+      sort: function () {
+        setTours([
+          ...tours.sort(
+            (a, b) =>
+              Number(parse(b.tourDate.to, "dd.MM.yyyy", new Date())) -
+              Number(parse(b.tourDate.from, "dd.MM.yyyy", new Date())) -
+              (Number(parse(a.tourDate.to, "dd.MM.yyyy", new Date())) -
+                Number(parse(a.tourDate.from, "dd.MM.yyyy", new Date())))
+          ),
+        ]);
+      },
+    },
+  ];
+
+  const handlerSetSort = (sortFilter: ISortFilter) => {
+    setSortData(sortFilter);
+  };
+
+  const handlerConfirmClick = () => {
+    sortData.sort();
+    dispatch(setModalInactive("sortModal"));
+  };
+
+  const handlerClearClick = () => {
+    setSortData(null);
+    dispatch(setModalInactive("sortModal"));
+  };
 
   return (
     <Dialog
@@ -42,15 +104,16 @@ export const Sorter = () => {
           {sortDefault.map((sort, index) => (
             <FormControlLabel
               key={index}
-              value={sort}
-              control={<Radio />}
-              label={sort}
+              checked={sortData?.name === sort.name ? true : false}
+              value={sort.name}
+              control={<Radio onChange={() => handlerSetSort(sort)} />}
+              label={sort.name}
             />
           ))}
         </RadioGroup>
         <Stack direction={"row"} justifyContent={"end"} marginTop={4} gap={1}>
-          <Button>Применить</Button>
-          <Button>Сбросить</Button>
+          <Button onClick={handlerConfirmClick}>Применить</Button>
+          <Button onClick={handlerClearClick}>Сбросить</Button>
         </Stack>
       </DialogContent>
     </Dialog>
