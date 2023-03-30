@@ -53,8 +53,8 @@ export const Sorter: FC<ISorterProps> = ({ tours, setTours }) => {
             return (
               Number(parse(a.tourDate.to, "dd.MM.yyyy", new Date())) -
               Number(parse(a.tourDate.from, "dd.MM.yyyy", new Date())) -
-              Number(parse(b.tourDate.to, "dd.MM.yyyy", new Date())) -
-              Number(parse(b.tourDate.from, "dd.MM.yyyy", new Date()))
+              (Number(parse(b.tourDate.to, "dd.MM.yyyy", new Date())) -
+                Number(parse(b.tourDate.from, "dd.MM.yyyy", new Date())))
             );
           }),
         ]);
@@ -68,8 +68,8 @@ export const Sorter: FC<ISorterProps> = ({ tours, setTours }) => {
             (a, b) =>
               Number(parse(b.tourDate.to, "dd.MM.yyyy", new Date())) -
               Number(parse(b.tourDate.from, "dd.MM.yyyy", new Date())) -
-              Number(parse(a.tourDate.to, "dd.MM.yyyy", new Date())) -
-              Number(parse(a.tourDate.from, "dd.MM.yyyy", new Date()))
+              (Number(parse(a.tourDate.to, "dd.MM.yyyy", new Date())) -
+                Number(parse(a.tourDate.from, "dd.MM.yyyy", new Date())))
           ),
         ]);
       },

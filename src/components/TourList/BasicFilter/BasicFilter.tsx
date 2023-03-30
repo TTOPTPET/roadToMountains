@@ -75,7 +75,9 @@ export const BasicFilter: FC<IFilterProps> = ({
       <TextField
         type={"number"}
         InputProps={{ inputProps: { min: 0 } }}
-        value={searchData.maxPersonNumber as number}
+        value={
+          searchData.maxPersonNumber === 0 ? "" : searchData.maxPersonNumber
+        }
         onChange={(e) =>
           handleFieldChange<number>("maxPersonNumber", +e.target.value)
         }

@@ -1,11 +1,9 @@
-import { ChangeEvent, FC } from "react";
-import { IFilter } from "../../../models/tourListModels/IFilter";
+import { ChangeEvent, FC, useState } from "react";
 import {
   Button,
   Checkbox,
   Dialog,
   DialogContent,
-  FormControl,
   FormControlLabel,
   Grid,
   Radio,
@@ -24,12 +22,31 @@ import { RootState } from "../../../redux/store";
 import { IFilterProps } from "../FilterTypes/IFilterProps";
 import { ISearchRequest } from "../../../models/tourListModels/ISearchRequest";
 
-const tourDuration: string[] = [
-  "Менее недели",
-  "1-2 недели",
-  "2 недели - 1 месяц",
-  "Более месяца",
-  "Другое:",
+interface ITourDuration {
+  label: string;
+  value?: number[];
+}
+
+const tourDuration: ITourDuration[] = [
+  {
+    label: "Менее недели",
+    value: [0, 7],
+  },
+  {
+    label: "1-2 недели",
+    value: [7, 14],
+  },
+  {
+    label: "2 недели - 1 месяц",
+    value: [14, 30],
+  },
+  {
+    label: "Более месяца",
+    value: [30, 0],
+  },
+  {
+    label: "Другое:",
+  },
 ];
 
 export const ComplexFilter: FC<IFilterProps> = ({
@@ -37,6 +54,9 @@ export const ComplexFilter: FC<IFilterProps> = ({
   searchData,
   setSearchData,
 }) => {
+  const [durationState, setDurationState] = useState<boolean>(true);
+  const [durationLabel, setDurationLabel] = useState<string>("");
+
   const { maxPrice, category, complexity } = filters;
   const activeModals = useSelector(
     (state: RootState) => state.modal.activeModals
@@ -75,6 +95,29 @@ export const ComplexFilter: FC<IFilterProps> = ({
     }
   };
 
+  const handlerDurationChange = (visibility: boolean, e: number[] | number) => {
+    if (visibility) {
+      let duration = Object.values(e);
+      setSearchData({
+        ...searchData,
+        tourDuration: {
+          from: duration[0],
+          to: duration[1],
+        },
+      });
+    } else {
+      setSearchData({
+        ...searchData,
+        tourDuration: {
+          from: e as number,
+          to: 0,
+        },
+      });
+    }
+
+    setDurationState(visibility);
+  };
+
   const handleChangeField = (key: keyof ISearchRequest, e: number[]) => {
     let numbers = Object.values(e);
     setSearchData({
@@ -91,7 +134,10 @@ export const ComplexFilter: FC<IFilterProps> = ({
     setSearchData({
       searchParam: searchData.searchParam,
       category: [],
-      tourDuration: searchData.tourDuration,
+      tourDuration: {
+        from: 0,
+        to: 0,
+      },
       complexity: [],
       price: {
         from: 0,
@@ -157,17 +203,45 @@ export const ComplexFilter: FC<IFilterProps> = ({
           <Grid item sm={4}>
             <Typography variant={"h5"}>Длительность тура</Typography>
             <RadioGroup>
-              {tourDuration.map((duration, index) => (
-                <FormControlLabel
-                  key={index}
-                  value={duration}
-                  control={<Radio />}
-                  label={duration}
-                />
-              ))}
+              {tourDuration.map((duration, index) =>
+                tourDuration.length - 1 === index ? (
+                  <FormControlLabel
+                    key={index}
+                    value={duration.label}
+                    checked={durationLabel === duration.label}
+                    control={
+                      <Radio
+                        onChange={() => {
+                          handlerDurationChange(false, duration.value);
+                          setDurationLabel(duration.label);
+                        }}
+                      />
+                    }
+                    label={duration.label}
+                  />
+                ) : (
+                  <FormControlLabel
+                    key={index}
+                    value={duration.label}
+                    checked={durationLabel === duration.label}
+                    control={
+                      <Radio
+                        onChange={() => {
+                          handlerDurationChange(true, duration.value);
+                          setDurationLabel(duration.label);
+                        }}
+                      />
+                    }
+                    label={duration.label}
+                  />
+                )
+              )}
             </RadioGroup>
             <TextField
               color={"secondary"}
+              disabled={durationState}
+              type={"number"}
+              onChange={(e) => handlerDurationChange(false, +e.target.value)}
               placeholder="Введите колличество дней"
             />
             <Typography variant={"h5"} marginTop={2}>
@@ -208,7 +282,7 @@ export const ComplexFilter: FC<IFilterProps> = ({
                 searchData.recommendedAge.from,
                 searchData.recommendedAge.to,
               ]}
-              onChange={(e, value) =>
+              onChange={(_, value) =>
                 handleChangeField("recommendedAge", value as number[])
               }
               valueLabelDisplay="auto"
