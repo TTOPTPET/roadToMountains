@@ -9,36 +9,13 @@ import { ISearchRequest } from "../../models/tourListModels/ISearchRequest";
 import { getToursSorted } from "../../submitFunctions/tourListAPI/searchAPI/searchAPI";
 import { ITour } from "../../models/tourCardModel/ITour";
 import TourCard from "../../components/TourCard/TourCard";
+import { searchDefault } from "../../components/TourList/Constants/searchDefault";
 
 const filterDefault: IFilter = {
   regions: [],
   category: [],
   complexity: [],
   maxPrice: 0,
-};
-
-const searchDefault: ISearchRequest = {
-  searchParam: "",
-  category: [],
-  tourDuration: {
-    from: 0,
-    to: 0,
-  },
-  complexity: [],
-  price: {
-    from: 0,
-    to: 5000,
-  },
-  recommendedAge: {
-    from: 0,
-    to: 14,
-  },
-  region: "",
-  tourDate: {
-    from: "",
-    to: "",
-  },
-  maxPersonNumber: 0,
 };
 
 function TourListPage() {
