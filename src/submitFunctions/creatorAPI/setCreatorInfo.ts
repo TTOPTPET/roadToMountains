@@ -8,6 +8,7 @@ let cookie = new Cookies();
 
 export const setCreatorInfo = async (
   data: ICreatorInfo,
+  successCallback?: (prop: any) => void,
   errorCallback?: () => void,
   useDefault?: boolean
 ) => {
@@ -15,12 +16,13 @@ export const setCreatorInfo = async (
     return;
   }
   try {
-    let respone = await axios.post(creatorUrl + "/creatorInfo", {
+    let response = await axios.post(creatorUrl + "/creatorInfo", {
       data: data,
       headers: {
         Authorization: `Bearer ${cookie.get(TOKEN)}`,
       },
     });
+    successCallback(response?.data);
   } catch (e) {
     console.error(e);
     errorCallback && errorCallback();

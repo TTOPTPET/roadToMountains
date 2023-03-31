@@ -8,11 +8,10 @@ import {
   Button,
   Typography,
 } from "@mui/material";
-import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  CreatorType,
   ICreatorInfo,
+  CreatorType,
 } from "../../../models/userModels/IUserInfo";
 import { RootState } from "../../../redux/store";
 import { setUserInfo } from "../../../redux/UserInfo/UserInfoReducer";
@@ -22,8 +21,10 @@ import EditUserInfo from "../EditUserInfo";
 import CreatorDocumentsList from "../../CreatorDocumentsList/CreatorDocumentsList";
 import { setCreatorInfo } from "../../../submitFunctions/creatorAPI/setCreatorInfo";
 import FieldsCreator from "./FieldsCreator/FieldsCreator";
-
-import { CreatorDocuments } from "../../../models/userModels/IUserInfo";
+import {
+  CreatorDocuments,
+  StatusVerify,
+} from "../../../models/userModels/IUserInfo";
 
 function EditCreatorInfo() {
   const creatorInfo = useSelector(
@@ -31,17 +32,42 @@ function EditCreatorInfo() {
   );
   let dispatch = useDispatch();
 
-  const [files, setFiles] = useState<CreatorDocuments[]>();
+  const setFiles = (files: CreatorDocuments[]) => {
+    dispatch(
+      setUserInfo({
+        ...creatorInfo,
+        dataUser: {
+          ...creatorInfo?.dataUser,
+          documents: files,
+        },
+      })
+    );
+  };
+
+  const setInfoStatus = (statusVerify: StatusVerify, timeToSend: string) => {
+    dispatch(
+      setUserInfo({
+        ...creatorInfo,
+        dataUser: {
+          ...creatorInfo?.dataUser,
+          statusVerify,
+          timeToSend,
+        },
+      })
+    );
+  };
 
   const handleFileInputChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     if (event.target.files && event.target.files.length > 0) {
       let files = Array.from(event.target.files).map((file) => {
-        const { name, lastModified } = file;
+        const { name, lastModified, size } = file;
+        // TODO: проверить размер файла
         return { name, lastModified };
       });
       setFiles(files);
+      event.target.value = null;
     }
   };
 
@@ -54,10 +80,9 @@ function EditCreatorInfo() {
               placeholder="Имя"
               color="primary"
               value={creatorInfo?.name}
-              onChange={(e) => {
-                dispatch(setUserInfo({ ...creatorInfo, name: e.target.value }));
-                console.log(e.target.value, creatorInfo?.name);
-              }}
+              onChange={(e) =>
+                dispatch(setUserInfo({ ...creatorInfo, name: e.target.value }))
+              }
             />
             <TextField
               placeholder="Телефон"
@@ -88,7 +113,6 @@ function EditCreatorInfo() {
                 }
                 name="radio-buttons-group"
                 onChange={(e) => {
-                  console.log(e.target.value);
                   dispatch(
                     setUserInfo({
                       ...creatorInfo,
@@ -119,6 +143,7 @@ function EditCreatorInfo() {
             </FormControl>
             <FieldsCreator
               creatorInfo={creatorInfo}
+              // TODO: переименовать спред оператор fieldsprototipe
               setCreatorInfo={(field: string, value: any, text: any) =>
                 dispatch(
                   setUserInfo({
@@ -149,21 +174,22 @@ function EditCreatorInfo() {
             </Button>
             <CreatorDocumentsList
               setFiles={setFiles}
-              files={files}
+              files={creatorInfo?.dataUser?.documents}
               variant={"editInfo"}
             />
           </>
         }
-        submitFuntion={
-          setCreatorInfo(creatorInfo, () => {}) //TODO: Обработать ответ
+        submitFuntion={() =>
+          setCreatorInfo(creatorInfo, (resp) =>
+            setInfoStatus(resp?.data?.statusVerify, resp?.data?.timeToSend)
+          )
         }
-        // TODO: SubmitFunc - функция, срабатывающаяя на кнопку сохранить
         header={"Личный кабинет"}
         linkTo={"/creatorLk"}
         avatarComponent={
           <Avatar
             photoUrl={creatorInfo.photo}
-            setUserPhoto={(photoUrl) =>
+            setUserPhoto={(photoUrl: string) =>
               dispatch(setUserInfo({ ...creatorInfo, photo: photoUrl }))
             }
           />

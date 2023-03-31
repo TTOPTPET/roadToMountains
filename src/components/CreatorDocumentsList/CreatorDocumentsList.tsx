@@ -8,7 +8,7 @@ import { CreatorDocuments } from "../../models/userModels/IUserInfo";
 type variant = "editInfo" | "displayInfo";
 
 type creatorDocumentsListProps = {
-  setFiles?: (value: React.SetStateAction<CreatorDocuments[]>) => void;
+  setFiles?: (value: CreatorDocuments[]) => void;
   files: CreatorDocuments[];
   variant: "editInfo" | "displayInfo";
   loadingStatus?: Boolean;
@@ -31,12 +31,9 @@ function CreatorDocumentsList({
     link.click();
   };
 
-  console.log(files);
-
   const elements =
     files &&
     files.map((file, i) => {
-      console.log(file);
       return (
         <CreatorDocumentItem
           handleDeleteFile={(lastModified) => handleDeleteFile(lastModified)}

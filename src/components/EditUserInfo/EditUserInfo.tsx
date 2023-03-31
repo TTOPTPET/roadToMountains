@@ -1,9 +1,14 @@
+import { useEffect } from "react";
 import { Box, Button, Paper, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "../../redux/store";
+import { setUserInfo } from "../../redux/UserInfo/UserInfoReducer";
+import { getUserInfo } from "../../submitFunctions/commonAPI";
 
 type editUserInfoProps = {
   fields: JSX.Element;
-  submitFuntion: Promise<void>;
+  submitFuntion: () => void;
   header: string;
   linkTo: string;
   avatarComponent: JSX.Element;
@@ -16,6 +21,20 @@ function EditUserInfo({
   linkTo,
   avatarComponent,
 }: editUserInfoProps) {
+  const userInfo = useSelector((state: RootState) => state.userInfo.userInfo);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    Object.keys(userInfo.dataUser) &&
+      getUserInfo(
+        (value) => {
+          dispatch(setUserInfo(value));
+          // setLoadingStatus(false);
+        },
+        undefined,
+        true
+      );
+  }, []);
+
   return (
     <Box sx={{ mt: "95px" }}>
       <Box
@@ -26,9 +45,12 @@ function EditUserInfo({
         }}
       >
         <Typography variant="h3">{header}</Typography>
-        <Button component={Link} to={linkTo}>
-          Отменить
-        </Button>
+        <Box>
+          <Button component={Link} to={linkTo}>
+            Отменить
+          </Button>
+          <Button onClick={() => submitFuntion()}>Сохранить</Button>
+        </Box>
       </Box>
       <Box sx={{ mt: "50px", display: "flex", columnGap: "22px" }}>
         <Box>{avatarComponent}</Box>
@@ -42,7 +64,6 @@ function EditUserInfo({
         >
           {fields}
         </Box>
-        {/* TODO: Здесь кнопка сохранения с submitFuntion */}
       </Box>
     </Box>
   );

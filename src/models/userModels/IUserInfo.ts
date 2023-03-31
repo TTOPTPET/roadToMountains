@@ -50,6 +50,8 @@ interface ICreatorSELFFields {
   pasportSELF?: string;
 }
 export interface ICreatorOOOData {
+  changeStatus?: boolean;
+  timeToSend?: string;
   documents?: CreatorDocuments[];
   dataVerify?: string;
   creatorType?: CreatorType.OOO;
@@ -58,6 +60,8 @@ export interface ICreatorOOOData {
 }
 
 export interface ICreatorIPData {
+  changeStatus?: boolean;
+  timeToSend?: string;
   documents?: CreatorDocuments[];
   dataVerify?: string;
   creatorType?: CreatorType.IP;
@@ -65,6 +69,8 @@ export interface ICreatorIPData {
   fieldsCreator?: ICreatorIPFields;
 }
 export interface ICreatorSELFData {
+  changeStatus?: boolean;
+  timeToSend?: string;
   documents?: CreatorDocuments[];
   dataVerify?: string;
   creatorType?: CreatorType.SELF;

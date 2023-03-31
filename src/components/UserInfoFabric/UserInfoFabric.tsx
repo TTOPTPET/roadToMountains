@@ -98,7 +98,10 @@ function UserInfoFabric() {
                       style={{ marginLeft: "15px" }}
                     />
                   </DarkStyledTooltip>
-                ) : (
+                ) : userInfo &&
+                  userInfo?.typeUser !== UserType.tourist &&
+                  userInfo?.dataUser?.statusVerify ===
+                    StatusVerify.notVerified ? (
                   <DarkStyledTooltip
                     title="Аккаунт заблокирован"
                     arrow
@@ -110,7 +113,7 @@ function UserInfoFabric() {
                       style={{ marginLeft: "15px" }}
                     />
                   </DarkStyledTooltip>
-                )}
+                ) : null}
               </Box>
               <Box
                 sx={{

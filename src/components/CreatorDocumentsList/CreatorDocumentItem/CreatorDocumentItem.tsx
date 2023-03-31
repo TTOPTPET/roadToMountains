@@ -19,7 +19,6 @@ function CreatorDocumentItem({
   file,
   variant,
 }: creatorDocumentItemProps) {
-  console.log(file);
   return (
     <Box
       className="document__item-wrapper"
@@ -33,7 +32,7 @@ function CreatorDocumentItem({
       onClick={() => {
         variant === "editInfo"
           ? handleDeleteFile(file.lastModified)
-          : handlerDownloadClick(file.name);
+          : handlerDownloadClick(file.docUrl);
       }}
     >
       <Box className="document__item-image-wrapper">
