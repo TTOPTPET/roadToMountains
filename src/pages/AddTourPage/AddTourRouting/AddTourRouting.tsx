@@ -16,7 +16,7 @@ export default function AddTourRouting({ page, setPage }: addTourRoutingProps) {
     <>
       <Stack direction={"row"} justifyContent={"space-between"}>
         <Button
-          variant="text"
+          variant="textButton"
           onClick={() =>
             setPage((page: addTourStepsMap) => {
               if (page > 0) {
@@ -44,7 +44,7 @@ export default function AddTourRouting({ page, setPage }: addTourRoutingProps) {
           </Button>
         ) : (
           <Button
-            variant="text"
+            variant="textButton"
             onClick={() =>
               setPage((page: addTourStepsMap) => (page < 2 ? page + 1 : page))
             }

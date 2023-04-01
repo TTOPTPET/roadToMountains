@@ -1,8 +1,8 @@
-export interface ITour {
+export interface ISearchResponse {
   tourId: string;
   tourName: string;
   category: string;
-  complexity: string;
+  complexity?: string;
   price: {
     from: number;
     to?: number;
@@ -12,8 +12,5 @@ export interface ITour {
     from: string;
     to: string;
   };
-  personsNumber: number;
-  photo: string[];
-  banStatus: boolean;
-  publicNum: number;
+  maxPersonNumber?: number;
 }

@@ -198,6 +198,12 @@ export const mainThemes = createTheme({
               fontFamily: "Montserrat",
               fontWeight: "400",
             },
+            "&::-webkit-outer-spin-button": {
+              "-webkit-appearance": "none",
+            },
+            "&::-webkit-inner-spin-button": {
+              "-webkit-appearance": "none",
+            },
           },
         },
       },
@@ -276,6 +282,13 @@ export const mainThemes = createTheme({
         root: {
           backgroundColor: lightTurquoiseColor,
           borderRadius: 20,
+        },
+      },
+    },
+    MuiDialog: {
+      styleOverrides: {
+        paper: {
+          backgroundColor: whiteColor,
         },
       },
     },
