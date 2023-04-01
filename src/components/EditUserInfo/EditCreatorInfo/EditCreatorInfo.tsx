@@ -185,7 +185,7 @@ function EditCreatorInfo() {
           )
         }
         header={"Личный кабинет"}
-        linkTo={"/creatorLk"}
+        linkTo={"/creator/lk"}
         avatarComponent={
           <Avatar
             photoUrl={creatorInfo.photo}
