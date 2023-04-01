@@ -13,13 +13,44 @@ import { Cookies } from "react-cookie";
 
 let cookie = new Cookies();
 
+// const userInfoDefault: ICreatorInfo = {
+//   typeUser: UserType.creator,
+//   photo:
+//     "https://sun9-54.userapi.com/impg/ZX9ad_1-MZrr8ifdvx7ze3A0dS1cygxCiRxrqg/gUGrJhMpjOk.jpg?size=900x920&quality=95&sign=a419c5b74139bd33f5cda9a584478c45&type=album",
+//   name: "Валера",
+//   phone: "+7(999)999-99-99",
+//   email: "email@mail.ru",
+//   banStatus: false,
+//   id: "1",
+//   createAt: "10-10-2010",
+//   dataUser: {
+//     documents: [
+//       { name: "123123", docUrl: "asjkdha", lastModified: 123123 },
+//       { name: "qwerty", docUrl: "nvmc,x.", lastModified: 1231233123123 },
+//     ],
+//     dataVerify: "123",
+//     creatorType: CreatorType.OOO,
+//     statusVerify: StatusVerify.verified,
+//     fieldsCreator: {
+//       innOOO: "38 48484848488",
+//       kppOOO: "474747474477474",
+//       ogrnOOO: "674589895678",
+//       okpoOOO: "345678908",
+//       okatoOOO: "4567",
+//       okvedOOO: "2563636",
+//       urAdress: "г. Барнаул, ул. Ленина, д. 239б, оф. 9",
+//       registryId: "123123123123",
+//     },
+//   },
+// };
+
 const userInfoDefault: ICreatorInfo = {
   typeUser: UserType.creator,
   photo:
     "https://sun9-54.userapi.com/impg/ZX9ad_1-MZrr8ifdvx7ze3A0dS1cygxCiRxrqg/gUGrJhMpjOk.jpg?size=900x920&quality=95&sign=a419c5b74139bd33f5cda9a584478c45&type=album",
   name: "Валера",
-  phone: "123123123123",
-  email: "2133123123123",
+  phone: "+7(999)999-99-99",
+  email: "email@mail.ru",
   banStatus: false,
   id: "1",
   createAt: "10-10-2010",
@@ -29,20 +60,42 @@ const userInfoDefault: ICreatorInfo = {
       { name: "qwerty", docUrl: "nvmc,x.", lastModified: 1231233123123 },
     ],
     dataVerify: "123",
-    creatorType: CreatorType.OOO,
-    statusVerify: StatusVerify.verified,
+    creatorType: CreatorType.IP,
+    statusVerify: StatusVerify.sendVerified,
     fieldsCreator: {
-      innOOO: "123123",
-      kppOOO: "13213123",
-      ogrnOOO: "12312312311321312323",
-      okpoOOO: "12312312312132131233",
-      okatoOOO: "12312312311321312323",
-      okvedOOO: "12312312311321312323",
-      urAdress: "12312312312313213123",
-      registryId: "123123123123",
+      ogrnipIP: "674589895678",
+      innIP: "38 48484848488",
+      egripIP: "474747474477474",
+      adressIP: "г. Барнаул, ул. Ленина, д. 239б, оф. 9",
     },
   },
 };
+
+// const userInfoDefault: ICreatorInfo = {
+//   typeUser: UserType.creator,
+//   photo:
+//     "https://sun9-54.userapi.com/impg/ZX9ad_1-MZrr8ifdvx7ze3A0dS1cygxCiRxrqg/gUGrJhMpjOk.jpg?size=900x920&quality=95&sign=a419c5b74139bd33f5cda9a584478c45&type=album",
+//   name: "Валера",
+//   phone: "+7(999)999-99-99",
+//   email: "email@mail.ru",
+//   banStatus: false,
+//   id: "1",
+//   createAt: "10-10-2010",
+//   dataUser: {
+//     documents: [
+//       { name: "123123", docUrl: "asjkdha", lastModified: 123123 },
+//       { name: "qwerty", docUrl: "nvmc,x.", lastModified: 1231233123123 },
+//     ],
+//     dataVerify: "123",
+//     creatorType: CreatorType.SELF,
+//     statusVerify: StatusVerify.notVerified,
+//     fieldsCreator: {
+//       pasportSELF: "674589895678",
+//       innSELF: "38 48484848488",
+//       adressSELF: "г. Барнаул, ул. Ленина, д. 239б, оф. 9",
+//     },
+//   },
+// };
 
 // const userInfoDefault: ITouristInfo = {
 //   typeUser: UserType.tourist,

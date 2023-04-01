@@ -1,8 +1,8 @@
 import React from "react";
-import UserInfoFabric from "../../components/UserInfoFabric/UserInfoFabric";
+import TouristInfo from "../../components/UserInfo/TouristInfo/TouristInfo";
 
 function TouristLk() {
-  return <UserInfoFabric />;
+  return <TouristInfo />;
 }
 
 export default TouristLk;

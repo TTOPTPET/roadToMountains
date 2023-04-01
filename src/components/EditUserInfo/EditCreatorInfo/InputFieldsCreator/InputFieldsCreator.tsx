@@ -6,18 +6,21 @@ import {
   ICreatorInfo,
   UserType,
 } from "../../../../models/userModels/IUserInfo";
-import { TIPFields, TOOOFields, TSELFFields } from "../models/fieldsTypes";
+import {
+  TIPFields,
+  TOOOFields,
+  TSELFFields,
+} from "../../../../models/creatorFieldsModels/ICreatorFields";
 
-type fieldsCreatorProps = {
+type inputFieldsCreatorProps = {
   creatorInfo: ICreatorInfo;
   setCreatorInfo: (field: string, value: any, text: any) => void;
 };
 
-function FieldsCreator({ creatorInfo, setCreatorInfo }: fieldsCreatorProps) {
-  useEffect(() => {
-    console.log("creatorInfo", creatorInfo);
-  }, [creatorInfo]);
-
+function InputFieldsCreator({
+  creatorInfo,
+  setCreatorInfo,
+}: inputFieldsCreatorProps) {
   const generFields = (creatorInfo: ICreatorInfo) => {
     switch (creatorInfo.dataUser.creatorType) {
       case CreatorType.OOO:
@@ -105,4 +108,4 @@ function FieldsCreator({ creatorInfo, setCreatorInfo }: fieldsCreatorProps) {
   return <>{generFields(creatorInfo)}</>;
 }
 
-export default FieldsCreator;
+export default InputFieldsCreator;
