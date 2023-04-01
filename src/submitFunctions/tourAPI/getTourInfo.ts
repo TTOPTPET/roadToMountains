@@ -6,7 +6,32 @@ import { ITourInfo } from "../../models/tourModels/ITourInfo";
 
 const cookie = new Cookies();
 
-const responseDefault: ITourInfo = {};
+const responseDefault: ITourInfo = {
+  category: "Конченные уроды",
+  complexity: "5",
+  price: 1000,
+  region: "Орехово-Зуево",
+  tourName: "Пирамиды говна",
+  tourDescription: "Говна наебни олух",
+  recommendedAge: {
+    from: 14,
+    to: 30,
+  },
+  tourServices: {
+    additionalServices: ["АБОБА", "уга буга"],
+    freeServices: ["По ебалу", "Солевая альтуха"],
+  },
+  recommendations: ["Пиво", "Гандоны"],
+  housingInclud: {
+    housingAddress: "Иваново",
+    housingName: "13",
+    housingDescription: "В жопе мира",
+  },
+  insuranceInclude: {
+    insuranceNumber: 100,
+    insuranceAmount: 1041040104,
+  },
+};
 
 export const getTourInfo = async (
   tourId: string,

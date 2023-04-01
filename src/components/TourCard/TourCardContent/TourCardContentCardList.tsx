@@ -150,7 +150,7 @@ function TourCardContentCardList({ tour }: TourCardProps) {
           sx={{ display: "flex", justifyContent: "flex-end" }}
           className="tour-card__button-price"
         >
-          <Button component={Link} to={`/tour/${tour.tourId}`}>
+          <Button component={Link} to={`/tours/tour/${tour.tourId}`}>
             {`от ${new Intl.NumberFormat("ru-RU").format(tour.price.from)}₽`}
           </Button>
         </Box>
