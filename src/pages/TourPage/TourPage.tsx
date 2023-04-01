@@ -1,15 +1,21 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { RootState } from "../../redux/store";
 import { setTourInfo } from "../../redux/TourInfo/TourInfoReducer";
 import { ITourInfo } from "../../models/tourModels/ITourInfo";
 import { getTourInfo } from "../../submitFunctions/tourAPI/getTourInfo";
-import { Stack, SvgIcon, Typography } from "@mui/material";
-import { ReactComponent as Icon } from "../../media/logo.svg";
+import { TourRouting } from "./TourRouting/TourRouting";
+import { TourSteps } from "./TourSteps/TourSteps";
+
+export enum tourStepsMap {
+  first,
+  second,
+}
 
 function TourPage() {
   const { tourId } = useParams();
+  const [page, setPage] = useState<tourStepsMap>(tourStepsMap.first);
 
   const dispatch = useDispatch();
   const tourInfo = useSelector((state: RootState) => state.tourInfo.tourInfo);
@@ -24,17 +30,10 @@ function TourPage() {
   }, []);
 
   return (
-    <Stack>
-      <Stack justifyContent={"space-between"} direction={"row"}>
-        <Typography variant={"h3"}>{tourInfo.tourName}</Typography>
-        <Stack direction={"row"} gap={1} alignItems={"center"}>
-          <SvgIcon fontSize={"large"} viewBox={"0 0 70 70"}>
-            <Icon />
-          </SvgIcon>
-          <Typography variant={"button"}>ООО "Алтайский тур"</Typography>
-        </Stack>
-      </Stack>
-    </Stack>
+    <>
+      <TourRouting page={page} setPage={setPage} />
+      <TourSteps page={page} tourInfo={tourInfo} />
+    </>
   );
 }
 

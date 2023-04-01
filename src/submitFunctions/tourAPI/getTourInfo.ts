@@ -9,7 +9,14 @@ const cookie = new Cookies();
 const responseDefault: ITourInfo = {
   category: "Конченные уроды",
   complexity: "5",
-  price: 1000,
+  nearestDate: {
+    from: "13 марта 2023",
+    to: "17 марта 2023",
+  },
+  price: {
+    from: 1000,
+    to: 15000,
+  },
   region: "Орехово-Зуево",
   tourName: "Пирамиды говна",
   tourDescription: "Говна наебни олух",
