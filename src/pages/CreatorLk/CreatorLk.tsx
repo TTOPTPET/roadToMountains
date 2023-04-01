@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getMyTours } from "../../submitFunctions/creatorAPI";
+import { getMyTours } from "../../submitFunctions/creatorAPI/getMyTours";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Skeleton from "@mui/material/Skeleton";

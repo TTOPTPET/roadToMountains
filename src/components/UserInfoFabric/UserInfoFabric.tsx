@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import { getUserInfo } from "../../submitFunctions/commonAPI";
 import {
-  IUserInfo,
+  ITouristInfo,
+  ICreatorInfo,
   StatusVerify,
-  userTypes,
+  UserType,
 } from "../../models/userModels/IUserInfo";
 import { Typography, Box, Button, Skeleton } from "@mui/material";
+import { Link } from "react-router-dom";
 import { darkTurquoiseColor } from "../../config/MUI/color/color";
 import userPhoto from "../../media/userPhoto.svg";
 import UserInfoData from "./UserInfoData/UserInfoData";
@@ -15,17 +17,26 @@ import { DarkStyledTooltip } from "../../config/MUI/styledComponents/StyledToolt
 import checked from "../../media/checkedVerify.svg";
 import clock from "../../media/clockVerify.svg";
 import alert from "../../media/alertVerify.svg";
-import CreatorDocumentsList from "../CreatorDocuments/CreatorDocumentsList";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
+import { setUserInfo } from "../../redux/UserInfo/UserInfoReducer";
+import UserInfoFabricSkeleton from "./UserInfoFabricSkeleton/UserInfoFabricSkeleton";
+import CreatorDocumentsList from "../CreatorDocumentsList/CreatorDocumentsList";
 
 function UserInfoFabric() {
-  const [userInfo, setUserInfo] = useState<IUserInfo>();
+  const userInfo: ITouristInfo | ICreatorInfo = useSelector(
+    (state: RootState) => state.userInfo.userInfo
+  );
+  const dispatch = useDispatch();
   const [loadingStatus, setLoadingStatus] = useState<Boolean>(true);
+
+  console.log(userInfo);
 
   useEffect(() => {
     setLoadingStatus(true);
     getUserInfo(
       (value) => {
-        setUserInfo(value);
+        dispatch(setUserInfo(value));
         setLoadingStatus(false);
       },
       undefined,
@@ -33,158 +44,16 @@ function UserInfoFabric() {
     );
   }, []);
 
-  const userInfoDocumentsSkeleton = () => {
-    return (
-      <Box>
-        <Typography variant="h5">Документы</Typography>
-        <Box sx={{ display: "flex", gap: "10px", mt: "10px" }}>
-          <Box>
-            <Skeleton
-              animation="wave"
-              variant="rounded"
-              width="100px"
-              height="100px"
-              sx={{ borderRadius: "30px" }}
-            />
-            <Skeleton
-              animation="wave"
-              variant="rounded"
-              width="100px"
-              height="20px"
-              sx={{ mt: "10px" }}
-            />
-          </Box>
-          <Box>
-            <Skeleton
-              animation="wave"
-              variant="rounded"
-              width="100px"
-              height="100px"
-              sx={{ borderRadius: "30px" }}
-            />
-            <Skeleton
-              animation="wave"
-              variant="rounded"
-              width="100px"
-              height="20px"
-              sx={{ mt: "10px" }}
-            />
-          </Box>
-          <Box>
-            <Skeleton
-              animation="wave"
-              variant="rounded"
-              width="100px"
-              height="100px"
-              sx={{ borderRadius: "30px" }}
-            />
-            <Skeleton
-              animation="wave"
-              variant="rounded"
-              width="100px"
-              height="20px"
-              sx={{ mt: "10px" }}
-            />
-          </Box>
-        </Box>
-      </Box>
-    );
-  };
-
-  const userInfoSkeleton = () => {
-    return (
-      <Box>
-        <Box>
-          <Skeleton
-            animation="wave"
-            variant="rounded"
-            width="100%"
-            height="50px"
-            sx={{ borderRadius: "20px" }}
-          />
-        </Box>
-        <Box className="skeleton-wrapper">
-          <Box
-            className="skeleton__content"
-            sx={{ mt: "50px", display: "flex" }}
-          >
-            <Skeleton
-              animation="wave"
-              variant="circular"
-              width="140px"
-              height="140px"
-            />
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                ml: "30px",
-              }}
-            >
-              <Box>
-                <Skeleton
-                  animation="wave"
-                  variant="rounded"
-                  width="400px"
-                  height="30px"
-                />
-              </Box>
-              <Box
-                sx={{
-                  mt: "30px",
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "5px",
-                }}
-              >
-                <Skeleton
-                  animation="wave"
-                  variant="rounded"
-                  width="550px"
-                  height="30px"
-                />
-                <Skeleton
-                  animation="wave"
-                  variant="rounded"
-                  width="550px"
-                  height="30px"
-                />
-                <Skeleton
-                  animation="wave"
-                  variant="rounded"
-                  width="550px"
-                  height="30px"
-                />
-                <Skeleton
-                  animation="wave"
-                  variant="rounded"
-                  width="550px"
-                  height="30px"
-                />
-                <Skeleton
-                  animation="wave"
-                  variant="rounded"
-                  width="550px"
-                  height="30px"
-                />
-              </Box>
-            </Box>
-          </Box>
-        </Box>
-      </Box>
-    );
-  };
-
   const title =
-    userInfo && userInfo.typeUser === "creator"
+    userInfo && userInfo?.typeUser === "creator"
       ? "Личный кабинет"
       : "Привет, турист!";
 
   return (
     <>
-      <Box className="userInfo__wrapper">
+      <Box className="userInfo__wrapper" sx={{ mt: "55px" }}>
         {loadingStatus ? (
-          userInfoSkeleton()
+          <UserInfoFabricSkeleton />
         ) : (
           <>
             <Box
@@ -201,8 +70,8 @@ function UserInfoFabric() {
               >
                 <Typography variant="h3">{title}</Typography>
                 {userInfo &&
-                userInfo.type !== userTypes.Tourist &&
-                userInfo.dataUser.statusVerify === StatusVerify.verified ? (
+                userInfo?.typeUser !== UserType.tourist &&
+                userInfo?.dataUser?.statusVerify === StatusVerify.verified ? (
                   <DarkStyledTooltip
                     title="Данные подтверждены"
                     arrow
@@ -215,8 +84,8 @@ function UserInfoFabric() {
                     />
                   </DarkStyledTooltip>
                 ) : userInfo &&
-                  userInfo.type !== userTypes.Tourist &&
-                  userInfo.dataUser.statusVerify ===
+                  userInfo?.typeUser !== UserType.tourist &&
+                  userInfo?.dataUser?.statusVerify ===
                     StatusVerify.sendVerified ? (
                   <DarkStyledTooltip
                     title="Данные на проверке"
@@ -229,7 +98,10 @@ function UserInfoFabric() {
                       style={{ marginLeft: "15px" }}
                     />
                   </DarkStyledTooltip>
-                ) : (
+                ) : userInfo &&
+                  userInfo?.typeUser !== UserType.tourist &&
+                  userInfo?.dataUser?.statusVerify ===
+                    StatusVerify.notVerified ? (
                   <DarkStyledTooltip
                     title="Аккаунт заблокирован"
                     arrow
@@ -241,7 +113,7 @@ function UserInfoFabric() {
                       style={{ marginLeft: "15px" }}
                     />
                   </DarkStyledTooltip>
-                )}
+                ) : null}
               </Box>
               <Box
                 sx={{
@@ -251,11 +123,11 @@ function UserInfoFabric() {
                   mt: "40px",
                 }}
               >
-                {userInfo && userInfo.type !== userTypes.Tourist && (
+                {userInfo && userInfo?.typeUser !== UserType.tourist && (
                   <Button
                     sx={{ mb: "10px" }}
                     disabled={
-                      userInfo.dataUser.statusVerify ===
+                      userInfo?.dataUser?.statusVerify ===
                       StatusVerify.notVerified
                         ? false
                         : true
@@ -264,7 +136,9 @@ function UserInfoFabric() {
                     Отправить на подтверждение
                   </Button>
                 )}
-                <Button>Изменить</Button>
+                <Button component={Link} to={"/editUserInfo"}>
+                  Изменить
+                </Button>
               </Box>
             </Box>
             <Box className="userInfo__body-wrapper">
@@ -284,8 +158,8 @@ function UserInfoFabric() {
                     borderRadius: "50%",
                   }}
                 >
-                  {userInfo && userInfo.photo ? (
-                    <img src={userInfo.photo} alt="user avatar" />
+                  {userInfo && userInfo?.photo ? (
+                    <img src={userInfo?.photo} alt="user avatar" />
                   ) : (
                     <img src={userPhoto} alt="person icon" />
                   )}
@@ -296,13 +170,13 @@ function UserInfoFabric() {
           </>
         )}
       </Box>
-      {userInfo &&
-        userInfo.type !== userTypes.Tourist &&
-        (loadingStatus ? (
-          userInfoDocumentsSkeleton
-        ) : (
-          <CreatorDocumentsList {...userInfo} />
-        ))}
+      {userInfo && userInfo?.typeUser !== UserType.tourist && (
+        <CreatorDocumentsList
+          files={userInfo.dataUser.documents}
+          loadingStatus={loadingStatus}
+          variant="displayInfo"
+        />
+      )}
     </>
   );
 }
