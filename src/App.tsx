@@ -26,6 +26,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "./redux/store";
 import { UserType } from "./models/userModels/IUserInfo";
 import EditTouristInfo from "./components/EditUserInfo/EditTouristInfo/EditTouristInfo";
+import TourPage from "./pages/TourPage/TourPage";
 
 function App() {
   dayjs.locale("ru");
@@ -47,12 +48,19 @@ function App() {
             <Route path={"/creator/editInfo"} element={<EditCreatorInfo />} />
             <Route path={"/tourist/editInfo"} element={<EditTouristInfo />} />
             <Route path={"/creator/add"} element={<AddTourPage />} />
-            <Route path={"/creator/notifications"} element={<NotificationsPage />} />
-            <Route path={"/creator/payment"} element={<PaymentSettingsPage />} />
+            <Route
+              path={"/creator/notifications"}
+              element={<NotificationsPage />}
+            />
+            <Route
+              path={"/creator/payment"}
+              element={<PaymentSettingsPage />}
+            />
             <Route path={"/creator/stats"} element={<StatisticPage />} />
             <Route path={"/creator/calendar"} element={<TourCalendarPage />} />
             <Route path={"/tourist/lk"} element={<TouristLk />} />
             <Route path={"/tours/all"} element={<TourListPage />} />
+            <Route path={"/tours/tour/:tourId"} element={<TourPage />} />
           </Routes>
         </Container>
         <Footer />
