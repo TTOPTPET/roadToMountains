@@ -106,7 +106,7 @@ function EditTouristInfo() {
         }
         submitFuntion={() => setTouristInfo(touristInfo, () => {})}
         header={"Привет, Турист!"}
-        linkTo={"/creatorLk"}
+        linkTo={"/tourist/lk"}
         avatarComponent={
           <Avatar
             photoUrl={touristInfo.photo}

@@ -198,6 +198,10 @@ export const mainThemes = createTheme({
               fontFamily: "Montserrat",
               fontWeight: "400",
             },
+            "&:-webkit-autofill": {
+              WebkitBoxShadow: `0 0 0 1000px ${lightTurquoiseColor} inset`,
+              borderRadius: "30px",
+            },
             "&::-webkit-outer-spin-button": {
               "-webkit-appearance": "none",
             },
@@ -229,6 +233,16 @@ export const mainThemes = createTheme({
           },
         },
       ],
+    },
+    MuiFormLabel: {
+      styleOverrides: {
+        root: {
+          color: darkBlueColor,
+          "&.Mui-focused": {
+            color: darkBlueColor,
+          },
+        },
+      },
     },
     MuiTypography: {
       defaultProps: {

@@ -41,18 +41,25 @@ function EditUserInfo({
         sx={{
           display: "flex",
           justifyContent: "space-between",
-          alignItems: "flex-end",
+          alignItems: "flex-start",
         }}
       >
         <Typography variant="h3">{header}</Typography>
-        <Box>
-          <Button component={Link} to={linkTo}>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            width: "132px",
+            gap: "10px",
+          }}
+        >
+          <Button onClick={() => submitFuntion()}>Сохранить</Button>
+          <Button component={Link} to={linkTo} sx={{ width: "100%" }}>
             Отменить
           </Button>
-          <Button onClick={() => submitFuntion()}>Сохранить</Button>
         </Box>
       </Box>
-      <Box sx={{ mt: "50px", display: "flex", columnGap: "22px" }}>
+      <Box sx={{ mt: "10px", display: "flex", columnGap: "22px" }}>
         <Box>{avatarComponent}</Box>
         <Box
           sx={{

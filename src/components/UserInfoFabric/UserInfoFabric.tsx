@@ -6,7 +6,13 @@ import {
   StatusVerify,
   UserType,
 } from "../../models/userModels/IUserInfo";
-import { Typography, Box, Button, Skeleton } from "@mui/material";
+import {
+  Typography,
+  Box,
+  Button,
+  Skeleton,
+  Avatar as MuiAvatar,
+} from "@mui/material";
 import { Link } from "react-router-dom";
 import { darkTurquoiseColor } from "../../config/MUI/color/color";
 import userPhoto from "../../media/userPhoto.svg";
@@ -48,6 +54,11 @@ function UserInfoFabric() {
     userInfo && userInfo?.typeUser === "creator"
       ? "Личный кабинет"
       : "Привет, турист!";
+
+  const linkTo =
+    userInfo && userInfo?.typeUser === "creator"
+      ? "/creator/editInfo"
+      : "/tourist/editInfo";
 
   return (
     <>
@@ -120,7 +131,6 @@ function UserInfoFabric() {
                   display: "flex",
                   flexDirection: "column",
                   alignItems: "flex-end",
-                  mt: "40px",
                 }}
               >
                 {userInfo && userInfo?.typeUser !== UserType.tourist && (
@@ -136,7 +146,7 @@ function UserInfoFabric() {
                     Отправить на подтверждение
                   </Button>
                 )}
-                <Button component={Link} to={"/editUserInfo"}>
+                <Button component={Link} to={linkTo}>
                   Изменить
                 </Button>
               </Box>
@@ -159,7 +169,11 @@ function UserInfoFabric() {
                   }}
                 >
                   {userInfo && userInfo?.photo ? (
-                    <img src={userInfo?.photo} alt="user avatar" />
+                    <MuiAvatar
+                      src={userInfo?.photo}
+                      alt="user avatar"
+                      sx={{ width: "140px", height: "140px" }}
+                    />
                   ) : (
                     <img src={userPhoto} alt="person icon" />
                   )}

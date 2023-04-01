@@ -1,7 +1,7 @@
-import { Paper } from "@mui/material";
-import { Box } from "@mui/system";
+import { Paper, Box, Avatar as MuiAvatar } from "@mui/material";
 import { darkTurquoiseColor } from "../../config/MUI/color/color";
 import addPhotoIcon from "../../media/plusIcon.svg";
+import editImageIcon from "../../media/iconEditImage.png";
 import { postUserAvatar } from "../../submitFunctions/commonAPI";
 
 type avatarProps = {
@@ -28,7 +28,7 @@ function Avatar({ photoUrl, setUserPhoto }: avatarProps) {
   };
 
   return (
-    <Box component="label">
+    <Box component="label" sx={{ position: "relative" }}>
       <Paper
         sx={{
           width: "140px",
@@ -41,20 +41,39 @@ function Avatar({ photoUrl, setUserPhoto }: avatarProps) {
           cursor: "pointer",
         }}
       >
-        <img
-          src={photoUrl || addPhotoIcon}
-          alt="add avatar icon"
-          style={{ width: "100%" }}
-        />
+        {photoUrl ? (
+          <MuiAvatar
+            alt={photoUrl}
+            src={photoUrl}
+            sx={{ width: "140px", height: "140px" }}
+          />
+        ) : (
+          <img src={addPhotoIcon} alt="add avatar icon" />
+        )}
+
         <input
           id="fileItem"
           type="file"
           hidden
-          multiple
           onChange={handleFileInputChange}
         />
-        {/* TODO:Нужен обработчик вставки фото с запросом 
-							сначала посылается запрос setPhoto на изменение фото, внутрь которого закидывается файл, бэк в ответ присылает url нового фото, который нужно засетить в userInfo с помощью setUserPhoto*/}
+        {photoUrl && (
+          <Box
+            sx={{
+              width: "140px",
+              height: "140px",
+              borderRadius: "50%",
+              bgcolor: "rgba(0, 0, 0, 0.4)",
+              zIndex: 5,
+              position: "absolute",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <img src={editImageIcon} alt="edit avatar icon" />
+          </Box>
+        )}
       </Paper>
     </Box>
   );
