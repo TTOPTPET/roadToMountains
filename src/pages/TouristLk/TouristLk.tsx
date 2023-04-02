@@ -1,8 +1,148 @@
-import React from "react";
+import React, { SyntheticEvent, useEffect, useState } from "react";
 import UserInfoFabric from "../../components/UserInfoFabric/UserInfoFabric";
+import { IUserRecord } from "../../models/userModels/IUserRecord";
+import { getTouristRecords } from "../../submitFunctions/touristAPI/getTouristRecords";
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Button,
+  Grid,
+  Stack,
+  Tab,
+  Tabs,
+  Typography,
+} from "@mui/material";
+
+enum tabValues {
+  upcomming,
+  past,
+}
 
 function TouristLk() {
-  return <UserInfoFabric />;
+  const [records, setRecords] = useState<IUserRecord[]>([]);
+  const [tabValue, setTabValue] = useState<tabValues>(tabValues.past);
+  const [expanded, setExpanded] = useState<boolean>(false);
+
+  useEffect(() => {
+    getTouristRecords((value) => setRecords(value), undefined, true);
+  }, []);
+
+  const handlerTabChange = (e: SyntheticEvent, newValue: tabValues) => {
+    setTabValue(newValue);
+  };
+
+  const freeTagConverter = (record: IUserRecord) => {
+    return record.tour?.freeServices
+      ? record.tour?.freeServices.map((service, index) =>
+          index === record.tour?.freeServices.length - 1
+            ? `${service}`
+            : `${service} • `
+        )
+      : "Ничего не включено";
+  };
+
+  return (
+    <>
+      {JSON.stringify(records)}
+      <UserInfoFabric />
+      <Stack
+        justifyContent={"space-between"}
+        direction={"row"}
+        marginBottom={3}
+        flexWrap={"wrap"}
+      >
+        <Typography variant={"h3"}>Мои записи</Typography>
+        <Tabs value={tabValue} onChange={handlerTabChange}>
+          <Tab value={tabValues.upcomming} label={"Предстоящие"} />
+          <Tab value={tabValues.past} label={"Прошедшие"} />
+        </Tabs>
+      </Stack>
+      <Stack direction={"row"} gap={3}>
+        {records &&
+          records.map((record, index) => (
+            <Accordion
+              key={index}
+              defaultExpanded
+              expanded={expanded}
+              square={true}
+              sx={{ width: "100%" }}
+            >
+              <AccordionSummary>
+                <Grid container padding={3} justifyContent={"space-between"}>
+                  <Grid item md={5}>
+                    <Typography variant={"h5"}>
+                      {record.tour.tourName + " "}№{record.publicTourId}
+                    </Typography>
+                    <Typography variant={"caption"}>
+                      {record.tourDate.from +
+                        " - " +
+                        record.tourDate.to +
+                        `ООО "Алтай тур"`}
+                    </Typography>
+                  </Grid>
+                  <Grid item md={2} justifyContent={"right"}>
+                    <Typography variant={"button"} textAlign={"right"}>
+                      {record.tourAmount}₽
+                    </Typography>
+                    <Typography variant={"caption"} textAlign={"right"}>
+                      {record.bookingStatus.payment}
+                    </Typography>
+                    <Typography
+                      variant={"caption"}
+                      onClick={() => setExpanded(!expanded)}
+                      textAlign={"right"}
+                    >
+                      {expanded ? <>Развернуть</> : <>Скрыть</>}
+                    </Typography>
+                  </Grid>
+                </Grid>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Stack padding={2} gap={1}>
+                  <Typography variant={"h6"}>Проживание</Typography>
+                  <Typography variant={"caption"}>
+                    {record.tour?.housingInclud.housingName +
+                      ", " +
+                      record.tour?.housingInclud.housingAddress +
+                      ", " +
+                      record.tour?.housingInclud.housingDescription}
+                  </Typography>
+                  <Typography variant={"h6"}>Страхование</Typography>
+                  <Typography variant={"caption"}>
+                    {record.tour?.insuranceInclude !== undefined ? (
+                      <>Страхование включено</>
+                    ) : (
+                      <>Страхование не включено</>
+                    )}
+                  </Typography>
+                  <Typography variant={"h6"}>Контакты</Typography>
+                  <Stack
+                    justifyContent={"space-between"}
+                    flexWrap={"wrap"}
+                    alignItems={"center"}
+                    direction={"row"}
+                  >
+                    <Typography variant={"caption"}>
+                      {record.contactInformation}
+                    </Typography>
+                    <Button>Сообщить о проблеме</Button>
+                  </Stack>
+                  <Typography variant={"h6"}>Сбор</Typography>
+                  <Typography variant={"caption"}>
+                    {record.meetingPoint + "в " + record.meetingTime}
+                  </Typography>
+                  <Typography variant={"h6"}>Включено в стоимость</Typography>
+                  <Typography variant={"caption"}>
+                    {freeTagConverter(record)}
+                  </Typography>
+                </Stack>
+              </AccordionDetails>
+            </Accordion>
+          ))}
+      </Stack>
+    </>
+  );
 }
 
 export default TouristLk;

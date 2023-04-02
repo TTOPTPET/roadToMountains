@@ -306,5 +306,28 @@ export const mainThemes = createTheme({
         },
       },
     },
+    MuiTabs: {
+      styleOverrides: {
+        root: {
+          borderRadius: 30,
+        },
+        indicator: {
+          visibility: "hidden",
+        },
+      },
+    },
+    MuiTab: {
+      styleOverrides: {
+        root: {
+          textTransform: "none",
+          backgroundColor: lightTurquoiseColor,
+          color: darkBlueColor,
+          "&.Mui-selected": {
+            backgroundColor: darkTurquoiseColor,
+            color: whiteColor,
+          },
+        },
+      },
+    },
   },
 });
