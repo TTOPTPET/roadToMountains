@@ -292,6 +292,9 @@ export const mainThemes = createTheme({
             borderRadius: 20,
             padding: 0,
           },
+          "&:before": {
+            backgroundColor: "rgba(0,0,0,0)",
+          },
         },
       },
     },
