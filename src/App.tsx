@@ -22,17 +22,28 @@ import {
 } from "./pages";
 import NavTool from "./components/NavTool/NavTool";
 import EditCreatorInfo from "./components/EditUserInfo/EditCreatorInfo/EditCreatorInfo";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "./redux/store";
 import { UserType } from "./models/userModels/IUserInfo";
 import EditTouristInfo from "./components/EditUserInfo/EditTouristInfo/EditTouristInfo";
 import TourPage from "./pages/TourPage/TourPage";
+import { useEffect } from "react";
+import { getUserInfo } from "./submitFunctions/commonAPI";
+import { setUserInfo } from "./redux/UserInfo/UserInfoReducer";
 
 function App() {
   dayjs.locale("ru");
-  const userType = useSelector(
-    (state: RootState) => state.userInfo.userInfo?.typeUser
-  );
+  const dispatch = useDispatch();
+  useEffect(() => {
+    getUserInfo(
+      (value) => {
+        dispatch(setUserInfo(value));
+        // setLoadingStatus(false);
+      },
+      undefined,
+      true
+    );
+  }, []);
 
   // const userType = "creator";
   return (

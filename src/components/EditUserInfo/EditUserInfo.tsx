@@ -3,8 +3,6 @@ import { Box, Button, Paper, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../redux/store";
-import { setUserInfo } from "../../redux/UserInfo/UserInfoReducer";
-import { getUserInfo } from "../../submitFunctions/commonAPI";
 
 type editUserInfoProps = {
   fields: JSX.Element;
@@ -22,18 +20,6 @@ function EditUserInfo({
   avatarComponent,
 }: editUserInfoProps) {
   const userInfo = useSelector((state: RootState) => state.userInfo.userInfo);
-  const dispatch = useDispatch();
-  useEffect(() => {
-    Object.keys(userInfo.dataUser) &&
-      getUserInfo(
-        (value) => {
-          dispatch(setUserInfo(value));
-          // setLoadingStatus(false);
-        },
-        undefined,
-        true
-      );
-  }, []);
 
   return (
     <Box sx={{ mt: "95px" }}>

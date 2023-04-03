@@ -28,27 +28,25 @@ function UserInfo({ header, fields, submitFuntion }: UserInfoProps) {
   const userInfo: ITouristInfo | ICreatorInfo = useSelector(
     (state: RootState) => state.userInfo.userInfo
   );
-  const dispatch = useDispatch();
-  const [loadingStatus, setLoadingStatus] = useState<Boolean>(true);
 
   const { typeUser, dataUser, name, phone, email } = userInfo;
 
-  useEffect(() => {
-    setLoadingStatus(true);
-    getUserInfo(
-      (value) => {
-        dispatch(setUserInfo(value));
-        setLoadingStatus(false);
-      },
-      undefined,
-      true
-    );
-  }, []);
+  // useEffect(() => {
+  //   setLoadingStatus(true);
+  //   getUserInfo(
+  //     (value) => {
+  //       dispatch(setUserInfo(value));
+  //       setLoadingStatus(false);
+  //     },
+  //     undefined,
+  //     true
+  //   );
+  // }, []);
 
   return (
     <>
       <Box className="userInfo__wrapper" sx={{ mt: "55px" }}>
-        {loadingStatus ? (
+        {!userInfo.dataUser ? (
           <UserInfoSkeleton />
         ) : (
           <>
@@ -152,7 +150,7 @@ function UserInfo({ header, fields, submitFuntion }: UserInfoProps) {
       {userInfo && userInfo?.typeUser !== UserType.tourist && (
         <CreatorDocumentsList
           files={userInfo.dataUser.documents}
-          loadingStatus={loadingStatus}
+          loadingStatus={!userInfo.dataUser}
           variant="displayInfo"
         />
       )}
