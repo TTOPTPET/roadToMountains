@@ -9,10 +9,12 @@ import {
   Button,
   Grid,
   Stack,
+  SvgIcon,
   Tab,
   Tabs,
   Typography,
 } from "@mui/material";
+import { ReactComponent as NavigateIcon } from "../../media/navigate_before.svg";
 
 enum tabValues {
   upcomming,
@@ -88,18 +90,46 @@ function TouristLk() {
                     <Typography variant={"caption"} textAlign={"right"}>
                       {record.bookingStatus.payment}
                     </Typography>
-                    <Typography
-                      variant={"caption"}
-                      onClick={() => setExpanded(!expanded)}
-                      textAlign={"right"}
-                    >
-                      {expanded ? <>Развернуть</> : <>Скрыть</>}
-                    </Typography>
+                    <Stack direction={"row"} justifyContent={"right"}>
+                      <Typography
+                        variant={"caption"}
+                        onClick={() => setExpanded(!expanded)}
+                      >
+                        {expanded ? <>Скрыть</> : <>Развернуть</>}
+                      </Typography>
+                      <SvgIcon
+                        viewBox="0 -8 24 24"
+                        fontSize="medium"
+                        sx={expanded ? {} : { transform: "rotate(180deg)" }}
+                      >
+                        <NavigateIcon width={24} />
+                      </SvgIcon>
+                    </Stack>
                   </Grid>
                 </Grid>
               </AccordionSummary>
               <AccordionDetails>
-                <Stack padding={2} gap={1}>
+                <Stack padding={3} gap={1}>
+                  <Stack
+                    justifyContent={"space-between"}
+                    flexWrap={"wrap"}
+                    alignItems={"center"}
+                    direction={"row"}
+                  >
+                    <Typography variant={"h6"}>Количество человек</Typography>
+                    <Button>Отменить бронирование</Button>
+                  </Stack>
+                  <Stack
+                    justifyContent={"space-between"}
+                    flexWrap={"wrap"}
+                    alignItems={"center"}
+                    direction={"row"}
+                  >
+                    <Typography variant={"caption"}>3 человека</Typography>
+                    <Typography variant={"caption"}>
+                      до 12 марта 2023
+                    </Typography>
+                  </Stack>
                   <Typography variant={"h6"}>Проживание</Typography>
                   <Typography variant={"caption"}>
                     {record.tour?.housingInclud.housingName +
