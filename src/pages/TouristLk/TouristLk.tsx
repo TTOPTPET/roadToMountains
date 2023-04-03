@@ -1,6 +1,5 @@
 import TouristInfo from "../../components/UserInfo/TouristInfo/TouristInfo";
 import React, { SyntheticEvent, useEffect, useState } from "react";
-import UserInfoFabric from "../../components/UserInfoFabric/UserInfoFabric";
 import { IUserRecord } from "../../models/userModels/IUserRecord";
 import { getTouristRecords } from "../../submitFunctions/touristAPI/getTouristRecords";
 import {
@@ -48,7 +47,7 @@ function TouristLk() {
   return (
     <>
       {JSON.stringify(records)}
-       <TouristInfo />
+      <TouristInfo />
       <Stack
         justifyContent={"space-between"}
         direction={"row"}
