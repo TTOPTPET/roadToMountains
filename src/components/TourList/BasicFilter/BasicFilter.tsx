@@ -114,7 +114,7 @@ export const BasicFilter: FC<IFilterProps> = ({
         onChange={(e) =>
           handleFieldChange<number>("maxPersonNumber", +e.target.value)
         }
-        placeholder={"Колличество человек"}
+        placeholder={"Количество человек"}
       />
       <Button variant="high">Найти</Button>
     </Stack>
