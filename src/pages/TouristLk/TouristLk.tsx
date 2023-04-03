@@ -15,6 +15,7 @@ import {
   Typography,
 } from "@mui/material";
 import { ReactComponent as NavigateIcon } from "../../media/navigate_before.svg";
+import dayjs from "dayjs";
 
 enum tabValues {
   upcomming,
@@ -24,14 +25,48 @@ enum tabValues {
 function TouristLk() {
   const [records, setRecords] = useState<IUserRecord[]>([]);
   const [tabValue, setTabValue] = useState<tabValues>(tabValues.past);
-  const [expanded, setExpanded] = useState<boolean>(false);
+  const [expanded, setExpanded] = useState<string | false>(false);
 
   useEffect(() => {
-    getTouristRecords((value) => setRecords(value), undefined, true);
+    switch (tabValue) {
+      case tabValues.past: {
+        filterRecords(true);
+        break;
+      }
+      case tabValues.upcomming: {
+        filterRecords(false);
+        break;
+      }
+      default: {
+        break;
+      }
+    }
   }, []);
+
+  const filterRecords = (past: boolean) => {
+    getTouristRecords(
+      (value) =>
+        setRecords(value.filter((item) => item.bookingStatus.past === past)),
+      undefined,
+      true
+    );
+  };
 
   const handlerTabChange = (e: SyntheticEvent, newValue: tabValues) => {
     setTabValue(newValue);
+    switch (newValue) {
+      case tabValues.past: {
+        filterRecords(true);
+        break;
+      }
+      case tabValues.upcomming: {
+        filterRecords(false);
+        break;
+      }
+      default: {
+        break;
+      }
+    }
   };
 
   const freeTagConverter = (record: IUserRecord) => {
@@ -46,7 +81,6 @@ function TouristLk() {
 
   return (
     <>
-      {JSON.stringify(records)}
       <TouristInfo />
       <Stack
         justifyContent={"space-between"}
@@ -60,13 +94,13 @@ function TouristLk() {
           <Tab value={tabValues.past} label={"Прошедшие"} />
         </Tabs>
       </Stack>
-      <Stack direction={"row"} gap={3}>
+      <Stack direction={"column"} gap={3}>
         {records &&
           records.map((record, index) => (
             <Accordion
               key={index}
               defaultExpanded
-              expanded={expanded}
+              expanded={expanded === record.publicTourId}
               square={true}
               sx={{ width: "100%" }}
             >
@@ -77,10 +111,10 @@ function TouristLk() {
                       {record.tour.tourName + " "}№{record.publicTourId}
                     </Typography>
                     <Typography variant={"caption"}>
-                      {record.tourDate.from +
+                      {dayjs(record.tourDate.from).format("D MMMM YYYY") +
                         " - " +
-                        record.tourDate.to +
-                        `ООО "Алтай тур"`}
+                        dayjs(record.tourDate.to).format("D MMMM YYYY") +
+                        ` ООО "Алтай тур"`}
                     </Typography>
                   </Grid>
                   <Grid item md={2} justifyContent={"right"}>
@@ -90,17 +124,34 @@ function TouristLk() {
                     <Typography variant={"caption"} textAlign={"right"}>
                       {record.bookingStatus.payment}
                     </Typography>
-                    <Stack direction={"row"} justifyContent={"right"}>
-                      <Typography
-                        variant={"caption"}
-                        onClick={() => setExpanded(!expanded)}
-                      >
-                        {expanded ? <>Скрыть</> : <>Развернуть</>}
+                    <Stack
+                      direction={"row"}
+                      justifyContent={"right"}
+                      onClick={() =>
+                        setExpanded(
+                          expanded === record.publicTourId
+                            ? false
+                            : record.publicTourId
+                        )
+                      }
+                    >
+                      <Typography variant={"caption"}>
+                        {expanded === record.publicTourId ? (
+                          <>Скрыть</>
+                        ) : (
+                          <>Развернуть</>
+                        )}
                       </Typography>
                       <SvgIcon
                         viewBox="0 -8 24 24"
                         fontSize="medium"
-                        sx={expanded ? {} : { transform: "rotate(180deg)" }}
+                        sx={
+                          expanded === record.publicTourId
+                            ? {}
+                            : {
+                                transform: "rotate(180deg)",
+                              }
+                        }
                       >
                         <NavigateIcon width={24} />
                       </SvgIcon>
@@ -127,7 +178,10 @@ function TouristLk() {
                   >
                     <Typography variant={"caption"}>3 человека</Typography>
                     <Typography variant={"caption"}>
-                      до 12 марта 2023
+                      до{" "}
+                      {dayjs(record.tourDate.from)
+                        .add(-1, "day")
+                        .format("D MMMM YYYY")}
                     </Typography>
                   </Stack>
                   <Typography variant={"h6"}>Проживание</Typography>
@@ -160,7 +214,7 @@ function TouristLk() {
                   </Stack>
                   <Typography variant={"h6"}>Сбор</Typography>
                   <Typography variant={"caption"}>
-                    {record.meetingPoint + "в " + record.meetingTime}
+                    {record.meetingPoint + " в " + record.meetingTime}
                   </Typography>
                   <Typography variant={"h6"}>Включено в стоимость</Typography>
                   <Typography variant={"caption"}>

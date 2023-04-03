@@ -20,6 +20,7 @@ import {
 } from "../../../submitFunctions/adminAPI";
 import { IChangeStatus } from "../../../models/adminModels/IChangeStatus";
 import { ReactComponent as DownloadIcon } from "../../../media/download.svg";
+import dayjs from "dayjs";
 
 export const AdminComponent: FC<IAdminComponent> = (props: IAdminComponent) => {
   const [expanded, setExpanded] = useState<boolean>(false);
@@ -201,7 +202,9 @@ export const AdminComponent: FC<IAdminComponent> = (props: IAdminComponent) => {
               </Grid>
             </AccordionSummary>
             <AccordionDetails>
-              <Typography variant={"caption"}>{message}</Typography>
+              <Typography variant={"caption"} padding={2} flexWrap={"wrap"}>
+                {message}
+              </Typography>
             </AccordionDetails>
           </Accordion>
         </div>
@@ -256,7 +259,7 @@ export const AdminComponent: FC<IAdminComponent> = (props: IAdminComponent) => {
               className="buttons"
             >
               <Typography variant={"caption"}>
-                {statusVerify}: {changeVerifyDate}
+                {statusVerify}: {dayjs(changeVerifyDate).format("D MMMM YYYY")}
               </Typography>
               <Button
                 variant="text"
