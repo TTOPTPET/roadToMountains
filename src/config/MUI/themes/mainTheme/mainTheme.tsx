@@ -238,6 +238,10 @@ export const mainThemes = createTheme({
       styleOverrides: {
         root: {
           color: darkBlueColor,
+          "& Mui-error": {
+            borderColor: "red",
+            borderWidth: 2,
+          },
           "&.Mui-focused": {
             color: darkBlueColor,
           },
