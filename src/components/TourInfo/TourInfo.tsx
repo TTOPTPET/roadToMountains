@@ -8,6 +8,7 @@ import { Dispatch, SetStateAction } from "react";
 import { Attention } from "../../components/Attention/Attention";
 import { IAddTour } from "../../models/addTourModels/IAddTour";
 import { ITourInfo } from "../../models/tourModels/ITourInfo";
+import dayjs from "dayjs";
 
 export const TourInfo = ({
   images,
@@ -141,9 +142,11 @@ export const TourInfo = ({
               <Typography variant={"h6"}>Дата ближайшего тура</Typography>
               <Typography variant={"caption"}>
                 {"nearestDate" in tourInfo
-                  ? (tourInfo?.nearestDate?.from ?? "") +
-                    "-" +
-                    (tourInfo?.nearestDate?.to ?? "")
+                  ? (dayjs(tourInfo?.nearestDate?.from).format("D MMMM YYYY") ??
+                      "") +
+                    " - " +
+                    (dayjs(tourInfo?.nearestDate?.to).format("D MMMM YYYY") ??
+                      "")
                   : ""}
               </Typography>
             </>
