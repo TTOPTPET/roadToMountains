@@ -1,10 +1,18 @@
 export interface ITourInfo {
+  photos?: string[];
   tourName?: string;
   tourDescription?: string;
   category?: string;
   complexity?: string;
   region?: string;
-  price?: number;
+  nearestDate?: {
+    from: string;
+    to: string;
+  };
+  price?: {
+    from: number;
+    to: number;
+  };
   recommendedAge?: {
     from?: number;
     to?: number;

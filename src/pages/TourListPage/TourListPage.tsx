@@ -34,7 +34,6 @@ function TourListPage() {
   const dispatch = useDispatch();
   return (
     <Stack gap={1}>
-      {JSON.stringify(searchData)}
       <Grid container alignItems={"center"} spacing={1}>
         <Grid item sm={9}>
           <Typography variant={"h3"}>Все туры</Typography>

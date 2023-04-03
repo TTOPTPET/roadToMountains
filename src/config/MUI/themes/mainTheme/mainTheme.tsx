@@ -238,6 +238,10 @@ export const mainThemes = createTheme({
       styleOverrides: {
         root: {
           color: darkBlueColor,
+          "& Mui-error": {
+            borderColor: "red",
+            borderWidth: 2,
+          },
           "&.Mui-focused": {
             color: darkBlueColor,
           },
@@ -303,6 +307,29 @@ export const mainThemes = createTheme({
       styleOverrides: {
         paper: {
           backgroundColor: whiteColor,
+        },
+      },
+    },
+    MuiTabs: {
+      styleOverrides: {
+        root: {
+          borderRadius: 30,
+        },
+        indicator: {
+          visibility: "hidden",
+        },
+      },
+    },
+    MuiTab: {
+      styleOverrides: {
+        root: {
+          textTransform: "none",
+          backgroundColor: lightTurquoiseColor,
+          color: darkBlueColor,
+          "&.Mui-selected": {
+            backgroundColor: darkTurquoiseColor,
+            color: whiteColor,
+          },
         },
       },
     },
