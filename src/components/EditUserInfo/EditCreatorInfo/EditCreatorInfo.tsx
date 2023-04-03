@@ -20,7 +20,7 @@ import attachment from "../../../media/attachment.svg";
 import EditUserInfo from "../EditUserInfo";
 import CreatorDocumentsList from "../../CreatorDocumentsList/CreatorDocumentsList";
 import { setCreatorInfo } from "../../../submitFunctions/creatorAPI/setCreatorInfo";
-import FieldsCreator from "./FieldsCreator/FieldsCreator";
+import InputFieldsCreator from "./InputFieldsCreator/InputFieldsCreator";
 import {
   CreatorDocuments,
   StatusVerify,
@@ -141,7 +141,7 @@ function EditCreatorInfo() {
                 />
               </RadioGroup>
             </FormControl>
-            <FieldsCreator
+            <InputFieldsCreator
               creatorInfo={creatorInfo}
               // TODO: переименовать спред оператор fieldsprototipe
               setCreatorInfo={(field: string, value: any, text: any) =>

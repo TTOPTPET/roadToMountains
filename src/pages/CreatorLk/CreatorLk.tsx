@@ -8,7 +8,7 @@ import TourCard from "../../components/TourCard/TourCard";
 import { darkBlueColor } from "../../config/MUI/color/color";
 import { ITour } from "../../models/tourCardModel/ITour";
 
-import UserInfoFabric from "../../components/UserInfoFabric/UserInfoFabric";
+import CreatorInfo from "../../components/UserInfo/CreatorInfo/CreatorInfo";
 
 function CreatorLk() {
   const [myTours, setMyTours] = useState<ITour[]>([]);
@@ -81,7 +81,7 @@ function CreatorLk() {
 
   return (
     <>
-      <UserInfoFabric />
+      <CreatorInfo />
       <Box
         sx={{
           fontFamily: "Jost",
