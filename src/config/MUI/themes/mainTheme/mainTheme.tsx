@@ -90,20 +90,8 @@ export const mainThemes = createTheme({
     MuiAutocomplete: {
       styleOverrides: {
         root: {
-          display: "flex",
-          alignItems: "center",
           width: "100%",
-          height: "50px",
-          padding: "12px 15px",
-          backgroundColor: lightTurquoiseColor,
           borderRadius: "30px",
-          border: "none",
-          color: darkBlueColor,
-          // fontSize: "16px",
-          // lineHeight: "20px",
-          // fontFamily: "Montserrat",
-          // fontWeight: "400",
-          boxSizing: "border-box",
           "&::placeholder": {
             color: darkBlueColor,
             opacity: "1",
@@ -118,7 +106,7 @@ export const mainThemes = createTheme({
     MuiButton: {
       styleOverrides: {
         root: {
-          width: "fit-content",
+          minWidth: "fit-content ",
           padding: "0 16px",
           backgroundColor: darkTurquoiseColor,
           height: "30px",
@@ -168,9 +156,12 @@ export const mainThemes = createTheme({
     MuiOutlinedInput: {
       styleOverrides: {
         root: {
-          "& > fieldset": {
-            border: "none",
-          },
+          backgroundColor: lightTurquoiseColor,
+          borderRadius: "30px",
+          height: "50px",
+          // "& > fieldset": {
+          //   borderColor: lightTurquoiseColor,
+          // },
         },
       },
     },
@@ -181,7 +172,7 @@ export const mainThemes = createTheme({
           input: {
             width: "100%",
             height: "50px",
-            padding: "12px 15px",
+            padding: "6px",
             borderRadius: "30px",
             border: "none",
             color: darkBlueColor,
@@ -209,10 +200,44 @@ export const mainThemes = createTheme({
               "-webkit-appearance": "none",
             },
           },
+          "& .MuiOutlinedInput-root": {
+            "&:hover fieldset": {
+              borderColor: lightTurquoiseColor,
+            },
+          },
+          "& .MuiInputBase-colorPrimary": {
+            "&:hover fieldset": {
+              borderColor: lightTurquoiseColor,
+            },
+          },
+          "& .MuiInputBase-colorSecondary": {
+            "&:hover fieldset": {
+              borderColor: "#FFF",
+            },
+          },
+          "& .MuiInputBase-colorSecondary.Mui-focused, .MuiInputBase-colorSecondary.Mui-disabled":
+            {
+              fieldset: {
+                borderColor: "#FFF",
+              },
+            },
+          "& .MuiInputBase-colorSecondary.MuiOutlinedInput-root": {
+            backgroundColor: "#FFF",
+          },
+          "& .Mui-error": {
+            "&:hover fieldset": {
+              borderColor: "#d32f2f",
+            },
+          },
         },
       },
     },
     MuiInputBase: {
+      styleOverrides: {
+        root: {
+          padding: "0 15px 0 12px !important ",
+        },
+      },
       variants: [
         {
           props: { color: "primary" },
@@ -220,6 +245,9 @@ export const mainThemes = createTheme({
             input: {
               backgroundColor: lightTurquoiseColor,
               borderRadius: "30px",
+            },
+            fieldset: {
+              borderColor: lightTurquoiseColor,
             },
           },
         },
@@ -230,6 +258,9 @@ export const mainThemes = createTheme({
               backgroundColor: "#FFF",
               borderRadius: "30px",
             },
+            fieldset: {
+              borderColor: "#FFF",
+            },
           },
         },
       ],
@@ -238,10 +269,6 @@ export const mainThemes = createTheme({
       styleOverrides: {
         root: {
           color: darkBlueColor,
-          "& Mui-error": {
-            borderColor: "red",
-            borderWidth: 2,
-          },
           "&.Mui-focused": {
             color: darkBlueColor,
           },
@@ -310,29 +337,6 @@ export const mainThemes = createTheme({
       styleOverrides: {
         paper: {
           backgroundColor: whiteColor,
-        },
-      },
-    },
-    MuiTabs: {
-      styleOverrides: {
-        root: {
-          borderRadius: 30,
-        },
-        indicator: {
-          visibility: "hidden",
-        },
-      },
-    },
-    MuiTab: {
-      styleOverrides: {
-        root: {
-          textTransform: "none",
-          backgroundColor: lightTurquoiseColor,
-          color: darkBlueColor,
-          "&.Mui-selected": {
-            backgroundColor: darkTurquoiseColor,
-            color: whiteColor,
-          },
         },
       },
     },
