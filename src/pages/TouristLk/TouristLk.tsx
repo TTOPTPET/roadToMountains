@@ -180,7 +180,7 @@ function TouristLk() {
                     <Typography variant={"caption"}>
                       до{" "}
                       {dayjs(record.tourDate.from)
-                        .add(-1, "day")
+                        .subtract(1, "day")
                         .format("D MMMM YYYY")}
                     </Typography>
                   </Stack>
