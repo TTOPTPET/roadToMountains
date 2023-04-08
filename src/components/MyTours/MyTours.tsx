@@ -11,7 +11,7 @@ enum tabValues {
 
 export const MyTours = () => {
   const [records, setRecords] = useState<IUserRecord[]>([]);
-  const [tabValue, setTabValue] = useState<tabValues>(tabValues.past);
+  const [tabValue, setTabValue] = useState<tabValues>(tabValues.upcomming);
 
   useEffect(() => {
     switch (tabValue) {
