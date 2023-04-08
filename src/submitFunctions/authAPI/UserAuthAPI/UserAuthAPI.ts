@@ -5,67 +5,59 @@ import { Cookies } from "react-cookie";
 import { IUserLogin } from "../../../models/authModels/IUserLogin";
 import { IUserRegister } from "../../../models/authModels/IUserRegister";
 import { IConfirmRegistration } from "../../../models/authModels/IConfirmRegistration";
+import { IAuthResponse } from "../../../models/authModels/IAuthResponse";
 
 let cookie = new Cookies();
 
-const userLoginDefault: IUserLogin = {
-  email: "str",
-  password: "str",
-  phone: "str",
+const userAuthDefault: IAuthResponse = {
+  accessTocken: "TOKEN",
+  refreshTocken: "REFRESH",
 };
 
 export const loginUser = async (
-  successCallback: (prop: IUserLogin) => void,
+  successCallback: (prop: IAuthResponse) => void,
   params: string,
   data: IUserLogin,
   errorCallback?: () => void,
   useDefault?: boolean
 ) => {
   if (useDefault) {
-    successCallback(userLoginDefault);
+    successCallback(userAuthDefault);
     return;
   }
   try {
-    let respone = await axios.post(urlUser + "/login", {
+    let response = await axios.post<IAuthResponse>(urlUser + "/login", {
       params: params,
       data: data,
-      headers: {
-        Authorization: `Bearer ${cookie.get(TOKEN)}`,
-      },
     });
-    successCallback(respone?.data);
+    cookie.set("ACCESS_TOKEN", response.data.accessTocken);
+    cookie.set("REFRESH_TOKEN", response.data.refreshTocken);
+    cookie.set("USER_INFO", response.data.userInfo);
+    successCallback(response?.data);
   } catch (e) {
     console.error(e);
     errorCallback && errorCallback();
   }
 };
 
-const userRegisterDefault: IUserRegister = {
-  email: "creaper@minecraft.su",
-  name: "sosika",
-  password: "12345",
-  phone: "8999999999",
-  typeUser: "tourist",
-};
-
 export const registerUser = async (
-  successCallback: (prop: IUserRegister) => void,
-  data: IUserLogin,
+  successCallback: (prop: IAuthResponse) => void,
+  data: IUserRegister,
   errorCallback?: () => void,
   useDefault?: boolean
 ) => {
   if (useDefault) {
-    successCallback(userRegisterDefault);
+    successCallback(userAuthDefault);
     return;
   }
   try {
-    let respone = await axios.post(urlUser + "/register", {
+    let response = await axios.post(urlUser + "/register", {
       data: data,
-      headers: {
-        Authorization: `Bearer ${cookie.get(TOKEN)}`,
-      },
     });
-    successCallback(respone?.data);
+    cookie.set("ACCESS_TOKEN", response.data.accessTocken);
+    cookie.set("REFRESH_TOKEN", response.data.refreshTocken);
+    cookie.set("USER_INFO", response.data.userInfo);
+    successCallback(response?.data);
   } catch (e) {
     console.error(e);
     errorCallback && errorCallback();
