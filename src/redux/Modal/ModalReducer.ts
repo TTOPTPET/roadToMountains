@@ -1,5 +1,17 @@
 //HACK: Для того, чтобы задать новый id необходмо вписать его сюда :)
-type modalsId = "filterModal" | "sortModal";
+type modalsId =
+  | "filterModal"
+  | "sortModal"
+  | "errorReportModal"
+  | "successMessageSendModal"
+  | "cancelBookingModal"
+  | "successCancellingBookingModal"
+  | "successPayModal"
+  | "successBookingModal"
+  | "deleteTourModal"
+  | "successDeleteTourModal"
+  | "successEditUserInfoModal"
+  | "enterMobileCodeModal";
 
 enum actionTypes {
   SET_MODAL_ACTIVE = "SET_MODAL_ACTIVE",

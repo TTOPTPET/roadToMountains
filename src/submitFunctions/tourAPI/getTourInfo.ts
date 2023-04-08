@@ -10,8 +10,8 @@ const responseDefault: ITourInfo = {
   category: "Конченные уроды",
   complexity: "5",
   nearestDate: {
-    from: "2018-04-04T16:00:00.000Z",
-    to: "2018-04-05T16:00:00.000Z",
+    from: "2023-04-10T16:00:00.000Z",
+    to: "2023-04-11T16:00:00.000Z",
   },
   price: {
     from: 1000,

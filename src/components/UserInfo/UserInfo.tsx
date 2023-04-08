@@ -6,7 +6,7 @@ import {
   UserType,
   CreatorType,
 } from "../../models/userModels/IUserInfo";
-import { Box, Typography, Avatar as MuiAvatar } from "@mui/material";
+import { Box, Typography, Avatar as MuiAvatar, Button } from "@mui/material";
 import { darkTurquoiseColor } from "../../config/MUI/color/color";
 import userPhoto from "../../media/userPhoto.svg";
 
@@ -15,6 +15,22 @@ import { RootState } from "../../redux/store";
 import { setUserInfo } from "../../redux/UserInfo/UserInfoReducer";
 import UserInfoSkeleton from "./UserInfoSkeleton/UserInfoSkeleton";
 import CreatorDocumentsList from "../CreatorDocumentsList/CreatorDocumentsList";
+
+import {
+  isModalActive,
+  setModalInactive,
+  setModalActive,
+} from "../../redux/Modal/ModalReducer";
+import ErrorReportModal from "../Modals/ErrorReportModal/ErrorReportModal";
+import SuccessMessageSendModal from "../Modals/SuccessMessageSendModal/SuccessMessageSendModal";
+import CancelBookingModal from "../Modals/CancelBookingModal/CancelBookingModal";
+import SuccessCancellingBookingModal from "../Modals/SuccessCancellingBookingModal/SuccessCancellingBookingModal";
+import SuccessBookingModal from "../Modals/SuccessBookingModal/SuccessBookingModal";
+import DeleteTourModal from "../Modals/DeleteTourModal/DeleteTourModal";
+import SuccessDeleteTourModal from "../Modals/SuccessDeleteTourModal/SuccessDeleteTourModal";
+import SuccessPayModal from "../Modals/SuccessPayModal/SuccessPayModal";
+import SuccessEditUserInfoModal from "../Modals/SuccessEditUserInfoModal/SuccessEditUserInfoModal";
+import EnterMobileCodeModal from "../Modals/EnterMobileCodeModal/EnterMobileCodeModal";
 
 type UserInfoProps = {
   fields: JSX.Element;
@@ -28,6 +44,8 @@ function UserInfo({ header, fields, submitFuntion }: UserInfoProps) {
   const userInfo: ITouristInfo | ICreatorInfo = useSelector(
     (state: RootState) => state.userInfo.userInfo
   );
+
+  const dispatch = useDispatch();
 
   const { typeUser, dataUser, name, phone, email } = userInfo;
 
@@ -154,6 +172,19 @@ function UserInfo({ header, fields, submitFuntion }: UserInfoProps) {
           variant="displayInfo"
         />
       )}
+      <Button onClick={() => dispatch(setModalActive("enterMobileCodeModal"))}>
+        Открыть модалку
+      </Button>
+      <ErrorReportModal />
+      <SuccessMessageSendModal />
+      <CancelBookingModal />
+      <SuccessCancellingBookingModal />
+      <SuccessBookingModal />
+      <DeleteTourModal />
+      <SuccessDeleteTourModal />
+      <SuccessPayModal />
+      <SuccessEditUserInfoModal />
+      <EnterMobileCodeModal />
     </>
   );
 }
