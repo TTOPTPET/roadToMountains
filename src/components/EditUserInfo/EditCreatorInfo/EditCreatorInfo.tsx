@@ -143,15 +143,18 @@ function EditCreatorInfo() {
             </FormControl>
             <InputFieldsCreator
               creatorInfo={creatorInfo}
-              // TODO: переименовать спред оператор fieldsprototipe
-              setCreatorInfo={(field: string, value: any, text: any) =>
+              setCreatorInfo={(
+                field: string,
+                value: any,
+                fieldsPrototipe: any
+              ) =>
                 dispatch(
                   setUserInfo({
                     ...creatorInfo,
                     dataUser: {
                       ...creatorInfo?.dataUser,
                       fieldsCreator: {
-                        ...text,
+                        ...fieldsPrototipe,
                         [field]: value,
                       },
                     },

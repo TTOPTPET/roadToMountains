@@ -13,6 +13,7 @@ declare module "@mui/material/Button" {
     high: true;
     textButton: true;
     fileInput: true;
+    weakTextButton: true;
   }
 }
 
@@ -107,6 +108,7 @@ export const mainThemes = createTheme({
       styleOverrides: {
         root: {
           minWidth: "fit-content ",
+          width: "fit-content",
           padding: "0 16px",
           backgroundColor: darkTurquoiseColor,
           height: "30px",
@@ -137,6 +139,17 @@ export const mainThemes = createTheme({
             backgroundColor: "transparent",
             "&:hover": { backgroundColor: "transparent" },
             color: darkBlueColor,
+          },
+        },
+        {
+          props: { variant: "weakTextButton" },
+          style: {
+            backgroundColor: "transparent",
+            "&:hover": { backgroundColor: "transparent" },
+            color: darkBlueColor,
+            fontFamily: "Montserrat",
+            fontSize: "16px",
+            fontWeight: 400,
           },
         },
         {

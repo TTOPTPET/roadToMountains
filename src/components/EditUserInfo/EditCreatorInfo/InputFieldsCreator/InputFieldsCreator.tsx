@@ -14,7 +14,7 @@ import {
 
 type inputFieldsCreatorProps = {
   creatorInfo: ICreatorInfo;
-  setCreatorInfo: (field: string, value: any, text: any) => void;
+  setCreatorInfo: (field: string, value: any, fieldsPrototipe: any) => void;
 };
 
 function InputFieldsCreator({
