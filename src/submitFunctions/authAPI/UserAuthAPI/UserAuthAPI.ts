@@ -42,7 +42,7 @@ export const loginUser = async (
 
 export const registerUser = async (
   successCallback: (prop: IAuthResponse) => void,
-  data: IUserLogin,
+  data: IUserRegister,
   errorCallback?: () => void,
   useDefault?: boolean
 ) => {
