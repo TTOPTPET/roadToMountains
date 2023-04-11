@@ -242,6 +242,11 @@ export const mainThemes = createTheme({
               borderColor: "#d32f2f",
             },
           },
+          "& .Mui-disabled": {
+            "& .MuiOutlinedInput-notchedOutline": {
+              border: "none",
+            },
+          },
         },
       },
     },

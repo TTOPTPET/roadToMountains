@@ -72,6 +72,7 @@ export const BasicFilter: FC<IFilterProps> = ({
           renderInput={(props) => (
             <TextField
               {...props}
+              error={props.error && props.inputProps.value !== ""}
               inputProps={{
                 ...props.inputProps,
                 placeholder: "Дата заезда",
@@ -85,6 +86,7 @@ export const BasicFilter: FC<IFilterProps> = ({
           renderInput={(props) => (
             <TextField
               {...props}
+              error={props.error && props.inputProps.value !== ""}
               inputProps={{
                 ...props.inputProps,
                 placeholder: "Дата выезда",
