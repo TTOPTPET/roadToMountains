@@ -1,7 +1,6 @@
-import { ICreatorInfo, ITouristInfo } from "../userModels/IUserInfo";
-
 export interface IAuthResponse {
-  accessTocken?: string;
-  refreshTocken?: string;
-  userInfo?: ICreatorInfo | ITouristInfo;
+  accessToken?: string;
+  refreshToken?: string;
+  status?: boolean;
+  role?: string;
 }

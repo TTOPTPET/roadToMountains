@@ -76,6 +76,7 @@ export const getMyTours = async (
     return;
   }
   try {
+    console.log(cookie.get(TOKEN));
     let response = await axios.get(creatorUrl + "/myTours ", {
       headers: {
         Authorization: `Bearer ${cookie.get(TOKEN)}`,

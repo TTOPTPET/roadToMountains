@@ -1,6 +1,9 @@
 import { Button } from "@mui/material";
 import { Stack } from "@mui/system";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { RootState } from "../../../redux/store";
+import { addTour } from "../../../submitFunctions/addTourAPI/addTourAPI";
 import { addTourStepsMap } from "../AddTourPage";
 
 interface addTourRoutingProps {
@@ -10,7 +13,12 @@ interface addTourRoutingProps {
 
 export default function AddTourRouting({ page, setPage }: addTourRoutingProps) {
   const navigate = useNavigate();
-  // const newTour = useSelect(stat)
+  const newTour = useSelector((state: RootState) => state.addTour);
+
+  const handlerSendTourClick = () => {
+    console.log(newTour);
+    addTour(undefined, newTour.tourFields, undefined, false);
+  };
 
   return (
     <>
@@ -31,15 +39,7 @@ export default function AddTourRouting({ page, setPage }: addTourRoutingProps) {
           {"< "} Назад
         </Button>
         {page === addTourStepsMap.third ? (
-          <Button
-            variant="contained"
-            onClick={
-              () => {
-                return;
-              }
-              //TODO: Апи для создания тура
-            }
-          >
+          <Button variant="contained" onClick={handlerSendTourClick}>
             Добавить тур
           </Button>
         ) : (

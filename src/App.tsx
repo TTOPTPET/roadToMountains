@@ -41,7 +41,7 @@ function App() {
         // setLoadingStatus(false);
       },
       undefined,
-      true
+      false
     );
   }, []);
 

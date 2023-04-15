@@ -1,4 +1,4 @@
-export const TOKEN = "TOKEN";
+export const TOKEN = "ACCESS_TOKEN";
 export const VISITED = "VISITED";
 
 export const datePickerModalId = "datePickerModal";
