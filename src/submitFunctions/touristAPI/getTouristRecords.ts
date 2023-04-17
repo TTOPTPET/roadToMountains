@@ -28,7 +28,7 @@ const recordsDefault: IUserRecord[] = [
     tour: {
       tourId: "1141414",
       tourName: "Египетские пирамиды",
-      housingInclud: {
+      housingInclude: {
         housingAddress: "ул. Иванова",
         housingName: "Гроб",
         housingDescription: "150",
@@ -61,7 +61,7 @@ const recordsDefault: IUserRecord[] = [
     tour: {
       tourId: "1141414",
       tourName: "Египетские пирамиды",
-      housingInclud: {
+      housingInclude: {
         housingAddress: "ул. Иванова",
         housingName: "Гроб",
         housingDescription: "150",
@@ -94,7 +94,7 @@ const recordsDefault: IUserRecord[] = [
     tour: {
       tourId: "1141414",
       tourName: "Египетские пирамиды",
-      housingInclud: {
+      housingInclude: {
         housingAddress: "ул. Иванова",
         housingName: "Гроб",
         housingDescription: "150",

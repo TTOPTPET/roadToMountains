@@ -30,6 +30,28 @@ import TourPage from "./pages/TourPage/TourPage";
 import { useEffect } from "react";
 import { getUserInfo } from "./submitFunctions/commonAPI";
 import { setUserInfo } from "./redux/UserInfo/UserInfoReducer";
+import axios from "axios";
+import { refreshToken } from "./submitFunctions/authAPI/UserAuthAPI/UserAuthAPI";
+
+axios.interceptors.request.use(
+  (response) => response,
+  async (error) => {
+    const config = error?.config;
+    if (error.response) {
+      if (
+        (error.response.status === 401 || error.response.status === 422) &&
+        !config?.sent
+      ) {
+        config.sent = true;
+        console.log("REFRESH TOKEN ESHKEEREEEEEE");
+        await refreshToken();
+        return axios(config);
+      }
+    }
+
+    return Promise.reject(error);
+  }
+);
 
 function App() {
   dayjs.locale("ru");
@@ -58,7 +80,7 @@ function App() {
             <Route path={"/creator/lk"} element={<CreatorLk />} />
             <Route path={"/creator/editInfo"} element={<EditCreatorInfo />} />
             <Route path={"/tourist/editInfo"} element={<EditTouristInfo />} />
-            <Route path={"/creator/add"} element={<AddTourPage />} />
+            <Route path={"/creator/lk/add"} element={<AddTourPage />} />
             <Route
               path={"/creator/notifications"}
               element={<NotificationsPage />}

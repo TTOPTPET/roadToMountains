@@ -7,7 +7,7 @@ function AddTourButton() {
   return (
     <Box
       component={Link}
-      to={"/addTour"}
+      to={"add"}
       className="tour_button"
       sx={{
         display: "block",

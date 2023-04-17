@@ -18,7 +18,7 @@ export interface ITourInfo {
     to?: number;
   };
   mapPoints?: string[];
-  housingInclud?: {
+  housingInclude?: {
     housingName: string;
     housingAddress: string;
     housingDescription?: string;

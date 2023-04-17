@@ -1,4 +1,5 @@
 export const TOKEN = "ACCESS_TOKEN";
+export const REFRESH_TOKEN = "REFRESH_TOKEN";
 export const VISITED = "VISITED";
 
 export const datePickerModalId = "datePickerModal";

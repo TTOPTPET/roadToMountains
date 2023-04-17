@@ -115,11 +115,11 @@ export const TourAccordion = ({ record }: { record: IUserRecord }) => {
             </Stack>
             <Typography variant={"h6"}>Проживание</Typography>
             <Typography variant={"caption"}>
-              {record.tour?.housingInclud.housingName +
+              {record.tour?.housingInclude.housingName +
                 ", " +
-                record.tour?.housingInclud.housingAddress +
+                record.tour?.housingInclude.housingAddress +
                 ", " +
-                record.tour?.housingInclud.housingDescription}
+                record.tour?.housingInclude.housingDescription}
             </Typography>
             <Typography variant={"h6"}>Страхование</Typography>
             <Typography variant={"caption"}>

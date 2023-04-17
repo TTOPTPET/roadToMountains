@@ -18,7 +18,7 @@ export interface IUserRecord {
   tour: {
     tourId: string;
     tourName: string;
-    housingInclud?: {
+    housingInclude?: {
       housingName: string;
       housingAddress: string;
       housingDescription?: string;

@@ -3,8 +3,8 @@ import { urlUser } from "../../../config/config";
 import { Cookies } from "react-cookie";
 import { IUserLogin } from "../../../models/authModels/IUserLogin";
 import { IUserRegister } from "../../../models/authModels/IUserRegister";
-import { IConfirmRegistration } from "../../../models/authModels/IConfirmRegistration";
 import { IAuthResponse } from "../../../models/authModels/IAuthResponse";
+import { REFRESH_TOKEN, TOKEN } from "../../../config/types";
 
 let cookie = new Cookies();
 
@@ -71,4 +71,14 @@ export const registerUser = async (
     console.error(e);
     errorCallback && errorCallback();
   }
+};
+
+export const refreshToken = async () => {
+  let response = await axios.get<IAuthResponse>(urlUser + "/refresh", {
+    headers: {
+      Authorization: `Bearer ${cookie.get(REFRESH_TOKEN)}`,
+    },
+  });
+  cookie.remove(TOKEN);
+  cookie.set(TOKEN, response.data?.accessToken);
 };

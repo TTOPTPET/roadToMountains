@@ -46,7 +46,7 @@ function NavTool() {
         <Link to={"/creator/calendar"}>TourCalendarPage</Link>
         <Link to={"/tourist/lk"}>TouristLk</Link>
         <Link to={"/tours/all"}>TourListPage</Link>
-        <Link to={"/creator/add"}>AddTourPage</Link>
+        <Link to={"/creator/lk/add"}>AddTourPage</Link>
       </div>
     </div>
   );

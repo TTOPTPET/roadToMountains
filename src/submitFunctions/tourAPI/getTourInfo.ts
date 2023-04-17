@@ -29,7 +29,7 @@ const responseDefault: ITourInfo = {
     freeServices: ["По ебалу", "Солевая альтуха"],
   },
   recommendations: ["Пиво", "Гандоны"],
-  housingInclud: {
+  housingInclude: {
     housingAddress: "Иваново",
     housingName: "13",
     housingDescription: "В жопе мира",

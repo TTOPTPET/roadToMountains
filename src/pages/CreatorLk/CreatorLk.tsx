@@ -26,33 +26,34 @@ function CreatorLk() {
     );
   }, []);
 
-  const elements = myTours.length ? (
-    myTours?.map((tour, i) => {
-      return (
-        <Grid key={i} item xs={1}>
-          <TourCard tour={tour} key={tour.tourId} tourCardType={"myTours"} />
+  const elements =
+    myTours && myTours.length ? (
+      myTours?.map((tour, i) => {
+        return (
+          <Grid key={i} item xs={1}>
+            <TourCard tour={tour} key={tour.tourId} tourCardType={"myTours"} />
+          </Grid>
+        );
+      })
+    ) : (
+      //TODO: изменить дизайн надписи, когда нет туров
+      <>
+        <Grid item xs={2} sx={{ display: "flex" }}>
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              m: "0 auto",
+              fontFamily: "Jost",
+              fontWeight: "800",
+              fontSize: "40px",
+            }}
+          >
+            Еще нет созданных туров
+          </Box>
         </Grid>
-      );
-    })
-  ) : (
-    //TODO: изменить дизайн надписи, когда нет туров
-    <>
-      <Grid item xs={2} sx={{ display: "flex" }}>
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            m: "0 auto",
-            fontFamily: "Jost",
-            fontWeight: "800",
-            fontSize: "40px",
-          }}
-        >
-          Еще нет созданных туров
-        </Box>
-      </Grid>
-    </>
-  );
+      </>
+    );
 
   const skeleton = () => {
     return (

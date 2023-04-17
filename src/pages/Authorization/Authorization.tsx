@@ -138,7 +138,7 @@ function Authorization() {
     name: "",
     password: "",
     phone: "",
-    typeUser: "creator",
+    typeUser: "tourist",
   };
   const [userLoginData, setUserLoginData] = useState<IUserLogin>(loginDefault);
   const [userRegisterData, setUserRegisterData] =
@@ -170,12 +170,14 @@ function Authorization() {
   const handlerRegisterClick = () => {
     let codeStatus;
     registerUser(
-      (value) => (codeStatus = value),
+      (value) => {
+        codeStatus = value;
+      },
       userRegisterData,
       undefined,
       false
     );
-
+    console.log(codeStatus);
     if (codeStatus === 201 || codeStatus === 200) {
       setIsConfirmCode(true);
     }
@@ -194,7 +196,7 @@ function Authorization() {
   };
 
   return (
-    <Stack width={"30%"} margin={"0 auto"}>
+    <Stack width={"30%"} margin={"0 auto"} gap={1}>
       <Typography component={"h1"} fontSize={"50"}>
         {regState ? "Вход" : "Регистрация"}
       </Typography>
