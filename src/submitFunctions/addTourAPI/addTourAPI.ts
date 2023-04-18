@@ -22,6 +22,7 @@ export const addTour = async (
   try {
     let formData = new FormData();
     formData.append("data", JSON.stringify(data));
+    console.log(data);
     let respone = await axios.post(creatorUrl + "/tour", formData, {
       headers: {
         Authorization: `Bearer ${cookie.get(TOKEN)}`,

@@ -4,6 +4,6 @@ export const urlUser = `${baseUrl}/users`;
 export const adminUrl = `${baseUrl}/api_admin`;
 export const creatorUrl = `${baseUrl}/users/creator`;
 export const touristUrl = `${baseUrl}/users/tourist`;
-export const urlTour = `${baseUrl}/tours`;
+export const urlTour = `${baseUrl}/tour`;
 
 export const mobileWidth = `${700}px`;

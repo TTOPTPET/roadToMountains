@@ -15,7 +15,15 @@ import { setTourField } from "../../../redux/AddTour/AddTourReducer";
 
 const turnOnDefault: string[] = ["Не включено", "Включено"];
 
-const difficultDefault: string[] = ["1", "2", "3", "4", "5"];
+const difficultDefault: string[] = [
+  "Легко",
+  "Ниже среднего",
+  "Релакс",
+  "Средне",
+  "Сложно",
+  "Тренировка",
+  "Экстрим",
+];
 
 export const AddTourSecondPage = () => {
   const [residency, setResidency] = useState<string>(turnOnDefault[0]);

@@ -15,6 +15,11 @@ export const setTouristInfo = async (
     return;
   }
   try {
+    let formData = new FormData();
+    const dataUser = data.dataUser;
+    delete data.dataUser;
+    data = Object.assign(data, dataUser);
+    formData.append("dataUser", JSON.stringify(data));
     let response = await axios.post(touristUrl + "/touristInfo", data, {
       headers: {
         Authorization: `Bearer ${cookie.get(TOKEN)}`,

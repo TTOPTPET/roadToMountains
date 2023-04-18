@@ -39,11 +39,10 @@ axios.interceptors.request.use(
     const config = error?.config;
     if (error.response) {
       if (
-        (error.response.status === 401 || error.response.status === 422) &&
+        (error.response.status === 422 || error.response.status === 401) &&
         !config?.sent
       ) {
         config.sent = true;
-        console.log("REFRESH TOKEN ESHKEEREEEEEE");
         await refreshToken();
         return axios(config);
       }

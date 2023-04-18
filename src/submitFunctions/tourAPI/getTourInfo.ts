@@ -51,7 +51,10 @@ export const getTourInfo = async (
     return;
   }
   try {
-    let response = await axios.get<ITourInfo>(urlTour + `/tours/${tourId}`, {
+    let response = await axios.get<ITourInfo>(urlTour + `/tour`, {
+      params: {
+        tourId,
+      },
       headers: {
         Authorization: `Bearer ${cookie.get(TOKEN)}`,
       },

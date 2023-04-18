@@ -17,6 +17,9 @@ export const setCreatorInfo = async (
   }
   try {
     let formData = new FormData();
+    const dataUser = data.dataUser;
+    delete data.dataUser;
+    data = Object.assign(data, dataUser);
     formData.append("dataUser", JSON.stringify(data));
     let response = await axios.post(creatorUrl + "/creatorInfo", formData, {
       headers: {
