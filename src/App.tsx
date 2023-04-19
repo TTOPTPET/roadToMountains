@@ -33,21 +33,13 @@ import { setUserInfo } from "./redux/UserInfo/UserInfoReducer";
 import axios from "axios";
 import { refreshToken } from "./submitFunctions/authAPI/UserAuthAPI/UserAuthAPI";
 
-axios.interceptors.request.use(
+axios.interceptors.response.use(
   (response) => response,
   async (error) => {
-    const config = error?.config;
-    if (error.response) {
-      if (
-        (error.response.status === 422 || error.response.status === 401) &&
-        !config?.sent
-      ) {
-        config.sent = true;
-        await refreshToken();
-        return axios(config);
-      }
+    if (error?.response?.status === 422 && !error.config._retry) {
+      await refreshToken();
+      return Promise.resolve();
     }
-
     return Promise.reject(error);
   }
 );

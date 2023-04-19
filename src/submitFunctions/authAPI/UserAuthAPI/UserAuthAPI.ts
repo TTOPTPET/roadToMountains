@@ -35,8 +35,8 @@ export const confirmUserRegistration = async (
 };
 
 export const loginUser = async (
-  successCallback: (prop: IAuthResponse) => void,
   data: IUserLogin,
+  successCallback?: (prop: IAuthResponse) => void,
   errorCallback?: () => void,
   useDefault?: boolean
 ) => {
@@ -50,7 +50,6 @@ export const loginUser = async (
     cookie.set("REFRESH_TOKEN", response.data.refreshToken);
     cookie.set("USER_ROLE", response.data.role);
     cookie.set("BAN_STATUS", response.data.status);
-    successCallback(response?.data);
   } catch (e) {
     console.error(e);
     errorCallback && errorCallback();

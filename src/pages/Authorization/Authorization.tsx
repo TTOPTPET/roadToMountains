@@ -178,13 +178,15 @@ function Authorization() {
       false
     );
     console.log(codeStatus);
+    setIsConfirmCode(true);
+
     if (codeStatus === 201 || codeStatus === 200) {
       setIsConfirmCode(true);
     }
   };
 
   const handlerLoginClick = () => {
-    loginUser(undefined, userLoginData, undefined, false);
+    loginUser(userLoginData, undefined, undefined, false);
   };
 
   const handlerConfirmCodeClick = () => {

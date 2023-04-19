@@ -8,7 +8,7 @@ export const AdminConfirmAdminPage = () => {
   const [adminList, setAdminList] = useState<IAdminList[]>();
 
   useEffect(() => {
-    getAdminList((value) => setAdminList(value), undefined, true);
+    getAdminList((value) => setAdminList(value), undefined, false);
   }, []);
 
   return (

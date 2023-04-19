@@ -26,19 +26,19 @@ export const AdminComponent: FC<IAdminComponent> = (props: IAdminComponent) => {
   const [expanded, setExpanded] = useState<boolean>(false);
 
   const handlerUserBanClick = (touristId: string) => {
-    userBan((value) => value, touristId, undefined, true);
+    userBan((value) => value, touristId, undefined, false);
   };
 
   const handlerTourBanClick = (tourId: string) => {
-    tourBan((value) => value, tourId, undefined, true);
+    tourBan((value) => value, tourId, undefined, false);
   };
 
   const handlerMessageStatusClick = (status: IChangeStatus) => {
-    changeMessageStatus((value) => value, status, undefined, true);
+    changeMessageStatus((value) => value, status, undefined, false);
   };
 
   const handlerVerifyStatusClick = (creatorId: string) => {
-    verifyCreator((value) => value, creatorId, undefined, true);
+    verifyCreator((value) => value, creatorId, undefined, false);
   };
 
   const handlerDownloadClick = (path: string) => {
@@ -73,8 +73,8 @@ export const AdminComponent: FC<IAdminComponent> = (props: IAdminComponent) => {
 
           <Grid item className="tourist__ban">
             <Typography variant={"caption"}>Статус блокировки:</Typography>
-            {banStatus ? (
-              <Typography variant={"caption"}>Живчик</Typography>
+            {!banStatus ? (
+              <Typography variant={"caption"}>Разблокирован</Typography>
             ) : (
               <Typography variant={"caption"}>Заблокирован</Typography>
             )}
@@ -166,16 +166,15 @@ export const AdminComponent: FC<IAdminComponent> = (props: IAdminComponent) => {
                 </Grid>
                 <Grid item className="problem__info">
                   <Typography variant={"h5"}>Тип: {typeMessage}</Typography>
-                  {typeMessage === "проблема с туром" && (
+                  {typeMessage === "tourProblem" && (
                     <>
-                      <Typography variant={"caption"}>
-                        ⚫ {tourName}, {publicTourId}
-                      </Typography>
+                      <Typography variant={"caption"}>⚫ {tourName}</Typography>
                       <Typography variant={"caption"}>
                         ⚫ {creatorName}
                       </Typography>
                       <Typography variant={"caption"}>
-                        ⚫ {from} - {to}
+                        ⚫ {dayjs(from).format("D MMMM YYYY")} -{" "}
+                        {dayjs(to).format("D MMMM YYYY")}
                       </Typography>
                     </>
                   )}
@@ -217,7 +216,7 @@ export const AdminComponent: FC<IAdminComponent> = (props: IAdminComponent) => {
         ceratorType,
         statusVerify,
         changeVerifyDate,
-        creatorDocuments,
+        documents,
       } = dataUser;
       return (
         <Stack
@@ -275,25 +274,22 @@ export const AdminComponent: FC<IAdminComponent> = (props: IAdminComponent) => {
               </Button>
             </Grid>
           </Grid>
-          {creatorDocuments.map((document, index) => (
-            <Stack direction={"row"} key={index} alignItems={"center"}>
-              <Button
-                onClick={() => handlerDownloadClick(document.documentPath)}
-              >
-                <SvgIcon scale={0.1}>
-                  <DownloadIcon />
-                </SvgIcon>{" "}
-              </Button>
-              <Typography variant={"caption"}>
-                {document.documentName}
-              </Typography>
-            </Stack>
-          ))}
+          {documents &&
+            documents.map((document, index) => (
+              <Stack direction={"row"} key={index} alignItems={"center"}>
+                <Button onClick={() => handlerDownloadClick(document.path)}>
+                  <SvgIcon scale={0.1}>
+                    <DownloadIcon />
+                  </SvgIcon>{" "}
+                </Button>
+                <Typography variant={"caption"}>{document.filename}</Typography>
+              </Stack>
+            ))}
         </Stack>
       );
     }
     case "admin": {
-      const { phone, email, name, banStatus } = props;
+      const { adminId, phone, email, name, banStatus } = props;
       return (
         <Grid
           container
@@ -310,7 +306,13 @@ export const AdminComponent: FC<IAdminComponent> = (props: IAdminComponent) => {
             <Typography variant={"caption"}>⚫ {email}</Typography>
           </Grid>
           <Grid item marginY={"auto"} className="user__ban">
-            <Button variant={"text"}>В данных не было id, не заметил:/</Button>
+            <Button
+              variant={"text"}
+              onClick={() => handlerUserBanClick(adminId)}
+            >
+              {" "}
+              Переключить статус блокировки
+            </Button>
           </Grid>
         </Grid>
       );

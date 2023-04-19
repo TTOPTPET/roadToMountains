@@ -8,9 +8,10 @@ export const AdminAccessTouristPage = () => {
   const [touristList, setTouristList] = useState<ITouristList[]>();
 
   useEffect(() => {
-    getTouristList((value) => setTouristList(value), undefined, true);
+    getTouristList((value) => setTouristList(value), undefined, false);
   }, []);
 
+  console.log(touristList);
   return (
     <Stack padding={1} gap={1}>
       {touristList &&
