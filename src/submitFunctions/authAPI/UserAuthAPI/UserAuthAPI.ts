@@ -23,8 +23,8 @@ export const confirmUserRegistration = async (
       urlUser + "/confirmRegistration",
       data
     );
-    cookie.set("ACCESS_TOKEN", response.data.accessToken);
-    cookie.set("REFRESH_TOKEN", response.data.refreshToken);
+    cookie.set(TOKEN, response.data.accessToken);
+    cookie.set(REFRESH_TOKEN, response.data.refreshToken);
     cookie.set("USER_ROLE", response.data.role);
     cookie.set("BAN_STATUS", response.data.status);
     successCallback(response?.data);
@@ -46,8 +46,8 @@ export const loginUser = async (
   }
   try {
     let response = await axios.post<IAuthResponse>(urlUser + "/login", data);
-    cookie.set("ACCESS_TOKEN", response.data.accessToken);
-    cookie.set("REFRESH_TOKEN", response.data.refreshToken);
+    cookie.set(TOKEN, response.data.accessToken);
+    cookie.set(REFRESH_TOKEN, response.data.refreshToken);
     cookie.set("USER_ROLE", response.data.role);
     cookie.set("BAN_STATUS", response.data.status);
   } catch (e) {
