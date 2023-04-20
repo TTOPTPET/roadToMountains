@@ -6,7 +6,7 @@ export const AuthComponent = (
   switch (type) {
     case "login": {
       const loginComponent: ILoginComponent = {
-        email: {
+        login: {
           name: "Логин",
           required: true,
           type: "",

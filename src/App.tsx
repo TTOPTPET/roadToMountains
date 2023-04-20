@@ -30,19 +30,6 @@ import TourPage from "./pages/TourPage/TourPage";
 import { useEffect } from "react";
 import { getUserInfo } from "./submitFunctions/commonAPI";
 import { setUserInfo } from "./redux/UserInfo/UserInfoReducer";
-import axios from "axios";
-import { refreshToken } from "./submitFunctions/authAPI/UserAuthAPI/UserAuthAPI";
-
-axios.interceptors.response.use(
-  (response) => response,
-  async (error) => {
-    if (error?.response?.status === 422 && !error.config._retry) {
-      await refreshToken();
-      return Promise.resolve();
-    }
-    return Promise.reject(error);
-  }
-);
 
 function App() {
   dayjs.locale("ru");

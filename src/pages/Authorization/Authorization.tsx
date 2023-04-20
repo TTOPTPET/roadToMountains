@@ -129,9 +129,8 @@ import {
 
 function Authorization() {
   const loginDefault: IUserLogin = {
-    email: "",
+    login: "",
     password: "",
-    phone: "",
   };
   const registerDefault: IUserRegister = {
     email: "",
