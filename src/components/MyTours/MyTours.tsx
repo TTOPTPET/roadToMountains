@@ -34,7 +34,7 @@ export const MyTours = () => {
       (value) =>
         setRecords(value.filter((item) => item.bookingStatus.past === past)),
       undefined,
-      true
+      false
     );
   };
 

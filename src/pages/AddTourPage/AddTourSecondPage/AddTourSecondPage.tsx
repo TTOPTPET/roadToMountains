@@ -15,7 +15,15 @@ import { setTourField } from "../../../redux/AddTour/AddTourReducer";
 
 const turnOnDefault: string[] = ["Не включено", "Включено"];
 
-const difficultDefault: string[] = ["1", "2", "3", "4", "5"];
+const difficultDefault: string[] = [
+  "Легко",
+  "Ниже среднего",
+  "Релакс",
+  "Средне",
+  "Сложно",
+  "Тренировка",
+  "Экстрим",
+];
 
 export const AddTourSecondPage = () => {
   const [residency, setResidency] = useState<string>(turnOnDefault[0]);
@@ -157,22 +165,56 @@ export const AddTourSecondPage = () => {
               />
             ))}
           </RadioGroup>
-          <TextField
-            placeholder={"Адрес гостиницы"}
-            disabled={residency === turnOnDefault[0] ? true : false}
-            value={tourInfo?.housingInclud?.housingAddress ?? ""}
-            sx={{ width: "75%" }}
-            onChange={(e) =>
-              dispatch(
-                setTourField({
-                  housingInclud: {
-                    ...tourInfo?.housingInclud,
-                    housingAddress: e.target.value,
-                  },
-                })
-              )
-            }
-          />
+          <Stack gap={1}>
+            <TextField
+              placeholder={"Название гостиницы"}
+              disabled={residency === turnOnDefault[0] ? true : false}
+              value={tourInfo?.housingInclude?.housingName ?? ""}
+              sx={{ width: "75%" }}
+              onChange={(e) =>
+                dispatch(
+                  setTourField({
+                    housingInclude: {
+                      ...tourInfo?.housingInclude,
+                      housingName: e.target.value,
+                    },
+                  })
+                )
+              }
+            />
+            <TextField
+              placeholder={"Адрес гостиницы"}
+              disabled={residency === turnOnDefault[0] ? true : false}
+              value={tourInfo?.housingInclude?.housingAddress ?? ""}
+              sx={{ width: "75%" }}
+              onChange={(e) =>
+                dispatch(
+                  setTourField({
+                    housingInclude: {
+                      ...tourInfo?.housingInclude,
+                      housingAddress: e.target.value,
+                    },
+                  })
+                )
+              }
+            />
+            <TextField
+              placeholder={"Описание гостиницы"}
+              disabled={residency === turnOnDefault[0] ? true : false}
+              value={tourInfo?.housingInclude?.housingDescription ?? ""}
+              sx={{ width: "75%" }}
+              onChange={(e) =>
+                dispatch(
+                  setTourField({
+                    housingInclude: {
+                      ...tourInfo?.housingInclude,
+                      housingDescription: e.target.value,
+                    },
+                  })
+                )
+              }
+            />
+          </Stack>
           <Typography variant={"h5"} marginTop={10}>
             Включено в стоимость
           </Typography>
@@ -208,23 +250,42 @@ export const AddTourSecondPage = () => {
               />
             ))}
           </RadioGroup>
-          <TextField
-            placeholder={"Сумма страхования"}
-            disabled={insurance === turnOnDefault[0] ? true : false}
-            type={"number"}
-            value={tourInfo?.insuranceInclude?.insuranceNumber ?? ""}
-            sx={{ width: "75%" }}
-            onChange={(e) =>
-              dispatch(
-                setTourField({
-                  insuranceInclude: {
-                    ...tourInfo?.insuranceInclude,
-                    insuranceNumber: +e.target.value,
-                  },
-                })
-              )
-            }
-          />
+          <Stack gap={1}>
+            <TextField
+              placeholder={"Номер страхования"}
+              disabled={insurance === turnOnDefault[0] ? true : false}
+              type={"number"}
+              value={tourInfo?.insuranceInclude?.insuranceNumber ?? ""}
+              sx={{ width: "75%" }}
+              onChange={(e) =>
+                dispatch(
+                  setTourField({
+                    insuranceInclude: {
+                      ...tourInfo?.insuranceInclude,
+                      insuranceNumber: +e.target.value,
+                    },
+                  })
+                )
+              }
+            />
+            <TextField
+              placeholder={"Сумма страхования"}
+              disabled={insurance === turnOnDefault[0] ? true : false}
+              type={"number"}
+              value={tourInfo?.insuranceInclude?.insuranceAmount ?? ""}
+              sx={{ width: "75%" }}
+              onChange={(e) =>
+                dispatch(
+                  setTourField({
+                    insuranceInclude: {
+                      ...tourInfo?.insuranceInclude,
+                      insuranceAmount: +e.target.value,
+                    },
+                  })
+                )
+              }
+            />
+          </Stack>
           <Typography variant={"h5"} marginTop={10}>
             Дополнительные услуги
           </Typography>

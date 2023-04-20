@@ -153,9 +153,9 @@ export const TourInfo = ({
           )}
           <Typography variant={"h6"}>Проживание</Typography>
           <Typography variant={"caption"}>
-            {tourInfo?.housingInclud?.housingName ?? "Отель"},{" "}
-            {tourInfo?.housingInclud?.housingAddress ?? "Адрес"},{" "}
-            {tourInfo?.housingInclud?.housingDescription ?? "Описание"}
+            {tourInfo?.housingInclude?.housingName ?? "Отель"},{" "}
+            {tourInfo?.housingInclude?.housingAddress ?? "Адрес"},{" "}
+            {tourInfo?.housingInclude?.housingDescription ?? "Описание"}
           </Typography>
           <Typography variant={"h6"}>Страхование</Typography>
           <Typography variant={"caption"}>

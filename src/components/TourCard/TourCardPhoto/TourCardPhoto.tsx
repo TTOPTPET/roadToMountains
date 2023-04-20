@@ -30,7 +30,7 @@ function TourCardPhoto({ tour, tourCardType }: TourCardProps) {
           position: "relative",
           borderTopLeftRadius: "30px",
           borderTopRightRadius: "30px",
-          backgroundImage: `url(${tour.photo.length === 0 ? noPhoto : cardbg})`, //TODO: подставить картинку, которая приходит с бэка.
+          backgroundImage: `url(${tour?.photo ? noPhoto : cardbg})`, //TODO: подставить картинку, которая приходит с бэка.
         }}
       >
         {tourCardType === "myTours" && (

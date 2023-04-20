@@ -73,6 +73,7 @@ function EditCreatorInfo() {
 
   return (
     <>
+      {JSON.stringify(creatorInfo)}
       <EditUserInfo
         fields={
           <>
@@ -183,7 +184,7 @@ function EditCreatorInfo() {
           </>
         }
         submitFuntion={() =>
-          setCreatorInfo(creatorInfo, (resp) =>
+          setCreatorInfo({ ...creatorInfo, ...creatorInfo.dataUser }, (resp) =>
             setInfoStatus(resp?.data?.statusVerify, resp?.data?.timeToSend)
           )
         }

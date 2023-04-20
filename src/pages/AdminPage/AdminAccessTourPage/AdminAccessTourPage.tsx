@@ -8,7 +8,7 @@ export const AdminAccessTourPage = () => {
   const [tourList, setTourList] = useState<ITourList[]>();
 
   useEffect(() => {
-    getTourList((value) => setTourList(value), undefined, true);
+    getTourList((value) => setTourList(value), undefined, false);
   }, []);
 
   return (

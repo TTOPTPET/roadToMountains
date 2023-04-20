@@ -121,24 +121,30 @@ import {
   IRegisterComponent,
   ITextProps,
 } from "../../components/AuthFabric/AuthTypes/AuthTypes";
+import {
+  confirmUserRegistration,
+  loginUser,
+  registerUser,
+} from "../../submitFunctions/authAPI";
 
 function Authorization() {
   const loginDefault: IUserLogin = {
-    email: "",
+    login: "",
     password: "",
-    phone: "",
   };
   const registerDefault: IUserRegister = {
     email: "",
     name: "",
     password: "",
     phone: "",
-    typeUser: "",
+    typeUser: "tourist",
   };
   const [userLoginData, setUserLoginData] = useState<IUserLogin>(loginDefault);
   const [userRegisterData, setUserRegisterData] =
     useState<IUserRegister>(registerDefault);
+  const [confirmCode, setConfirmCode] = useState<string>("");
   const [regState, setRegState] = useState<boolean>(true);
+  const [isConfirmCode, setIsConfirmCode] = useState<boolean>(false);
 
   const handlerUpdateLoginField = (
     key: keyof IUserLogin,
@@ -154,14 +160,44 @@ function Authorization() {
     setUserRegisterData({ ...userRegisterData, [key]: e.target.value });
   };
 
-  const hadnlerOnTransition = () => {
+  const handlerOnTransition = () => {
     setUserLoginData(loginDefault);
     setUserRegisterData(registerDefault);
     setRegState(!regState);
   };
 
+  const handlerRegisterClick = () => {
+    let codeStatus;
+    registerUser(
+      (value) => {
+        codeStatus = value;
+      },
+      userRegisterData,
+      undefined,
+      false
+    );
+    console.log(codeStatus);
+    setIsConfirmCode(true);
+
+    if (codeStatus === 201 || codeStatus === 200) {
+      setIsConfirmCode(true);
+    }
+  };
+
+  const handlerLoginClick = () => {
+    loginUser(userLoginData, undefined, undefined, false);
+  };
+
+  const handlerConfirmCodeClick = () => {
+    confirmUserRegistration(
+      { confirmationCode: +confirmCode },
+      undefined,
+      undefined
+    );
+  };
+
   return (
-    <Stack width={"30%"} margin={"0 auto"}>
+    <Stack width={"30%"} margin={"0 auto"} gap={1}>
       <Typography component={"h1"} fontSize={"50"}>
         {regState ? "Вход" : "Регистрация"}
       </Typography>
@@ -194,19 +230,45 @@ function Authorization() {
               }
             />
           ))}
-      {regState ? <Button>Вход</Button> : <Button>Регистрация</Button>}
+      {isConfirmCode && !regState ? (
+        <>
+          <Typography variant={"h5"}>
+            На Вашу почту отправлен <br /> одноразовый код подтверждения
+          </Typography>
+          <TextField
+            label={"Код с почты"}
+            type={"text"}
+            required
+            value={confirmCode}
+            onChange={(e) => setConfirmCode(e.target.value)}
+          />
+        </>
+      ) : (
+        <></>
+      )}
+      {regState ? (
+        <Button onClick={handlerLoginClick}>Вход</Button>
+      ) : (
+        <>
+          {isConfirmCode ? (
+            <Button onClick={handlerConfirmCodeClick}>Отправить код</Button>
+          ) : (
+            <Button onClick={handlerRegisterClick}>Регистрация</Button>
+          )}
+        </>
+      )}
       <Stack direction={"row"}>
         {regState ? (
           <>
             <Typography component={"h5"}>Нет аккаунта?</Typography>
-            <Link component={"button"} onClick={hadnlerOnTransition}>
+            <Link component={"button"} onClick={handlerOnTransition}>
               Зарегистрироваться
             </Link>
           </>
         ) : (
           <>
             <Typography component={"h5"}>Уже есть аккаунт?</Typography>
-            <Link component={"button"} onClick={hadnlerOnTransition}>
+            <Link component={"button"} onClick={handlerOnTransition}>
               Войти
             </Link>
           </>

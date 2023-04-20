@@ -25,10 +25,11 @@ function TourPage() {
       tourId,
       (response: ITourInfo) => dispatch(setTourInfo(response)),
       undefined,
-      true
+      false
     );
   }, []);
 
+  console.log(tourInfo);
   return (
     <>
       <TourRouting page={page} setPage={setPage} />

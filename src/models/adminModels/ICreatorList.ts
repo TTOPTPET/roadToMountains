@@ -1,6 +1,6 @@
 interface ICreatorDocuments {
-  documentName: string;
-  documentPath: string;
+  filename: string;
+  path: string;
 }
 
 interface IDataUser {
@@ -8,7 +8,7 @@ interface IDataUser {
   ceratorType: string;
   statusVerify: string;
   changeVerifyDate: string;
-  creatorDocuments: ICreatorDocuments[];
+  documents: ICreatorDocuments[];
 }
 
 export interface ICreatorList {

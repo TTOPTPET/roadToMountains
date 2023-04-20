@@ -8,7 +8,7 @@ export const AdminVerifyTouroperatorPage = () => {
   const [creatorList, setCreatorList] = useState<ICreatorList[]>([]);
 
   useEffect(() => {
-    getCreatorList((value) => setCreatorList(value), undefined, true);
+    getCreatorList((value) => setCreatorList(value), undefined, false);
   }, []);
 
   return (

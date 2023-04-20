@@ -41,7 +41,7 @@ function App() {
         // setLoadingStatus(false);
       },
       undefined,
-      true
+      false
     );
   }, []);
 
@@ -58,7 +58,7 @@ function App() {
             <Route path={"/creator/lk"} element={<CreatorLk />} />
             <Route path={"/creator/editInfo"} element={<EditCreatorInfo />} />
             <Route path={"/tourist/editInfo"} element={<EditTouristInfo />} />
-            <Route path={"/creator/add"} element={<AddTourPage />} />
+            <Route path={"/creator/lk/add"} element={<AddTourPage />} />
             <Route
               path={"/creator/notifications"}
               element={<NotificationsPage />}

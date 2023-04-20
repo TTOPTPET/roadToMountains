@@ -10,9 +10,9 @@ let cookie = new Cookies();
 
 const adminListDefault: IAdminList[] = [
   {
+    adminId: "ewjfkwqhgwewk;g",
     phone: "12414",
     email: "s",
-    password: "1515135",
     name: "amogus USA",
     banStatus: false,
   },

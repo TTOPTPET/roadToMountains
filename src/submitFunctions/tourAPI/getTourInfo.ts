@@ -29,7 +29,7 @@ const responseDefault: ITourInfo = {
     freeServices: ["По ебалу", "Солевая альтуха"],
   },
   recommendations: ["Пиво", "Гандоны"],
-  housingInclud: {
+  housingInclude: {
     housingAddress: "Иваново",
     housingName: "13",
     housingDescription: "В жопе мира",
@@ -51,7 +51,10 @@ export const getTourInfo = async (
     return;
   }
   try {
-    let response = await axios.get<ITourInfo>(urlTour + `/tours/${tourId}`, {
+    let response = await axios.get<ITourInfo>(urlTour + `/tour`, {
+      params: {
+        tourId,
+      },
       headers: {
         Authorization: `Bearer ${cookie.get(TOKEN)}`,
       },

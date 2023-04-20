@@ -8,7 +8,7 @@ export const AdminMessagesPage = () => {
   const [userMessages, setUserMessages] = useState<IUserMessage[]>([]);
 
   useEffect(() => {
-    getUserMessages((value) => setUserMessages(value), undefined, true);
+    getUserMessages((value) => setUserMessages(value), undefined, false);
   }, []);
 
   return (

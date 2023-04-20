@@ -16,10 +16,15 @@ export const setCreatorInfo = async (
     return;
   }
   try {
-    let response = await axios.post(creatorUrl + "/creatorInfo", {
-      data: data,
+    let formData = new FormData();
+    const dataUser = data.dataUser;
+    delete data.dataUser;
+    data = Object.assign(data, dataUser);
+    formData.append("dataUser", JSON.stringify(data));
+    let response = await axios.post(creatorUrl + "/creatorInfo", formData, {
       headers: {
         Authorization: `Bearer ${cookie.get(TOKEN)}`,
+        "Content-Type": "multipart/form-data",
       },
     });
     successCallback(response?.data);

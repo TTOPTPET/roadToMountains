@@ -3,6 +3,7 @@ import { creatorUrl } from "../../config/config";
 import { TOKEN } from "../../config/types";
 import { Cookies } from "react-cookie";
 import { IAddTour } from "../../models/addTourModels/IAddTour";
+import { ITourInfo } from "../../models/tourModels/ITourInfo";
 
 let cookie = new Cookies();
 
@@ -19,8 +20,10 @@ export const addTour = async (
     return;
   }
   try {
-    let respone = await axios.post(creatorUrl + "/tour", {
-      data: data,
+    let formData = new FormData();
+    formData.append("data", JSON.stringify(data));
+    console.log(data);
+    let respone = await axios.post(creatorUrl + "/tour", formData, {
       headers: {
         Authorization: `Bearer ${cookie.get(TOKEN)}`,
       },

@@ -17,10 +17,10 @@ const creatorDefault: ICreatorList[] = [
       ceratorType: "bb",
       statusVerify: "1",
       changeVerifyDate: "11.24.11",
-      creatorDocuments: [
+      documents: [
         {
-          documentName: "ss",
-          documentPath: "bb",
+          filename: "ss",
+          path: "bb",
         },
       ],
     },
@@ -62,8 +62,8 @@ export const verifyCreator = async (
     return;
   }
   try {
-    let response = await axios.put(adminUrl + "/creatorVerify/", {
-      params: params,
+    let response = await axios.get(adminUrl + "/creatorVerify", {
+      params: { creatorId: params, statusVerify: "verified" },
       headers: {
         Authorization: `Bearer ${cookie.get(TOKEN)}`,
       },

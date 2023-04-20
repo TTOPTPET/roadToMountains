@@ -1,18 +1,18 @@
 import axios from "axios";
-import { useCookies } from "react-cookie";
-import { TOKEN } from "../../config/types";
+import { refreshToken } from "../../submitFunctions/authAPI/UserAuthAPI/UserAuthAPI";
 
-function AxiosProvider({ children }) {
-  const [cookies, setCookie, removeCookie] = useCookies();
+function AxiosProvider({ children }: { children: JSX.Element }) {
   axios?.interceptors.response.use(
     function (response) {
       console.log("res response", response);
       return response;
     },
-    function (error) {
+    async (error) => {
       console.log("res error", error);
       if (error.response.status === 401 || 422) {
-        removeCookie(TOKEN);
+        await refreshToken().then(() => {
+          return axios.request(error?.config);
+        });
       }
       return Promise.reject(error);
     }

@@ -10,7 +10,7 @@ export interface IAddTour {
     to?: number;
   };
   mapPoints?: string[];
-  housingInclud?: {
+  housingInclude?: {
     housingName: string;
     housingAddress: string;
     housingDescription?: string;

@@ -37,7 +37,7 @@ export const TourAccordion = ({ record }: { record: IUserRecord }) => {
           <Grid container padding={3} justifyContent={"space-between"}>
             <Grid item md={5}>
               <Typography variant={"h5"}>
-                {record.tour.tourName + " "}№{record.publicTourId}
+                {record.tour.tourName + " "}№{record.bookingId}
               </Typography>
               <Typography variant={"caption"}>
                 {dayjs(record.tourDate.from).format("D MMMM YYYY") +
@@ -115,11 +115,11 @@ export const TourAccordion = ({ record }: { record: IUserRecord }) => {
             </Stack>
             <Typography variant={"h6"}>Проживание</Typography>
             <Typography variant={"caption"}>
-              {record.tour?.housingInclud.housingName +
+              {record.tour?.housingInclude.housingName +
                 ", " +
-                record.tour?.housingInclud.housingAddress +
+                record.tour?.housingInclude.housingAddress +
                 ", " +
-                record.tour?.housingInclud.housingDescription}
+                record.tour?.housingInclude.housingDescription}
             </Typography>
             <Typography variant={"h6"}>Страхование</Typography>
             <Typography variant={"caption"}>
