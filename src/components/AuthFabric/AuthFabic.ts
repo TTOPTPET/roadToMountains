@@ -29,20 +29,20 @@ export const AuthComponent = (
           type: "",
           value: "",
         },
-        phone: {
-          name: "Номер телефона",
-          required: true,
-          type: "",
-          value: "",
-        },
-        email: {
-          name: "Электронная почта",
+        login: {
+          name: "Логин",
           required: true,
           type: "",
           value: "",
         },
         password: {
           name: "Пароль",
+          required: true,
+          type: "password",
+          value: "",
+        },
+        passwordSecond: {
+          name: "Повторите пароль",
           required: true,
           type: "password",
           value: "",

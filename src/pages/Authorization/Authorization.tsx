@@ -112,7 +112,15 @@
 // export default Authorization;
 
 import { ChangeEvent, useState } from "react";
-import { Button, Link, Stack, TextField, Typography } from "@mui/material";
+import {
+  Button,
+  Link,
+  Stack,
+  TextField,
+  Typography,
+  Box,
+  Paper,
+} from "@mui/material";
 import { AuthComponent } from "../../components/AuthFabric/AuthFabic";
 import { IUserLogin } from "../../models/authModels/IUserLogin";
 import { IUserRegister } from "../../models/authModels/IUserRegister";
@@ -126,6 +134,7 @@ import {
   loginUser,
   registerUser,
 } from "../../submitFunctions/authAPI";
+import { lightTurquoiseColor } from "../../config/MUI/color/color";
 
 function Authorization() {
   const loginDefault: IUserLogin = {
@@ -133,10 +142,10 @@ function Authorization() {
     password: "",
   };
   const registerDefault: IUserRegister = {
-    email: "",
+    login: "",
     name: "",
     password: "",
-    phone: "",
+    passwordSecond: "",
     typeUser: "tourist",
   };
   const [userLoginData, setUserLoginData] = useState<IUserLogin>(loginDefault);
@@ -197,83 +206,114 @@ function Authorization() {
   };
 
   return (
-    <Stack width={"30%"} margin={"0 auto"} gap={1}>
-      <Typography component={"h1"} fontSize={"50"}>
-        {regState ? "Вход" : "Регистрация"}
-      </Typography>
-      {regState
-        ? Object.entries<ITextProps>(
-            AuthComponent("login") as unknown as { [s: string]: ITextProps }
-          ).map(([key, value], index) => (
-            <TextField
-              key={index}
-              label={value.name}
-              type={value.type}
-              required={value.required}
-              value={userLoginData[key as keyof ILoginComponent]}
-              onChange={(e) =>
-                handlerUpdateLoginField(key as keyof ILoginComponent, e)
-              }
-            />
-          ))
-        : Object.entries<ITextProps>(
-            AuthComponent("register") as unknown as { [s: string]: ITextProps }
-          ).map(([key, value], index) => (
-            <TextField
-              key={index}
-              label={value.name}
-              type={value.type}
-              required={value.required}
-              value={userRegisterData[key as keyof IRegisterComponent]}
-              onChange={(e) =>
-                handlerUpdateRegisterField(key as keyof IRegisterComponent, e)
-              }
-            />
-          ))}
-      {isConfirmCode && !regState ? (
-        <>
-          <Typography variant={"h5"}>
-            На Вашу почту отправлен <br /> одноразовый код подтверждения
-          </Typography>
-          <TextField
-            label={"Код с почты"}
-            type={"text"}
-            required
-            value={confirmCode}
-            onChange={(e) => setConfirmCode(e.target.value)}
-          />
-        </>
-      ) : (
-        <></>
-      )}
-      {regState ? (
-        <Button onClick={handlerLoginClick}>Вход</Button>
-      ) : (
-        <>
-          {isConfirmCode ? (
-            <Button onClick={handlerConfirmCodeClick}>Отправить код</Button>
+    <Stack sx={{ m: "0 auto", mt: "95px", gap: "50px" }}>
+      <Typography variant="h3">{regState ? "Вход" : "Регистрация"}</Typography>
+      <Box>
+        <Paper
+          variant="bigPadding"
+          sx={{
+            bgcolor: lightTurquoiseColor,
+            display: "flex",
+            alignItems: "center",
+            flexDirection: "column",
+          }}
+        >
+          <Stack sx={{ width: "450px", gap: "15px", mb: "30px" }}>
+            {regState
+              ? Object.entries<ITextProps>(
+                  AuthComponent("login") as unknown as {
+                    [s: string]: ITextProps;
+                  }
+                ).map(([key, value], index) => (
+                  <TextField
+                    color="secondary"
+                    key={index}
+                    placeholder={value.name}
+                    type={value.type}
+                    required={value.required}
+                    value={userLoginData[key as keyof ILoginComponent]}
+                    onChange={(e) =>
+                      handlerUpdateLoginField(key as keyof ILoginComponent, e)
+                    }
+                  />
+                ))
+              : Object.entries<ITextProps>(
+                  AuthComponent("register") as unknown as {
+                    [s: string]: ITextProps;
+                  }
+                ).map(([key, value], index) => (
+                  <TextField
+                    color="secondary"
+                    key={index}
+                    placeholder={value.name}
+                    type={value.type}
+                    required={value.required}
+                    value={userRegisterData[key as keyof IRegisterComponent]}
+                    onChange={(e) =>
+                      handlerUpdateRegisterField(
+                        key as keyof IRegisterComponent,
+                        e
+                      )
+                    }
+                  />
+                ))}
+          </Stack>
+          {isConfirmCode && !regState ? (
+            <>
+              <Typography variant={"h5"}>
+                На Вашу почту отправлен <br /> одноразовый код подтверждения
+              </Typography>
+              <TextField
+                color="secondary"
+                placeholder={"Код с почты"}
+                type={"text"}
+                required
+                value={confirmCode}
+                onChange={(e) => setConfirmCode(e.target.value)}
+              />
+            </>
           ) : (
-            <Button onClick={handlerRegisterClick}>Регистрация</Button>
+            <></>
           )}
-        </>
-      )}
-      <Stack direction={"row"}>
-        {regState ? (
-          <>
-            <Typography component={"h5"}>Нет аккаунта?</Typography>
-            <Link component={"button"} onClick={handlerOnTransition}>
-              Зарегистрироваться
-            </Link>
-          </>
-        ) : (
-          <>
-            <Typography component={"h5"}>Уже есть аккаунт?</Typography>
-            <Link component={"button"} onClick={handlerOnTransition}>
-              Войти
-            </Link>
-          </>
-        )}
-      </Stack>
+          <Box>
+            {regState ? (
+              <Button onClick={handlerLoginClick}>Вход</Button>
+            ) : (
+              <>
+                {isConfirmCode ? (
+                  <Button onClick={handlerConfirmCodeClick}>
+                    Отправить код
+                  </Button>
+                ) : (
+                  <Button onClick={handlerRegisterClick}>Регистрация</Button>
+                )}
+              </>
+            )}
+          </Box>
+          <Stack direction={"row"}>
+            {regState ? (
+              <Box sx={{ display: "flex", alignItems: "center", mt: "10px" }}>
+                <Typography variant="caption">Нет аккаунта?</Typography>
+                <Button variant="weakTextButton" onClick={handlerOnTransition}>
+                  Зарегистрироваться
+                </Button>
+              </Box>
+            ) : (
+              <>
+                <Box sx={{ display: "flex", alignItems: "center", mt: "10px" }}>
+                  <Typography variant="caption">Уже есть аккаунт?</Typography>
+                  <Button
+                    variant="weakTextButton"
+                    onClick={handlerOnTransition}
+                  >
+                    Войти
+                  </Button>
+                </Box>
+              </>
+            )}
+          </Stack>
+        </Paper>
+      </Box>
     </Stack>
   );
 }
