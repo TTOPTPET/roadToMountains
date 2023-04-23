@@ -28,6 +28,7 @@ declare module "@mui/material/Paper" {
   interface PaperPropsVariantOverrides {
     helpButton: true;
     bigPadding: true;
+    header: true;
   }
 }
 
@@ -112,6 +113,15 @@ export const mainThemes = createTheme({
           props: { variant: "bigPadding" },
           style: {
             padding: "50px",
+          },
+        },
+        {
+          props: { variant: "header" },
+          style: {
+            padding: "15px",
+            backgroundColor: lightTurquoiseColor,
+            height: 100,
+            borderRadius: 0,
           },
         },
       ],
@@ -343,6 +353,7 @@ export const mainThemes = createTheme({
       styleOverrides: {
         root: {
           color: darkBlueColor,
+          textTransform: "none",
         },
       },
     },
