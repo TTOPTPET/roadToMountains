@@ -16,11 +16,7 @@ import { setUserInfo } from "../../redux/UserInfo/UserInfoReducer";
 import UserInfoSkeleton from "./UserInfoSkeleton/UserInfoSkeleton";
 import CreatorDocumentsList from "../CreatorDocumentsList/CreatorDocumentsList";
 
-import {
-  isModalActive,
-  setModalInactive,
-  setModalActive,
-} from "../../redux/Modal/ModalReducer";
+import { setModalActive } from "../../redux/Modal/ModalReducer";
 import ErrorReportModal from "../Modals/ErrorReportModal/ErrorReportModal";
 import SuccessMessageSendModal from "../Modals/SuccessMessageSendModal/SuccessMessageSendModal";
 import CancelBookingModal from "../Modals/CancelBookingModal/CancelBookingModal";
@@ -31,6 +27,7 @@ import SuccessDeleteTourModal from "../Modals/SuccessDeleteTourModal/SuccessDele
 import SuccessPayModal from "../Modals/SuccessPayModal/SuccessPayModal";
 import SuccessEditUserInfoModal from "../Modals/SuccessEditUserInfoModal/SuccessEditUserInfoModal";
 import EnterMobileCodeModal from "../Modals/EnterMobileCodeModal/EnterMobileCodeModal";
+import HelpButton from "../HelpButton/HelpButton";
 
 type UserInfoProps = {
   fields: JSX.Element;
@@ -185,6 +182,7 @@ function UserInfo({ header, fields, submitFuntion }: UserInfoProps) {
       <SuccessPayModal />
       <SuccessEditUserInfoModal />
       <EnterMobileCodeModal />
+      <HelpButton />
     </>
   );
 }
