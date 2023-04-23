@@ -1,6 +1,7 @@
 import { Button } from "@mui/material";
 import { Stack } from "@mui/system";
-import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { RootState } from "../../../redux/store";
 import { addTour } from "../../../submitFunctions/addTourAPI/addTourAPI";
@@ -9,15 +10,20 @@ import { addTourStepsMap } from "../AddTourPage";
 interface addTourRoutingProps {
   page: addTourStepsMap;
   setPage: (prop: any) => void;
+  files: any[];
 }
 
-export default function AddTourRouting({ page, setPage }: addTourRoutingProps) {
+export default function AddTourRouting({
+  page,
+  setPage,
+  files,
+}: addTourRoutingProps) {
   const navigate = useNavigate();
   const newTour = useSelector((state: RootState) => state.addTour);
 
   const handlerSendTourClick = () => {
     console.log(newTour);
-    addTour(undefined, newTour.tourFields, undefined, false);
+    addTour(undefined, newTour.tourFields, files, undefined, false);
   };
 
   return (
@@ -30,7 +36,7 @@ export default function AddTourRouting({ page, setPage }: addTourRoutingProps) {
               if (page > 0) {
                 return page - 1;
               } else {
-                navigate("/creatorLk");
+                navigate("/creator/lk");
                 return page;
               }
             })

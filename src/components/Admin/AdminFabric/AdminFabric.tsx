@@ -22,6 +22,19 @@ import { IChangeStatus } from "../../../models/adminModels/IChangeStatus";
 import { ReactComponent as DownloadIcon } from "../../../media/download.svg";
 import dayjs from "dayjs";
 
+enum messageStatus {
+  notRead = "notRead",
+  read = "read",
+  solved = "solved",
+}
+
+enum verifyStatus {
+  notVerified = "notVerified",
+  verified = "verified",
+  sendVerified = "sendVerified",
+  waitVerified = "waitVerified",
+}
+
 export const AdminComponent: FC<IAdminComponent> = (props: IAdminComponent) => {
   const [expanded, setExpanded] = useState<boolean>(false);
 
@@ -46,6 +59,34 @@ export const AdminComponent: FC<IAdminComponent> = (props: IAdminComponent) => {
     link.download = path;
     link.href = "./" + path;
     link.click();
+  };
+
+  const getMessageStatus = (status: string): string => {
+    switch (status) {
+      case messageStatus.notRead:
+        return "Не прочитано";
+      case messageStatus.read:
+        return "Прочитано";
+      case messageStatus.solved:
+        return "Решено";
+      default:
+        return "Неизвестный тип";
+    }
+  };
+
+  const getVerifyStatus = (status: string): string => {
+    switch (status) {
+      case verifyStatus.notVerified:
+        return "Не подтверджен";
+      case verifyStatus.verified:
+        return "Подтверджен";
+      case verifyStatus.sendVerified:
+        return "Отправлен на подтверждение";
+      case verifyStatus.waitVerified:
+        return "Ожидает подтверждения";
+      default:
+        return "Неизвестный статус";
+    }
   };
 
   switch (props.type) {
@@ -97,7 +138,7 @@ export const AdminComponent: FC<IAdminComponent> = (props: IAdminComponent) => {
       );
     }
     case "tour": {
-      const { tourId, tourName, creatorInfo } = props;
+      const { tourId, tourName, creatorInfo, banStatus } = props;
       const { name, phone, email } = creatorInfo;
 
       return (
@@ -109,15 +150,22 @@ export const AdminComponent: FC<IAdminComponent> = (props: IAdminComponent) => {
           padding={1}
           bgcolor={whiteColor}
         >
-          <Grid item className="tour__info">
+          <Grid item md={3} className="tour__info">
             <Typography variant={"h6"}>{tourName}</Typography>
             <Typography variant={"caption"}>{name}</Typography>
-            <Typography variant={"caption"}>Ссылки в апи не было:/</Typography>
           </Grid>
           <Grid item className="creator__info">
             <Typography variant={"caption"}>⚫ {phone}</Typography>
             <Typography variant={"caption"}>⚫ {email}</Typography>
             <Typography variant={"caption"}>⚫ {name}</Typography>
+          </Grid>
+          <Grid item className="ban__status">
+            <Typography variant={"caption"}>Статус блокировки:</Typography>
+            {!banStatus ? (
+              <Typography variant={"caption"}>Разблокирован</Typography>
+            ) : (
+              <Typography variant={"caption"}>Заблокирован</Typography>
+            )}
           </Grid>
           <Grid
             item
@@ -165,7 +213,9 @@ export const AdminComponent: FC<IAdminComponent> = (props: IAdminComponent) => {
                   <Typography variant={"caption"}>⚫ {email}</Typography>
                 </Grid>
                 <Grid item className="problem__info">
-                  <Typography variant={"h5"}>Тип: {typeMessage}</Typography>
+                  <Typography variant={"h5"}>
+                    Тип: {typeMessage} Статус: {getMessageStatus(statusMessage)}
+                  </Typography>
                   {typeMessage === "tourProblem" && (
                     <>
                       <Typography variant={"caption"}>⚫ {tourName}</Typography>
@@ -210,7 +260,7 @@ export const AdminComponent: FC<IAdminComponent> = (props: IAdminComponent) => {
       );
     }
     case "creator": {
-      const { phone, email, name, creatorId, dataUser } = props;
+      const { phone, email, name, creatorId, dataUser, banStatus } = props;
       const {
         regisryId,
         ceratorType,
@@ -246,6 +296,20 @@ export const AdminComponent: FC<IAdminComponent> = (props: IAdminComponent) => {
                     Тип: {ceratorType}
                   </Typography>
                 </Stack>
+                <Stack direction={"column"}>
+                  <Typography variant={"caption"} mt={1}>
+                    Статус блокировки:
+                  </Typography>
+                  {!banStatus ? (
+                    <Typography variant={"caption"} mt={1}>
+                      Разблокирован
+                    </Typography>
+                  ) : (
+                    <Typography variant={"caption"} mt={1}>
+                      Заблокирован
+                    </Typography>
+                  )}
+                </Stack>
               </Stack>
             </Grid>
             <Grid
@@ -258,7 +322,8 @@ export const AdminComponent: FC<IAdminComponent> = (props: IAdminComponent) => {
               className="buttons"
             >
               <Typography variant={"caption"}>
-                {statusVerify}: {dayjs(changeVerifyDate).format("D MMMM YYYY")}
+                {getVerifyStatus(statusVerify)}:{" "}
+                {dayjs(changeVerifyDate).format("D MMMM YYYY")}
               </Typography>
               <Button
                 variant="text"
@@ -274,17 +339,21 @@ export const AdminComponent: FC<IAdminComponent> = (props: IAdminComponent) => {
               </Button>
             </Grid>
           </Grid>
-          {documents &&
-            documents.map((document, index) => (
-              <Stack direction={"row"} key={index} alignItems={"center"}>
-                <Button onClick={() => handlerDownloadClick(document.path)}>
-                  <SvgIcon scale={0.1}>
-                    <DownloadIcon />
-                  </SvgIcon>{" "}
-                </Button>
-                <Typography variant={"caption"}>{document.filename}</Typography>
-              </Stack>
-            ))}
+          <Stack direction={"column"} gap={1} mt={2}>
+            {documents &&
+              documents.map((document, index) => (
+                <Stack direction={"row"} key={index} alignItems={"center"}>
+                  <Button onClick={() => handlerDownloadClick(document.path)}>
+                    <SvgIcon scale={0.1}>
+                      <DownloadIcon />
+                    </SvgIcon>{" "}
+                  </Button>
+                  <Typography variant={"caption"}>
+                    {document.filename}
+                  </Typography>
+                </Stack>
+              ))}
+          </Stack>
         </Stack>
       );
     }
@@ -304,6 +373,14 @@ export const AdminComponent: FC<IAdminComponent> = (props: IAdminComponent) => {
             <Typography variant={"caption"}>Контакты:</Typography>
             <Typography variant={"caption"}>⚫ {phone}</Typography>
             <Typography variant={"caption"}>⚫ {email}</Typography>
+          </Grid>
+          <Grid item className="ban__status">
+            <Typography variant={"caption"}>Статус блокировки:</Typography>
+            {!banStatus ? (
+              <Typography variant={"caption"}>Разблокирован</Typography>
+            ) : (
+              <Typography variant={"caption"}>Заблокирован</Typography>
+            )}
           </Grid>
           <Grid item marginY={"auto"} className="user__ban">
             <Button

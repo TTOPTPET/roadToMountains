@@ -1,31 +1,55 @@
-import { Box, Button, Skeleton, Stack, SvgIcon } from "@mui/material";
+import {
+  Box,
+  Button,
+  IconButton,
+  Skeleton,
+  Stack,
+  SvgIcon,
+} from "@mui/material";
 import { Dispatch, SetStateAction, useState } from "react";
 import { ReactComponent as AddImageLogo } from "../../media/add-image.svg";
+import { ReactComponent as DeleteIcon } from "../../media/DeleteCreatorDocumentIcon.svg";
 
 const MAXIMUM_UPLOAD = 20 * 1024 * 1024;
 
 export const AddTourImage = ({
   images,
   setImage,
+  files,
+  setFiles,
 }: {
   images: any[];
   setImage: Dispatch<SetStateAction<any[]>>;
+  files: any[];
+  setFiles: (prop: any[]) => void;
 }) => {
   const [reader] = useState(new FileReader());
 
   const fileHandler = (e: any) => {
-    const files = e.target.files[0];
-    if (files) {
-      reader.readAsDataURL(files);
+    const file = e.target.files[0];
+    if (file) {
+      reader.readAsDataURL(file);
       reader.addEventListener("load", () => {
-        if (files.size > MAXIMUM_UPLOAD) {
+        if (file.size > MAXIMUM_UPLOAD) {
           return;
         }
         setImage([reader?.result, ...images]);
       });
       images.pop();
       setImage([...images]);
+      setFiles([...files, file]);
     }
+  };
+
+  const handlerDeleteImage = (index: number) => {
+    setImage([
+      ...images.filter((item, i) => i !== index),
+      {
+        src: "",
+        loading: true,
+      },
+    ]);
+    setFiles([...files.filter((item, i) => i !== index)]);
   };
   return (
     <Stack direction={"row"} gap={1} flexWrap={"wrap"} width={500}>
@@ -61,16 +85,23 @@ export const AddTourImage = ({
                 }}
               />
             ) : (
-              <img
-                src={image}
-                alt={`tour`}
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  objectFit: "cover",
-                  borderRadius: 40,
-                }}
-              />
+              <>
+                {" "}
+                <IconButton onClick={() => handlerDeleteImage(index)}>
+                  <DeleteIcon />
+                </IconButton>
+                <img
+                  src={image}
+                  alt={`tour`}
+                  style={{
+                    marginTop: -30,
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                    borderRadius: 25,
+                  }}
+                />
+              </>
             )}
           </Box>
         ))}
