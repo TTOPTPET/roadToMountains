@@ -24,6 +24,12 @@ declare module "@mui/material/InputBase" {
   }
 }
 
+declare module "@mui/material/Paper" {
+  interface PaperPropsVariantOverrides {
+    helpButton: true;
+  }
+}
+
 export const mainThemes = createTheme({
   typography: {
     fontFamily: "Montserrat",
@@ -87,6 +93,21 @@ export const mainThemes = createTheme({
           padding: 30,
         },
       },
+      variants: [
+        {
+          props: { variant: "helpButton" },
+          style: {
+            height: "70px",
+            width: "70px",
+            borderRadius: "50%",
+            backgroundColor: lightTurquoiseColor,
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            cursor: "pointer",
+          },
+        },
+      ],
     },
     MuiAutocomplete: {
       styleOverrides: {

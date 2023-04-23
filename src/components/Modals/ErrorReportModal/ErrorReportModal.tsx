@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import {
   isModalActive,
+  setModalActive,
   setModalInactive,
 } from "../../../redux/Modal/ModalReducer";
 import { RootState } from "../../../redux/store";
@@ -24,6 +25,7 @@ function ErrorReportModal() {
   const dispatch = useDispatch();
 
   const handlerConfirmClick = () => {
+    dispatch(setModalActive("successMessageSendModal"));
     dispatch(setModalInactive("errorReportModal"));
   };
 
