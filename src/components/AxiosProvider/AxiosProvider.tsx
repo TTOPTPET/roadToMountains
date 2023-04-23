@@ -9,11 +9,11 @@ function AxiosProvider({ children }: { children: JSX.Element }) {
     },
     async (error) => {
       console.log("res error", error);
-      if (error.response.status === 401 || 422) {
-        await refreshToken().then(() => {
-          return axios.request(error?.config);
-        });
-      }
+      // if (error.response.status === 401 || 422) {
+      //   await refreshToken().then(() => {
+      //     return axios.request(error?.config);
+      //   });
+      // }
       return Promise.reject(error);
     }
   );

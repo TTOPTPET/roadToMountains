@@ -38,9 +38,13 @@ const tourCategory = [
 export const AddTourFirstPage = ({
   images,
   setImage,
+  files,
+  setFiles,
 }: {
   images: any[];
   setImage: Dispatch<SetStateAction<any[]>>;
+  files: any[];
+  setFiles: (prop: any[]) => void;
 }) => {
   const dispatch = useDispatch();
 
@@ -56,7 +60,12 @@ export const AddTourFirstPage = ({
       />
       <Grid container spacing={6}>
         <Grid item sm={5.6}>
-          <AddTourImage images={images} setImage={setImage} />
+          <AddTourImage
+            images={images}
+            setImage={setImage}
+            files={files}
+            setFiles={setFiles}
+          />
           <Typography variant={"h6"} marginBottom={1}>
             Описание
           </Typography>

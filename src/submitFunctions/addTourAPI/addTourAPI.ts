@@ -12,6 +12,7 @@ const addTourDefault: IAddTour = {};
 export const addTour = async (
   successCallback: (prop: IAddTour) => void,
   data: IAddTour,
+  files: any[],
   errorCallback?: () => void,
   useDefault?: boolean
 ) => {
@@ -22,10 +23,14 @@ export const addTour = async (
   try {
     let formData = new FormData();
     formData.append("data", JSON.stringify(data));
-    console.log(data);
+    files.forEach((file) => {
+      formData.append("creatorPhoto", file);
+    });
+    console.log(JSON.stringify(formData));
     let respone = await axios.post(creatorUrl + "/tour", formData, {
       headers: {
         Authorization: `Bearer ${cookie.get(TOKEN)}`,
+        "Content-Type": "multipart/form-data",
       },
     });
     successCallback(respone?.data);
