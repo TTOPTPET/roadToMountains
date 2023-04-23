@@ -91,6 +91,9 @@ export const mainThemes = createTheme({
         root: {
           borderRadius: 20,
           padding: 30,
+          "&.MuiPickersPopper-paper": {
+            padding: 5,
+          },
         },
       },
       variants: [
@@ -193,9 +196,6 @@ export const mainThemes = createTheme({
           backgroundColor: lightTurquoiseColor,
           borderRadius: "30px",
           height: "50px",
-          // "& > fieldset": {
-          //   borderColor: lightTurquoiseColor,
-          // },
         },
       },
     },
