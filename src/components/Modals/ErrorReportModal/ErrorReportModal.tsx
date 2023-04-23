@@ -26,6 +26,7 @@ function ErrorReportModal() {
 
   const handlerConfirmClick = () => {
     dispatch(setModalActive("successMessageSendModal"));
+    //TODO: добавить проверку на успешное отправление сообщения
     dispatch(setModalInactive("errorReportModal"));
   };
 
