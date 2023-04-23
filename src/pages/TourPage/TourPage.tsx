@@ -29,7 +29,6 @@ function TourPage() {
     );
   }, []);
 
-  console.log(tourInfo);
   return (
     <>
       <TourRouting page={page} setPage={setPage} />
