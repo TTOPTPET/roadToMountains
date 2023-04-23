@@ -93,6 +93,9 @@ export const mainThemes = createTheme({
         root: {
           borderRadius: 20,
           padding: 30,
+          "&.MuiPickersPopper-paper": {
+            padding: 5,
+          },
         },
       },
       variants: [
