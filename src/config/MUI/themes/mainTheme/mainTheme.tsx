@@ -27,6 +27,7 @@ declare module "@mui/material/InputBase" {
 declare module "@mui/material/Paper" {
   interface PaperPropsVariantOverrides {
     helpButton: true;
+    bigPadding: true;
   }
 }
 
@@ -91,9 +92,6 @@ export const mainThemes = createTheme({
         root: {
           borderRadius: 20,
           padding: 30,
-          "&.MuiPickersPopper-paper": {
-            padding: 5,
-          },
         },
       },
       variants: [
@@ -108,6 +106,12 @@ export const mainThemes = createTheme({
             justifyContent: "center",
             alignItems: "center",
             cursor: "pointer",
+          },
+        },
+        {
+          props: { variant: "bigPadding" },
+          style: {
+            padding: "50px",
           },
         },
       ],
@@ -174,6 +178,7 @@ export const mainThemes = createTheme({
             fontFamily: "Montserrat",
             fontSize: "16px",
             fontWeight: 400,
+            padding: 5,
           },
         },
         {
@@ -196,6 +201,9 @@ export const mainThemes = createTheme({
           backgroundColor: lightTurquoiseColor,
           borderRadius: "30px",
           height: "50px",
+          // "& > fieldset": {
+          //   borderColor: lightTurquoiseColor,
+          // },
         },
       },
     },
