@@ -6,24 +6,40 @@ import {
   Stack,
   SvgIcon,
 } from "@mui/material";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useState, FC } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { baseUrl } from "../../config/config";
 import { ReactComponent as AddImageLogo } from "../../media/add-image.svg";
 import { ReactComponent as DeleteIcon } from "../../media/DeleteCreatorDocumentIcon.svg";
+import { setPhotoToDelete } from "../../redux/Photo/PhotoReducer";
+import { RootState } from "../../redux/store";
 
 const MAXIMUM_UPLOAD = 20 * 1024 * 1024;
 
-export const AddTourImage = ({
-  images,
-  setImage,
-  files,
-  setFiles,
-}: {
+interface IAddTourImageProps {
   images: any[];
   setImage: Dispatch<SetStateAction<any[]>>;
   files: any[];
   setFiles: (prop: any[]) => void;
+  isEditing: boolean;
+}
+
+export const AddTourImage: FC<IAddTourImageProps> = ({
+  images,
+  setImage,
+  files,
+  setFiles,
+  isEditing,
 }) => {
   const [reader] = useState(new FileReader());
+
+  const tourInfo = useSelector((state: RootState) => state.addTour.tourFields);
+
+  const photoToDelete = useSelector(
+    (state: RootState) => state.photoToDelete.photo
+  );
+
+  const dispatch = useDispatch();
 
   const fileHandler = (e: any) => {
     const file = e.target.files[0];
@@ -40,16 +56,30 @@ export const AddTourImage = ({
       setFiles([...files, file]);
     }
   };
-
+  console.log(photoToDelete);
   const handlerDeleteImage = (index: number) => {
-    setImage([
-      ...images.filter((item, i) => i !== index),
-      {
-        src: "",
-        loading: true,
-      },
-    ]);
-    setFiles([...files.filter((item, i) => i !== index)]);
+    if (isEditing) {
+      if (tourInfo.photos.includes(images[index])) {
+        dispatch(setPhotoToDelete(images[index]));
+      }
+
+      setImage([
+        ...images.filter((item, i) => i !== index),
+        {
+          src: "",
+          loading: true,
+        },
+      ]);
+    } else {
+      setImage([
+        ...images.filter((item, i) => i !== index),
+        {
+          src: "",
+          loading: true,
+        },
+      ]);
+      setFiles([...files.filter((item, i) => i !== index)]);
+    }
   };
   return (
     <Stack direction={"row"} gap={1} flexWrap={"wrap"} width={500}>
@@ -91,7 +121,13 @@ export const AddTourImage = ({
                   <DeleteIcon />
                 </IconButton>
                 <img
-                  src={image}
+                  src={
+                    isEditing
+                      ? image.includes("data:image/")
+                        ? image
+                        : baseUrl + "/" + image
+                      : image
+                  }
                   alt={`tour`}
                   style={{
                     marginTop: -30,

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { RootState } from "../../redux/store";
@@ -29,10 +29,11 @@ function TourPage() {
     );
   }, []);
 
+  console.log(tourInfo);
   return (
     <>
       <TourRouting page={page} setPage={setPage} />
-      <TourSteps page={page} setPage={setPage} tourInfo={tourInfo} />
+      <TourSteps page={page} tourInfo={tourInfo} setPage={setPage} />
     </>
   );
 }

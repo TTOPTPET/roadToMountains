@@ -1,29 +1,24 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, FC } from "react";
 import { Stack, Typography } from "@mui/material";
 import { TourInfo } from "../../../components/TourInfo/TourInfo";
-import { setTourField } from "../../../redux/AddTour/AddTourReducer";
 
-export const AddTourThirdPage = ({
-  images,
-  setImage,
-}: {
+interface IAddTourThirdPageProps {
   images: any[];
   setImage: Dispatch<SetStateAction<any[]>>;
+  isEditing: boolean;
+}
+
+export const AddTourThirdPage: FC<IAddTourThirdPageProps> = ({
+  images,
+  setImage,
+  isEditing,
 }) => {
   const tourInfo = useSelector((state: RootState) => state.addTour.tourFields);
-  const dispatch = useDispatch();
 
-  const handlerOnLoad = () => {
-    // dispatch(
-    //   setTourField({
-    //     creatorPhoto: [...images.filter((image) => typeof image === "string")],
-    //   })
-    // );
-  };
   return (
-    <Stack gap={1} marginTop={2} onLoad={handlerOnLoad}>
+    <Stack gap={1} marginTop={2}>
       <Typography variant={"h3"}>
         {tourInfo?.tourName ?? "Название тура"}
       </Typography>
@@ -32,6 +27,7 @@ export const AddTourThirdPage = ({
         setImage={setImage}
         addTourInfo
         tourInfo={tourInfo}
+        isEditing={isEditing}
       />
     </Stack>
   );

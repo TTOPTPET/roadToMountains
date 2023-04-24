@@ -44,6 +44,7 @@ export const TourFirstPage: FC<TourFirstPageProps> = ({
         setImage={setImage}
         addTourInfo={false}
         tourInfo={tourInfo}
+        isEditing={false}
       />
       <TourBooking
         tourInfo={tourInfo}

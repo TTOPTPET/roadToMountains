@@ -1,5 +1,6 @@
 export interface ITour {
-  tourId: string;
+  id?: string;
+  tourId?: string;
   tourName: string;
   category: string;
   complexity: string;
