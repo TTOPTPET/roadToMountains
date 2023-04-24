@@ -16,6 +16,7 @@ interface ITourInfoProps {
   setImage: Dispatch<SetStateAction<any[]>>;
   addTourInfo: boolean;
   tourInfo: IAddTour | ITourInfo;
+  isEditing: boolean;
 }
 
 export const TourInfo: FC<ITourInfoProps> = ({
@@ -23,6 +24,7 @@ export const TourInfo: FC<ITourInfoProps> = ({
   setImage,
   addTourInfo,
   tourInfo,
+  isEditing,
 }) => {
   const tagsConverter = (key: "free" | "additional" | "recommend") => {
     switch (key) {
@@ -102,6 +104,39 @@ export const TourInfo: FC<ITourInfoProps> = ({
                     <Box key={index} style={{ width: 490, height: 490 }}>
                       <img
                         src={image}
+                        alt={`tour`}
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          objectFit: "cover",
+                          borderRadius: 40,
+                        }}
+                      />
+                    </Box>
+                  ))
+              ) : (
+                <Skeleton
+                  variant="rounded"
+                  sx={{
+                    width: 490,
+                    height: 490,
+                    borderRadius: 8,
+                  }}
+                />
+              )
+            ) : isEditing ? (
+              images.filter((image) => image?.src === undefined).length !==
+              0 ? (
+                images
+                  .filter((image) => image?.src === undefined)
+                  .map((image, index) => (
+                    <Box key={index} style={{ width: 490, height: 490 }}>
+                      <img
+                        src={
+                          image.includes("data:image/")
+                            ? image
+                            : baseUrl + "/" + image
+                        }
                         alt={`tour`}
                         style={{
                           width: "100%",

@@ -58,7 +58,14 @@ function App() {
             <Route path={"/creator/lk"} element={<CreatorLk />} />
             <Route path={"/creator/editInfo"} element={<EditCreatorInfo />} />
             <Route path={"/tourist/editInfo"} element={<EditTouristInfo />} />
-            <Route path={"/creator/lk/add"} element={<AddTourPage />} />
+            <Route
+              path={"/creator/lk/add"}
+              element={<AddTourPage isEditing={false} />}
+            />
+            <Route
+              path={"/creator/lk/edit/:tourId"}
+              element={<AddTourPage isEditing />}
+            />
             <Route
               path={"/creator/notifications"}
               element={<NotificationsPage />}

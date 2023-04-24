@@ -1,29 +1,41 @@
 import { Button } from "@mui/material";
 import { Stack } from "@mui/system";
-import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { clearPhotoToDelete } from "../../../redux/Photo/PhotoReducer";
 import { RootState } from "../../../redux/store";
 import { addTour } from "../../../submitFunctions/addTourAPI/addTourAPI";
+import { editTour } from "../../../submitFunctions/creatorAPI/editTour";
 import { addTourStepsMap } from "../AddTourPage";
 
 interface addTourRoutingProps {
   page: addTourStepsMap;
   setPage: (prop: any) => void;
   files: any[];
+  isEditing: boolean;
+  tourId: string;
 }
 
 export default function AddTourRouting({
   page,
   setPage,
   files,
+  isEditing,
+  tourId,
 }: addTourRoutingProps) {
   const navigate = useNavigate();
-  const newTour = useSelector((state: RootState) => state.addTour);
+  const newTour = useSelector((state: RootState) => state.addTour.tourFields);
+  const photosToDelete = useSelector(
+    (state: RootState) => state.photoToDelete.photo
+  );
+  const dispatch = useDispatch();
 
   const handlerSendTourClick = () => {
-    console.log(newTour);
-    addTour(undefined, newTour.tourFields, files, undefined, false);
+    if (isEditing) {
+      editTour(tourId, newTour, files, photosToDelete, undefined);
+    } else {
+      addTour(undefined, newTour, files, undefined, false);
+    }
   };
 
   return (
@@ -37,6 +49,7 @@ export default function AddTourRouting({
                 return page - 1;
               } else {
                 navigate("/creator/lk");
+                dispatch(clearPhotoToDelete());
                 return page;
               }
             })
@@ -46,7 +59,7 @@ export default function AddTourRouting({
         </Button>
         {page === addTourStepsMap.third ? (
           <Button variant="contained" onClick={handlerSendTourClick}>
-            Добавить тур
+            {isEditing ? "Редактировать тур" : "Добавить тур"}
           </Button>
         ) : (
           <Button

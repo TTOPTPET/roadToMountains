@@ -9,7 +9,7 @@ import {
   Typography,
 } from "@mui/material";
 import { AddTourImage } from "../../../components/AddTourImage/AddTourImage";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, FC } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setTourField } from "../../../redux/AddTour/AddTourReducer";
 import { RootState } from "../../../redux/store";
@@ -35,21 +35,24 @@ const tourCategory = [
   "Экскурсия",
 ];
 
-export const AddTourFirstPage = ({
-  images,
-  setImage,
-  files,
-  setFiles,
-}: {
+interface IAddTourFirstPageProps {
   images: any[];
   setImage: Dispatch<SetStateAction<any[]>>;
   files: any[];
   setFiles: (prop: any[]) => void;
+  isEditing: boolean;
+}
+
+export const AddTourFirstPage: FC<IAddTourFirstPageProps> = ({
+  images,
+  setImage,
+  files,
+  setFiles,
+  isEditing,
 }) => {
   const dispatch = useDispatch();
 
   const tourInfo = useSelector((state: RootState) => state.addTour.tourFields);
-
   return (
     <Stack gap={1} marginTop={2}>
       <TextField
@@ -65,6 +68,7 @@ export const AddTourFirstPage = ({
             setImage={setImage}
             files={files}
             setFiles={setFiles}
+            isEditing={isEditing}
           />
           <Typography variant={"h6"} marginBottom={1}>
             Описание

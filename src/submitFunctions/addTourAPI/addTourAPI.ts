@@ -3,7 +3,6 @@ import { creatorUrl } from "../../config/config";
 import { TOKEN } from "../../config/types";
 import { Cookies } from "react-cookie";
 import { IAddTour } from "../../models/addTourModels/IAddTour";
-import { ITourInfo } from "../../models/tourModels/ITourInfo";
 
 let cookie = new Cookies();
 
@@ -26,7 +25,6 @@ export const addTour = async (
     files.forEach((file) => {
       formData.append("creatorPhoto", file);
     });
-    console.log(JSON.stringify(formData));
     let respone = await axios.post(creatorUrl + "/tour", formData, {
       headers: {
         Authorization: `Bearer ${cookie.get(TOKEN)}`,
