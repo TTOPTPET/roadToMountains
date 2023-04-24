@@ -4,22 +4,25 @@ import { ReactComponent as MapMarker } from "../../media/map-marker.svg";
 import { ReactComponent as ArrowRight } from "../../media/right-arrow-navigation.svg";
 import { ReactComponent as ArrlowLeft } from "../../media/left-arrow-navigation.svg";
 import Carousel from "react-material-ui-carousel";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, FC, SetStateAction } from "react";
 import { Attention } from "../../components/Attention/Attention";
 import { IAddTour } from "../../models/addTourModels/IAddTour";
 import { ITourInfo } from "../../models/tourModels/ITourInfo";
 import dayjs from "dayjs";
+import { baseUrl } from "../../config/config";
 
-export const TourInfo = ({
-  images,
-  setImage,
-  addTourInfo,
-  tourInfo,
-}: {
+interface ITourInfoProps {
   images: any[];
   setImage: Dispatch<SetStateAction<any[]>>;
   addTourInfo: boolean;
   tourInfo: IAddTour | ITourInfo;
+}
+
+export const TourInfo: FC<ITourInfoProps> = ({
+  images,
+  setImage,
+  addTourInfo,
+  tourInfo,
 }) => {
   const tagsConverter = (key: "free" | "additional" | "recommend") => {
     switch (key) {
@@ -90,32 +93,51 @@ export const TourInfo = ({
               </SvgIcon>
             }
           >
-            {images.filter((image) => image?.src === undefined).length !== 0 ? (
-              images
-                .filter((image) => image?.src === undefined)
-                .map((image, index) => (
-                  <Box key={index} style={{ width: 490, height: 490 }}>
-                    <img
-                      src={image}
-                      alt={`tour`}
-                      style={{
-                        width: "100%",
-                        height: "100%",
-                        objectFit: "cover",
-                        borderRadius: 40,
-                      }}
-                    />
-                  </Box>
-                ))
+            {tourInfo?.photos === undefined ? (
+              images.filter((image) => image?.src === undefined).length !==
+              0 ? (
+                images
+                  .filter((image) => image?.src === undefined)
+                  .map((image, index) => (
+                    <Box key={index} style={{ width: 490, height: 490 }}>
+                      <img
+                        src={image}
+                        alt={`tour`}
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          objectFit: "cover",
+                          borderRadius: 40,
+                        }}
+                      />
+                    </Box>
+                  ))
+              ) : (
+                <Skeleton
+                  variant="rounded"
+                  sx={{
+                    width: 490,
+                    height: 490,
+                    borderRadius: 8,
+                  }}
+                />
+              )
             ) : (
-              <Skeleton
-                variant="rounded"
-                sx={{
-                  width: 490,
-                  height: 490,
-                  borderRadius: 8,
-                }}
-              />
+              tourInfo?.photos &&
+              tourInfo?.photos.map((image, index) => (
+                <Box key={index} style={{ width: 490, height: 490 }}>
+                  <img
+                    src={baseUrl + "/" + image}
+                    alt={`tour`}
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                      borderRadius: 40,
+                    }}
+                  />
+                </Box>
+              ))
             )}
           </Carousel>
           <Typography variant={"h6"} marginY={2}>
@@ -128,11 +150,11 @@ export const TourInfo = ({
         <Grid container direction={"column"} item md={6} gap={2}>
           {addTourInfo ? <Attention /> : <></>}
           <Typography variant={"h5"}>
-            {typeof tourInfo?.price === "number"
+            {tourInfo?.price === undefined
               ? tourInfo?.price ?? 0
-              : (tourInfo?.price?.from ?? 0) +
+              : (tourInfo?.prices?.from ?? 0) +
                 " до " +
-                (tourInfo?.price?.to ?? 1000000)}
+                (tourInfo?.prices?.to ?? 1000000)}
             ₽
           </Typography>
           {addTourInfo ? (
@@ -160,7 +182,9 @@ export const TourInfo = ({
           <Typography variant={"h6"}>Страхование</Typography>
           <Typography variant={"caption"}>
             {tourInfo?.insuranceInclude !== undefined
-              ? `Страхование включено, до ${tourInfo?.insuranceInclude?.insuranceAmount}₽`
+              ? `Страхование включено, до ${
+                  tourInfo?.insuranceInclude?.insuranceAmount ?? 0
+                }₽`
               : "Страхование не включено"}
           </Typography>
           <Typography variant={"h6"}>Рекомендуемый возраст</Typography>

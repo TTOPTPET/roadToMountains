@@ -8,6 +8,7 @@ import dayjs from "dayjs";
 
 interface TourStepsProps {
   page: tourStepsMap;
+  setPage: (prop: any) => void;
   tourInfo: ITourInfo;
 }
 
@@ -24,15 +25,16 @@ const tourBookingDefault: ITourBooking = {
   comment: "",
 };
 
-export const TourSteps: FC<TourStepsProps> = ({ page, tourInfo }) => {
+export const TourSteps: FC<TourStepsProps> = ({ page, setPage, tourInfo }) => {
   const [images, setImage] = useState<any[]>([]);
   const [bookingData, setBookingData] = useState<ITourBooking>({
     ...tourBookingDefault,
     tourDate: {
       from: new Date().toString(),
-      to: dayjs(tourInfo?.nearestDate?.from ?? new Date())
+      to: dayjs(tourInfo?.nearestDate?.to ?? new Date())
         .add(-1, "day")
-        .format("D MMMM YYYY"),
+        .toDate()
+        .toString(),
     },
   });
 
@@ -45,6 +47,8 @@ export const TourSteps: FC<TourStepsProps> = ({ page, tourInfo }) => {
           tourInfo={tourInfo}
           bookingData={bookingData}
           setBookingData={setBookingData}
+          page={page}
+          setPage={setPage}
         />
       );
     }

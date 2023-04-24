@@ -1,4 +1,5 @@
 import Box from "@mui/material/Box";
+import { baseUrl } from "../../../config/config";
 
 import {
   lightTurquoiseColor,
@@ -30,7 +31,10 @@ function TourCardPhoto({ tour, tourCardType }: TourCardProps) {
           position: "relative",
           borderTopLeftRadius: "30px",
           borderTopRightRadius: "30px",
-          backgroundImage: `url(${tour?.photo ? noPhoto : cardbg})`, //TODO: подставить картинку, которая приходит с бэка.
+          backgroundImage: `url(${
+            tour?.photos[0] ? baseUrl + "/" + tour?.photos[0] : noPhoto
+          })`,
+          backgroundSize: "100% 100%",
         }}
       >
         {tourCardType === "myTours" && (

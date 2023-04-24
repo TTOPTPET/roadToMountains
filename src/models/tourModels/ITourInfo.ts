@@ -9,7 +9,8 @@ export interface ITourInfo {
     from: string;
     to: string;
   };
-  price?: {
+  price?: number;
+  prices?: {
     from: number;
     to: number;
   };

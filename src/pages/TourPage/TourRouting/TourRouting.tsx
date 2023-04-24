@@ -29,18 +29,6 @@ export const TourRouting: FC<TourRoutingProps> = ({ page, setPage }) => {
         >
           {"< "} Назад
         </Button>
-        {page === tourStepsMap.second ? (
-          <></>
-        ) : (
-          <Button
-            variant="textButton"
-            onClick={() =>
-              setPage((page: tourStepsMap) => (page < 2 ? page + 1 : page))
-            }
-          >
-            Вперёд {" >"}
-          </Button>
-        )}
       </Stack>
     </>
   );
