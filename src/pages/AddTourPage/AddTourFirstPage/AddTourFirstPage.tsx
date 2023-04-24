@@ -61,8 +61,8 @@ export const AddTourFirstPage: FC<IAddTourFirstPageProps> = ({
         value={tourInfo?.tourName ?? ""}
         onChange={(e) => dispatch(setTourField({ tourName: e.target.value }))}
       />
-      <Grid container spacing={6}>
-        <Grid item sm={5.6}>
+      <Grid container justifyContent={"space-between"}>
+        <Grid item md={5.6}>
           <AddTourImage
             images={images}
             setImage={setImage}
@@ -83,13 +83,13 @@ export const AddTourFirstPage: FC<IAddTourFirstPageProps> = ({
             }
           />
         </Grid>
-        <Grid container item sm={6}>
+        <Grid container item md={6}>
           <Grid item>
             <Attention />
           </Grid>
 
           <Grid container direction={"row"} marginTop={5} spacing={2}>
-            <Grid item xs={6}>
+            <Grid item md={6}>
               <Typography variant={"h6"} marginBottom={1}>
                 Регион проведения
               </Typography>
@@ -161,7 +161,7 @@ export const AddTourFirstPage: FC<IAddTourFirstPageProps> = ({
                 }
               />
             </Grid>
-            <Grid item xs={5}>
+            <Grid item md={5}>
               <Typography variant={"h6"}>Категория тура</Typography>
               <RadioGroup
                 value={tourInfo?.category ?? ""}
