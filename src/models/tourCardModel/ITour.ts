@@ -13,7 +13,7 @@ export interface ITour {
     to: string;
   };
   personsNumber: number;
-  photo: string[];
+  photos: string[];
   banStatus: boolean;
   publicNum: number;
 }

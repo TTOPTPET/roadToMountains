@@ -13,7 +13,7 @@ const responseDefault: ITourInfo = {
     from: "2023-04-10T16:00:00.000Z",
     to: "2023-04-11T16:00:00.000Z",
   },
-  price: {
+  prices: {
     from: 1000,
     to: 15000,
   },

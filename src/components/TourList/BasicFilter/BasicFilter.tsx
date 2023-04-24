@@ -69,30 +69,12 @@ export const BasicFilter: FC<IFilterProps> = ({
         <DatePicker
           value={dayjs(searchData.tourDate.from)}
           onChange={(newValue) => handleDateChange("from", newValue)}
-          renderInput={(props) => (
-            <TextField
-              {...props}
-              error={props.error && props.inputProps.value !== ""}
-              inputProps={{
-                ...props.inputProps,
-                placeholder: "Дата заезда",
-              }}
-            />
-          )}
+          label={"Дата заезда"}
         />
         <DatePicker
           value={dayjs(searchData.tourDate.to)}
           onChange={(newValue) => handleDateChange("to", newValue)}
-          renderInput={(props) => (
-            <TextField
-              {...props}
-              error={props.error && props.inputProps.value !== ""}
-              inputProps={{
-                ...props.inputProps,
-                placeholder: "Дата выезда",
-              }}
-            />
-          )}
+          label={"Дата выезда"}
         />
       </LocalizationProvider>
       {/* <TextField

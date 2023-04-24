@@ -5,6 +5,11 @@ export interface IAddTour {
   complexity?: string;
   region?: string;
   price?: number;
+  photos?: string[];
+  prices?: {
+    from?: number;
+    to?: number;
+  };
   recommendedAge?: {
     from?: number;
     to?: number;

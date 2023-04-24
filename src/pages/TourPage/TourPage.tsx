@@ -29,11 +29,10 @@ function TourPage() {
     );
   }, []);
 
-  console.log(tourInfo);
   return (
     <>
       <TourRouting page={page} setPage={setPage} />
-      <TourSteps page={page} tourInfo={tourInfo} />
+      <TourSteps page={page} setPage={setPage} tourInfo={tourInfo} />
     </>
   );
 }
