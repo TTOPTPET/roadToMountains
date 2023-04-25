@@ -1,18 +1,25 @@
 import { Sex } from "../userModels/IUserInfo";
 
 export interface ITourBooking {
-  publicTourId: string;
-  creatorId: string;
-  tourId: string;
-  tourDate: {
+  publicTourId?: string;
+  creatorId?: string;
+  tourId?: string;
+  tourDate?: {
     from: string;
     to: string;
   };
-  tourAmount: number;
-  touristsInfo: {
+  size?: number;
+  tourAmount?: number;
+  touristsInfo?: {
     name: string;
     age: string;
-    sex: Sex;
+    sex: string;
   }[];
-  comment: string;
+  comment?: string;
+}
+
+export interface ITouristBookingData {
+  name: string;
+  age: string;
+  sex: string;
 }

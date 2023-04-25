@@ -20,6 +20,7 @@ const tourBookingDefault: ITourBooking = {
     from: "",
     to: "",
   },
+  size: 0,
   tourAmount: 0,
   touristsInfo: [],
   comment: "",
@@ -53,7 +54,14 @@ export const TourSteps: FC<TourStepsProps> = ({ page, setPage, tourInfo }) => {
       );
     }
     case tourStepsMap.second: {
-      return <TourSecondPage />;
+      return (
+        <TourSecondPage
+          bookingData={bookingData}
+          setBookingData={setBookingData}
+          setPage={setPage}
+          tourInfo={tourInfo}
+        />
+      );
     }
     default: {
       break;
