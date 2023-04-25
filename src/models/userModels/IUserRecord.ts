@@ -1,21 +1,21 @@
 export interface IUserRecord {
-  publicTourId: string;
-  bookingId: number;
-  bookingStatus: {
+  publicTourId?: string;
+  bookingId?: number;
+  bookingStatus?: {
     payment: string;
     cancellation: string;
     past: boolean;
   };
-  tourDate: {
+  tourDate?: {
     from: string;
     to: string;
   };
-  tourAmount: number;
-  contactInformation: string;
-  meetingPoint: string;
-  meetingTime: string;
-  bookingNumber: number;
-  tour: {
+  tourAmount?: number;
+  contactInformation?: string;
+  meetingPoint?: string;
+  meetingTime?: string;
+  bookingNumber?: number;
+  tour?: {
     tourId: string;
     tourName: string;
     housingInclude?: {

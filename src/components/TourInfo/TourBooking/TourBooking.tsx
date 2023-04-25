@@ -15,16 +15,16 @@ interface ITourBookingProps {
   tourInfo: ITourInfo;
   bookingData: ITourBooking;
   setBookingData: Dispatch<SetStateAction<ITourBooking>>;
-  page: tourStepsMap;
   setPage: (prop: any) => void;
+  isFirstPage: boolean;
 }
 
 export const TourBooking: FC<ITourBookingProps> = ({
   tourInfo,
   bookingData,
   setBookingData,
-  page,
   setPage,
+  isFirstPage,
 }) => {
   const [datePickerValue, setDatePickerValue] = useState([
     {
@@ -105,13 +105,20 @@ export const TourBooking: FC<ITourBookingProps> = ({
               label={"Количество человек"}
               type={"number"}
               InputProps={{ inputProps: { min: 0 } }}
+              value={bookingData?.size}
+              onChange={(e) =>
+                setBookingData({
+                  ...bookingData,
+                  size: +e.target.value,
+                })
+              }
             />
             <Typography variant={"caption"}>Мест свободно: {8}</Typography>
           </Stack>
         </Stack>
         <Box
           sx={{
-            width: "350px",
+            width: "380px",
             height: "270px",
             backgroundColor: lightTurquoiseColor,
             borderRadius: 5,
@@ -135,15 +142,22 @@ export const TourBooking: FC<ITourBookingProps> = ({
           <Typography variant={"caption"}>
             Оплатить бронирование необходимо в течение 3 часов
           </Typography>
-          <Button
-            variant={"contained"}
-            sx={{ marginTop: 1 }}
-            onClick={() =>
-              setPage((page: tourStepsMap) => (page < 2 ? page + 1 : page))
-            }
-          >
-            Забронировать
-          </Button>
+          {isFirstPage ? (
+            <Button
+              variant={"contained"}
+              sx={{ marginTop: 1 }}
+              onClick={() =>
+                setPage((page: tourStepsMap) => (page < 2 ? page + 1 : page))
+              }
+            >
+              Забронировать
+            </Button>
+          ) : (
+            <Stack direction={"row"} gap={2}>
+              <Button>Оплатить</Button>
+              <Button>Оплатить потом</Button>
+            </Stack>
+          )}
         </Box>
       </Stack>
     </LocalizationProvider>

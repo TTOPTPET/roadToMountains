@@ -50,8 +50,8 @@ export const TourFirstPage: FC<TourFirstPageProps> = ({
         tourInfo={tourInfo}
         bookingData={bookingData}
         setBookingData={setBookingData}
-        page={page}
         setPage={setPage}
+        isFirstPage
       />
     </>
   );
