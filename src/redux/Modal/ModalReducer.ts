@@ -11,7 +11,8 @@ type modalsId =
   | "deleteTourModal"
   | "successDeleteTourModal"
   | "successEditUserInfoModal"
-  | "enterMobileCodeModal";
+  | "enterMobileCodeModal"
+  | "newPublicModal";
 
 enum actionTypes {
   SET_MODAL_ACTIVE = "SET_MODAL_ACTIVE",
