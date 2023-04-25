@@ -27,6 +27,8 @@ function AddTourPage({ isEditing }: { isEditing: boolean }) {
       getTourInfo(tourId, (value) => dispatch(setTourField(value))).then(() =>
         setLoading(false)
       );
+    } else {
+      setLoading(false);
     }
   }, []);
 
