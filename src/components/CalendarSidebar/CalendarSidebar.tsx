@@ -2,8 +2,8 @@ import { Box, Button, Paper, Typography } from "@mui/material";
 import { Stack } from "@mui/system";
 import dayjs from "dayjs";
 import { FC } from "react";
-import { whiteColor } from "../../../config/MUI/color/color";
-import { IPublicTour } from "../../../models/calendarModels/IPublicTour";
+import { whiteColor } from "../../config/MUI/color/color";
+import { IPublicTour } from "../../models/calendarModels/IPublicTour";
 import { TouristOrder } from "./TouristOrder/TouristOrder";
 
 export const CalendarSidebar: FC<IPublicTour> = (publicTour) => {

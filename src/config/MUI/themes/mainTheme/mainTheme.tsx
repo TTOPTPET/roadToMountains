@@ -29,6 +29,7 @@ declare module "@mui/material/Paper" {
     helpButton: true;
     bigPadding: true;
     header: true;
+    whiteBlue: true;
   }
 }
 
@@ -125,6 +126,12 @@ export const mainThemes = createTheme({
             backgroundColor: lightTurquoiseColor,
             height: 100,
             borderRadius: 0,
+          },
+        },
+        {
+          props: { variant: "whiteBlue" },
+          style: {
+            backgroundColor: whiteColor,
           },
         },
       ],

@@ -4,8 +4,8 @@ import { FC } from "react";
 import {
   darkTurquoiseColor,
   whiteColor,
-} from "../../../../config/MUI/color/color";
-import { IBookingInfo } from "../../../../models/calendarModels/IPublicTour";
+} from "../../../config/MUI/color/color";
+import { IBookingInfo } from "../../../models/calendarModels/IPublicTour";
 
 export const TouristOrder: FC<IBookingInfo> = (bookingInfo) => {
   return (
