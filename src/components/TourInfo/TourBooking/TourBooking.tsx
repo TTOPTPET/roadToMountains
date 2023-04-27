@@ -1,5 +1,5 @@
 import { Stack, Typography, TextField, Box, Button } from "@mui/material";
-import { LocalizationProvider, DateField } from "@mui/x-date-pickers";
+import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs, { Dayjs } from "dayjs";
 import { FC, Dispatch, SetStateAction, useState } from "react";
@@ -10,6 +10,7 @@ import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 import { DateRange } from "react-date-range";
 import { tourStepsMap } from "../../../pages/TourPage/TourPage";
+import * as locales from "react-date-range/dist/locale";
 
 interface ITourBookingProps {
   tourInfo: ITourInfo;
@@ -69,6 +70,8 @@ export const TourBooking: FC<ITourBookingProps> = ({
         <div className="date">
           <DateRange
             editableDateInputs={true}
+            showDateDisplay={false}
+            locale={locales["ru"]}
             onChange={(item) => {
               setDatePickerValue([
                 item.selection as {
@@ -90,22 +93,42 @@ export const TourBooking: FC<ITourBookingProps> = ({
           />
         </div>
         <Stack direction={"column"} gap={2} mt={5}>
-          <DateField
+          <DatePicker
             value={dayjs(bookingData.tourDate.from)}
             onChange={(newValue) => handleDateChange("from", newValue)}
-            label={"Дата заезда"}
+            disableOpenPicker={true}
+            renderInput={(props) => (
+              <TextField
+                {...props}
+                error={props.error && props.inputProps.value !== ""}
+                inputProps={{
+                  ...props.inputProps,
+                  placeholder: "Дата заезда",
+                }}
+              />
+            )}
           />
-          <DateField
+          <DatePicker
             value={dayjs(bookingData.tourDate.to)}
             onChange={(newValue) => handleDateChange("to", newValue)}
-            label={"Дата выезда"}
+            disableOpenPicker={true}
+            renderInput={(props) => (
+              <TextField
+                {...props}
+                error={props.error && props.inputProps.value !== ""}
+                inputProps={{
+                  ...props.inputProps,
+                  placeholder: "Дата выезда",
+                }}
+              />
+            )}
           />
           <Stack direction={"column"}>
             <TextField
-              label={"Количество человек"}
+              placeholder={"Количество человек"}
               type={"number"}
               InputProps={{ inputProps: { min: 0 } }}
-              value={bookingData?.size}
+              value={bookingData?.size || undefined}
               onChange={(e) =>
                 setBookingData({
                   ...bookingData,
