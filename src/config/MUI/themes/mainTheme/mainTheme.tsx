@@ -11,6 +11,7 @@ import {
 declare module "@mui/material/Button" {
   interface ButtonPropsVariantOverrides {
     high: true;
+    whiteColor: true;
     textButton: true;
     fileInput: true;
     weakTextButton: true;
@@ -122,9 +123,11 @@ export const mainThemes = createTheme({
         {
           props: { variant: "header" },
           style: {
-            padding: "15px",
+            padding: 0,
+            paddingLeft: "15px",
+            paddingRight: "15px",
             backgroundColor: lightTurquoiseColor,
-            height: 100,
+            height: 70,
             borderRadius: 0,
           },
         },
@@ -155,7 +158,7 @@ export const mainThemes = createTheme({
     MuiButton: {
       styleOverrides: {
         root: {
-          minWidth: "fit-content ",
+          minWidth: 0,
           width: "fit-content",
           padding: "0 16px",
           backgroundColor: darkTurquoiseColor,
@@ -179,6 +182,13 @@ export const mainThemes = createTheme({
           props: { variant: "high" },
           style: {
             height: "50px",
+          },
+        },
+        {
+          props: { variant: "whiteColor" },
+          style: {
+            backgroundColor: whiteColor,
+            color: darkBlueColor,
           },
         },
         {

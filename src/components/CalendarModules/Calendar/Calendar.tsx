@@ -1,13 +1,14 @@
 import { Box, Grid, Paper, TextField, Typography } from "@mui/material";
+import dayjs, { Dayjs } from "dayjs";
 import { useState, useEffect } from "react";
 
-// const WeekNameNode = () => ();
+type Props = {
+  viewMonth: Dayjs;
+};
 
-// const DayNode = () => ();
-
-export const Calendar = () => {
+export const Calendar = ({ viewMonth }: Props) => {
   return (
-    <Paper variant="whiteBlue" sx={{ width: "100%", height: "100%" }}>
+    <Paper variant="whiteBlue" sx={{ width: "100%", height: "65vh" }}>
       <Grid container columns={21} sx={{ height: "100%" }}>
         <Grid container item xs={12} sx={{ height: "10%" }}>
           {[
@@ -49,9 +50,16 @@ export const Calendar = () => {
               }}
             >
               <Typography
-                style={{ position: "absolute", top: "10px", right: "10px" }}
+                style={{
+                  position: "absolute",
+                  top: "10px",
+                  right: "10px",
+                  opacity:
+                    calcDayIndex(viewMonth).add(index, "day").month() !==
+                      viewMonth.month() && 0.6,
+                }}
               >
-                {index + 1}
+                {calcDayIndex(viewMonth).add(index, "day").format("D")}
               </Typography>
             </Box>
           </Grid>
@@ -71,4 +79,14 @@ export const Calendar = () => {
       </Grid>
     </Paper>
   );
+};
+
+const calcDayIndex = (monthDate: Dayjs) => {
+  const fixWeekIndex = (index: number) => {
+    return index === 0 ? 7 : index - 1;
+  };
+
+  return monthDate
+    .date(1)
+    .subtract(fixWeekIndex(monthDate.date(1).day()), "day");
 };

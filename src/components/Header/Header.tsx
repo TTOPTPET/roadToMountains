@@ -11,8 +11,13 @@ import calendarIcon from "../../media/calendarIcon.svg";
 const Header = () => {
   const userInfo = useSelector((state: RootState) => state.userInfo.userInfo);
   return (
-    <Box className="header__wrapper" sx={{ width: "100%" }}>
-      <Paper variant="header">
+    <Paper variant="header" sx={{ width: "100%" }}>
+      <Box
+        className="header__wrapper"
+        height={"100%"}
+        display={"flex"}
+        alignItems={"center"}
+      >
         <Container
           className="header__container"
           maxWidth={"lg"}
@@ -31,7 +36,12 @@ const Header = () => {
             }}
             className="header__logo"
           >
-            <img src={logo} alt="logo" className="logo-img" />
+            <img
+              style={{ height: "50px" }}
+              src={logo}
+              alt="logo"
+              className="logo-img"
+            />
 
             <Typography variant={"button"} className="logo-text">
               Путь <br /> в Горы
@@ -62,7 +72,7 @@ const Header = () => {
           >
             {userInfo.typeUser === UserType.tourist ? (
               <Box component={Link} to="/tourist/lk">
-                <img src={accIcon} alt="accIcon" />
+                <img style={{ height: "30px" }} src={accIcon} alt="accIcon" />
               </Box>
             ) : (
               <Box sx={{ display: "flex", gap: "22px", alignItems: "center" }}>
@@ -76,7 +86,11 @@ const Header = () => {
                   component={Link}
                   to="/creator/calendar"
                 >
-                  <img src={calendarIcon} alt="calendarIcon" />
+                  <img
+                    style={{ height: "30px" }}
+                    src={calendarIcon}
+                    alt="calendarIcon"
+                  />
                   <Typography variant="caption">Календарь</Typography>
                 </Box>
                 <Box
@@ -89,7 +103,7 @@ const Header = () => {
                   component={Link}
                   to="/creator/lk"
                 >
-                  <img src={accIcon} alt="accIcon" style={{ width: "40px" }} />
+                  <img src={accIcon} alt="accIcon" style={{ height: "30px" }} />
                   <Typography variant="caption" sx={{ mt: "1px" }}>
                     Профиль
                   </Typography>
@@ -98,8 +112,8 @@ const Header = () => {
             )}
           </Box>
         </Container>
-      </Paper>
-    </Box>
+      </Box>
+    </Paper>
   );
 };
 

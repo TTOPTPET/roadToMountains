@@ -2,14 +2,16 @@ import { Box, Button, Grid } from "@mui/material";
 import { useState, useEffect } from "react";
 import { IPublicTour } from "../../models/calendarModels/IPublicTour";
 import { getPublicTours } from "../../submitFunctions/calendarAPI/getPublicTours";
-import { CalendarSidebar } from "../../components/CalendarSidebar/CalendarSidebar";
+import { CalendarSidebar } from "../../components/CalendarModules/CalendarSidebar/CalendarSidebar";
 import { INewPublic } from "../../models/calendarModels/INewPublic";
 import { ITour } from "../../models/tourCardModel/ITour";
 import { getMyTours } from "../../submitFunctions/creatorAPI/getMyTours";
 import { useDispatch } from "react-redux";
 import { setModalActive } from "../../redux/Modal/ModalReducer";
 import NewPublicModal from "../../components/Modals/NewPublicModal/NewPublicModal";
-import { Calendar } from "../../components/Calendar/Calendar";
+import { Calendar } from "../../components/CalendarModules/Calendar/Calendar";
+import CalendarDatePicker from "../../components/CalendarModules/CalendarDatePicker/CalendarDatePicker";
+import dayjs, { Dayjs } from "dayjs";
 
 const NewPublicDefault: INewPublic = {
   tourId: "",
@@ -28,6 +30,8 @@ function TourCalendarPage() {
   const [publicTour, setPublicTour] = useState<IPublicTour[]>([]);
   const [newPublic, setNewPublic] = useState<INewPublic>(NewPublicDefault);
   const [myTours, setMyTours] = useState<ITour[]>([]);
+  const [viewMonth, setViewMonth] = useState<Dayjs>(dayjs());
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -53,7 +57,11 @@ function TourCalendarPage() {
     <Box pt={10}>
       <Grid container spacing={8}>
         <Grid item xs={8}>
-          <Calendar />
+          <CalendarDatePicker
+            viewMonth={viewMonth}
+            setViewMonth={setViewMonth}
+          />
+          <Calendar viewMonth={viewMonth} />
         </Grid>
         <Grid item xs={4}>
           <CalendarSidebar {...publicTour[0]} />
