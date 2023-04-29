@@ -3,6 +3,11 @@ stages:
   - build-image-dev
   - deploy-dev
 
+  - build-production
+  - build-image-production
+  - deploy-production
+
+
 build-dev:
   stage: build-dev
   image: node:latest
@@ -33,8 +38,44 @@ deploy-dev:
   stage: deploy-dev
   script:
     - docker login -u $CI_USERNAME -p $CI_PASSWORD registry.gitlab.com
-    - docker-compose up -d
+    - docker-compose up -f docker-compose-dev.yml -d
   rules:
     - if: $CI_PIPELINE_SOURCE != 'merge_request_event' && $CI_COMMIT_BRANCH == "dev"
+  tags:
+    - stage-for-front-shell
+
+build-production:
+  stage: build-production
+  image: node:latest
+  script:
+    - npm i --force
+    - npm run build
+    - mv build build_front_prod
+  rules:
+    - if: $CI_PIPELINE_SOURCE != 'merge_request_event' && $CI_COMMIT_BRANCH == "prod"
+  artifacts:
+    paths:
+      - build_front_prod
+  tags:
+    - stage-for-front-docker
+
+build-image-production:
+  stage: build-image-production
+  script:
+    - docker login -u $CI_USERNAME -p $CI_PASSWORD registry.gitlab.com
+    - docker build -t registry.gitlab.com/f3120/road-to-mountains-frontend:frontend$CI_COMMIT_SHA .
+    - docker push registry.gitlab.com/f3120/road-to-mountains-frontend:frontend$CI_COMMIT_SHA
+  rules:
+    - if: $CI_PIPELINE_SOURCE != 'merge_request_event' && $CI_COMMIT_BRANCH == "prod"
+  tags:
+    - stage-for-front-shell
+
+deploy-production:
+  stage: deploy-production
+  script:
+    - docker login -u $CI_USERNAME -p $CI_PASSWORD registry.gitlab.com
+    - docker-compose up -f docker-compose-prod.yml -d
+  rules:
+    - if: $CI_PIPELINE_SOURCE != 'merge_request_event' && $CI_COMMIT_BRANCH == "prod"
   tags:
     - stage-for-front-shell
