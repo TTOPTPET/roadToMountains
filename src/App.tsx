@@ -30,6 +30,7 @@ import TourPage from "./pages/TourPage/TourPage";
 import { useEffect } from "react";
 import { getUserInfo } from "./submitFunctions/commonAPI";
 import { setUserInfo } from "./redux/UserInfo/UserInfoReducer";
+import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 
 function App() {
   dayjs.locale("ru");
@@ -52,31 +53,90 @@ function App() {
         <Header />
         <Container>
           <Routes>
-            <Route path={"/"} element={<HomePage />} />
-            <Route path={"/admin/*"} element={<AdminPage />} />
-            <Route path={"/auth"} element={<Authorization />} />
-            <Route path={"/creator/lk"} element={<CreatorLk />} />
-            <Route path={"/creator/editInfo"} element={<EditCreatorInfo />} />
-            <Route path={"/tourist/editInfo"} element={<EditTouristInfo />} />
+            <Route
+              path={"/creator/lk"}
+              element={
+                <ProtectedRoute>
+                  <CreatorLk />
+                </ProtectedRoute>
+              }
+            />
+
+            <Route
+              path={"/creator/editInfo"}
+              element={
+                <ProtectedRoute>
+                  <EditCreatorInfo />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path={"/tourist/editInfo"}
+              element={
+                <ProtectedRoute>
+                  <EditTouristInfo />
+                </ProtectedRoute>
+              }
+            />
             <Route
               path={"/creator/lk/add"}
-              element={<AddTourPage isEditing={false} />}
+              element={
+                <ProtectedRoute>
+                  <AddTourPage isEditing={false} />
+                </ProtectedRoute>
+              }
             />
             <Route
               path={"/creator/lk/edit/:tourId"}
-              element={<AddTourPage isEditing />}
+              element={
+                <ProtectedRoute>
+                  <AddTourPage isEditing />
+                </ProtectedRoute>
+              }
             />
             <Route
               path={"/creator/notifications"}
-              element={<NotificationsPage />}
+              element={
+                <ProtectedRoute>
+                  <NotificationsPage />
+                </ProtectedRoute>
+              }
             />
             <Route
               path={"/creator/payment"}
-              element={<PaymentSettingsPage />}
+              element={
+                <ProtectedRoute>
+                  <PaymentSettingsPage />
+                </ProtectedRoute>
+              }
             />
-            <Route path={"/creator/stats"} element={<StatisticPage />} />
-            <Route path={"/creator/calendar"} element={<TourCalendarPage />} />
-            <Route path={"/tourist/lk"} element={<TouristLk />} />
+            <Route
+              path={"/creator/stats"}
+              element={
+                <ProtectedRoute>
+                  <StatisticPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path={"/creator/calendar"}
+              element={
+                <ProtectedRoute>
+                  <TourCalendarPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path={"/tourist/lk"}
+              element={
+                <ProtectedRoute>
+                  <TouristLk />
+                </ProtectedRoute>
+              }
+            />
+            <Route path={"/admin/*"} element={<AdminPage />} />
+            <Route path={"/auth"} element={<Authorization />} />
+
             <Route path={"/tours/all"} element={<TourListPage />} />
             <Route path={"/tours/tour/:tourId"} element={<TourPage />} />
           </Routes>

@@ -78,6 +78,6 @@ export const refreshToken = async () => {
       Authorization: `Bearer ${cookie.get(REFRESH_TOKEN)}`,
     },
   });
-  cookie.remove(TOKEN);
+  // cookie.remove(TOKEN);
   cookie.set(TOKEN, response.data?.accessToken);
 };

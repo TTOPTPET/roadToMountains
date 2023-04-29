@@ -290,28 +290,15 @@ function Authorization() {
               </>
             )}
           </Box>
-          <Stack direction={"row"}>
-            {regState ? (
-              <Box sx={{ display: "flex", alignItems: "center", mt: "10px" }}>
-                <Typography variant="caption">Нет аккаунта?</Typography>
-                <Button variant="weakTextButton" onClick={handlerOnTransition}>
-                  Зарегистрироваться
-                </Button>
-              </Box>
-            ) : (
-              <>
-                <Box sx={{ display: "flex", alignItems: "center", mt: "10px" }}>
-                  <Typography variant="caption">Уже есть аккаунт?</Typography>
-                  <Button
-                    variant="weakTextButton"
-                    onClick={handlerOnTransition}
-                  >
-                    Войти
-                  </Button>
-                </Box>
-              </>
-            )}
-          </Stack>
+
+          <Box sx={{ display: "flex", alignItems: "center", mt: "10px" }}>
+            <Typography variant="caption">
+              {regState ? "Нет аккаунта?" : "Уже есть аккаунт?"}
+            </Typography>
+            <Button variant="weakTextButton" onClick={handlerOnTransition}>
+              {regState ? "Зарегистрироваться" : "Войти"}
+            </Button>
+          </Box>
         </Paper>
       </Box>
     </Stack>
