@@ -26,6 +26,7 @@ build-dev:
 build-image-dev:
   stage: build-image-dev
   script:
+    - cp -r DockerfileDEV Dockerfile
     - docker login -u $CI_USERNAME -p $CI_PASSWORD registry.gitlab.com
     - docker build -t registry.gitlab.com/f3120/road-to-mountains-frontend:frontend$CI_COMMIT_SHA .
     - docker push registry.gitlab.com/f3120/road-to-mountains-frontend:frontend$CI_COMMIT_SHA
@@ -62,6 +63,7 @@ build-production:
 build-image-production:
   stage: build-image-production
   script:
+    - cp -r DockerfilePROD Dockerfile
     - docker login -u $CI_USERNAME -p $CI_PASSWORD registry.gitlab.com
     - docker build -t registry.gitlab.com/f3120/road-to-mountains-frontend:frontend$CI_COMMIT_SHA .
     - docker push registry.gitlab.com/f3120/road-to-mountains-frontend:frontend$CI_COMMIT_SHA
