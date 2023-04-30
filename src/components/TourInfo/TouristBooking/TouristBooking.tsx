@@ -1,4 +1,4 @@
-import { Autocomplete, TextField, Typography } from "@mui/material";
+import { Autocomplete, IconButton, TextField, Typography } from "@mui/material";
 import { Box, Stack } from "@mui/system";
 import { Dispatch, SetStateAction, FC } from "react";
 import { lightTurquoiseColor } from "../../../config/MUI/color/color";
@@ -7,6 +7,7 @@ import {
   ITouristBookingData,
 } from "../../../models/tourModels/ITourBooking";
 import { Sex } from "../../../models/userModels/IUserInfo";
+import { ReactComponent as DeleteIcon } from "../../../media/DeleteCreatorDocumentIcon.svg";
 
 interface ITouristBookingProps {
   bookingData: ITourBooking;
@@ -35,12 +36,28 @@ export const TouristBooking: FC<ITouristBookingProps> = ({
     });
   };
 
+  const handlerDeleteTourist = (index: number) => {
+    setBookingData({
+      ...bookingData,
+      touristsInfo: [
+        ...bookingData.touristsInfo.filter((item, i) => i !== index),
+      ],
+      size: bookingData.size - 1,
+    });
+  };
+
   return (
     <Box
       sx={{ width: "100%", backgroundColor: lightTurquoiseColor }}
       borderRadius={10}
       padding={4}
     >
+      <IconButton
+        onClick={() => handlerDeleteTourist(index)}
+        sx={{ float: "right", marginTop: "-20px", marginRight: "-15px" }}
+      >
+        <DeleteIcon width={20} height={20} />
+      </IconButton>
       <Typography variant={"h5"} mb={2}>
         Турист
       </Typography>

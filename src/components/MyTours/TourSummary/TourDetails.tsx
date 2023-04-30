@@ -59,11 +59,11 @@ export const TourDetails: FC<ITourDetailsProps> = ({ record }) => {
           </Stack>
           <Typography variant={"h6"}>Проживание</Typography>
           <Typography variant={"caption"}>
-            {record.tour?.housingInclude.housingName +
+            {(record.tour?.housingInclude.housingName ?? "") +
               ", " +
-              record.tour?.housingInclude.housingAddress +
+              (record.tour?.housingInclude.housingAddress ?? "") +
               ", " +
-              record.tour?.housingInclude.housingDescription}
+              (record.tour?.housingInclude.housingDescription ?? "")}
           </Typography>
           <Typography variant={"h6"}>Страхование</Typography>
           <Typography variant={"caption"}>
@@ -103,11 +103,11 @@ export const TourDetails: FC<ITourDetailsProps> = ({ record }) => {
           <Typography variant={"caption"}>3 человека</Typography>
           <Typography variant={"h6"}>Проживание</Typography>
           <Typography variant={"caption"}>
-            {record?.housingInclude?.housingName +
+            {(record?.housingInclude?.housingName ?? "Отель") +
               ", " +
-              record?.housingInclude?.housingAddress +
+              (record?.housingInclude?.housingAddress ?? "Адрес") +
               ", " +
-              record?.housingInclude?.housingDescription}
+              (record?.housingInclude?.housingDescription ?? "Описание")}
           </Typography>
           <Typography variant={"h6"}>Страхование</Typography>
           <Typography variant={"caption"}>
