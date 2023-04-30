@@ -6,6 +6,7 @@ import {
   Stack,
   SvgIcon,
 } from "@mui/material";
+import imageCompression, { Options } from "browser-image-compression";
 import { Dispatch, SetStateAction, useState, FC } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { baseUrl } from "../../config/config";
@@ -14,7 +15,7 @@ import { ReactComponent as DeleteIcon } from "../../media/DeleteCreatorDocumentI
 import { setPhotoToDelete } from "../../redux/Photo/PhotoReducer";
 import { RootState } from "../../redux/store";
 
-const MAXIMUM_UPLOAD = 20 * 1024 * 1024;
+const MAXIMUM_UPLOAD = 100 * 1024 * 1024;
 
 interface IAddTourImageProps {
   images: any[];
@@ -23,6 +24,12 @@ interface IAddTourImageProps {
   setFiles: (prop: any[]) => void;
   isEditing: boolean;
 }
+
+const resizeOptions: Options = {
+  maxSizeMB: 0.3,
+  maxWidthOrHeight: 1080,
+  useWebWorker: true,
+};
 
 export const AddTourImage: FC<IAddTourImageProps> = ({
   images,
@@ -41,20 +48,23 @@ export const AddTourImage: FC<IAddTourImageProps> = ({
 
   const dispatch = useDispatch();
 
-  const fileHandler = (e: any) => {
+  const fileHandler = async (e: any) => {
     const file = e.target.files[0];
-    if (file) {
-      reader.readAsDataURL(file);
+    const resizedFile = await imageCompression(file, resizeOptions);
+    if (resizedFile) {
+      reader.readAsDataURL(resizedFile);
       reader.addEventListener("load", () => {
-        if (file.size > MAXIMUM_UPLOAD) {
+        if (resizedFile.size > MAXIMUM_UPLOAD) {
           return;
         }
         setImage([reader?.result, ...images]);
       });
       images.pop();
       setImage([...images]);
-      setFiles([...files, file]);
+      setFiles([...files, resizedFile]);
     }
+    console.log(file);
+    console.log(resizedFile);
   };
   console.log(photoToDelete);
   const handlerDeleteImage = (index: number) => {
@@ -117,8 +127,11 @@ export const AddTourImage: FC<IAddTourImageProps> = ({
             ) : (
               <>
                 {" "}
-                <IconButton onClick={() => handlerDeleteImage(index)}>
-                  <DeleteIcon />
+                <IconButton
+                  onClick={() => handlerDeleteImage(index)}
+                  sx={{ float: "right", margin: "2px 2px 0 0" }}
+                >
+                  <DeleteIcon width={20} height={20} />
                 </IconButton>
                 <img
                   src={
@@ -130,7 +143,7 @@ export const AddTourImage: FC<IAddTourImageProps> = ({
                   }
                   alt={`tour`}
                   style={{
-                    marginTop: -30,
+                    marginTop: -37,
                     width: "100%",
                     height: "100%",
                     objectFit: "cover",
