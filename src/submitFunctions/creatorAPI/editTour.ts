@@ -33,16 +33,15 @@ export const editTour = async (
           },
         });
       });
-      filesToUpload.forEach(async (image) => {
-        await axios.post(
-          creatorUrl + `/tour/photo/${tourId}`,
-          JSON.stringify(image),
-          {
-            headers: {
-              Authorization: `Bearer ${cookie.get(TOKEN)}`,
-            },
-          }
-        );
+      const formData = new FormData();
+      filesToUpload.forEach((file) => {
+        formData.append("creatorPhoto", file);
+      });
+      await axios.post(creatorUrl + `/tour/photo/${tourId}`, formData, {
+        headers: {
+          Authorization: `Bearer ${cookie.get(TOKEN)}`,
+          "Content-Type": "multipart/form-data",
+        },
       });
     }
   } catch (e) {

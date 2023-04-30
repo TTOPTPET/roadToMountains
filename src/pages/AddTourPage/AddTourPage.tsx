@@ -2,7 +2,10 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { AddTourSkeleton } from "../../components/AddTourSkeleton/AddTourSkeleton";
-import { setTourField } from "../../redux/AddTour/AddTourReducer";
+import {
+  clearTourFields,
+  setTourField,
+} from "../../redux/AddTour/AddTourReducer";
 import { getTourInfo } from "../../submitFunctions/tourAPI/getTourInfo";
 import AddTourRouting from "./AddTourRouting/AddTourRouting";
 import AddTourSteps from "./AddTourSteps/AddTourSteps";
@@ -28,6 +31,7 @@ function AddTourPage({ isEditing }: { isEditing: boolean }) {
         setLoading(false)
       );
     } else {
+      dispatch(clearTourFields());
       setLoading(false);
     }
   }, []);
