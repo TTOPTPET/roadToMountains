@@ -1,6 +1,6 @@
 import { TextField, Typography } from "@mui/material";
 import { Box, Stack } from "@mui/system";
-import { Dispatch, SetStateAction, FC, useState, useEffect } from "react";
+import { Dispatch, SetStateAction, FC, useEffect } from "react";
 import { AddTouristButton } from "../../../components/AddTouristButton/AddTouristButton";
 import { TourDetails } from "../../../components/MyTours/TourSummary/TourDetails";
 import { TourBooking } from "../../../components/TourInfo/TourBooking/TourBooking";
@@ -52,7 +52,7 @@ export const TourSecondPage: FC<ITourSecondPageProps> = ({
       />
     );
   }
-  console.log(bookingData.touristsInfo);
+
   return (
     <Stack gap={2}>
       <TourBooking
