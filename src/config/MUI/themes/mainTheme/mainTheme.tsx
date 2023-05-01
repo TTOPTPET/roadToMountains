@@ -261,10 +261,7 @@ export const mainThemes = createTheme({
               fontFamily: "Montserrat",
               fontWeight: "400",
             },
-            "&:-webkit-autofill": {
-              WebkitBoxShadow: `0 0 0 1000px ${lightTurquoiseColor} inset`,
-              borderRadius: "30px",
-            },
+
             "&::-webkit-outer-spin-button": {
               "-webkit-appearance": "none",
             },
@@ -281,10 +278,22 @@ export const mainThemes = createTheme({
             "&:hover fieldset": {
               borderColor: lightTurquoiseColor,
             },
+            input: {
+              "&:-webkit-autofill": {
+                WebkitBoxShadow: `0 0 0 1000px ${lightTurquoiseColor} inset`,
+                borderRadius: "30px",
+              },
+            },
           },
           "& .MuiInputBase-colorSecondary": {
             "&:hover fieldset": {
               borderColor: "#FFF",
+            },
+            input: {
+              "&:-webkit-autofill": {
+                WebkitBoxShadow: `0 0 0 1000px #FFF inset`,
+                borderRadius: "30px",
+              },
             },
           },
           "& .MuiInputBase-colorSecondary.Mui-focused, .MuiInputBase-colorSecondary.Mui-disabled":
