@@ -39,6 +39,9 @@ function TourCardContentCreatorLk({ tour }: TourCardProps) {
           fontSize: "24px",
           lineHeight: "32px",
           color: darkBlueColor,
+          whiteSpace: "nowrap",
+          overflow: "hidden",
+          textOverflow: "ellipsis",
         }}
       >
         {tour.tourName}

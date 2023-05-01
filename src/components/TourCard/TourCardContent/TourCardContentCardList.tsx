@@ -44,6 +44,9 @@ function TourCardContentCardList({ tour }: TourCardProps) {
           fontSize: "24px",
           lineHeight: "32px",
           color: darkBlueColor,
+          whiteSpace: "nowrap",
+          overflow: "hidden",
+          textOverflow: "ellipsis",
         }}
       >
         {tour.tourName}
@@ -74,6 +77,9 @@ function TourCardContentCardList({ tour }: TourCardProps) {
                 fontSize: "16px",
                 lineHeight: "20px",
                 color: darkBlueColor,
+                whiteSpace: "nowrap",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
               }}
             >
               {tour.region}
@@ -135,6 +141,9 @@ function TourCardContentCardList({ tour }: TourCardProps) {
                 fontSize: "16px",
                 lineHeight: "20px",
                 color: darkTurquoiseColor,
+                whiteSpace: "nowrap",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
               }}
             >
               {tour.category}
