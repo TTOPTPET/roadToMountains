@@ -1,6 +1,7 @@
 import { Stack, Typography, Button } from "@mui/material";
 import dayjs from "dayjs";
 import { FC } from "react";
+import { cancelBooking } from "../../../submitFunctions/touristAPI/cancelBooking";
 import { TourDetailsType } from "./tourDetailsType/tourDetailsType";
 
 interface ITourDetailsProps {
@@ -39,7 +40,16 @@ export const TourDetails: FC<ITourDetailsProps> = ({ record }) => {
             direction={"row"}
           >
             <Typography variant={"h6"}>Количество человек</Typography>
-            <Button>Отменить бронирование</Button>
+            <Button
+              disabled={
+                record.bookingStatus.past || record.bookingStatus.cancellation
+                  ? true
+                  : false
+              }
+              onClick={() => cancelBooking(record.bookingId, undefined)}
+            >
+              Отменить бронирование
+            </Button>
           </Stack>
           <Stack
             justifyContent={"space-between"}
@@ -59,11 +69,12 @@ export const TourDetails: FC<ITourDetailsProps> = ({ record }) => {
           </Stack>
           <Typography variant={"h6"}>Проживание</Typography>
           <Typography variant={"caption"}>
-            {(record.tour?.housingInclude.housingName ?? "") +
-              ", " +
-              (record.tour?.housingInclude.housingAddress ?? "") +
-              ", " +
-              (record.tour?.housingInclude.housingDescription ?? "")}
+            {record.tour?.housingInclude &&
+              (record.tour?.housingInclude.housingName ?? "") +
+                ", " +
+                (record.tour?.housingInclude.housingAddress ?? "") +
+                ", " +
+                (record.tour?.housingInclude.housingDescription ?? "")}
           </Typography>
           <Typography variant={"h6"}>Страхование</Typography>
           <Typography variant={"caption"}>
