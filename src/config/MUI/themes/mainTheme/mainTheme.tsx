@@ -15,6 +15,7 @@ declare module "@mui/material/Button" {
     textButton: true;
     fileInput: true;
     weakTextButton: true;
+    arrowButton: true;
   }
 }
 
@@ -158,7 +159,7 @@ export const mainThemes = createTheme({
     MuiButton: {
       styleOverrides: {
         root: {
-          minWidth: 0,
+          minWidth: "fit-content",
           width: "fit-content",
           padding: "0 16px",
           backgroundColor: darkTurquoiseColor,
@@ -182,13 +183,6 @@ export const mainThemes = createTheme({
           props: { variant: "high" },
           style: {
             height: "50px",
-          },
-        },
-        {
-          props: { variant: "whiteColor" },
-          style: {
-            backgroundColor: whiteColor,
-            color: darkBlueColor,
           },
         },
         {
@@ -221,6 +215,18 @@ export const mainThemes = createTheme({
             justifyContent: "space-between",
             "&:hover": { backgroundColor: lightTurquoiseColor },
             color: darkBlueColor,
+          },
+        },
+        {
+          props: { variant: "arrowButton" },
+          style: {
+            minWidth: "34px",
+            width: "fit-content",
+            backgroundColor: whiteColor,
+            color: darkBlueColor,
+            borderRadius: "100%",
+            height: "34px",
+            padding: "0",
           },
         },
       ],
