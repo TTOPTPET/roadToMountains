@@ -1,5 +1,5 @@
 import axios from "axios";
-import { urlUser } from "../../../config/config";
+import { urlTour, urlUser } from "../../../config/config";
 import { TOKEN } from "../../../config/types";
 import { Cookies } from "react-cookie";
 import { ISearchRequest } from "../../../models/tourListModels/ISearchRequest";
@@ -132,8 +132,7 @@ export const getToursSorted = async (
     return;
   }
   try {
-    let response = await axios.get<ITour[]>(urlUser + "/tours/search", {
-      data: data,
+    let response = await axios.post<ITour[]>(urlTour + "/search", data, {
       headers: {
         Authorization: `Bearer ${cookie.get(TOKEN)}`,
       },

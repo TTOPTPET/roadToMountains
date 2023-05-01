@@ -1,19 +1,17 @@
 import { touristUrl } from "../../config/config";
+import axios from "axios";
 import { Cookies } from "react-cookie";
 import { TOKEN } from "../../config/types";
-import axios from "axios";
-import { ITourBooking } from "../../models/tourModels/ITourBooking";
 
 let cookie = new Cookies();
 
-export const registrateTour = async (
-  momentPay: boolean,
-  data: ITourBooking,
+export const cancelBooking = async (
+  bookingId: number,
   errorCallback?: () => void
 ) => {
   try {
-    let response = await axios.post(touristUrl + "/booking", data, {
-      params: { momentPay: momentPay },
+    let response = await axios.get(touristUrl + "/bookingCancel", {
+      params: { bookingId: bookingId },
       headers: {
         Authorization: `Bearer ${cookie.get(TOKEN)}`,
       },
