@@ -40,9 +40,8 @@ deploy-dev:
   stage: deploy-dev
   script:
     - docker login -u $CI_USERNAME -p $CI_PASSWORD registry.gitlab.com
-    - sudo usermod -aG docker $USER
-    - chgrp docker /usr/local/bin/docker-compose
-    - chmod 750 /usr/local/bin/docker-compose
+#    - chgrp docker /usr/local/bin/docker-compose
+#    - chmod 750 /usr/local/bin/docker-compose
     - docker-compose -f docker-compose-dev.yml up -d
   rules:
     - if: $CI_PIPELINE_SOURCE != 'merge_request_event' && $CI_COMMIT_BRANCH == "dev"
@@ -70,8 +69,8 @@ build-image-production:
   script:
     - cp -r DockerfilePROD Dockerfile
     - docker login -u $CI_USERNAME -p $CI_PASSWORD registry.gitlab.com
-    - docker build -t registry.gitlab.com/f3120/road-to-mountains-frontend:frontend$CI_COMMIT_SHA .
-    - docker push registry.gitlab.com/f3120/road-to-mountains-frontend:frontend$CI_COMMIT_SHA
+    - docker build -t registry.gitlab.com/f3120/road-to-mountains-frontend:prod$CI_COMMIT_SHA .
+    - docker push registry.gitlab.com/f3120/road-to-mountains-frontend:prod$CI_COMMIT_SHA
   rules:
     - if: $CI_PIPELINE_SOURCE != 'merge_request_event' && $CI_COMMIT_BRANCH == "prod"
   tags:
@@ -81,9 +80,9 @@ deploy-production:
   stage: deploy-production
   script:
     - docker login -u $CI_USERNAME -p $CI_PASSWORD registry.gitlab.com
-    - sudo usermod -aG docker $USER
-    - chgrp docker /usr/local/bin/docker-compose
-    - chmod 750 /usr/local/bin/docker-compose
+#    - chgrp docker /usr/local/bin/docker-compose
+#    - chmod 750 /usr/local/bin/docker-compose
+    - cp -r DockerfilePROD Dockerfile
     - docker-compose -f docker-compose-prod.yml up -d
   rules:
     - if: $CI_PIPELINE_SOURCE != 'merge_request_event' && $CI_COMMIT_BRANCH == "prod"

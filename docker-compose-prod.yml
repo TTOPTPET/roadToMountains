@@ -1,7 +1,6 @@
 version: '3.3'
 services:
-  web-front-dev:
-    image: registry.gitlab.com/f3120/road-to-mountains-frontend:frontend$CI_COMMIT_SHA
+  web-front-prod:
+    image: registry.gitlab.com/f3120/road-to-mountains-frontend:prod$CI_COMMIT_SHA
     ports:
-      - 80:80
-      - 443:443
+      - 2000:80
