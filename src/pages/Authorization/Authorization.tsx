@@ -218,7 +218,7 @@ function Authorization() {
             flexDirection: "column",
           }}
         >
-          <Stack sx={{ width: "450px", gap: "15px", mb: "30px" }}>
+          <Stack sx={{ width: "450px", gap: "15px", mb: "15px" }}>
             {regState
               ? Object.entries<ITextProps>(
                   AuthComponent("login") as unknown as {
@@ -259,8 +259,8 @@ function Authorization() {
                 ))}
           </Stack>
           {isConfirmCode && !regState ? (
-            <>
-              <Typography variant={"h5"}>
+            <Stack sx={{ width: "450px", gap: "15px", mb: "15px" }}>
+              <Typography variant={"h5"} sx={{ textAlign: "center" }}>
                 На Вашу почту отправлен <br /> одноразовый код подтверждения
               </Typography>
               <TextField
@@ -271,11 +271,11 @@ function Authorization() {
                 value={confirmCode}
                 onChange={(e) => setConfirmCode(e.target.value)}
               />
-            </>
+            </Stack>
           ) : (
             <></>
           )}
-          <Box>
+          <Box sx={{ mt: "15px" }}>
             {regState ? (
               <Button onClick={handlerLoginClick}>Вход</Button>
             ) : (

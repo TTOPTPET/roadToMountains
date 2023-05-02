@@ -24,11 +24,11 @@ function TourListPage() {
   const [tours, setTours] = useState<ITour[]>([]);
 
   useEffect(() => {
-    getFilters((filter) => setFilters(filter), undefined, true);
+    getFilters((filter) => setFilters(filter), undefined, false);
   }, []);
 
   useEffect(() => {
-    getToursSorted((search) => setTours(search), searchData, undefined, true);
+    getToursSorted((search) => setTours(search), searchData, undefined, false);
   }, [searchData]);
 
   const dispatch = useDispatch();

@@ -11,6 +11,7 @@ import "react-date-range/dist/theme/default.css";
 import { DateRange } from "react-date-range";
 import { tourStepsMap } from "../../../pages/TourPage/TourPage";
 import * as locales from "react-date-range/dist/locale";
+import { registrateTour } from "../../../submitFunctions/touristAPI/registrateTour";
 
 interface ITourBookingProps {
   tourInfo: ITourInfo;
@@ -169,16 +170,22 @@ export const TourBooking: FC<ITourBookingProps> = ({
             <Button
               variant={"contained"}
               sx={{ marginTop: 1 }}
-              onClick={() =>
-                setPage((page: tourStepsMap) => (page < 2 ? page + 1 : page))
-              }
+              onClick={() => {
+                setPage((page: tourStepsMap) => (page < 2 ? page + 1 : page));
+              }}
             >
               Забронировать
             </Button>
           ) : (
             <Stack direction={"row"} gap={2}>
               <Button>Оплатить</Button>
-              <Button>Оплатить потом</Button>
+              <Button
+                onClick={() => {
+                  registrateTour(false, bookingData, undefined);
+                }}
+              >
+                Оплатить потом
+              </Button>
             </Stack>
           )}
         </Box>

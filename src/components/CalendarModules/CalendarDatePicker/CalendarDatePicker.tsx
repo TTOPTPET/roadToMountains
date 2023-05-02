@@ -6,12 +6,7 @@ import { Dayjs } from "dayjs";
 import styled from "@emotion/styled";
 
 const ArrowButton = styled(({ className, ...props }: ButtonProps) => (
-  <Button
-    {...props}
-    className={className}
-    sx={{ borderRadius: "100%", width: "34px", height: "34px", p: 0 }}
-    variant="whiteColor"
-  />
+  <Button {...props} className={className} variant="arrowButton" />
 ))();
 
 type Props = {
