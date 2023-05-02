@@ -31,11 +31,10 @@ export const TourSteps: FC<TourStepsProps> = ({ page, setPage, tourInfo }) => {
   const [bookingData, setBookingData] = useState<ITourBooking>({
     ...tourBookingDefault,
     tourDate: {
-      from: new Date().toString(),
+      from: dayjs(new Date()).toISOString(),
       to: dayjs(tourInfo?.nearestDate?.to ?? new Date())
         .add(-1, "day")
-        .toDate()
-        .toString(),
+        .toISOString(),
     },
   });
 

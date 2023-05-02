@@ -1,5 +1,5 @@
 import axios from "axios";
-import { urlUser } from "../../../config/config";
+import { urlTour, urlUser } from "../../../config/config";
 import { TOKEN } from "../../../config/types";
 import { Cookies } from "react-cookie";
 import { IFilter } from "../../../models/tourListModels/IFilter";
@@ -28,7 +28,7 @@ export const getFilters = async (
     return;
   }
   try {
-    let response = await axios.get(urlUser + "/tours/filters", {
+    let response = await axios.get(urlTour + "/filters", {
       headers: {
         Authorization: `Bearer ${cookie.get(TOKEN)}`,
       },

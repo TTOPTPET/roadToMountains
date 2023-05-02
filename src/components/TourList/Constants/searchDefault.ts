@@ -18,8 +18,8 @@ export const searchDefault: ISearchRequest = {
   },
   region: "",
   tourDate: {
-    from: "",
-    to: "",
+    from: null,
+    to: null,
   },
   maxPersonNumber: 0,
 };
