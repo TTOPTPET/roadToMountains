@@ -40,7 +40,6 @@ deploy-dev:
   stage: deploy-dev
   script:
     - docker login -u $CI_USERNAME -p $CI_PASSWORD registry.gitlab.com
-    - sudo usermod -aG docker $USER
     - chgrp docker /usr/local/bin/docker-compose
     - chmod 750 /usr/local/bin/docker-compose
     - docker-compose -f docker-compose-dev.yml up -d
@@ -81,7 +80,6 @@ deploy-production:
   stage: deploy-production
   script:
     - docker login -u $CI_USERNAME -p $CI_PASSWORD registry.gitlab.com
-    - sudo usermod -aG docker $USER
     - chgrp docker /usr/local/bin/docker-compose
     - chmod 750 /usr/local/bin/docker-compose
     - docker-compose -f docker-compose-prod.yml up -d
