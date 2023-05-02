@@ -42,7 +42,7 @@ deploy-dev:
     - docker login -u $CI_USERNAME -p $CI_PASSWORD registry.gitlab.com
 #    - chgrp docker /usr/local/bin/docker-compose
 #    - chmod 750 /usr/local/bin/docker-compose
-    - sudo docker-compose -f docker-compose-dev.yml up -d
+    - docker-compose -f docker-compose-dev.yml up -d
   rules:
     - if: $CI_PIPELINE_SOURCE != 'merge_request_event' && $CI_COMMIT_BRANCH == "dev"
   tags:
@@ -83,7 +83,7 @@ deploy-production:
 #    - chgrp docker /usr/local/bin/docker-compose
 #    - chmod 750 /usr/local/bin/docker-compose
     - cp -r DockerfilePROD Dockerfile
-    - sudo docker-compose -f docker-compose-prod.yml up -d
+    - docker-compose -f docker-compose-prod.yml up -d
   rules:
     - if: $CI_PIPELINE_SOURCE != 'merge_request_event' && $CI_COMMIT_BRANCH == "prod"
   tags:
