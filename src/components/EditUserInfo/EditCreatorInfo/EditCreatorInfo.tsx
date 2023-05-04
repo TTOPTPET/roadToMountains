@@ -25,6 +25,8 @@ import {
   CreatorDocuments,
   StatusVerify,
 } from "../../../models/userModels/IUserInfo";
+import cloneDeep from "lodash/cloneDeep";
+import { useState } from "react";
 
 function EditCreatorInfo() {
   const creatorInfo = useSelector(
@@ -33,28 +35,24 @@ function EditCreatorInfo() {
   let dispatch = useDispatch();
 
   const setFiles = (files: CreatorDocuments[]) => {
-    dispatch(
-      setUserInfo({
-        ...creatorInfo,
-        dataUser: {
-          ...creatorInfo?.dataUser,
-          documents: files,
-        },
-      })
-    );
+    setEditedCreatorInfo({
+      ...editedCreatorInfo,
+      dataUser: {
+        ...editedCreatorInfo?.dataUser,
+        documents: files,
+      },
+    });
   };
 
   const setInfoStatus = (statusVerify: StatusVerify, timeToSend: string) => {
-    dispatch(
-      setUserInfo({
-        ...creatorInfo,
-        dataUser: {
-          ...creatorInfo?.dataUser,
-          statusVerify,
-          timeToSend,
-        },
-      })
-    );
+    setEditedCreatorInfo({
+      ...editedCreatorInfo,
+      dataUser: {
+        ...editedCreatorInfo?.dataUser,
+        statusVerify,
+        timeToSend,
+      },
+    });
   };
 
   const handleFileInputChange = (
@@ -71,6 +69,10 @@ function EditCreatorInfo() {
     }
   };
 
+  const [editedCreatorInfo, setEditedCreatorInfo] = useState(
+    cloneDeep(creatorInfo)
+  );
+
   return (
     <>
       {JSON.stringify(creatorInfo)}
@@ -82,7 +84,10 @@ function EditCreatorInfo() {
               color="primary"
               value={creatorInfo?.name}
               onChange={(e) =>
-                dispatch(setUserInfo({ ...creatorInfo, name: e.target.value }))
+                setEditedCreatorInfo({
+                  ...editedCreatorInfo,
+                  name: e.target.value,
+                })
               }
             />
             <TextField
@@ -90,7 +95,10 @@ function EditCreatorInfo() {
               color="primary"
               value={creatorInfo?.phone}
               onChange={(e) =>
-                dispatch(setUserInfo({ ...creatorInfo, phone: e.target.value }))
+                setEditedCreatorInfo({
+                  ...editedCreatorInfo,
+                  phone: e.target.value,
+                })
               }
             />
             <TextField
@@ -98,7 +106,10 @@ function EditCreatorInfo() {
               color="primary"
               value={creatorInfo?.email}
               onChange={(e) =>
-                dispatch(setUserInfo({ ...creatorInfo, email: e.target.value }))
+                setEditedCreatorInfo({
+                  ...editedCreatorInfo,
+                  email: e.target.value,
+                })
               }
             />
             <FormControl>
@@ -108,21 +119,19 @@ function EditCreatorInfo() {
               <RadioGroup
                 aria-labelledby="demo-radio-buttons-group-label"
                 value={
-                  creatorInfo?.dataUser?.creatorType
-                    ? creatorInfo?.dataUser?.creatorType
+                  editedCreatorInfo?.dataUser?.creatorType
+                    ? editedCreatorInfo?.dataUser?.creatorType
                     : ""
                 }
                 name="radio-buttons-group"
                 onChange={(e) => {
-                  dispatch(
-                    setUserInfo({
-                      ...creatorInfo,
-                      dataUser: {
-                        ...creatorInfo?.dataUser,
-                        creatorType: e.target.value as any,
-                      },
-                    })
-                  );
+                  setEditedCreatorInfo({
+                    ...editedCreatorInfo,
+                    dataUser: {
+                      ...editedCreatorInfo?.dataUser,
+                      creatorType: e.target.value as any,
+                    },
+                  });
                 }}
               >
                 <FormControlLabel
@@ -143,24 +152,22 @@ function EditCreatorInfo() {
               </RadioGroup>
             </FormControl>
             <InputFieldsCreator
-              creatorInfo={creatorInfo}
+              creatorInfo={editedCreatorInfo}
               setCreatorInfo={(
                 field: string,
                 value: any,
                 fieldsPrototipe: any
               ) =>
-                dispatch(
-                  setUserInfo({
-                    ...creatorInfo,
-                    dataUser: {
-                      ...creatorInfo?.dataUser,
-                      fieldsCreator: {
-                        ...fieldsPrototipe,
-                        [field]: value,
-                      },
+                setEditedCreatorInfo({
+                  ...editedCreatorInfo,
+                  dataUser: {
+                    ...editedCreatorInfo?.dataUser,
+                    fieldsCreator: {
+                      ...fieldsPrototipe,
+                      [field]: value,
                     },
-                  })
-                )
+                  },
+                })
               }
             />
             <Button variant="fileInput" component="label">
@@ -178,23 +185,25 @@ function EditCreatorInfo() {
             </Button>
             <CreatorDocumentsList
               setFiles={setFiles}
-              files={creatorInfo?.dataUser?.documents}
+              files={editedCreatorInfo?.dataUser?.documents}
               variant={"editInfo"}
             />
           </>
         }
         submitFuntion={() =>
-          setCreatorInfo({ ...creatorInfo, ...creatorInfo.dataUser }, (resp) =>
-            setInfoStatus(resp?.data?.statusVerify, resp?.data?.timeToSend)
+          setCreatorInfo(
+            { ...editedCreatorInfo, ...editedCreatorInfo.dataUser },
+            (resp) =>
+              setInfoStatus(resp?.data?.statusVerify, resp?.data?.timeToSend)
           )
         }
         header={"Личный кабинет"}
         linkTo={"/creator/lk"}
         avatarComponent={
           <Avatar
-            photoUrl={creatorInfo.photo}
+            photoUrl={editedCreatorInfo.photo}
             setUserPhoto={(photoUrl: string) =>
-              dispatch(setUserInfo({ ...creatorInfo, photo: photoUrl }))
+              setEditedCreatorInfo({ ...editedCreatorInfo, photo: photoUrl })
             }
           />
         }
