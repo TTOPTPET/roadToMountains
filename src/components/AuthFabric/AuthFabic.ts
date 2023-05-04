@@ -29,8 +29,14 @@ export const AuthComponent = (
           type: "",
           value: "",
         },
-        login: {
-          name: "Логин",
+        email: {
+          name: "Почта",
+          required: true,
+          type: "",
+          value: "",
+        },
+        phone: {
+          name: "Телефон",
           required: true,
           type: "",
           value: "",
