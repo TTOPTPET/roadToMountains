@@ -32,6 +32,7 @@ function EditCreatorInfo() {
   const creatorInfo = useSelector(
     (state: RootState) => state.userInfo.userInfo as ICreatorInfo
   );
+
   let dispatch = useDispatch();
 
   const setFiles = (files: CreatorDocuments[]) => {
@@ -45,14 +46,16 @@ function EditCreatorInfo() {
   };
 
   const setInfoStatus = (statusVerify: StatusVerify, timeToSend: string) => {
-    setEditedCreatorInfo({
-      ...editedCreatorInfo,
-      dataUser: {
-        ...editedCreatorInfo?.dataUser,
-        statusVerify,
-        timeToSend,
-      },
-    });
+    dispatch(
+      setUserInfo({
+        ...creatorInfo,
+        dataUser: {
+          ...creatorInfo?.dataUser,
+          statusVerify,
+          timeToSend,
+        },
+      })
+    );
   };
 
   const handleFileInputChange = (

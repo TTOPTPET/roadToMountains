@@ -17,7 +17,7 @@ import {
   ITextProps,
 } from "../../components/AuthorizationModules/AuthFabric/AuthTypes/AuthTypes";
 import { loginUser, registerUser } from "../../API/authAPI";
-import { lightTurquoiseColor } from "../../config/MUI/color/color";
+import { lightTurquoiseColor, redColor } from "../../config/MUI/color/color";
 import EnterMobileCodeModal from "../../components/Modals/EnterMobileCodeModal/EnterMobileCodeModal";
 import { useDispatch } from "react-redux";
 import { setModalActive } from "../../redux/Modal/ModalReducer";
@@ -89,6 +89,23 @@ function Authorization() {
     loginUser(userLoginData, undefined, undefined, false);
   };
 
+  const [errorMessage, setErrorMessage] = useState("");
+  const [passwordErrorStatus, setPasswordErrorStatus] = useState(false);
+
+  const handlePasswordChanged = () => {
+    if (
+      userRegisterData.password !== userRegisterData.passwordSecond &&
+      userRegisterData.password !== "" &&
+      userRegisterData.passwordSecond !== ""
+    ) {
+      setPasswordErrorStatus(true);
+      setErrorMessage("Пароли не совпадают!");
+    } else {
+      setPasswordErrorStatus(false);
+      setErrorMessage("");
+    }
+  };
+
   return (
     <Stack sx={{ m: "0 auto", mt: "95px", gap: "50px" }}>
       <Typography variant="h3">{regState ? "Вход" : "Регистрация"}</Typography>
@@ -131,14 +148,16 @@ function Authorization() {
                     key={index}
                     placeholder={value.name}
                     type={value.type}
+                    error={value.type === "password" && passwordErrorStatus}
                     required={value.required}
                     value={userRegisterData[key as keyof IRegisterComponent]}
-                    onChange={(e) =>
+                    onChange={(e) => {
                       handlerUpdateRegisterField(
                         key as keyof IRegisterComponent,
                         e
-                      )
-                    }
+                      );
+                      handlePasswordChanged();
+                    }}
                   />
                 ))}
             {!regState && (
@@ -157,6 +176,16 @@ function Authorization() {
               />
             )}
           </Stack>
+          {!regState && passwordErrorStatus && (
+            <Typography
+              variant="caption"
+              className="author__error"
+              sx={{ color: redColor, mb: "15px" }}
+            >
+              {errorMessage}
+            </Typography>
+          )}
+
           {regState ? (
             <Button onClick={handlerLoginClick}>Вход</Button>
           ) : (

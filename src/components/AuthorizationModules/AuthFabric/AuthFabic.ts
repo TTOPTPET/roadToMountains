@@ -11,12 +11,14 @@ export const AuthComponent = (
           required: true,
           type: "",
           value: "",
+          error: true,
         },
         password: {
           name: "Пароль",
           required: true,
           type: "password",
           value: "",
+          error: true,
         },
       };
       return loginComponent;
@@ -28,24 +30,28 @@ export const AuthComponent = (
           required: true,
           type: "",
           value: "",
+          error: false,
         },
         phone: {
           name: "Телефон",
           required: true,
           type: "",
           value: "",
+          error: false,
         },
         password: {
           name: "Пароль",
           required: true,
           type: "password",
           value: "",
+          error: false,
         },
         passwordSecond: {
           name: "Повторите пароль",
           required: true,
           type: "password",
           value: "",
+          error: false,
         },
       };
 
