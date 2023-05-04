@@ -142,7 +142,8 @@ function Authorization() {
     password: "",
   };
   const registerDefault: IUserRegister = {
-    login: "",
+    email: "",
+    phone: "",
     name: "",
     password: "",
     passwordSecond: "",
