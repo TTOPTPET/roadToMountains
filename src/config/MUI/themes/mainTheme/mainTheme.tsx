@@ -11,9 +11,11 @@ import {
 declare module "@mui/material/Button" {
   interface ButtonPropsVariantOverrides {
     high: true;
+    whiteColor: true;
     textButton: true;
     fileInput: true;
     weakTextButton: true;
+    arrowButton: true;
   }
 }
 
@@ -29,6 +31,7 @@ declare module "@mui/material/Paper" {
     helpButton: true;
     bigPadding: true;
     header: true;
+    whiteBlue: true;
   }
 }
 
@@ -121,10 +124,18 @@ export const mainThemes = createTheme({
         {
           props: { variant: "header" },
           style: {
-            padding: "15px",
+            padding: 0,
+            paddingLeft: "15px",
+            paddingRight: "15px",
             backgroundColor: lightTurquoiseColor,
-            height: 100,
+            height: 70,
             borderRadius: 0,
+          },
+        },
+        {
+          props: { variant: "whiteBlue" },
+          style: {
+            backgroundColor: whiteColor,
           },
         },
       ],
@@ -148,7 +159,7 @@ export const mainThemes = createTheme({
     MuiButton: {
       styleOverrides: {
         root: {
-          minWidth: "fit-content ",
+          minWidth: "fit-content",
           width: "fit-content",
           padding: "0 16px",
           backgroundColor: darkTurquoiseColor,
@@ -206,6 +217,18 @@ export const mainThemes = createTheme({
             color: darkBlueColor,
           },
         },
+        {
+          props: { variant: "arrowButton" },
+          style: {
+            minWidth: "34px",
+            width: "fit-content",
+            backgroundColor: whiteColor,
+            color: darkBlueColor,
+            borderRadius: "100%",
+            height: "34px",
+            padding: "0",
+          },
+        },
       ],
     },
     MuiOutlinedInput: {
@@ -244,10 +267,7 @@ export const mainThemes = createTheme({
               fontFamily: "Montserrat",
               fontWeight: "400",
             },
-            "&:-webkit-autofill": {
-              WebkitBoxShadow: `0 0 0 1000px ${lightTurquoiseColor} inset`,
-              borderRadius: "30px",
-            },
+
             "&::-webkit-outer-spin-button": {
               "-webkit-appearance": "none",
             },
@@ -264,10 +284,22 @@ export const mainThemes = createTheme({
             "&:hover fieldset": {
               borderColor: lightTurquoiseColor,
             },
+            input: {
+              "&:-webkit-autofill": {
+                WebkitBoxShadow: `0 0 0 1000px ${lightTurquoiseColor} inset`,
+                borderRadius: "30px",
+              },
+            },
           },
           "& .MuiInputBase-colorSecondary": {
             "&:hover fieldset": {
               borderColor: "#FFF",
+            },
+            input: {
+              "&:-webkit-autofill": {
+                WebkitBoxShadow: `0 0 0 1000px #FFF inset`,
+                borderRadius: "30px",
+              },
             },
           },
           "& .MuiInputBase-colorSecondary.Mui-focused, .MuiInputBase-colorSecondary.Mui-disabled":

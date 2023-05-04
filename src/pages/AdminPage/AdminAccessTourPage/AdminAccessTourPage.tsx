@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { ITourList } from "../../../models/adminModels/ITourList";
-import { getTourList } from "../../../submitFunctions/adminAPI";
+import { getTourList } from "../../../API/adminAPI";
 import { AdminComponent } from "../../../components/Admin/AdminFabric/AdminFabric";
 import { Stack } from "@mui/material";
 

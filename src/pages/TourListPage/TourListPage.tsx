@@ -4,9 +4,9 @@ import { useDispatch } from "react-redux";
 import { setModalActive } from "../../redux/Modal/ModalReducer";
 import { BasicFilter, ComplexFilter, Sorter } from "../../components/TourList";
 import { IFilter } from "../../models/tourListModels/IFilter";
-import { getFilters } from "../../submitFunctions/tourListAPI";
+import { getFilters } from "../../API/tourListAPI";
 import { ISearchRequest } from "../../models/tourListModels/ISearchRequest";
-import { getToursSorted } from "../../submitFunctions/tourListAPI/searchAPI/searchAPI";
+import { getToursSorted } from "../../API/tourListAPI/searchAPI/searchAPI";
 import { ITour } from "../../models/tourCardModel/ITour";
 import TourCard from "../../components/TourCard/TourCard";
 import { searchDefault } from "../../components/TourList/Constants/searchDefault";
@@ -24,11 +24,11 @@ function TourListPage() {
   const [tours, setTours] = useState<ITour[]>([]);
 
   useEffect(() => {
-    getFilters((filter) => setFilters(filter), undefined, true);
+    getFilters((filter) => setFilters(filter), undefined, false);
   }, []);
 
   useEffect(() => {
-    getToursSorted((search) => setTours(search), searchData, undefined, true);
+    getToursSorted((search) => setTours(search), searchData, undefined, false);
   }, [searchData]);
 
   const dispatch = useDispatch();

@@ -2,7 +2,7 @@ import { Paper, Box, Avatar as MuiAvatar } from "@mui/material";
 import { darkTurquoiseColor } from "../../config/MUI/color/color";
 import addPhotoIcon from "../../media/plusIcon.svg";
 import editImageIcon from "../../media/iconEditImage.png";
-import { postUserAvatar } from "../../submitFunctions/commonAPI";
+import { postUserAvatar } from "../../API/commonAPI";
 
 type avatarProps = {
   photoUrl: string;

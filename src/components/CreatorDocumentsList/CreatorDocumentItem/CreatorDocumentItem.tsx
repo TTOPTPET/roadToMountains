@@ -27,12 +27,10 @@ function CreatorDocumentItem({
         flexDirection: "column",
         gap: "10px",
         width: "100px",
-        cursor: "pointer",
+        cursor: variant !== "editInfo" && "pointer",
       }}
       onClick={() => {
-        variant === "editInfo"
-          ? handleDeleteFile(file.lastModified)
-          : handlerDownloadClick(file.docUrl);
+        variant !== "editInfo" && handlerDownloadClick(file.docUrl);
       }}
     >
       <Box className="document__item-image-wrapper">
@@ -58,6 +56,10 @@ function CreatorDocumentItem({
                 top: "12px",
                 right: "12px",
                 width: "16px",
+                cursor: "pointer",
+              }}
+              onClick={() => {
+                handleDeleteFile(file.lastModified);
               }}
             />
           )}

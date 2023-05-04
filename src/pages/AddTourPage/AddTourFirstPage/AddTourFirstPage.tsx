@@ -8,7 +8,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { AddTourImage } from "../../../components/AddTourImage/AddTourImage";
+import { AddTourImage } from "../../../components/AddTourModules/AddTourImage/AddTourImage";
 import { Dispatch, SetStateAction, FC } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setTourField } from "../../../redux/AddTour/AddTourReducer";

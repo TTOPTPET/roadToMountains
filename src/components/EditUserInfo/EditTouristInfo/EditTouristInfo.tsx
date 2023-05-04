@@ -12,13 +12,19 @@ import { RootState } from "../../../redux/store";
 import { setUserInfo } from "../../../redux/UserInfo/UserInfoReducer";
 import Avatar from "../../Avatar/Avatar";
 import EditUserInfo from "../EditUserInfo";
-import { setTouristInfo } from "../../../submitFunctions/touristAPI/setTouristInfo";
+import { setTouristInfo } from "../../../API/touristAPI/setTouristInfo";
+import { useState } from "react";
+import cloneDeep from "lodash/cloneDeep";
 
 function EditTouristInfo() {
   const touristInfo = useSelector(
     (state: RootState) => state.userInfo.userInfo as ITouristInfo
   );
   let dispatch = useDispatch();
+
+  const [editedTouristInfo, setEditedTouristInfo] = useState(
+    cloneDeep(touristInfo)
+  );
 
   return (
     <>
@@ -30,7 +36,10 @@ function EditTouristInfo() {
               color="primary"
               value={touristInfo?.name}
               onChange={(e) =>
-                dispatch(setUserInfo({ ...touristInfo, name: e.target.value }))
+                setEditedTouristInfo({
+                  ...editedTouristInfo,
+                  name: e.target.value,
+                })
               }
             />
             <TextField
@@ -38,7 +47,10 @@ function EditTouristInfo() {
               color="primary"
               value={touristInfo?.phone}
               onChange={(e) =>
-                dispatch(setUserInfo({ ...touristInfo, phone: e.target.value }))
+                setEditedTouristInfo({
+                  ...editedTouristInfo,
+                  phone: e.target.value,
+                })
               }
             />
             <TextField
@@ -46,7 +58,10 @@ function EditTouristInfo() {
               color="primary"
               value={touristInfo?.email}
               onChange={(e) =>
-                dispatch(setUserInfo({ ...touristInfo, email: e.target.value }))
+                setEditedTouristInfo({
+                  ...editedTouristInfo,
+                  email: e.target.value,
+                })
               }
             />
             <TextField
@@ -54,15 +69,13 @@ function EditTouristInfo() {
               color="primary"
               value={touristInfo?.dataUser?.region}
               onChange={(e) =>
-                dispatch(
-                  setUserInfo({
-                    ...touristInfo,
-                    dataUser: {
-                      ...touristInfo?.dataUser,
-                      region: e.target.value,
-                    },
-                  })
-                )
+                setEditedTouristInfo({
+                  ...editedTouristInfo,
+                  dataUser: {
+                    ...editedTouristInfo?.dataUser,
+                    region: e.target.value,
+                  },
+                })
               }
             />
             <FormControl>
@@ -70,19 +83,19 @@ function EditTouristInfo() {
               <RadioGroup
                 aria-labelledby="demo-radio-buttons-group-label"
                 value={
-                  touristInfo?.dataUser?.sex ? touristInfo?.dataUser?.sex : ""
+                  editedTouristInfo?.dataUser?.sex
+                    ? editedTouristInfo?.dataUser?.sex
+                    : ""
                 }
                 name="radio-buttons-group"
                 onChange={(e) =>
-                  dispatch(
-                    setUserInfo({
-                      ...touristInfo,
-                      dataUser: {
-                        ...touristInfo?.dataUser,
-                        sex: e.target.value as any,
-                      },
-                    })
-                  )
+                  setEditedTouristInfo({
+                    ...editedTouristInfo,
+                    dataUser: {
+                      ...editedTouristInfo?.dataUser,
+                      sex: e.target.value as any,
+                    },
+                  })
                 }
               >
                 <FormControlLabel
@@ -104,14 +117,14 @@ function EditTouristInfo() {
             </FormControl>
           </>
         }
-        submitFuntion={() => setTouristInfo(touristInfo, () => {})}
+        submitFuntion={() => setTouristInfo(editedTouristInfo, () => {})}
         header={"Привет, Турист!"}
         linkTo={"/tourist/lk"}
         avatarComponent={
           <Avatar
-            photoUrl={touristInfo.photo}
+            photoUrl={editedTouristInfo.photo}
             setUserPhoto={(photoUrl: string) =>
-              dispatch(setUserInfo({ ...touristInfo, photo: photoUrl }))
+              setEditedTouristInfo({ ...editedTouristInfo, photo: photoUrl })
             }
           />
         }
