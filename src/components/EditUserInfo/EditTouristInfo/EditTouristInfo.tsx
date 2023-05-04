@@ -12,7 +12,7 @@ import { RootState } from "../../../redux/store";
 import { setUserInfo } from "../../../redux/UserInfo/UserInfoReducer";
 import Avatar from "../../Avatar/Avatar";
 import EditUserInfo from "../EditUserInfo";
-import { setTouristInfo } from "../../../submitFunctions/touristAPI/setTouristInfo";
+import { setTouristInfo } from "../../../API/touristAPI/setTouristInfo";
 
 function EditTouristInfo() {
   const touristInfo = useSelector(

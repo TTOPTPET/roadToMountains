@@ -1,6 +1,6 @@
-import plus from "../../media/plus-circle-outline.svg";
+import plus from "../../../media/plus-circle-outline.svg";
 import Box from "@mui/material/Box";
-import { darkTurquoiseColor } from "../../config/MUI/color/color";
+import { darkTurquoiseColor } from "../../../config/MUI/color/color";
 import { Link } from "react-router-dom";
 
 function AddTourButton() {

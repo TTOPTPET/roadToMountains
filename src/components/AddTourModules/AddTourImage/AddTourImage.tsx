@@ -9,11 +9,11 @@ import {
 import imageCompression, { Options } from "browser-image-compression";
 import { Dispatch, SetStateAction, useState, FC } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { baseUrl } from "../../config/config";
-import { ReactComponent as AddImageLogo } from "../../media/add-image.svg";
-import { ReactComponent as DeleteIcon } from "../../media/DeleteCreatorDocumentIcon.svg";
-import { setPhotoToDelete } from "../../redux/Photo/PhotoReducer";
-import { RootState } from "../../redux/store";
+import { baseUrl } from "../../../config/config";
+import { ReactComponent as AddImageLogo } from "../../../media/add-image.svg";
+import { ReactComponent as DeleteIcon } from "../../../media/DeleteCreatorDocumentIcon.svg";
+import { setPhotoToDelete } from "../../../redux/Photo/PhotoReducer";
+import { RootState } from "../../../redux/store";
 
 const MAXIMUM_UPLOAD = 100 * 1024 * 1024;
 

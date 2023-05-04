@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getUserInfo } from "../../submitFunctions/commonAPI";
+import { getUserInfo } from "../../API/commonAPI";
 import {
   ITouristInfo,
   ICreatorInfo,

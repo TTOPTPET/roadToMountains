@@ -1,11 +1,11 @@
 import { Box, Button, Grid } from "@mui/material";
 import { useState, useEffect } from "react";
 import { IPublicTour } from "../../models/calendarModels/IPublicTour";
-import { getPublicTours } from "../../submitFunctions/calendarAPI/getPublicTours";
+import { getPublicTours } from "../../API/calendarAPI/getPublicTours";
 import { CalendarSidebar } from "../../components/CalendarModules/CalendarSidebar/CalendarSidebar";
 import { INewPublic } from "../../models/calendarModels/INewPublic";
 import { ITour } from "../../models/tourCardModel/ITour";
-import { getMyTours } from "../../submitFunctions/creatorAPI/getMyTours";
+import { getMyTours } from "../../API/creatorAPI/getMyTours";
 import { useDispatch } from "react-redux";
 import { setModalActive } from "../../redux/Modal/ModalReducer";
 import NewPublicModal from "../../components/Modals/NewPublicModal/NewPublicModal";
