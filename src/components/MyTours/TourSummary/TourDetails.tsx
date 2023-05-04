@@ -1,7 +1,7 @@
 import { Stack, Typography, Button } from "@mui/material";
 import dayjs from "dayjs";
 import { FC } from "react";
-import { cancelBooking } from "../../../submitFunctions/touristAPI/cancelBooking";
+import { cancelBooking } from "../../../API/touristAPI/cancelBooking";
 import { TourDetailsType } from "./tourDetailsType/tourDetailsType";
 
 interface ITourDetailsProps {

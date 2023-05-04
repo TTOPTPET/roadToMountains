@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
-import { AddTourSkeleton } from "../../components/AddTourSkeleton/AddTourSkeleton";
+import { AddTourSkeleton } from "../../components/AddTourModules/AddTourSkeleton/AddTourSkeleton";
 import {
   clearTourFields,
   setTourField,
 } from "../../redux/AddTour/AddTourReducer";
-import { getTourInfo } from "../../submitFunctions/tourAPI/getTourInfo";
+import { getTourInfo } from "../../API/tourAPI/getTourInfo";
 import AddTourRouting from "./AddTourRouting/AddTourRouting";
 import AddTourSteps from "./AddTourSteps/AddTourSteps";
 

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { refreshToken } from "../../submitFunctions/authAPI/UserAuthAPI/UserAuthAPI";
+import { refreshToken } from "../../API/authAPI/UserAuthAPI/UserAuthAPI";
 import { TOKEN } from "../../config/types";
 import { Cookies } from "react-cookie";
 

@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { getMyTours } from "../../submitFunctions/creatorAPI/getMyTours";
+import { getMyTours } from "../../API/creatorAPI/getMyTours";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Skeleton from "@mui/material/Skeleton";
-import AddTourButton from "../../components/AddTourButton/AddTourButton";
+import AddTourButton from "../../components/AddTourModules/AddTourButton/AddTourButton";
 import TourCard from "../../components/TourCard/TourCard";
 import { darkBlueColor } from "../../config/MUI/color/color";
 import { ITour } from "../../models/tourCardModel/ITour";

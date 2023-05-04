@@ -11,7 +11,7 @@ import "react-date-range/dist/theme/default.css";
 import { DateRange } from "react-date-range";
 import { tourStepsMap } from "../../../pages/TourPage/TourPage";
 import * as locales from "react-date-range/dist/locale";
-import { registrateTour } from "../../../submitFunctions/touristAPI/registrateTour";
+import { registrateTour } from "../../../API/touristAPI/registrateTour";
 
 interface ITourBookingProps {
   tourInfo: ITourInfo;

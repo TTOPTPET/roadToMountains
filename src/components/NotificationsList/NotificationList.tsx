@@ -1,7 +1,7 @@
 import { Stack } from "@mui/system";
 import { useState, useEffect } from "react";
 import { INotification } from "../../models/notificationModels/INotification";
-import { getNotifications } from "../../submitFunctions/notificationAPI/getNotifications";
+import { getNotifications } from "../../API/notificationAPI/getNotifications";
 import { Notification } from "./Notification/Notification";
 
 export const NotificationList = () => {

@@ -11,7 +11,6 @@ import {
   AdminPage,
   Authorization,
   CreatorLk,
-  HomePage,
   NotificationsPage,
   PaymentSettingsPage,
   StatisticPage,
@@ -19,6 +18,7 @@ import {
   TouristLk,
   TourListPage,
   AddTourPage,
+  StartPage,
 } from "./pages";
 import NavTool from "./components/NavTool/NavTool";
 import EditCreatorInfo from "./components/EditUserInfo/EditCreatorInfo/EditCreatorInfo";
@@ -28,7 +28,7 @@ import { UserType } from "./models/userModels/IUserInfo";
 import EditTouristInfo from "./components/EditUserInfo/EditTouristInfo/EditTouristInfo";
 import TourPage from "./pages/TourPage/TourPage";
 import { useEffect } from "react";
-import { getUserInfo } from "./submitFunctions/commonAPI";
+import { getUserInfo } from "./API/commonAPI";
 import { setUserInfo } from "./redux/UserInfo/UserInfoReducer";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 
@@ -61,7 +61,6 @@ function App() {
                 </ProtectedRoute>
               }
             />
-
             <Route
               path={"/creator/editInfo"}
               element={
@@ -134,9 +133,9 @@ function App() {
                 </ProtectedRoute>
               }
             />
+            <Route path={"/"} element={<StartPage />} />
             <Route path={"/admin/*"} element={<AdminPage />} />
             <Route path={"/auth"} element={<Authorization />} />
-
             <Route path={"/tours/all"} element={<TourListPage />} />
             <Route path={"/tours/tour/:tourId"} element={<TourPage />} />
           </Routes>

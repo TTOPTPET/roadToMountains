@@ -17,7 +17,7 @@ import {
   tourBan,
   userBan,
   verifyCreator,
-} from "../../../submitFunctions/adminAPI";
+} from "../../../API/adminAPI";
 import { IChangeStatus } from "../../../models/adminModels/IChangeStatus";
 import { ReactComponent as DownloadIcon } from "../../../media/download.svg";
 import dayjs from "dayjs";

@@ -1,7 +1,7 @@
 import { Stack, Typography, Tabs, Tab } from "@mui/material";
 import { SyntheticEvent, useEffect, useState } from "react";
 import { IUserRecord } from "../../models/userModels/IUserRecord";
-import { getTouristRecords } from "../../submitFunctions/touristAPI/getTouristRecords";
+import { getTouristRecords } from "../../API/touristAPI/getTouristRecords";
 import { TourAccordion } from "./TourAccordion/TourAccordion";
 
 enum tabValues {

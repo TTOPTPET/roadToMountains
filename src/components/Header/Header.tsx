@@ -3,13 +3,16 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../redux/store";
 import logo from "../../media/logo.svg";
 import { UserType } from "../../models/userModels/IUserInfo";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import accIcon from "../../media/accountLinkIcon.svg";
 import calendarIcon from "../../media/calendarIcon.svg";
 
 const Header = () => {
   const userInfo = useSelector((state: RootState) => state.userInfo.userInfo);
+
+  const navigate = useNavigate();
+
   return (
     <Paper variant="header" sx={{ width: "100%" }}>
       <Box
@@ -28,11 +31,15 @@ const Header = () => {
           }}
         >
           <Box
+            onClick={() => {
+              navigate("/tours/all");
+            }}
             sx={{
               display: "flex",
               alignItems: "center",
               gap: "10px",
               justifyContent: "flex-start",
+              cursor: "pointer",
             }}
             className="header__logo"
           >

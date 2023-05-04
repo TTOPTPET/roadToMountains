@@ -19,7 +19,7 @@ import Avatar from "../../Avatar/Avatar";
 import attachment from "../../../media/attachment.svg";
 import EditUserInfo from "../EditUserInfo";
 import CreatorDocumentsList from "../../CreatorDocumentsList/CreatorDocumentsList";
-import { setCreatorInfo } from "../../../submitFunctions/creatorAPI/setCreatorInfo";
+import { setCreatorInfo } from "../../../API/creatorAPI/setCreatorInfo";
 import InputFieldsCreator from "./InputFieldsCreator/InputFieldsCreator";
 import {
   CreatorDocuments,

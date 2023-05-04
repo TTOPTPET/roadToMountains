@@ -32,7 +32,7 @@ import { ITour } from "../../../models/tourCardModel/ITour";
 import { INewPublic } from "../../../models/calendarModels/INewPublic";
 import { StyledTextAreaAutosize } from "../../../config/MUI/styledComponents/StyledTextAreaAutosize";
 
-import { postNewPublic } from "../../../submitFunctions/creatorAPI/postNewPublic";
+import { postNewPublic } from "../../../API/creatorAPI/postNewPublic";
 
 type NewPublicModalProps = {
   myTours: ITour[];

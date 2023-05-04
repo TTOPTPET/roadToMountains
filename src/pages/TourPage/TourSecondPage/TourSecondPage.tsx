@@ -1,7 +1,7 @@
 import { TextField, Typography } from "@mui/material";
 import { Box, Stack } from "@mui/system";
 import { Dispatch, SetStateAction, FC, useEffect } from "react";
-import { AddTouristButton } from "../../../components/AddTouristButton/AddTouristButton";
+import { AddTouristButton } from "../../../components/AddTourModules/AddTouristButton/AddTouristButton";
 import { TourDetails } from "../../../components/MyTours/TourSummary/TourDetails";
 import { TourBooking } from "../../../components/TourInfo/TourBooking/TourBooking";
 import { TouristBooking } from "../../../components/TourInfo/TouristBooking/TouristBooking";
