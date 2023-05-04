@@ -11,7 +11,6 @@ export interface ILoginComponent {
 }
 
 export interface IRegisterComponent {
-  name: ITextProps;
   email: ITextProps;
   phone: ITextProps;
   password: ITextProps;

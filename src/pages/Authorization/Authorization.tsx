@@ -1,12 +1,12 @@
 import { ChangeEvent, useState } from "react";
 import {
   Button,
-  Link,
   Stack,
   TextField,
   Typography,
   Box,
   Paper,
+  Autocomplete,
 } from "@mui/material";
 import { AuthComponent } from "../../components/AuthorizationModules/AuthFabric/AuthFabic";
 import { IUserLogin } from "../../models/authModels/IUserLogin";
@@ -16,12 +16,17 @@ import {
   IRegisterComponent,
   ITextProps,
 } from "../../components/AuthorizationModules/AuthFabric/AuthTypes/AuthTypes";
-import {
-  confirmUserRegistration,
-  loginUser,
-  registerUser,
-} from "../../API/authAPI";
+import { loginUser, registerUser } from "../../API/authAPI";
 import { lightTurquoiseColor } from "../../config/MUI/color/color";
+import EnterMobileCodeModal from "../../components/Modals/EnterMobileCodeModal/EnterMobileCodeModal";
+import { useDispatch } from "react-redux";
+import { setModalActive } from "../../redux/Modal/ModalReducer";
+import { UserType } from "../../models/userModels/IUserInfo";
+
+const registerTypes = [
+  { id: UserType.creator, name: "туросоздатель" },
+  { id: UserType.tourist, name: "турист" },
+];
 
 function Authorization() {
   const loginDefault: IUserLogin = {
@@ -31,18 +36,20 @@ function Authorization() {
   const registerDefault: IUserRegister = {
     email: "",
     phone: "",
-    name: "",
     password: "",
     passwordSecond: "",
-    typeUser: "tourist",
+    typeUser: null,
   };
   const [userLoginData, setUserLoginData] = useState<IUserLogin>(loginDefault);
   const [userRegisterData, setUserRegisterData] =
     useState<IUserRegister>(registerDefault);
-  const [confirmCode, setConfirmCode] = useState<string>("");
   const [regState, setRegState] = useState<boolean>(true);
-  const [isConfirmCode, setIsConfirmCode] = useState<boolean>(false);
 
+  const dispatch = useDispatch();
+
+  const autocompleteChanged = (value: string) => {
+    setUserRegisterData({ ...userRegisterData, typeUser: value as UserType });
+  };
   const handlerUpdateLoginField = (
     key: keyof IUserLogin,
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -74,23 +81,12 @@ function Authorization() {
       false
     );
     console.log(codeStatus);
-    setIsConfirmCode(true);
 
-    if (codeStatus === 201 || codeStatus === 200) {
-      setIsConfirmCode(true);
-    }
+    dispatch(setModalActive("enterMobileCodeModal"));
   };
 
   const handlerLoginClick = () => {
     loginUser(userLoginData, undefined, undefined, false);
-  };
-
-  const handlerConfirmCodeClick = () => {
-    confirmUserRegistration(
-      { confirmationCode: +confirmCode },
-      undefined,
-      undefined
-    );
   };
 
   return (
@@ -145,39 +141,28 @@ function Authorization() {
                     }
                   />
                 ))}
-          </Stack>
-          {isConfirmCode && !regState ? (
-            <Stack sx={{ width: "450px", gap: "15px", mb: "15px" }}>
-              <Typography variant={"h5"} sx={{ textAlign: "center" }}>
-                На Вашу почту отправлен <br /> одноразовый код подтверждения
-              </Typography>
-              <TextField
-                color="secondary"
-                placeholder={"Код с почты"}
-                type={"text"}
-                required
-                value={confirmCode}
-                onChange={(e) => setConfirmCode(e.target.value)}
-              />
-            </Stack>
-          ) : (
-            <></>
-          )}
-          <Box sx={{ mt: "15px" }}>
-            {regState ? (
-              <Button onClick={handlerLoginClick}>Вход</Button>
-            ) : (
-              <>
-                {isConfirmCode ? (
-                  <Button onClick={handlerConfirmCodeClick}>
-                    Отправить код
-                  </Button>
-                ) : (
-                  <Button onClick={handlerRegisterClick}>Регистрация</Button>
+            {!regState && (
+              <Autocomplete
+                id="rolePicker"
+                onChange={(e, value) => autocompleteChanged(value?.id)}
+                options={registerTypes}
+                getOptionLabel={(option) => option.name}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    placeholder="Выбор роли"
+                    color="secondary"
+                  />
                 )}
-              </>
+              />
             )}
-          </Box>
+          </Stack>
+          {regState ? (
+            <Button onClick={handlerLoginClick}>Вход</Button>
+          ) : (
+            <Button onClick={handlerRegisterClick}>Регистрация</Button>
+          )}
+          <EnterMobileCodeModal />
 
           <Box sx={{ display: "flex", alignItems: "center", mt: "10px" }}>
             <Typography variant="caption">
