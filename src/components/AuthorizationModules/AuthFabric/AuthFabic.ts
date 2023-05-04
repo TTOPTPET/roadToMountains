@@ -23,12 +23,6 @@ export const AuthComponent = (
     }
     case "register": {
       const registerComponent: IRegisterComponent = {
-        name: {
-          name: "Имя",
-          required: false,
-          type: "",
-          value: "",
-        },
         email: {
           name: "Почта",
           required: true,

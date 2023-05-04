@@ -4,7 +4,7 @@ import madeInRussia from "../../media/made-in-russia-sign-ru.svg";
 const Footer = () => {
   return (
     <div className="footer">
-      <img src={madeInRussia}></img>
+      <img src={madeInRussia} alt={"madeInRussia"}></img>
     </div>
   );
 };
