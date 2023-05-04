@@ -3,6 +3,7 @@ export interface ITextProps {
   value: string;
   type: string;
   required: boolean;
+  error: boolean;
 }
 
 export interface ILoginComponent {

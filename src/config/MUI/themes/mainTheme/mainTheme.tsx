@@ -315,6 +315,9 @@ export const mainThemes = createTheme({
             "&:hover fieldset": {
               borderColor: "#d32f2f",
             },
+            "&.Mui-focused fieldset": {
+              borderColor: "#d32f2f",
+            },
           },
           "& .Mui-disabled": {
             "& .MuiOutlinedInput-notchedOutline": {
