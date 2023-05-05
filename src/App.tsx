@@ -51,7 +51,7 @@ function App() {
     <BrowserRouter>
       <ThemeProvider theme={mainThemes}>
         <Header />
-        <Container>
+        <Container sx={{ pb: "70px" }}>
           <Routes>
             <Route
               path={"/creator/lk"}

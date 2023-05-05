@@ -8,6 +8,7 @@ let cookie = new Cookies();
 
 export const setTouristInfo = async (
   data: ITouristInfo,
+  successCallback?: (prop: any) => void,
   errorCallback?: () => void,
   useDefault?: boolean
 ) => {
@@ -25,6 +26,7 @@ export const setTouristInfo = async (
         Authorization: `Bearer ${cookie.get(TOKEN)}`,
       },
     });
+    successCallback(response?.data);
   } catch (e) {
     console.error(e);
     errorCallback && errorCallback();
