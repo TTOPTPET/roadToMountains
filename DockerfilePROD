@@ -2,9 +2,9 @@ FROM nginx:alpine
 EXPOSE 80
 EXPOSE 443
 
-COPY ./nginx_prod.conf /etc/nginx/conf.d/
+COPY ./nginx_prod.conf /etc/nginx/conf.d/nginx.conf
 COPY ./mime.types /etc/nginx/
 COPY /build_front_prod /usr/share/nginx/html
 COPY ./privkey.pem /etc/letsencrypt/live/waytomountains.ru/
 COPY ./fullchain.pem /etc/letsencrypt/live/waytomountains.ru/
-CMD ["nginx", "-c", "/etc/nginx/conf.d/nginx_prod.conf","-g","daemon off;"]
+CMD ["nginx", "-c", "/etc/nginx/conf.d/nginx.conf","-g","daemon off;"]
