@@ -15,7 +15,7 @@ build-dev:
     - npm cache clean --force
     - npm i --force
     - npm run build
-    - mv build build_front_dev
+    - mv dist build_front_dev
   rules:
     - if: $CI_PIPELINE_SOURCE != 'merge_request_event' && $CI_COMMIT_BRANCH == "dev"
   artifacts:
@@ -55,7 +55,7 @@ build-production:
     - npm cache clean --force
     - npm i --force
     - npm run build
-    - mv build build_front_prod
+    - mv dist build_front_prod
   rules:
     - if: $CI_PIPELINE_SOURCE != 'merge_request_event' && $CI_COMMIT_BRANCH == "prod"
   artifacts:
