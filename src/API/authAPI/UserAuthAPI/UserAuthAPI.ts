@@ -15,7 +15,7 @@ const userAuthDefault: IAuthResponse = {
 
 export const confirmUserRegistration = async (
   data: { confirmationCode: number },
-  successCallback?: (params: IAuthResponse) => void,
+  successCallback?: any,
   errorCallback?: () => void
 ) => {
   try {
@@ -27,7 +27,7 @@ export const confirmUserRegistration = async (
     cookie.set(REFRESH_TOKEN, response.data.refreshToken);
     cookie.set("USER_ROLE", response.data.role);
     cookie.set("BAN_STATUS", response.data.status);
-    successCallback(response?.data);
+    successCallback();
   } catch (e) {
     console.error(e);
     errorCallback && errorCallback();
@@ -62,6 +62,8 @@ export const registerUser = async (
   errorCallback?: () => void,
   useDefault?: boolean
 ) => {
+  delete data.passwordSecond;
+
   try {
     let response = await axios.post(urlUser + "/register", data);
 

@@ -1,11 +1,11 @@
 import { Stack, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { Link } from "react-router-dom";
-import { lightTurquoiseColor } from "../../config/MUI/color/color";
-import { ReactComponent as Plus } from "../../media/plus-circle-outline.svg";
+import { lightTurquoiseColor } from "../../../config/MUI/color/color";
+import { ReactComponent as Plus } from "../../../media/plus-circle-outline.svg";
 import { Dispatch, SetStateAction, FC } from "react";
 import "./svgStyling.css";
-import { ITourBooking } from "../../models/tourModels/ITourBooking";
+import { ITourBooking } from "../../../models/tourModels/ITourBooking";
 
 interface IAddTouristButton {
   bookingData: ITourBooking;

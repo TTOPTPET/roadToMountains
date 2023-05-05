@@ -1,140 +1,32 @@
-// import React, { useState, useEffect, useRef } from "react";
-// import { useLocation, useNavigate } from "react-router-dom";
-// import InputField from "../../components/InputField/InputField";
-// import { login } from "../../components/submitFunctions/autorizationAPI";
-// import { TOKEN } from "../../config/types";
-// import { useCookies } from "react-cookie";
-// import "./Authorization.css";
-
-// function Authorization({}) {
-//   const [cookies, setCookie, removeCookie] = useCookies();
-//   let navigate = useNavigate();
-//   let location = useLocation();
-//   const [regState, setRegState] = useState(false);
-
-//   const ref = useRef();
-//   const refBtn = useRef();
-
-//   //TODO: Сделать нормальный обработчик
-//   useEffect(() => {
-//     document.addEventListener("keydown", (e) => {
-//       console.log("e", e);
-//       const event = new MouseEvent("click", {
-//         view: window,
-//         bubbles: true,
-//         cancelable: true,
-//       });
-//       location?.pathname === "/auth" &&
-//         e.code === "Enter" &&
-//         refBtn.current.dispatchEvent(event);
-//     });
-//   }, []);
-
-//   const [userData, setUserData] = useState({
-//     login: "",
-//     password: "",
-//     userName: "",
-//   });
-//   const [errAuth, setErrAuth] = useState(false);
-
-//   //TODO: Переделать ошибки полей
-//   useEffect(() => {
-//     if (errAuth) {
-//       setErrAuth(false);
-//     }
-//   }, [userData, regState]);
-
-//   return (
-//     <div className="author" ref={ref}>
-//       <div className="author__wrapp">
-//         {/* {tokenTimeOut ? (
-//           <div className="author__time-out">Истекло время сессии</div>
-//         ) : null} */}
-//         <div className="author__text">{regState ? "Регистрация" : "Вход"}</div>
-//         <div className="author__login">
-//           <InputField
-//             fieldID={"login"}
-//             label={"Логин"}
-//             style={{ width: "100%" }}
-//             value={userData.login}
-//             setValue={(value) => setUserData((ud) => ({ ...ud, login: value }))}
-//           ></InputField>
-//           <InputField
-//             fieldID={"password"}
-//             label={"Пароль"}
-//             style={{ width: "100%" }}
-//             value={userData.password}
-//             setValue={(value) =>
-//               setUserData((ud) => ({ ...ud, password: value }))
-//             }
-//           ></InputField>
-//           <div
-//             className="author__register"
-//             style={regState ? null : { maxHeight: 0 }}
-//           >
-//             <InputField
-//               fieldID={"userName"}
-//               label={"Имя"}
-//               style={{ width: "100%" }}
-//               value={userData.userName}
-//               setValue={(value) =>
-//                 setUserData((ud) => ({ ...ud, userName: value }))
-//               }
-//             ></InputField>
-//           </div>
-//         </div>
-//         <div className="author__error" style={{ height: errAuth ? "" : 0 }}>
-//           {errAuth ? "Неверный логин или пароль" : ""}
-//         </div>
-//         <div
-//           className="author__btn"
-//           ref={refBtn}
-//           onClick={() =>
-//             login(userData, regState).then(
-//               (resp) => {
-//                 setCookie(TOKEN, resp?.data?.access_token);
-//                 navigate("/");
-//               },
-//               (err) => console.error(err)
-//             )
-//           }
-//         >
-//           {regState ? "Зарегистрироваться" : "Войти"}
-//         </div>
-//         <div className="author__toggle" onClick={() => setRegState(!regState)}>
-//           {regState ? "Вход" : "Регистрация"}
-//         </div>
-//       </div>
-//     </div>
-//   );
-// }
-
-// export default Authorization;
-
 import { ChangeEvent, useState } from "react";
 import {
   Button,
-  Link,
   Stack,
   TextField,
   Typography,
   Box,
   Paper,
+  Autocomplete,
 } from "@mui/material";
-import { AuthComponent } from "../../components/AuthFabric/AuthFabic";
+import { AuthComponent } from "../../components/AuthorizationModules/AuthFabric/AuthFabic";
 import { IUserLogin } from "../../models/authModels/IUserLogin";
 import { IUserRegister } from "../../models/authModels/IUserRegister";
 import {
   ILoginComponent,
   IRegisterComponent,
   ITextProps,
-} from "../../components/AuthFabric/AuthTypes/AuthTypes";
-import {
-  confirmUserRegistration,
-  loginUser,
-  registerUser,
-} from "../../submitFunctions/authAPI";
-import { lightTurquoiseColor } from "../../config/MUI/color/color";
+} from "../../components/AuthorizationModules/AuthFabric/AuthTypes/AuthTypes";
+import { loginUser, registerUser } from "../../API/authAPI";
+import { lightTurquoiseColor, redColor } from "../../config/MUI/color/color";
+import EnterMobileCodeModal from "../../components/Modals/EnterMobileCodeModal/EnterMobileCodeModal";
+import { useDispatch } from "react-redux";
+import { setModalActive } from "../../redux/Modal/ModalReducer";
+import { UserType } from "../../models/userModels/IUserInfo";
+
+const registerTypes = [
+  { id: UserType.creator, name: "туросоздатель" },
+  { id: UserType.tourist, name: "турист" },
+];
 
 function Authorization() {
   const loginDefault: IUserLogin = {
@@ -142,19 +34,22 @@ function Authorization() {
     password: "",
   };
   const registerDefault: IUserRegister = {
-    login: "",
-    name: "",
+    email: "",
+    phone: "",
     password: "",
     passwordSecond: "",
-    typeUser: "tourist",
+    typeUser: null,
   };
   const [userLoginData, setUserLoginData] = useState<IUserLogin>(loginDefault);
   const [userRegisterData, setUserRegisterData] =
     useState<IUserRegister>(registerDefault);
-  const [confirmCode, setConfirmCode] = useState<string>("");
   const [regState, setRegState] = useState<boolean>(true);
-  const [isConfirmCode, setIsConfirmCode] = useState<boolean>(false);
 
+  const dispatch = useDispatch();
+
+  const autocompleteChanged = (value: string) => {
+    setUserRegisterData({ ...userRegisterData, typeUser: value as UserType });
+  };
   const handlerUpdateLoginField = (
     key: keyof IUserLogin,
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -186,23 +81,29 @@ function Authorization() {
       false
     );
     console.log(codeStatus);
-    setIsConfirmCode(true);
 
-    if (codeStatus === 201 || codeStatus === 200) {
-      setIsConfirmCode(true);
-    }
+    dispatch(setModalActive("enterMobileCodeModal"));
   };
 
   const handlerLoginClick = () => {
     loginUser(userLoginData, undefined, undefined, false);
   };
 
-  const handlerConfirmCodeClick = () => {
-    confirmUserRegistration(
-      { confirmationCode: +confirmCode },
-      undefined,
-      undefined
-    );
+  const [errorMessage, setErrorMessage] = useState("");
+  const [passwordErrorStatus, setPasswordErrorStatus] = useState(false);
+
+  const handlePasswordChanged = () => {
+    if (
+      userRegisterData.password !== userRegisterData.passwordSecond &&
+      userRegisterData.password !== "" &&
+      userRegisterData.passwordSecond !== ""
+    ) {
+      setPasswordErrorStatus(true);
+      setErrorMessage("Пароли не совпадают!");
+    } else {
+      setPasswordErrorStatus(false);
+      setErrorMessage("");
+    }
   };
 
   return (
@@ -247,49 +148,50 @@ function Authorization() {
                     key={index}
                     placeholder={value.name}
                     type={value.type}
+                    error={value.type === "password" && passwordErrorStatus}
                     required={value.required}
                     value={userRegisterData[key as keyof IRegisterComponent]}
-                    onChange={(e) =>
+                    onChange={(e) => {
                       handlerUpdateRegisterField(
                         key as keyof IRegisterComponent,
                         e
-                      )
-                    }
+                      );
+                      handlePasswordChanged();
+                    }}
                   />
                 ))}
-          </Stack>
-          {isConfirmCode && !regState ? (
-            <Stack sx={{ width: "450px", gap: "15px", mb: "15px" }}>
-              <Typography variant={"h5"} sx={{ textAlign: "center" }}>
-                На Вашу почту отправлен <br /> одноразовый код подтверждения
-              </Typography>
-              <TextField
-                color="secondary"
-                placeholder={"Код с почты"}
-                type={"text"}
-                required
-                value={confirmCode}
-                onChange={(e) => setConfirmCode(e.target.value)}
-              />
-            </Stack>
-          ) : (
-            <></>
-          )}
-          <Box sx={{ mt: "15px" }}>
-            {regState ? (
-              <Button onClick={handlerLoginClick}>Вход</Button>
-            ) : (
-              <>
-                {isConfirmCode ? (
-                  <Button onClick={handlerConfirmCodeClick}>
-                    Отправить код
-                  </Button>
-                ) : (
-                  <Button onClick={handlerRegisterClick}>Регистрация</Button>
+            {!regState && (
+              <Autocomplete
+                id="rolePicker"
+                onChange={(e, value) => autocompleteChanged(value?.id)}
+                options={registerTypes}
+                getOptionLabel={(option) => option.name}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    placeholder="Выбор роли"
+                    color="secondary"
+                  />
                 )}
-              </>
+              />
             )}
-          </Box>
+          </Stack>
+          {!regState && passwordErrorStatus && (
+            <Typography
+              variant="caption"
+              className="author__error"
+              sx={{ color: redColor, mb: "15px" }}
+            >
+              {errorMessage}
+            </Typography>
+          )}
+
+          {regState ? (
+            <Button onClick={handlerLoginClick}>Вход</Button>
+          ) : (
+            <Button onClick={handlerRegisterClick}>Регистрация</Button>
+          )}
+          <EnterMobileCodeModal />
 
           <Box sx={{ display: "flex", alignItems: "center", mt: "10px" }}>
             <Typography variant="caption">

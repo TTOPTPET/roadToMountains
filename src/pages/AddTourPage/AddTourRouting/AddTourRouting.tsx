@@ -4,8 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { clearPhotoToDelete } from "../../../redux/Photo/PhotoReducer";
 import { RootState } from "../../../redux/store";
-import { addTour } from "../../../submitFunctions/addTourAPI/addTourAPI";
-import { editTour } from "../../../submitFunctions/creatorAPI/editTour";
+import { addTour } from "../../../API/addTourAPI/addTourAPI";
+import { editTour } from "../../../API/creatorAPI/editTour";
 import { addTourStepsMap } from "../AddTourPage";
 
 interface addTourRoutingProps {

@@ -11,41 +11,47 @@ export const AuthComponent = (
           required: true,
           type: "",
           value: "",
+          error: true,
         },
         password: {
           name: "Пароль",
           required: true,
           type: "password",
           value: "",
+          error: true,
         },
       };
       return loginComponent;
     }
     case "register": {
       const registerComponent: IRegisterComponent = {
-        name: {
-          name: "Имя",
-          required: false,
-          type: "",
-          value: "",
-        },
-        login: {
-          name: "Логин",
+        email: {
+          name: "Почта",
           required: true,
           type: "",
           value: "",
+          error: false,
+        },
+        phone: {
+          name: "Телефон",
+          required: true,
+          type: "",
+          value: "",
+          error: false,
         },
         password: {
           name: "Пароль",
           required: true,
           type: "password",
           value: "",
+          error: false,
         },
         passwordSecond: {
           name: "Повторите пароль",
           required: true,
           type: "password",
           value: "",
+          error: false,
         },
       };
 

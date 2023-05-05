@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { IUserMessage } from "../../../models/adminModels/IUsersMessage";
-import { getUserMessages } from "../../../submitFunctions/adminAPI";
+import { getUserMessages } from "../../../API/adminAPI";
 import { Stack } from "@mui/material";
 import { AdminComponent } from "../../../components/Admin/AdminFabric/AdminFabric";
 

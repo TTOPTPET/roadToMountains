@@ -6,16 +6,22 @@ import {
   Stack,
   TextField,
 } from "@mui/material";
+import { useState } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
+import { confirmUserRegistration } from "../../../API/authAPI";
+import { getUserInfo } from "../../../API/commonAPI";
 
 import {
   isModalActive,
   setModalInactive,
 } from "../../../redux/Modal/ModalReducer";
 import { RootState } from "../../../redux/store";
+import { setUserInfo } from "../../../redux/UserInfo/UserInfoReducer";
 
 function EnterMobileCodeModal() {
+  const [confirmCode, setConfirmCode] = useState<string>("");
+
   const activeModals = useSelector(
     (state: RootState) => state.modal.activeModals
   );
@@ -23,8 +29,12 @@ function EnterMobileCodeModal() {
   const dispatch = useDispatch();
 
   const handlerConfirmClick = () => {
-    dispatch(setModalInactive("enterMobileCodeModal"));
+    confirmUserRegistration({ confirmationCode: +confirmCode }, () => {
+      getUserInfo((value) => dispatch(setUserInfo(value)));
+      dispatch(setModalInactive("enterMobileCodeModal"));
+    });
   };
+
   return (
     <Dialog
       className="enterMobileCodeModal"
@@ -37,7 +47,13 @@ function EnterMobileCodeModal() {
         <Typography variant={"h5"} sx={{ mb: "30px" }}>
           Вам отправлен одноразовый код подтверждения
         </Typography>
-        <TextField placeholder="Код из SMS" color="secondary" />
+        <TextField
+          placeholder="Код из SMS"
+          color="secondary"
+          value={confirmCode}
+          type={"number"}
+          onChange={(e) => setConfirmCode(e.target.value)}
+        />
 
         <Stack
           direction={"column"}

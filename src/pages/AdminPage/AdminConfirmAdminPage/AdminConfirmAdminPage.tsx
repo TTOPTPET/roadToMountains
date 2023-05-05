@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { IAdminList } from "../../../models/adminModels/IAdminList";
-import { getAdminList } from "../../../submitFunctions/adminAPI";
+import { getAdminList } from "../../../API/adminAPI";
 import { Stack } from "@mui/material";
 import { AdminComponent } from "../../../components/Admin/AdminFabric/AdminFabric";
 
