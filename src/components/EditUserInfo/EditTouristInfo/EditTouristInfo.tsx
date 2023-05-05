@@ -15,12 +15,15 @@ import EditUserInfo from "../EditUserInfo";
 import { setTouristInfo } from "../../../API/touristAPI/setTouristInfo";
 import { useState } from "react";
 import cloneDeep from "lodash/cloneDeep";
+import { useNavigate } from "react-router-dom";
 
 function EditTouristInfo() {
   const touristInfo = useSelector(
     (state: RootState) => state.userInfo.userInfo as ITouristInfo
   );
   let dispatch = useDispatch();
+
+  const navigate = useNavigate();
 
   const [editedTouristInfo, setEditedTouristInfo] = useState(
     cloneDeep(touristInfo)
@@ -34,7 +37,7 @@ function EditTouristInfo() {
             <TextField
               placeholder="Имя"
               color="primary"
-              value={touristInfo?.name}
+              value={editedTouristInfo?.name}
               onChange={(e) =>
                 setEditedTouristInfo({
                   ...editedTouristInfo,
@@ -45,7 +48,7 @@ function EditTouristInfo() {
             <TextField
               placeholder="Номер телефона"
               color="primary"
-              value={touristInfo?.phone}
+              value={editedTouristInfo?.phone}
               onChange={(e) =>
                 setEditedTouristInfo({
                   ...editedTouristInfo,
@@ -56,7 +59,7 @@ function EditTouristInfo() {
             <TextField
               placeholder="Электронная почта"
               color="primary"
-              value={touristInfo?.email}
+              value={editedTouristInfo?.email}
               onChange={(e) =>
                 setEditedTouristInfo({
                   ...editedTouristInfo,
@@ -67,7 +70,7 @@ function EditTouristInfo() {
             <TextField
               placeholder="Регион проживания"
               color="primary"
-              value={touristInfo?.dataUser?.region}
+              value={editedTouristInfo?.dataUser?.region}
               onChange={(e) =>
                 setEditedTouristInfo({
                   ...editedTouristInfo,
@@ -117,7 +120,15 @@ function EditTouristInfo() {
             </FormControl>
           </>
         }
-        submitFuntion={() => setTouristInfo(editedTouristInfo, () => {})}
+        submitFuntion={() => {
+          setTouristInfo(
+            editedTouristInfo,
+            () => {
+              navigate("/tourist/lk");
+            },
+            () => {}
+          );
+        }}
         header={"Привет, Турист!"}
         linkTo={"/tourist/lk"}
         avatarComponent={

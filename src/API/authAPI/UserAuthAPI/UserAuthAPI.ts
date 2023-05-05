@@ -37,7 +37,7 @@ export const confirmUserRegistration = async (
 export const loginUser = async (
   data: IUserLogin,
   successCallback?: (prop: IAuthResponse) => void,
-  errorCallback?: () => void,
+  errorCallback?: (prop: any) => void,
   useDefault?: boolean
 ) => {
   if (useDefault) {
@@ -52,14 +52,14 @@ export const loginUser = async (
     cookie.set("BAN_STATUS", response.data.status);
   } catch (e) {
     console.error(e);
-    errorCallback && errorCallback();
+    errorCallback && errorCallback(e);
   }
 };
 
 export const registerUser = async (
   successCallback: (prop: number) => void,
   data: IUserRegister,
-  errorCallback?: () => void,
+  errorCallback?: (prop: any) => void,
   useDefault?: boolean
 ) => {
   delete data.passwordSecond;
@@ -70,7 +70,7 @@ export const registerUser = async (
     successCallback(response?.status);
   } catch (e) {
     console.error(e);
-    errorCallback && errorCallback();
+    errorCallback && errorCallback(e);
   }
 };
 

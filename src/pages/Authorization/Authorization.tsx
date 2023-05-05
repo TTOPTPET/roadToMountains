@@ -22,6 +22,7 @@ import EnterMobileCodeModal from "../../components/Modals/EnterMobileCodeModal/E
 import { useDispatch } from "react-redux";
 import { setModalActive } from "../../redux/Modal/ModalReducer";
 import { UserType } from "../../models/userModels/IUserInfo";
+import { useEffect } from "react";
 
 const registerTypes = [
   { id: UserType.creator, name: "туросоздатель" },
@@ -44,6 +45,8 @@ function Authorization() {
   const [userRegisterData, setUserRegisterData] =
     useState<IUserRegister>(registerDefault);
   const [regState, setRegState] = useState<boolean>(true);
+  const [errAuth, setErrAuth] = useState(false);
+  const [errReg, setErrReg] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -75,24 +78,47 @@ function Authorization() {
     registerUser(
       (value) => {
         codeStatus = value;
+        dispatch(setModalActive("enterMobileCodeModal"));
       },
       userRegisterData,
-      undefined,
+      (e) => {
+        setErrReg(true);
+        setErrorMessage("Что-то пошло не так, попробуйте позже!");
+      },
       false
     );
     console.log(codeStatus);
-
-    dispatch(setModalActive("enterMobileCodeModal"));
   };
 
   const handlerLoginClick = () => {
-    loginUser(userLoginData, undefined, undefined, false);
+    loginUser(
+      userLoginData,
+      () => {
+        setErrAuth(false);
+        setErrorMessage("");
+      },
+      (e) => {
+        if (e.response.status >= 400 && e.response.status <= 500) {
+          setErrAuth(true);
+          setErrorMessage("Неверный логин или пароль!");
+        } else {
+          setErrAuth(true);
+          setErrorMessage("Ошибка сервера, попробуйте позже!");
+        }
+      },
+      false
+    );
   };
 
   const [errorMessage, setErrorMessage] = useState("");
   const [passwordErrorStatus, setPasswordErrorStatus] = useState(false);
 
-  const handlePasswordChanged = () => {
+  useEffect(() => {
+    setErrAuth(false);
+    setErrorMessage("");
+  }, [regState]);
+
+  useEffect(() => {
     if (
       userRegisterData.password !== userRegisterData.passwordSecond &&
       userRegisterData.password !== "" &&
@@ -104,7 +130,9 @@ function Authorization() {
       setPasswordErrorStatus(false);
       setErrorMessage("");
     }
-  };
+  }, [userRegisterData]);
+
+  console.log(userRegisterData);
 
   return (
     <Stack sx={{ m: "0 auto", mt: "95px", gap: "50px" }}>
@@ -131,6 +159,7 @@ function Authorization() {
                     key={index}
                     placeholder={value.name}
                     type={value.type}
+                    error={errAuth}
                     required={value.required}
                     value={userLoginData[key as keyof ILoginComponent]}
                     onChange={(e) =>
@@ -148,7 +177,9 @@ function Authorization() {
                     key={index}
                     placeholder={value.name}
                     type={value.type}
-                    error={value.type === "password" && passwordErrorStatus}
+                    error={
+                      value.name === "Повторите пароль" && passwordErrorStatus
+                    }
                     required={value.required}
                     value={userRegisterData[key as keyof IRegisterComponent]}
                     onChange={(e) => {
@@ -156,7 +187,6 @@ function Authorization() {
                         key as keyof IRegisterComponent,
                         e
                       );
-                      handlePasswordChanged();
                     }}
                   />
                 ))}
@@ -176,7 +206,7 @@ function Authorization() {
               />
             )}
           </Stack>
-          {!regState && passwordErrorStatus && (
+          {(passwordErrorStatus || errAuth || setErrReg) && (
             <Typography
               variant="caption"
               className="author__error"
@@ -197,7 +227,11 @@ function Authorization() {
             <Typography variant="caption">
               {regState ? "Нет аккаунта?" : "Уже есть аккаунт?"}
             </Typography>
-            <Button variant="weakTextButton" onClick={handlerOnTransition}>
+            <Button
+              variant="weakTextButton"
+              onClick={handlerOnTransition}
+              sx={{ textDecoration: "underline" }}
+            >
               {regState ? "Зарегистрироваться" : "Войти"}
             </Button>
           </Box>

@@ -27,13 +27,15 @@ import {
 } from "../../../models/userModels/IUserInfo";
 import cloneDeep from "lodash/cloneDeep";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function EditCreatorInfo() {
   const creatorInfo = useSelector(
     (state: RootState) => state.userInfo.userInfo as ICreatorInfo
   );
-
   let dispatch = useDispatch();
+
+  const navigate = useNavigate();
 
   const setFiles = (files: CreatorDocuments[]) => {
     setEditedCreatorInfo({
@@ -85,7 +87,7 @@ function EditCreatorInfo() {
             <TextField
               placeholder="Имя"
               color="primary"
-              value={creatorInfo?.name}
+              value={editedCreatorInfo?.name}
               onChange={(e) =>
                 setEditedCreatorInfo({
                   ...editedCreatorInfo,
@@ -96,7 +98,7 @@ function EditCreatorInfo() {
             <TextField
               placeholder="Телефон"
               color="primary"
-              value={creatorInfo?.phone}
+              value={editedCreatorInfo?.phone}
               onChange={(e) =>
                 setEditedCreatorInfo({
                   ...editedCreatorInfo,
@@ -107,7 +109,7 @@ function EditCreatorInfo() {
             <TextField
               placeholder="Электронная почта"
               color="primary"
-              value={creatorInfo?.email}
+              value={editedCreatorInfo?.email}
               onChange={(e) =>
                 setEditedCreatorInfo({
                   ...editedCreatorInfo,
@@ -196,8 +198,11 @@ function EditCreatorInfo() {
         submitFuntion={() =>
           setCreatorInfo(
             { ...editedCreatorInfo, ...editedCreatorInfo.dataUser },
-            (resp) =>
-              setInfoStatus(resp?.data?.statusVerify, resp?.data?.timeToSend)
+            (resp) => {
+              setInfoStatus(resp?.data?.statusVerify, resp?.data?.timeToSend);
+              navigate("/creator/lk");
+            },
+            () => {}
           )
         }
         header={"Личный кабинет"}
