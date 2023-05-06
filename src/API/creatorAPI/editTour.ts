@@ -15,35 +15,34 @@ export const editTour = async (
 ) => {
   delete data.photos;
   console.log(data);
+  let formData = new FormData();
+  formData.append("data", JSON.stringify(data));
+  filesToUpload.forEach((photo) => {
+    formData.append("creatorPhoto", photo);
+  });
   try {
-    let response = await axios.put(creatorUrl + `/tour/${tourId}`, data, {
-      headers: {
-        Authorization: `Bearer ${cookie.get(TOKEN)}`,
-      },
-    });
-    if (response?.status === 200 || 201) {
-      filesToDelete.forEach(async (image) => {
-        await axios.delete(creatorUrl + "/tour/photo", {
-          params: {
-            pathPhoto: image,
-            tourId: tourId,
-          },
-          headers: {
-            Authorization: `Bearer ${cookie.get(TOKEN)}`,
-          },
-        });
-      });
-      const formData = new FormData();
-      filesToUpload.forEach((file) => {
-        formData.append("creatorPhoto", file);
-      });
-      await axios.post(creatorUrl + `/tour/photo/${tourId}`, formData, {
+    let response = await axios
+      .put(creatorUrl + "/tour", formData, {
+        params: {
+          tourId: tourId,
+        },
         headers: {
           Authorization: `Bearer ${cookie.get(TOKEN)}`,
           "Content-Type": "multipart/form-data",
         },
+      })
+      .then(async () => {
+        formData = new FormData();
+        filesToUpload.forEach((file) => {
+          formData.append("creatorPhoto", file);
+        });
+        await axios.post(creatorUrl + `/tour/photo/${tourId}`, formData, {
+          headers: {
+            Authorization: `Bearer ${cookie.get(TOKEN)}`,
+            "Content-Type": "multipart/form-data",
+          },
+        });
       });
-    }
   } catch (e) {
     console.error(e);
     errorCallback && errorCallback();

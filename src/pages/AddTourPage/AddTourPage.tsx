@@ -9,6 +9,8 @@ import {
 import { getTourInfo } from "../../API/tourAPI/getTourInfo";
 import AddTourRouting from "./AddTourRouting/AddTourRouting";
 import AddTourSteps from "./AddTourSteps/AddTourSteps";
+import { IFilter } from "../../models/tourListModels/IFilter";
+import { getFilters } from "../../API/tourListAPI";
 
 export enum addTourStepsMap {
   first,
@@ -16,12 +18,24 @@ export enum addTourStepsMap {
   third,
 }
 
+const filterDefault: IFilter = {
+  regions: [],
+  category: [],
+  complexity: [],
+  maxPrice: 0,
+};
+
 function AddTourPage({ isEditing }: { isEditing: boolean }) {
   const { tourId } = useParams();
 
   const [page, setPage] = useState<addTourStepsMap>(addTourStepsMap.first);
+  const [filters, setFilters] = useState<IFilter>(filterDefault);
   const [files, setFiles] = useState<any[]>([]);
   const [isLoading, setLoading] = useState(true);
+
+  useEffect(() => {
+    getFilters((value) => setFilters(value), undefined, false);
+  }, []);
 
   const dispatch = useDispatch();
 
@@ -52,6 +66,7 @@ function AddTourPage({ isEditing }: { isEditing: boolean }) {
         page={page}
         files={files}
         setFiles={setFiles}
+        filters={filters}
         isEditing={isEditing}
       />
     </>

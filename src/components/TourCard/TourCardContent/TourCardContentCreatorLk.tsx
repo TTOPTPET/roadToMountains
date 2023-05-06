@@ -58,7 +58,10 @@ function TourCardContentCreatorLk({ tour }: TourCardProps) {
           flex: "1 0 auto",
         }}
       >
-        {new Intl.NumberFormat("ru-RU").format(tour.price.from)}₽
+        {new Intl.NumberFormat("ru-RU").format(
+          tour?.prices?.from || tour.price
+        )}
+        ₽
       </Box>
       <Box
         display={"flex"}
@@ -71,7 +74,7 @@ function TourCardContentCreatorLk({ tour }: TourCardProps) {
           justifyContent={"flex-end"}
           className="tour-card__button-edit"
         >
-          <Button component={Link} to={`/creator/lk/edit/${tour?.id}`}>
+          <Button component={Link} to={`/creator/lk/edit/${tour?.tourId}`}>
             Редактировать
           </Button>
         </Box>
