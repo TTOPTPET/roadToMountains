@@ -16,6 +16,7 @@ export const setCreatorInfo = async (
     return;
   }
   try {
+    console.log(data);
     let formData = new FormData();
     const dataUser = data.dataUser;
     delete data.dataUser;

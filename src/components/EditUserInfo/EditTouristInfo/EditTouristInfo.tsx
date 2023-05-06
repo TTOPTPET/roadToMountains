@@ -124,6 +124,7 @@ function EditTouristInfo() {
           setTouristInfo(
             editedTouristInfo,
             () => {
+              dispatch(setUserInfo(touristInfo));
               navigate("/tourist/lk");
             },
             () => {}
