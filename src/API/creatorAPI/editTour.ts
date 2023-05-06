@@ -32,15 +32,15 @@ export const editTour = async (
         },
       })
       .then(async () => {
-        formData = new FormData();
-        filesToUpload.forEach((file) => {
-          formData.append("creatorPhoto", file);
-        });
-        await axios.post(creatorUrl + `/tour/photo?tourId=${tourId}`, formData, {
-          headers: {
-            Authorization: `Bearer ${cookie.get(TOKEN)}`,
-            "Content-Type": "multipart/form-data",
-          },
+        filesToDelete.forEach((file) => async () => {
+          await axios.post(
+            creatorUrl + `/tour/photo?pathPhoto=${file}&tourId=${tourId}`,
+            {
+              headers: {
+                Authorization: `Bearer ${cookie.get(TOKEN)}`,
+              },
+            }
+          );
         });
       });
   } catch (e) {
