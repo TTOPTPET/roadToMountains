@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   ICreatorInfo,
   CreatorType,
+  UserType,
 } from "../../../models/userModels/IUserInfo";
 import { RootState } from "../../../redux/store";
 import { setUserInfo } from "../../../redux/UserInfo/UserInfoReducer";
@@ -74,13 +75,11 @@ function EditCreatorInfo() {
     }
   };
 
-  const [editedCreatorInfo, setEditedCreatorInfo] = useState(
-    cloneDeep(creatorInfo)
-  );
+  const [editedCreatorInfo, setEditedCreatorInfo] =
+    useState<ICreatorInfo>(creatorInfo);
 
   return (
     <>
-      {JSON.stringify(creatorInfo)}
       <EditUserInfo
         fields={
           <>
@@ -157,22 +156,10 @@ function EditCreatorInfo() {
               </RadioGroup>
             </FormControl>
             <InputFieldsCreator
-              creatorInfo={editedCreatorInfo}
-              setCreatorInfo={(
-                field: string,
-                value: any,
-                fieldsPrototipe: any
-              ) =>
-                setEditedCreatorInfo({
-                  ...editedCreatorInfo,
-                  dataUser: {
-                    ...editedCreatorInfo?.dataUser,
-                    fieldsCreator: {
-                      ...fieldsPrototipe,
-                      [field]: value,
-                    },
-                  },
-                })
+              creatorInfo={creatorInfo}
+              editedCreatorInfo={editedCreatorInfo}
+              setEditedCreatorInfo={(creatorInfo) =>
+                setEditedCreatorInfo(creatorInfo)
               }
             />
             <Button variant="fileInput" component="label">
@@ -200,6 +187,7 @@ function EditCreatorInfo() {
             { ...editedCreatorInfo, ...editedCreatorInfo.dataUser },
             (resp) => {
               setInfoStatus(resp?.data?.statusVerify, resp?.data?.timeToSend);
+              dispatch(setUserInfo(editedCreatorInfo));
               navigate("/creator/lk");
             },
             () => {}

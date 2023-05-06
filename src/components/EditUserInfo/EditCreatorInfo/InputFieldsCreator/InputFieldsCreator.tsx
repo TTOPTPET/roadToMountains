@@ -11,18 +11,42 @@ import {
   TOOOFields,
   TSELFFields,
 } from "../../../../models/creatorFieldsModels/ICreatorFields";
+import { useDispatch } from "react-redux";
+import { clearFieldsCreator } from "../../../../redux/UserInfo/UserInfoReducer";
 
 type inputFieldsCreatorProps = {
   creatorInfo: ICreatorInfo;
-  setCreatorInfo: (field: string, value: any, fieldsPrototipe: any) => void;
+  editedCreatorInfo: ICreatorInfo;
+  setEditedCreatorInfo: (ICreatorInfo) => void;
 };
 
 function InputFieldsCreator({
   creatorInfo,
-  setCreatorInfo,
+  editedCreatorInfo,
+  setEditedCreatorInfo,
 }: inputFieldsCreatorProps) {
-  const generFields = (creatorInfo: ICreatorInfo) => {
-    switch (creatorInfo.dataUser.creatorType) {
+  useEffect(() => {
+    if (
+      editedCreatorInfo.dataUser.creatorType !==
+      creatorInfo.dataUser.creatorType
+    ) {
+      setEditedCreatorInfo({
+        ...editedCreatorInfo,
+        dataUser: { ...editedCreatorInfo.dataUser, fieldsCreator: {} },
+      });
+    } else {
+      setEditedCreatorInfo({
+        ...editedCreatorInfo,
+        dataUser: {
+          ...editedCreatorInfo.dataUser,
+          fieldsCreator: editedCreatorInfo.dataUser.fieldsCreator,
+        },
+      });
+    }
+  }, [editedCreatorInfo.dataUser.creatorType]);
+
+  const generFields = (editedCreatorInfo: ICreatorInfo) => {
+    switch (editedCreatorInfo.dataUser.creatorType) {
       case CreatorType.OOO:
         const fieldsOOO: TOOOFields[] = [
           "innOOO",
@@ -35,19 +59,24 @@ function InputFieldsCreator({
         ];
         return fieldsOOO.map((field, i) => {
           return (
-            creatorInfo?.dataUser?.creatorType === CreatorType.OOO && (
+            editedCreatorInfo?.dataUser?.creatorType === CreatorType.OOO && (
               <TextField
                 key={i}
                 placeholder={fromModelsToFieldsName.get(field)}
                 color="primary"
-                value={creatorInfo?.dataUser?.fieldsCreator?.[field]}
-                onChange={(e) =>
-                  setCreatorInfo(
-                    field,
-                    e.target.value,
-                    creatorInfo?.dataUser?.fieldsCreator
-                  )
-                }
+                value={editedCreatorInfo?.dataUser?.fieldsCreator?.[field]}
+                onChange={(e) => {
+                  setEditedCreatorInfo({
+                    ...editedCreatorInfo,
+                    dataUser: {
+                      ...editedCreatorInfo.dataUser,
+                      fieldsCreator: {
+                        ...editedCreatorInfo.dataUser.fieldsCreator,
+                        [field]: e.target.value,
+                      },
+                    },
+                  });
+                }}
               />
             )
           );
@@ -61,18 +90,25 @@ function InputFieldsCreator({
         ];
         return fieldsIP.map((field, i) => {
           return (
-            creatorInfo?.dataUser?.creatorType === CreatorType.IP && (
+            editedCreatorInfo?.dataUser?.creatorType === CreatorType.IP && (
               <TextField
                 key={i}
                 placeholder={fromModelsToFieldsName.get(field)}
                 color="primary"
-                value={creatorInfo?.dataUser?.fieldsCreator?.[field] || ""}
+                value={
+                  editedCreatorInfo?.dataUser?.fieldsCreator?.[field] || ""
+                }
                 onChange={(e) => {
-                  setCreatorInfo(
-                    field,
-                    e.target.value,
-                    creatorInfo?.dataUser?.fieldsCreator
-                  );
+                  setEditedCreatorInfo({
+                    ...editedCreatorInfo,
+                    dataUser: {
+                      ...editedCreatorInfo.dataUser,
+                      fieldsCreator: {
+                        ...editedCreatorInfo.dataUser.fieldsCreator,
+                        [field]: e.target.value,
+                      },
+                    },
+                  });
                 }}
               />
             )
@@ -86,18 +122,25 @@ function InputFieldsCreator({
         ];
         return fieldsSELF.map((field, i) => {
           return (
-            creatorInfo?.dataUser?.creatorType === CreatorType.SELF && (
+            editedCreatorInfo?.dataUser?.creatorType === CreatorType.SELF && (
               <TextField
                 key={i}
                 placeholder={fromModelsToFieldsName.get(field)}
                 color="primary"
-                value={creatorInfo?.dataUser?.fieldsCreator?.[field] || ""}
+                value={
+                  editedCreatorInfo?.dataUser?.fieldsCreator?.[field] || ""
+                }
                 onChange={(e) =>
-                  setCreatorInfo(
-                    field,
-                    e.target.value,
-                    creatorInfo?.dataUser?.fieldsCreator
-                  )
+                  setEditedCreatorInfo({
+                    ...editedCreatorInfo,
+                    dataUser: {
+                      ...editedCreatorInfo.dataUser,
+                      fieldsCreator: {
+                        ...editedCreatorInfo.dataUser.fieldsCreator,
+                        [field]: e.target.value,
+                      },
+                    },
+                  })
                 }
               />
             )
@@ -105,7 +148,7 @@ function InputFieldsCreator({
         });
     }
   };
-  return <>{generFields(creatorInfo)}</>;
+  return <>{generFields(editedCreatorInfo)}</>;
 }
 
 export default InputFieldsCreator;
