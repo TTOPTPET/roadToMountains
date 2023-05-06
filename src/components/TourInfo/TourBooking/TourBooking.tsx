@@ -73,14 +73,16 @@ export const TourBooking: FC<ITourBookingProps> = ({
             editableDateInputs={true}
             showDateDisplay={false}
             locale={locales["ru"]}
+            dragSelectionEnabled={false}
+            showPreview={false}
             onChange={(item) => {
-              setDatePickerValue([
-                item.selection as {
-                  startDate: Date;
-                  endDate: Date;
-                  key: string;
-                },
-              ]);
+              // setDatePickerValue([
+              //   item.selection as {
+              //     startDate: Date;
+              //     endDate: Date;
+              //     key: string;
+              //   },
+              // ]);
               setBookingData({
                 ...bookingData,
                 tourDate: {

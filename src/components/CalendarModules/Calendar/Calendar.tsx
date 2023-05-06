@@ -1,12 +1,15 @@
 import { Box, Grid, Paper, TextField, Typography } from "@mui/material";
 import dayjs, { Dayjs } from "dayjs";
 import { useState, useEffect } from "react";
+import CalendarRenderObjects from "./CalendarRenderObjects/CalendarRenderObjects";
+import { IPublicTour } from "../../../models/calendarModels/IPublicTour";
 
 type Props = {
   viewMonth: Dayjs;
+  publicTour: IPublicTour[];
 };
 
-export const Calendar = ({ viewMonth }: Props) => {
+export const Calendar = ({ viewMonth, publicTour }: Props) => {
   return (
     <Paper variant="whiteBlue" sx={{ width: "100%", height: "65vh" }}>
       <Grid container columns={21} sx={{ height: "100%" }}>
@@ -61,6 +64,7 @@ export const Calendar = ({ viewMonth }: Props) => {
               >
                 {calcDayIndex(viewMonth).add(index, "day").format("D")}
               </Typography>
+              <CalendarRenderObjects />
             </Box>
           </Grid>
         ))}

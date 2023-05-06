@@ -1,0 +1,8 @@
+.rdrDay {
+  cursor: default !important;
+}
+.rdrDay:has(.rdrStartEdge),
+.rdrDay:has(.rdrInRange),
+.rdrDay:has(.rdrEndEdge) {
+  cursor: pointer !important;
+}

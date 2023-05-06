@@ -61,7 +61,7 @@ function TourCalendarPage() {
             viewMonth={viewMonth}
             setViewMonth={setViewMonth}
           />
-          <Calendar viewMonth={viewMonth} />
+          <Calendar viewMonth={viewMonth} publicTour={publicTour} />
         </Grid>
         <Grid item xs={4}>
           <CalendarSidebar {...publicTour[0]} />
