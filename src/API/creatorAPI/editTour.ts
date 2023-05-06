@@ -13,7 +13,7 @@ export const editTour = async (
   filesToDelete: string[],
   errorCallback?: () => void
 ) => {
-  delete data.photos;
+  //delete data.photos;
   console.log(data);
   let formData = new FormData();
   formData.append("data", JSON.stringify(data));

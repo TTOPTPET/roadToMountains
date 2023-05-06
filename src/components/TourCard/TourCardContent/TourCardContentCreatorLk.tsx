@@ -10,12 +10,16 @@ import {
   darkTurquoiseColor,
   whiteColor,
 } from "../../../config/MUI/color/color";
+import DeleteTourModal from "../../Modals/DeleteTourModal/DeleteTourModal";
+import { useDispatch } from "react-redux";
+import { setModalActive } from "../../../redux/Modal/ModalReducer";
 
 type TourCardProps = {
   tour: ITour;
 };
 
 function TourCardContentCreatorLk({ tour }: TourCardProps) {
+  const dispatch = useDispatch();
   return (
     <Box
       className="tour-card__content"
@@ -91,9 +95,15 @@ function TourCardContentCreatorLk({ tour }: TourCardProps) {
           >
             Разместить
           </Button>
-          <Button className="tour-card__button-delete">Удалить</Button>
+          <Button
+            className="tour-card__button-delete"
+            onClick={() => dispatch(setModalActive("deleteTourModal"))}
+          >
+            Удалить
+          </Button>
         </Box>
       </Box>
+      <DeleteTourModal tourId={tour?.tourId} />
     </Box>
   );
 }
