@@ -29,12 +29,12 @@ function AxiosProvider({ children }: { children: JSX.Element }) {
       const originalConfig = err.config;
       if (err.response) {
         // Access Token was expired
-        if (err.response.status === 401 && !originalConfig._retry) {
+        if (err.response.status === 422 && !originalConfig._retry) {
           originalConfig._retry = true;
 
           try {
             await refreshToken();
-            return axios.create({
+            return axios.request({
               ...originalConfig,
               headers: {
                 ...originalConfig.headers,
