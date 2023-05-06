@@ -7,8 +7,6 @@ import { Link } from "react-router-dom";
 import {
   lightTurquoiseColor,
   darkBlueColor,
-  darkTurquoiseColor,
-  whiteColor,
 } from "../../../config/MUI/color/color";
 import DeleteTourModal from "../../Modals/DeleteTourModal/DeleteTourModal";
 import { useDispatch } from "react-redux";
