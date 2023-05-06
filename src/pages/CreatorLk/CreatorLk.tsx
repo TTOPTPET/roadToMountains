@@ -9,6 +9,8 @@ import { darkBlueColor } from "../../config/MUI/color/color";
 import { ITour } from "../../models/tourCardModel/ITour";
 
 import CreatorInfo from "../../components/UserInfo/CreatorInfo/CreatorInfo";
+import { Stack } from "@mui/system";
+import { mobileWidth } from "../../config/config";
 
 function CreatorLk() {
   const [myTours, setMyTours] = useState<ITour[]>([]);
@@ -30,7 +32,7 @@ function CreatorLk() {
     myTours && myTours.length ? (
       myTours?.map((tour, i) => {
         return (
-          <Grid key={i} item xs={1}>
+          <Grid key={i} item md={1}>
             <TourCard tour={tour} key={tour.tourId} tourCardType={"myTours"} />
           </Grid>
         );
@@ -96,12 +98,16 @@ function CreatorLk() {
       >
         Мои туры
       </Box>
-      <Grid container spacing={"24px"} columns={3}>
-        <Grid item xs={1}>
+      <Stack direction={"row"} gap={5} flexWrap={"wrap"}>
+        <AddTourButton />
+        {loadingStatus ? skeleton() : elements}
+      </Stack>
+      {/* <Grid container spacing={4} columns={3}>
+        <Grid item md={1}>
           <AddTourButton />
         </Grid>
         {loadingStatus ? skeleton() : elements}
-      </Grid>
+      </Grid> */}
     </>
   );
 }
