@@ -36,7 +36,7 @@ export const editTour = async (
         filesToUpload.forEach((file) => {
           formData.append("creatorPhoto", file);
         });
-        await axios.post(creatorUrl + `/tour/photo/${tourId}`, formData, {
+        await axios.post(creatorUrl + `/tour/photo?tourId=${tourId}`, formData, {
           headers: {
             Authorization: `Bearer ${cookie.get(TOKEN)}`,
             "Content-Type": "multipart/form-data",

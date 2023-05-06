@@ -11,10 +11,7 @@ export const deleteTour = async (
   errorCallback?: () => void
 ) => {
   try {
-    let response = await axios.delete(creatorUrl + "/tour", {
-      params: {
-        tourId: tourId,
-      },
+    let response = await axios.post(creatorUrl + `/tour?tourId=${tourId}`, {
       headers: {
         Authorization: `Bearer ${cookie.get(TOKEN)}`,
       },
