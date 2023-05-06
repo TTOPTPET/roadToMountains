@@ -14,32 +14,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { setTourField } from "../../../redux/AddTour/AddTourReducer";
 import { RootState } from "../../../redux/store";
 import { Attention } from "../../../components/Attention/Attention";
-
-const regions = [
-  "Регион РФ",
-  "Алтайский край",
-  "Владимирская область",
-  "Иркутская область",
-  "Москва",
-  "Самарская область",
-  "Тверская область",
-];
-
-const tourCategory = [
-  "Джип-тур",
-  "Кемпинг",
-  "Конные прогулки",
-  "Рафтинг",
-  "Треккинг",
-  "Хайкинг",
-  "Экскурсия",
-];
+import { IFilter } from "../../../models/tourListModels/IFilter";
+import { StyledTextAreaAutosize } from "../../../config/MUI/styledComponents/StyledTextAreaAutosize";
+import { lightTurquoiseColor } from "../../../config/MUI/color/color";
 
 interface IAddTourFirstPageProps {
   images: any[];
   setImage: Dispatch<SetStateAction<any[]>>;
   files: any[];
   setFiles: (prop: any[]) => void;
+  filters: IFilter;
   isEditing: boolean;
 }
 
@@ -48,6 +32,7 @@ export const AddTourFirstPage: FC<IAddTourFirstPageProps> = ({
   setImage,
   files,
   setFiles,
+  filters,
   isEditing,
 }) => {
   const dispatch = useDispatch();
@@ -73,10 +58,14 @@ export const AddTourFirstPage: FC<IAddTourFirstPageProps> = ({
           <Typography variant={"h6"} marginBottom={1}>
             Описание
           </Typography>
-          <TextField
-            fullWidth
+          <StyledTextAreaAutosize
             placeholder={"Описание тура (не более 2500 символов)"}
-            InputProps={{ inputProps: { maxLength: 2500 } }}
+            maxLength={2500}
+            sx={{
+              minHeight: "30px",
+              backgroundColor: lightTurquoiseColor,
+              margin: "0 0",
+            }}
             value={tourInfo?.tourDescription ?? ""}
             onChange={(e) =>
               dispatch(setTourField({ tourDescription: e.target.value }))
@@ -96,7 +85,7 @@ export const AddTourFirstPage: FC<IAddTourFirstPageProps> = ({
               <Autocomplete
                 freeSolo
                 disableClearable
-                options={regions.map((region) => region)}
+                options={filters.regions.map((region) => region)}
                 value={tourInfo?.region ?? ""}
                 renderInput={(params) => (
                   <TextField
@@ -169,7 +158,7 @@ export const AddTourFirstPage: FC<IAddTourFirstPageProps> = ({
                   dispatch(setTourField({ category: e.target.value }))
                 }
               >
-                {tourCategory.map((category, index) => (
+                {filters.category.map((category, index) => (
                   <FormControlLabel
                     key={index}
                     value={category}

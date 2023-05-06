@@ -26,12 +26,13 @@ export const TourInfo: FC<ITourInfoProps> = ({
   tourInfo,
   isEditing,
 }) => {
+  console.log(tourInfo);
   const tagsConverter = (key: "free" | "additional" | "recommend") => {
     switch (key) {
       case "free": {
         return tourInfo?.tourServices?.freeServices
           ? tourInfo?.tourServices?.freeServices.map((service, index) =>
-              index === tourInfo?.tourServices?.additionalServices.length - 1
+              index === tourInfo?.tourServices?.freeServices.length - 1
                 ? `${service}`
                 : `${service} • `
             )
@@ -49,7 +50,7 @@ export const TourInfo: FC<ITourInfoProps> = ({
       case "recommend": {
         return tourInfo?.recommendations
           ? tourInfo?.recommendations.map((service, index) =>
-              index === tourInfo?.tourServices?.additionalServices.length - 1
+              index === tourInfo?.recommendations.length - 1
                 ? `${service}`
                 : `${service} • `
             )
@@ -185,7 +186,7 @@ export const TourInfo: FC<ITourInfoProps> = ({
         <Grid container direction={"column"} item md={6} gap={2}>
           {addTourInfo ? <Attention /> : <></>}
           <Typography variant={"h5"}>
-            {tourInfo?.price === undefined
+            {tourInfo?.price !== undefined
               ? tourInfo?.price ?? 0
               : (tourInfo?.prices?.from ?? 0) +
                 " до " +
