@@ -76,7 +76,7 @@ export const TourInfo: FC<ITourInfoProps> = ({
         </Typography>
       </Stack>
       <Grid container justifyContent={"space-between"}>
-        <Grid item md={5.1} className="addtour__carousel">
+        <Grid item width={"100%"} md={5.1} className="addtour__carousel">
           <Carousel
             navButtonsAlwaysVisible
             indicators={false}

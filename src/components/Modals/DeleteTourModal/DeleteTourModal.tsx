@@ -7,6 +7,7 @@ import {
 } from "@mui/material";
 
 import { useDispatch, useSelector } from "react-redux";
+import { deleteTour } from "../../../API/creatorAPI/deleteTour";
 
 import {
   isModalActive,
@@ -14,7 +15,7 @@ import {
 } from "../../../redux/Modal/ModalReducer";
 import { RootState } from "../../../redux/store";
 
-function DeleteTourModal() {
+function DeleteTourModal({ tourId }: { tourId: string }) {
   const activeModals = useSelector(
     (state: RootState) => state.modal.activeModals
   );
@@ -26,7 +27,9 @@ function DeleteTourModal() {
   };
 
   const handlerConfirmClick = () => {
-    dispatch(setModalInactive("deleteTourModal"));
+    deleteTour(tourId, () => {
+      dispatch(setModalInactive("deleteTourModal"));
+    });
   };
   return (
     <Dialog
