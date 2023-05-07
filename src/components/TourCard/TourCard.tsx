@@ -5,15 +5,18 @@ import { ITour } from "../../models/tourCardModel/ITour";
 import TourCardPhoto from "./TourCardPhoto/TourCardPhoto";
 import TourCardContentCreatorLk from "./TourCardContent/TourCardContentCreatorLk";
 import TourCardContentCardList from "./TourCardContent/TourCardContentCardList";
+import { SetStateAction, Dispatch } from "react";
 
 type CardType = "tourList" | "myTours";
 
 type TourCardProps = {
   tour: ITour;
   tourCardType: CardType;
+  myTours: ITour[];
+  setMyTours: Dispatch<SetStateAction<ITour[]>>;
 };
 
-function TourCard({ tour, tourCardType }: TourCardProps) {
+function TourCard({ tour, tourCardType, myTours, setMyTours }: TourCardProps) {
   return (
     <Box
       className="tour_card"
@@ -26,7 +29,13 @@ function TourCard({ tour, tourCardType }: TourCardProps) {
     >
       <TourCardPhoto tour={tour} tourCardType={tourCardType} />
 
-      {tourCardType === "myTours" && <TourCardContentCreatorLk tour={tour} />}
+      {tourCardType === "myTours" && (
+        <TourCardContentCreatorLk
+          tour={tour}
+          myTours={myTours}
+          setMyTours={setMyTours}
+        />
+      )}
       {tourCardType === "tourList" && <TourCardContentCardList tour={tour} />}
     </Box>
   );

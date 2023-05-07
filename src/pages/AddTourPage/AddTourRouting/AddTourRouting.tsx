@@ -34,7 +34,15 @@ export default function AddTourRouting({
     if (isEditing) {
       editTour(tourId, newTour, files, photosToDelete, undefined);
     } else {
-      addTour(undefined, newTour, files, undefined, false);
+      addTour(
+        () => {
+          navigate("/creator/lk");
+        },
+        newTour,
+        files,
+        undefined,
+        false
+      );
     }
   };
 

@@ -23,6 +23,8 @@ import { useDispatch } from "react-redux";
 import { setModalActive } from "../../redux/Modal/ModalReducer";
 import { UserType } from "../../models/userModels/IUserInfo";
 import { useEffect } from "react";
+import { setUserInfo } from "../../redux/UserInfo/UserInfoReducer";
+import { getUserInfo } from "../../API/commonAPI";
 
 const registerTypes = [
   { id: UserType.creator, name: "туросоздатель" },
@@ -96,6 +98,7 @@ function Authorization() {
       () => {
         setErrAuth(false);
         setErrorMessage("");
+        getUserInfo((value) => dispatch(setUserInfo(value)));
       },
       (e) => {
         if (e.response.status >= 400 && e.response.status <= 500) {

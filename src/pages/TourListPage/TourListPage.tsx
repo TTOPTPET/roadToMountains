@@ -77,7 +77,17 @@ function TourListPage() {
           tours
             .filter((tour) => tour.banStatus !== true)
             .map((tour, index) => (
-              <TourCard key={index} tour={tour} tourCardType={"tourList"} />
+              <TourCard
+                key={index}
+                tour={tour}
+                tourCardType={"tourList"}
+                myTours={[]}
+                setMyTours={function (
+                  value: React.SetStateAction<ITour[]>
+                ): void {
+                  throw new Error("Function not implemented.");
+                }}
+              />
             ))}
       </Stack>
     </Stack>

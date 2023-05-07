@@ -8,10 +8,13 @@ import { ITourBooking } from "../../../models/tourModels/ITourBooking";
 import { ITourInfo } from "../../../models/tourModels/ITourInfo";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
-import { DateRange } from "react-date-range";
+import { DateRange, DateRangePicker } from "react-date-range";
 import { tourStepsMap } from "../../../pages/TourPage/TourPage";
 import * as locales from "react-date-range/dist/locale";
 import { registrateTour } from "../../../API/touristAPI/registrateTour";
+import isBetween from "dayjs/plugin/isBetween";
+
+dayjs.extend(isBetween);
 
 interface ITourBookingProps {
   tourInfo: ITourInfo;
@@ -21,6 +24,46 @@ interface ITourBookingProps {
   isFirstPage: boolean;
 }
 
+interface typicalDate {
+  date: {
+    from: string;
+    to: string;
+  };
+}
+
+const dateRangeDefault: typicalDate[] = [
+  {
+    date: {
+      from: dayjs(new Date()).toDate().toString(),
+      to: dayjs(new Date()).add(4, "day").toDate().toString(),
+    },
+  },
+  {
+    date: {
+      from: dayjs(new Date()).add(8, "day").toDate().toString(),
+      to: dayjs(new Date()).add(15, "day").toDate().toString(),
+    },
+  },
+  {
+    date: {
+      from: dayjs(new Date()).add(17, "day").toDate().toString(),
+      to: dayjs(new Date()).add(28, "day").toDate().toString(),
+    },
+  },
+];
+
+const handlerDateConverter = () => {
+  return [
+    ...dateRangeDefault.map((item, index) => ({
+      ["selection" + index]: {
+        startDate: dayjs(item.date.from).toDate(),
+        endDate: dayjs(item.date.to).toDate(),
+        key: "selection" + index,
+      },
+    })),
+  ];
+};
+
 export const TourBooking: FC<ITourBookingProps> = ({
   tourInfo,
   bookingData,
@@ -28,13 +71,30 @@ export const TourBooking: FC<ITourBookingProps> = ({
   setPage,
   isFirstPage,
 }) => {
-  const [datePickerValue, setDatePickerValue] = useState([
-    {
-      startDate: dayjs(bookingData.tourDate.from).toDate(),
-      endDate: dayjs(bookingData.tourDate.to).toDate(),
-      key: "selection",
-    },
-  ]);
+  const [datePickerValue, setDatePickerValue] = useState(
+    handlerDateConverter()
+  );
+
+  const dateValidation = (value: string) => {
+    dateRangeDefault.forEach((item, index) => {
+      const fsaf: boolean = dayjs(value).isBetween(
+        dayjs(item.date.from),
+        dayjs(item.date.to),
+        "day",
+        "[]"
+      );
+      if (fsaf) {
+        setBookingData({
+          ...bookingData,
+          tourDate: {
+            from: dayjs(item.date.from).toISOString(),
+            to: dayjs(item.date.to).toISOString(),
+          },
+        });
+      }
+    });
+  };
+  console.log(bookingData);
   const handleDateChange = (type: "from" | "to", value: Dayjs) => {
     try {
       const stringDate = value ? value.toISOString() : "";
@@ -62,12 +122,7 @@ export const TourBooking: FC<ITourBookingProps> = ({
   };
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <Stack
-        direction={"row"}
-        justifyContent={"space-between"}
-        flexWrap={"wrap"}
-        mt={5}
-      >
+      <Stack direction={"row"} gap={10} flexWrap={"wrap"} mt={5}>
         <div className="date">
           <DateRange
             editableDateInputs={true}
@@ -76,23 +131,22 @@ export const TourBooking: FC<ITourBookingProps> = ({
             dragSelectionEnabled={false}
             showPreview={false}
             onChange={(item) => {
-              // setDatePickerValue([
-              //   item.selection as {
-              //     startDate: Date;
-              //     endDate: Date;
-              //     key: string;
-              //   },
-              // ]);
-              setBookingData({
-                ...bookingData,
-                tourDate: {
-                  from: dayjs(item.selection.startDate).toDate().toString(),
-                  to: dayjs(item.selection.endDate).toDate().toString(),
-                },
+              const selectionName = Object.keys(item).filter((key) => {
+                return item[key];
               });
+
+              dateValidation(item[selectionName[0]].endDate.toString());
             }}
             moveRangeOnFirstSelection={false}
-            ranges={datePickerValue}
+            ranges={
+              datePickerValue
+                ? [
+                    ...datePickerValue.map(
+                      (item, index) => item["selection" + index]
+                    ),
+                  ]
+                : []
+            }
           />
         </div>
         <Stack direction={"column"} gap={2} mt={5}>
@@ -100,6 +154,7 @@ export const TourBooking: FC<ITourBookingProps> = ({
             value={dayjs(bookingData.tourDate.from)}
             onChange={(newValue) => handleDateChange("from", newValue)}
             disableOpenPicker={true}
+            disabled={true}
             renderInput={(props) => (
               <TextField
                 {...props}
@@ -108,6 +163,7 @@ export const TourBooking: FC<ITourBookingProps> = ({
                   ...props.inputProps,
                   placeholder: "Дата заезда",
                 }}
+                sx={{ color: "black" }}
               />
             )}
           />
@@ -115,6 +171,7 @@ export const TourBooking: FC<ITourBookingProps> = ({
             value={dayjs(bookingData.tourDate.to)}
             onChange={(newValue) => handleDateChange("to", newValue)}
             disableOpenPicker={true}
+            disabled={true}
             renderInput={(props) => (
               <TextField
                 {...props}
@@ -123,6 +180,7 @@ export const TourBooking: FC<ITourBookingProps> = ({
                   ...props.inputProps,
                   placeholder: "Дата выезда",
                 }}
+                sx={{ color: "black" }}
               />
             )}
           />

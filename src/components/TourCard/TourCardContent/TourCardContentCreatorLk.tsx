@@ -11,12 +11,21 @@ import {
 import DeleteTourModal from "../../Modals/DeleteTourModal/DeleteTourModal";
 import { useDispatch } from "react-redux";
 import { setModalActive } from "../../../redux/Modal/ModalReducer";
+import SuccessDeleteTourModal from "../../Modals/SuccessDeleteTourModal/SuccessDeleteTourModal";
+import { SetStateAction, Dispatch } from "react";
+import { MyTours } from "../../MyTours/MyTours";
 
 type TourCardProps = {
   tour: ITour;
+  myTours: ITour[];
+  setMyTours: Dispatch<SetStateAction<ITour[]>>;
 };
 
-function TourCardContentCreatorLk({ tour }: TourCardProps) {
+function TourCardContentCreatorLk({
+  tour,
+  myTours,
+  setMyTours,
+}: TourCardProps) {
   const dispatch = useDispatch();
   return (
     <Box
@@ -101,7 +110,12 @@ function TourCardContentCreatorLk({ tour }: TourCardProps) {
           </Button>
         </Box>
       </Box>
-      <DeleteTourModal tourId={tour?.tourId} />
+      <DeleteTourModal
+        tourId={tour?.tourId}
+        myTours={myTours}
+        setMyTours={setMyTours}
+      />
+      <SuccessDeleteTourModal />
     </Box>
   );
 }
