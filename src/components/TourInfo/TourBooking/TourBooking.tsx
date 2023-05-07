@@ -80,7 +80,7 @@ export const TourBooking: FC<ITourBookingProps> = ({
       const fsaf: boolean = dayjs(value).isBetween(
         dayjs(item.date.from),
         dayjs(item.date.to),
-        null,
+        "day",
         "[]"
       );
       if (fsaf) {
