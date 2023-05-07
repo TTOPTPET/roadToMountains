@@ -11,11 +11,24 @@ import { deleteTour } from "../../../API/creatorAPI/deleteTour";
 
 import {
   isModalActive,
+  setModalActive,
   setModalInactive,
 } from "../../../redux/Modal/ModalReducer";
 import { RootState } from "../../../redux/store";
+import { ITour } from "../../../models/tourCardModel/ITour";
+import { SetStateAction, Dispatch } from "react";
 
-function DeleteTourModal({ tourId }: { tourId: string }) {
+interface IDeleteTourModalProps {
+  tourId: string;
+  myTours: ITour[];
+  setMyTours: Dispatch<SetStateAction<ITour[]>>;
+}
+
+function DeleteTourModal({
+  tourId,
+  myTours,
+  setMyTours,
+}: IDeleteTourModalProps) {
   const activeModals = useSelector(
     (state: RootState) => state.modal.activeModals
   );
@@ -27,8 +40,12 @@ function DeleteTourModal({ tourId }: { tourId: string }) {
   };
 
   const handlerConfirmClick = () => {
-    deleteTour(tourId, () => {
+    deleteTour(tourId, (value) => {
       dispatch(setModalInactive("deleteTourModal"));
+      setMyTours([...myTours.filter((tour) => tour.tourId !== tourId)]);
+      if (value === 200 || 201) {
+        dispatch(setModalActive("successDeleteTourModal"));
+      }
     });
   };
   return (

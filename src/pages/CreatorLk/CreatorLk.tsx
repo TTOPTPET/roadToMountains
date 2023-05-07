@@ -33,7 +33,13 @@ function CreatorLk() {
       myTours?.map((tour, i) => {
         return (
           <Grid key={i} item md={1}>
-            <TourCard tour={tour} key={tour.tourId} tourCardType={"myTours"} />
+            <TourCard
+              tour={tour}
+              key={tour.tourId}
+              tourCardType={"myTours"}
+              myTours={myTours}
+              setMyTours={setMyTours}
+            />
           </Grid>
         );
       })

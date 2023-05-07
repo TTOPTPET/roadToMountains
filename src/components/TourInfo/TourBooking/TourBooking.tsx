@@ -62,12 +62,7 @@ export const TourBooking: FC<ITourBookingProps> = ({
   };
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <Stack
-        direction={"row"}
-        justifyContent={"space-between"}
-        flexWrap={"wrap"}
-        mt={5}
-      >
+      <Stack direction={"row"} gap={10} flexWrap={"wrap"} mt={5}>
         <div className="date">
           <DateRange
             editableDateInputs={true}
@@ -75,6 +70,7 @@ export const TourBooking: FC<ITourBookingProps> = ({
             locale={locales["ru"]}
             dragSelectionEnabled={false}
             showPreview={false}
+            displayMode={"date"}
             onChange={(item) => {
               // setDatePickerValue([
               //   item.selection as {
@@ -83,6 +79,7 @@ export const TourBooking: FC<ITourBookingProps> = ({
               //     key: string;
               //   },
               // ]);
+              console.log(item.selection.endDate);
               setBookingData({
                 ...bookingData,
                 tourDate: {
@@ -100,6 +97,7 @@ export const TourBooking: FC<ITourBookingProps> = ({
             value={dayjs(bookingData.tourDate.from)}
             onChange={(newValue) => handleDateChange("from", newValue)}
             disableOpenPicker={true}
+            disabled={true}
             renderInput={(props) => (
               <TextField
                 {...props}
@@ -108,6 +106,7 @@ export const TourBooking: FC<ITourBookingProps> = ({
                   ...props.inputProps,
                   placeholder: "Дата заезда",
                 }}
+                sx={{ color: "black" }}
               />
             )}
           />
@@ -115,6 +114,7 @@ export const TourBooking: FC<ITourBookingProps> = ({
             value={dayjs(bookingData.tourDate.to)}
             onChange={(newValue) => handleDateChange("to", newValue)}
             disableOpenPicker={true}
+            disabled={true}
             renderInput={(props) => (
               <TextField
                 {...props}
@@ -123,6 +123,7 @@ export const TourBooking: FC<ITourBookingProps> = ({
                   ...props.inputProps,
                   placeholder: "Дата выезда",
                 }}
+                sx={{ color: "black" }}
               />
             )}
           />

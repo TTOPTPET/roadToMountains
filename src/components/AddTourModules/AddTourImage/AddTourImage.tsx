@@ -42,15 +42,11 @@ export const AddTourImage: FC<IAddTourImageProps> = ({
 
   const tourInfo = useSelector((state: RootState) => state.addTour.tourFields);
 
-  const photoToDelete = useSelector(
-    (state: RootState) => state.photoToDelete.photo
-  );
-
   const dispatch = useDispatch();
 
   const fileHandler = async (e: any) => {
     const file = e.target.files[0];
-    const resizedFile = await imageCompression(file, resizeOptions);
+    const resizedFile: File = await imageCompression(file, resizeOptions);
     if (resizedFile) {
       reader.readAsDataURL(resizedFile);
       reader.addEventListener("load", () => {
@@ -62,11 +58,9 @@ export const AddTourImage: FC<IAddTourImageProps> = ({
       images.pop();
       setImage([...images]);
       setFiles([...files, resizedFile]);
+      //new File([resizedFile], resizedFile.name, { type: resizedFile.type })
     }
-    console.log(file);
-    console.log(resizedFile);
   };
-  console.log(photoToDelete);
   const handlerDeleteImage = (index: number) => {
     if (isEditing) {
       if (tourInfo.photos.includes(images[index])) {
