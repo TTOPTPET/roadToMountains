@@ -28,7 +28,7 @@ function TourListPage() {
   }, []);
 
   useEffect(() => {
-    getToursSorted((search) => setTours(search), searchData, undefined, false);
+    getToursSorted((search) => setTours(search), searchData, undefined, true);
   }, [searchData]);
 
   const dispatch = useDispatch();
