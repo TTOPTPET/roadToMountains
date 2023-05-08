@@ -17,6 +17,8 @@ interface TourFirstPageProps {
   page: tourStepsMap;
   setPage: (prop: any) => void;
   bookingDate: ITourBookingDate[];
+  selectedDate: ITourBookingDate;
+  setSelectedDate: Dispatch<SetStateAction<ITourBookingDate>>;
 }
 
 export const TourFirstPage: FC<TourFirstPageProps> = ({
@@ -28,6 +30,8 @@ export const TourFirstPage: FC<TourFirstPageProps> = ({
   page,
   setPage,
   bookingDate,
+  selectedDate,
+  setSelectedDate,
 }) => {
   return (
     <>
@@ -56,6 +60,8 @@ export const TourFirstPage: FC<TourFirstPageProps> = ({
         setPage={setPage}
         bookingDate={bookingDate}
         isFirstPage
+        selectedDate={selectedDate}
+        setSelectedDate={setSelectedDate}
       />
     </>
   );

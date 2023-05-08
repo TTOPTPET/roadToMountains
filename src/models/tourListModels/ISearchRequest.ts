@@ -6,7 +6,7 @@ export interface ISearchRequest {
     to: number;
   };
   complexity: string[];
-  prices: {
+  price: {
     from: number;
     to: number;
   };

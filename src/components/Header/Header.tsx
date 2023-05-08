@@ -1,22 +1,23 @@
 import { Container, Box, Paper, Typography, TextField } from "@mui/material";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import logo from "../../media/logo.svg";
 import { UserType } from "../../models/userModels/IUserInfo";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { TOKEN } from "../../config/types";
 import { useCookies } from "react-cookie";
 import accIcon from "../../media/accountLinkIcon.svg";
 import calendarIcon from "../../media/calendarIcon.svg";
+import { useState } from "react";
 
 const Header = () => {
   const [cookies, setCookie, removeCookie] = useCookies([TOKEN]);
+  const [searchData, setSearchData] = useState<string>("");
+  let location = useLocation();
 
   const userInfo = useSelector((state: RootState) => state.userInfo.userInfo);
 
   const navigate = useNavigate();
-
-  console.log(cookies[TOKEN]);
 
   return (
     <Paper variant="header" sx={{ width: "100%" }}>
@@ -68,11 +69,15 @@ const Header = () => {
                   <TextField
                     placeholder="Найти тур"
                     color="secondary"
-                    // onChange={(e) =>
-                    //   dispatch(
-                    //
-                    //   )
-                    // }
+                    value={searchData}
+                    onChange={(e) => setSearchData(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        if (location.state !== "/tours/all") {
+                          navigate(`/tours/all?title=${searchData}`);
+                        }
+                      }
+                    }}
                   />
                 </Box>
               )}

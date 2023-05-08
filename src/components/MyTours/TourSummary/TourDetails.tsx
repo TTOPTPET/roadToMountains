@@ -2,13 +2,21 @@ import { Stack, Typography, Button } from "@mui/material";
 import dayjs from "dayjs";
 import { FC } from "react";
 import { cancelBooking } from "../../../API/touristAPI/cancelBooking";
+import { ITourBooking } from "../../../models/tourModels/ITourBooking";
+import { ITourBookingDate } from "../../../models/tourModels/ITourBookingDate";
 import { TourDetailsType } from "./tourDetailsType/tourDetailsType";
 
 interface ITourDetailsProps {
   record: TourDetailsType;
+  bookingData?: ITourBooking;
+  selectedDate?: ITourBookingDate;
 }
 
-export const TourDetails: FC<ITourDetailsProps> = ({ record }) => {
+export const TourDetails: FC<ITourDetailsProps> = ({
+  record,
+  bookingData,
+  selectedDate,
+}) => {
   const freeTagConverter = (recordValue: TourDetailsType) => {
     switch (recordValue.type) {
       case "record":
@@ -111,7 +119,9 @@ export const TourDetails: FC<ITourDetailsProps> = ({ record }) => {
       return (
         <Stack padding={3} gap={1}>
           <Typography variant={"h6"}>Количество человек</Typography>
-          <Typography variant={"caption"}>3 человека</Typography>
+          <Typography variant={"caption"}>
+            {bookingData?.size} человека
+          </Typography>
           <Typography variant={"h6"}>Проживание</Typography>
           <Typography variant={"caption"}>
             {(record?.housingInclude?.housingName ?? "Отель") +
@@ -130,13 +140,13 @@ export const TourDetails: FC<ITourDetailsProps> = ({ record }) => {
           </Typography>
           <Typography variant={"h6"}>Контакты</Typography>
           <Typography variant={"caption"}>
-            {/* {record.contactInformation} */ "контакты"}
+            {selectedDate?.contactInformation}
           </Typography>
           <Typography variant={"h6"}>Сбор</Typography>
           <Typography variant={"caption"}>
-            {
-              /* {record.meetingPoint + " в " + record.meetingTime} */ "точка сбора"
-            }
+            {selectedDate?.meetingPoint +
+              " " +
+              dayjs(selectedDate?.meetingTime).format("D MMMM YYYY").toString()}
           </Typography>
           <Typography variant={"h6"}>Включено в стоимость</Typography>
           <Typography variant={"caption"}>

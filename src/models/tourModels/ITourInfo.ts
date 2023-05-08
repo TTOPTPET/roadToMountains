@@ -5,6 +5,8 @@ export interface ITourInfo {
   category?: string;
   complexity?: string;
   region?: string;
+  id?: string;
+  creatorId?: string;
   nearestDate?: {
     from: string;
     to: string;
