@@ -49,6 +49,8 @@ function Authorization() {
   const [regState, setRegState] = useState<boolean>(true);
   const [errAuth, setErrAuth] = useState(false);
   const [errReg, setErrReg] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [passwordErrorStatus, setPasswordErrorStatus] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -113,19 +115,17 @@ function Authorization() {
     );
   };
 
-  const [errorMessage, setErrorMessage] = useState("");
-  const [passwordErrorStatus, setPasswordErrorStatus] = useState(false);
-
   useEffect(() => {
     setErrAuth(false);
     setErrorMessage("");
   }, [regState]);
 
   useEffect(() => {
+    console.log("userRegisterData");
     if (
-      userRegisterData.password !== userRegisterData.passwordSecond &&
+      userRegisterData.password !== userRegisterData?.passwordSecond &&
       userRegisterData.password !== "" &&
-      userRegisterData.passwordSecond !== ""
+      userRegisterData?.passwordSecond !== ""
     ) {
       setPasswordErrorStatus(true);
       setErrorMessage("Пароли не совпадают!");
@@ -133,7 +133,8 @@ function Authorization() {
       setPasswordErrorStatus(false);
       setErrorMessage("");
     }
-  }, [userRegisterData]);
+    setErrAuth(false);
+  }, [userRegisterData, userLoginData]);
 
   console.log(userRegisterData);
 

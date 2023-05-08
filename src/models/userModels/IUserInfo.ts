@@ -23,9 +23,9 @@ export enum UserType {
 }
 
 export interface CreatorDocuments {
-  name?: string;
-  docUrl?: string;
-  lastModified?: number;
+  documentName: string;
+  documentPath?: string;
+  file?: File;
 }
 
 export interface ICreatorOOOFields {

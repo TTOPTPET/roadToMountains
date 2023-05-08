@@ -14,7 +14,6 @@ import Avatar from "../../Avatar/Avatar";
 import EditUserInfo from "../EditUserInfo";
 import { setTouristInfo } from "../../../API/touristAPI/setTouristInfo";
 import { useState } from "react";
-import cloneDeep from "lodash/cloneDeep";
 import { useNavigate } from "react-router-dom";
 
 function EditTouristInfo() {
@@ -25,9 +24,7 @@ function EditTouristInfo() {
 
   const navigate = useNavigate();
 
-  const [editedTouristInfo, setEditedTouristInfo] = useState(
-    cloneDeep(touristInfo)
-  );
+  const [editedTouristInfo, setEditedTouristInfo] = useState(touristInfo);
 
   return (
     <>
@@ -124,7 +121,7 @@ function EditTouristInfo() {
           setTouristInfo(
             editedTouristInfo,
             () => {
-              dispatch(setUserInfo(touristInfo));
+              dispatch(setUserInfo(editedTouristInfo));
               navigate("/tourist/lk");
             },
             () => {}

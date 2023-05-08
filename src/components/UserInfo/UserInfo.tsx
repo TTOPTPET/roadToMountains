@@ -177,7 +177,7 @@ function UserInfo({ header, fields, submitFuntion }: UserInfoProps) {
       <CancelBookingModal />
       <SuccessCancellingBookingModal />
       <SuccessBookingModal />
-      <DeleteTourModal />
+      {/* <DeleteTourModal /> */}
       <SuccessDeleteTourModal />
       <SuccessPayModal />
       <SuccessEditUserInfoModal />

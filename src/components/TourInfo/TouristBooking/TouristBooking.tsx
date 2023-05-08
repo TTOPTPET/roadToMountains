@@ -64,11 +64,13 @@ export const TouristBooking: FC<ITouristBookingProps> = ({
       <Stack direction={"row"} gap={4}>
         <TextField
           placeholder={"ФИО"}
+          color={"secondary"}
           value={bookingData.touristsInfo[index]?.name}
           onChange={(e) => handlerFieldChange("name", e.target.value)}
         />
         <TextField
           placeholder={"Возраст"}
+          color={"secondary"}
           value={bookingData.touristsInfo[index]?.age}
           onChange={(e) => handlerFieldChange("age", e.target.value)}
         />
@@ -79,7 +81,8 @@ export const TouristBooking: FC<ITouristBookingProps> = ({
           options={Object.values(Sex)}
           renderInput={(params) => (
             <TextField
-              placeholder={"Регион"}
+              placeholder={"Пол"}
+              color={"secondary"}
               {...params}
               value={bookingData.touristsInfo[index]?.sex}
               onChange={(e) => handlerFieldChange("sex", e.target.value)}

@@ -27,7 +27,7 @@ import {
   StatusVerify,
 } from "../../../models/userModels/IUserInfo";
 import cloneDeep from "lodash/cloneDeep";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function EditCreatorInfo() {
@@ -65,18 +65,23 @@ function EditCreatorInfo() {
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     if (event.target.files && event.target.files.length > 0) {
-      let files = Array.from(event.target.files).map((file) => {
-        const { name, lastModified, size } = file;
-        // TODO: проверить размер файла
-        return { name, lastModified };
-      });
-      setFiles(files);
+      let files: CreatorDocuments[] = Array.from(event.target.files).map(
+        (file) => {
+          // TODO: проверить размер файла
+          return { documentName: file.name, file };
+        }
+      );
+      setFiles(editedCreatorInfo?.dataUser?.documents.concat(files));
       event.target.value = null;
     }
   };
 
   const [editedCreatorInfo, setEditedCreatorInfo] =
     useState<ICreatorInfo>(creatorInfo);
+
+  useEffect(() => {
+    setEditedCreatorInfo(creatorInfo);
+  }, [creatorInfo]);
 
   return (
     <>
@@ -184,10 +189,18 @@ function EditCreatorInfo() {
         }
         submitFuntion={() =>
           setCreatorInfo(
-            { ...editedCreatorInfo, ...editedCreatorInfo.dataUser },
+            editedCreatorInfo,
             (resp) => {
               setInfoStatus(resp?.data?.statusVerify, resp?.data?.timeToSend);
-              dispatch(setUserInfo(editedCreatorInfo));
+              dispatch(
+                setUserInfo({
+                  ...editedCreatorInfo,
+                  dataUser: {
+                    ...editedCreatorInfo.dataUser,
+                    documents: resp?.data?.documents,
+                  },
+                })
+              );
               navigate("/creator/lk");
             },
             () => {}
