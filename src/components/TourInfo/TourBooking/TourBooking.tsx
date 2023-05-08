@@ -15,7 +15,7 @@ import { ITourBooking } from "../../../models/tourModels/ITourBooking";
 import { ITourInfo } from "../../../models/tourModels/ITourInfo";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
-import { DateRange, DateRangePicker } from "react-date-range";
+import { DateRange } from "react-date-range";
 import { tourStepsMap } from "../../../pages/TourPage/TourPage";
 import * as locales from "react-date-range/dist/locale";
 import { registrateTour } from "../../../API/touristAPI/registrateTour";
@@ -30,6 +30,8 @@ interface ITourBookingProps {
   setBookingData: Dispatch<SetStateAction<ITourBooking>>;
   setPage: (prop: any) => void;
   bookingDate: ITourBookingDate[];
+  selectedDate: ITourBookingDate;
+  setSelectedDate: Dispatch<SetStateAction<ITourBookingDate>>;
   isFirstPage: boolean;
 }
 
@@ -51,16 +53,22 @@ export const TourBooking: FC<ITourBookingProps> = ({
   setBookingData,
   setPage,
   bookingDate,
+  selectedDate,
+  setSelectedDate,
   isFirstPage,
 }) => {
   const [datePickerValue, setDatePickerValue] = useState(
     handlerDateConverter(bookingDate)
   );
-  const [selectedDate, setSelectedDate] = useState<ITourBookingDate>(
-    bookingDate[0]
-  );
+
   const [errSize, setErrSize] = useState<boolean>(false);
   useEffect(() => {
+    if (bookingData?.size >= 50) {
+      setBookingData({
+        ...bookingData,
+        size: 50,
+      });
+    }
     if (bookingData?.size > selectedDate?.bookingNumber) {
       setErrSize(true);
     } else {
@@ -87,9 +95,11 @@ export const TourBooking: FC<ITourBookingProps> = ({
         setBookingData({
           ...bookingData,
           tourDate: {
-            from: dayjs(item.date.from).toISOString(),
-            to: dayjs(item.date.to).toISOString(),
+            from: dayjs(item?.date?.from).toISOString(),
+            to: dayjs(item?.date?.to).toISOString(),
           },
+          publicTourId: item?.publicTourId,
+          tourAmount: item?.price,
         });
         setSelectedDate(item);
       }
@@ -194,7 +204,7 @@ export const TourBooking: FC<ITourBookingProps> = ({
             <TextField
               placeholder={"Количество человек"}
               type={"number"}
-              InputProps={{ inputProps: { min: 0 } }}
+              InputProps={{ inputProps: { min: 0, max: 50 } }}
               error={errSize}
               value={bookingData?.size || undefined}
               onChange={(e) =>
@@ -255,7 +265,13 @@ export const TourBooking: FC<ITourBookingProps> = ({
             </Button>
           ) : (
             <Stack direction={"row"} gap={2}>
-              <Button>Оплатить</Button>
+              <Button
+                onClick={() => {
+                  registrateTour(true, bookingData, undefined);
+                }}
+              >
+                Оплатить
+              </Button>
               <Button
                 onClick={() => {
                   registrateTour(false, bookingData, undefined);

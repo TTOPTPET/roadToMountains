@@ -5,6 +5,7 @@ import CreatorDocumentItem from "./CreatorDocumentItem/CreatorDocumentItem";
 import SkeletonCreatorDocumentsList from "./SkeletonCreatorDocumentsList/SkeletonCreatorDocumentsList";
 import { CreatorDocuments } from "../../models/userModels/IUserInfo";
 import { baseUrl } from "../../config/config";
+import { deleteCreatorFile } from "../../API/creatorAPI/deleteCreatorFile";
 
 type variant = "editInfo" | "displayInfo";
 
@@ -22,7 +23,14 @@ function CreatorDocumentsList({
   loadingStatus,
 }: creatorDocumentsListProps) {
   const handleDeleteFile = (documentName: string) => {
-    setFiles(files.filter((item) => item.documentName !== documentName));
+    deleteCreatorFile(
+      files.filter((item) => item.documentName === documentName)[0]
+        .documentPath,
+      () => {
+        setFiles(files.filter((item) => item.documentName !== documentName));
+      }
+    );
+    //setFiles(files.filter((item) => item.documentName !== documentName));
   };
 
   const handlerDownloadClick = (file: CreatorDocuments) => {

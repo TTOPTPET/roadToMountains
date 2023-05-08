@@ -10,6 +10,7 @@ import { getToursSorted } from "../../API/tourListAPI/searchAPI/searchAPI";
 import { ITour } from "../../models/tourCardModel/ITour";
 import TourCard from "../../components/TourCard/TourCard";
 import { searchDefault } from "../../components/TourList/Constants/searchDefault";
+import { useSearchParams } from "react-router-dom";
 
 const filterDefault: IFilter = {
   regions: [],
@@ -19,8 +20,12 @@ const filterDefault: IFilter = {
 };
 
 function TourListPage() {
+  const [searchParam] = useSearchParams();
   const [filters, setFilters] = useState<IFilter>(filterDefault);
-  const [searchData, setSearchData] = useState<ISearchRequest>(searchDefault);
+  const [searchData, setSearchData] = useState<ISearchRequest>({
+    ...searchDefault,
+    searchParam: searchParam.get("title"),
+  });
   const [tours, setTours] = useState<ITour[]>([]);
 
   useEffect(() => {
@@ -28,8 +33,12 @@ function TourListPage() {
   }, []);
 
   useEffect(() => {
-    getToursSorted((search) => setTours(search), searchData, undefined, false);
+    getToursSorted((search) => setTours(search), searchData, undefined, true);
   }, []);
+
+  useEffect(() => {
+    setSearchData({ ...searchData, searchParam: searchParam.get("title") });
+  }, [searchParam.get("title")]);
 
   const dispatch = useDispatch();
   return (
@@ -58,11 +67,13 @@ function TourListPage() {
         filters={filters}
         searchData={searchData}
         setSearchData={setSearchData}
+        setTours={setTours}
       />
       <ComplexFilter
         filters={filters}
         searchData={searchData}
         setSearchData={setSearchData}
+        setTours={setTours}
       />
       <Sorter tours={tours} setTours={setTours} />
 

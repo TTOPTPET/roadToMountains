@@ -22,6 +22,8 @@ interface ITourSecondPageProps {
   setBookingData: Dispatch<SetStateAction<ITourBooking>>;
   setPage: (prop: any) => void;
   bookingDate: ITourBookingDate[];
+  selectedDate: ITourBookingDate;
+  setSelectedDate: Dispatch<SetStateAction<ITourBookingDate>>;
 }
 
 const defaultTourist: ITouristBookingData = {
@@ -36,6 +38,8 @@ export const TourSecondPage: FC<ITourSecondPageProps> = ({
   setPage,
   tourInfo,
   bookingDate,
+  selectedDate,
+  setSelectedDate,
 }) => {
   useEffect(() => {
     setBookingData({
@@ -65,13 +69,19 @@ export const TourSecondPage: FC<ITourSecondPageProps> = ({
         setPage={setPage}
         bookingDate={bookingDate}
         isFirstPage={false}
+        selectedDate={selectedDate}
+        setSelectedDate={setSelectedDate}
       />
       <Box
         sx={{ width: "100%", backgroundColor: whiteColor }}
         borderRadius={10}
         padding={2}
       >
-        <TourDetails record={{ ...tourInfo, type: "tourInfo" }} />
+        <TourDetails
+          record={{ ...tourInfo, type: "tourInfo" }}
+          bookingData={bookingData}
+          selectedDate={selectedDate}
+        />
       </Box>
       <Stack direction={"column"} gap={2}>
         {touristInfo.map((item) => item)}
@@ -91,6 +101,10 @@ export const TourSecondPage: FC<ITourSecondPageProps> = ({
         <TextField
           placeholder={"Введите комментарий (не более 1500 символов)"}
           color={"secondary"}
+          value={bookingData?.comment}
+          onChange={(e) =>
+            setBookingData({ ...bookingData, comment: e.target.value })
+          }
         ></TextField>
       </Box>
     </Stack>

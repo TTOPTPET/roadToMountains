@@ -43,7 +43,12 @@ export const TourSteps: FC<TourStepsProps> = ({
         .add(-1, "day")
         .toISOString(),
     },
+    creatorId: tourInfo?.creatorId,
+    tourId: tourInfo?.id,
   });
+  const [selectedDate, setSelectedDate] = useState<ITourBookingDate>(
+    bookingDate[0]
+  );
 
   switch (page) {
     case tourStepsMap.first: {
@@ -57,6 +62,8 @@ export const TourSteps: FC<TourStepsProps> = ({
           page={page}
           setPage={setPage}
           bookingDate={bookingDate}
+          selectedDate={selectedDate}
+          setSelectedDate={setSelectedDate}
         />
       );
     }
@@ -68,6 +75,8 @@ export const TourSteps: FC<TourStepsProps> = ({
           setPage={setPage}
           tourInfo={tourInfo}
           bookingDate={bookingDate}
+          selectedDate={selectedDate}
+          setSelectedDate={setSelectedDate}
         />
       );
     }

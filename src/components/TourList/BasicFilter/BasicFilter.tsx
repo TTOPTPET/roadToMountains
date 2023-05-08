@@ -1,15 +1,17 @@
-import { ChangeEvent, FC } from "react";
+import { FC } from "react";
 import { Autocomplete, Button, Stack, TextField } from "@mui/material";
 import { IFilterProps } from "../FilterTypes/IFilterProps";
 import { ISearchRequest } from "../../../models/tourListModels/ISearchRequest";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import dayjs, { Dayjs } from "dayjs";
+import { getToursSorted } from "../../../API/tourListAPI/searchAPI/searchAPI";
 
 export const BasicFilter: FC<IFilterProps> = ({
   filters,
   searchData,
   setSearchData,
+  setTours,
 }) => {
   const { regions } = filters;
 
@@ -95,18 +97,6 @@ export const BasicFilter: FC<IFilterProps> = ({
           )}
         />
       </LocalizationProvider>
-      {/* <TextField
-        type="date"
-        placeholder="Дата заезда"
-        value={searchData.tourDate.from}
-        onChange={(e) => handleDateChange("from", e)}
-      />
-      <TextField
-        type="date"
-        placeholder="Дата выезда"
-        value={searchData.tourDate.to}
-        onChange={(e) => handleDateChange("to", e)}
-      /> */}
       <TextField
         type={"number"}
         InputProps={{ inputProps: { min: 0 } }}
@@ -118,7 +108,12 @@ export const BasicFilter: FC<IFilterProps> = ({
         }
         placeholder={"Количество человек"}
       />
-      <Button variant="high">Найти</Button>
+      <Button
+        variant="high"
+        onClick={() => getToursSorted((value) => setTours(value), searchData)}
+      >
+        Найти
+      </Button>
     </Stack>
   );
 };
