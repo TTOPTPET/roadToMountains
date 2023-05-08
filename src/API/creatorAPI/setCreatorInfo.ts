@@ -18,7 +18,6 @@ export const setCreatorInfo = async (
     return;
   }
   try {
-    console.log(data);
     let formData = new FormData();
     let copyDataUser = _.cloneDeep(data);
     copyDataUser.dataUser.documents.forEach((doc) => {
