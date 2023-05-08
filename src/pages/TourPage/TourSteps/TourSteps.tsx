@@ -5,11 +5,13 @@ import { TourSecondPage } from "../TourSecondPage/TourSecondPage";
 import { ITourInfo } from "../../../models/tourModels/ITourInfo";
 import { ITourBooking } from "../../../models/tourModels/ITourBooking";
 import dayjs from "dayjs";
+import { ITourBookingDate } from "../../../models/tourModels/ITourBookingDate";
 
 interface TourStepsProps {
   page: tourStepsMap;
   setPage: (prop: any) => void;
   tourInfo: ITourInfo;
+  bookingDate: ITourBookingDate[];
 }
 
 const tourBookingDefault: ITourBooking = {
@@ -26,7 +28,12 @@ const tourBookingDefault: ITourBooking = {
   comment: "",
 };
 
-export const TourSteps: FC<TourStepsProps> = ({ page, setPage, tourInfo }) => {
+export const TourSteps: FC<TourStepsProps> = ({
+  page,
+  setPage,
+  tourInfo,
+  bookingDate,
+}) => {
   const [images, setImage] = useState<any[]>([]);
   const [bookingData, setBookingData] = useState<ITourBooking>({
     ...tourBookingDefault,
@@ -49,6 +56,7 @@ export const TourSteps: FC<TourStepsProps> = ({ page, setPage, tourInfo }) => {
           setBookingData={setBookingData}
           page={page}
           setPage={setPage}
+          bookingDate={bookingDate}
         />
       );
     }
@@ -59,6 +67,7 @@ export const TourSteps: FC<TourStepsProps> = ({ page, setPage, tourInfo }) => {
           setBookingData={setBookingData}
           setPage={setPage}
           tourInfo={tourInfo}
+          bookingDate={bookingDate}
         />
       );
     }

@@ -8,7 +8,7 @@ export const searchDefault: ISearchRequest = {
     to: 0,
   },
   complexity: [],
-  price: {
+  prices: {
     from: 0,
     to: 5000,
   },

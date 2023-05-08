@@ -6,6 +6,7 @@ import { TourInfo } from "../../../components/TourInfo/TourInfo";
 import { ITourBooking } from "../../../models/tourModels/ITourBooking";
 import { TourBooking } from "../../../components/TourInfo/TourBooking/TourBooking";
 import { tourStepsMap } from "../TourPage";
+import { ITourBookingDate } from "../../../models/tourModels/ITourBookingDate";
 
 interface TourFirstPageProps {
   images: any[];
@@ -15,6 +16,7 @@ interface TourFirstPageProps {
   setBookingData: Dispatch<SetStateAction<ITourBooking>>;
   page: tourStepsMap;
   setPage: (prop: any) => void;
+  bookingDate: ITourBookingDate[];
 }
 
 export const TourFirstPage: FC<TourFirstPageProps> = ({
@@ -25,6 +27,7 @@ export const TourFirstPage: FC<TourFirstPageProps> = ({
   setBookingData,
   page,
   setPage,
+  bookingDate,
 }) => {
   return (
     <>
@@ -51,6 +54,7 @@ export const TourFirstPage: FC<TourFirstPageProps> = ({
         bookingData={bookingData}
         setBookingData={setBookingData}
         setPage={setPage}
+        bookingDate={bookingDate}
         isFirstPage
       />
     </>

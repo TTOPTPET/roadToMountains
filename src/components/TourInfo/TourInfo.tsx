@@ -26,11 +26,11 @@ export const TourInfo: FC<ITourInfoProps> = ({
   tourInfo,
   isEditing,
 }) => {
-  console.log(tourInfo);
   const tagsConverter = (key: "free" | "additional" | "recommend") => {
     switch (key) {
       case "free": {
-        return tourInfo?.tourServices?.freeServices
+        return tourInfo?.tourServices?.freeServices &&
+          tourInfo?.tourServices?.freeServices.length !== 0
           ? tourInfo?.tourServices?.freeServices.map((service, index) =>
               index === tourInfo?.tourServices?.freeServices.length - 1
                 ? `${service}`
@@ -39,7 +39,8 @@ export const TourInfo: FC<ITourInfoProps> = ({
           : "Ничего не включено";
       }
       case "additional": {
-        return tourInfo?.tourServices?.additionalServices
+        return tourInfo?.tourServices?.additionalServices &&
+          tourInfo?.tourServices?.additionalServices.length !== 0
           ? tourInfo?.tourServices?.additionalServices.map((service, index) =>
               index === tourInfo?.tourServices?.additionalServices.length - 1
                 ? `${service}`
@@ -48,7 +49,8 @@ export const TourInfo: FC<ITourInfoProps> = ({
           : "Ничего не включено";
       }
       case "recommend": {
-        return tourInfo?.recommendations
+        return tourInfo?.recommendations &&
+          tourInfo?.recommendations.length !== 0
           ? tourInfo?.recommendations.map((service, index) =>
               index === tourInfo?.recommendations.length - 1
                 ? `${service}`
@@ -188,6 +190,8 @@ export const TourInfo: FC<ITourInfoProps> = ({
           <Typography variant={"h5"}>
             {tourInfo?.price !== undefined
               ? tourInfo?.price ?? 0
+              : tourInfo?.prices?.from === tourInfo?.prices?.to
+              ? tourInfo?.prices?.from
               : (tourInfo?.prices?.from ?? 0) +
                 " до " +
                 (tourInfo?.prices?.to ?? 1000000)}
@@ -211,13 +215,17 @@ export const TourInfo: FC<ITourInfoProps> = ({
           )}
           <Typography variant={"h6"}>Проживание</Typography>
           <Typography variant={"caption"}>
-            {tourInfo?.housingInclude?.housingName ?? "Отель"},{" "}
-            {tourInfo?.housingInclude?.housingAddress ?? "Адрес"},{" "}
-            {tourInfo?.housingInclude?.housingDescription ?? "Описание"}
+            {tourInfo?.housingInclude !== null
+              ? (tourInfo?.housingInclude?.housingName ?? "Отель") +
+                ", " +
+                (tourInfo?.housingInclude?.housingAddress ?? "Адрес") +
+                ", " +
+                (tourInfo?.housingInclude?.housingDescription ?? "Описание")
+              : "Проживание не включено"}
           </Typography>
           <Typography variant={"h6"}>Страхование</Typography>
           <Typography variant={"caption"}>
-            {tourInfo?.insuranceInclude !== undefined
+            {tourInfo?.insuranceInclude !== null
               ? `Страхование включено, до ${
                   tourInfo?.insuranceInclude?.insuranceAmount ?? 0
                 }₽`
@@ -225,9 +233,11 @@ export const TourInfo: FC<ITourInfoProps> = ({
           </Typography>
           <Typography variant={"h6"}>Рекомендуемый возраст</Typography>
           <Typography variant={"caption"}>
-            {tourInfo?.recommendedAge?.from ?? "14"}
-            {tourInfo?.recommendedAge?.to !== undefined ? " - " : ""}
-            {tourInfo?.recommendedAge?.to ?? "+"}
+            {tourInfo?.recommendedAge?.from === tourInfo?.recommendedAge?.to
+              ? "C " + tourInfo?.recommendedAge?.to
+              : (tourInfo?.recommendedAge?.from ?? "") +
+                (tourInfo?.recommendedAge?.to !== undefined ? " - " : "") +
+                (tourInfo?.recommendedAge?.to ?? "+")}
           </Typography>
           {addTourInfo ? (
             <></>
