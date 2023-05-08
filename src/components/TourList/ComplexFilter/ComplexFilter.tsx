@@ -113,7 +113,7 @@ export const ComplexFilter: FC<IFilterProps> = ({
         to: 0,
       },
       complexity: [],
-      price: {
+      prices: {
         from: 0,
         to: 5000,
       },
@@ -224,9 +224,9 @@ export const ComplexFilter: FC<IFilterProps> = ({
             <Slider
               max={maxPrice}
               marks={marks}
-              value={[searchData.price.from, searchData.price.to]}
+              value={[searchData.prices.from, searchData.prices.to]}
               onChange={(e, value) =>
-                handleChangeField("price", value as number[])
+                handleChangeField("prices", value as number[])
               }
               valueLabelDisplay="auto"
             />

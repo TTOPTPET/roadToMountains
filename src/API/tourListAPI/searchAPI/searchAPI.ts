@@ -12,16 +12,17 @@ const searchResponseDefault: ITour[] = [
     category: "Падик",
     complexity: "1",
     personsNumber: 50,
-    price: {
+    prices: {
       from: 1500,
       to: 3500,
     },
+    price: undefined,
     region: "Орехово-Зуево",
     tourDate: {
       from: "16.09.2023",
       to: "19.09.2023",
     },
-    tourId: "52c1fcfe-611b-4de1-b6f4-9a214a9e88c4",
+    tourId: "d3818292-94d6-479f-a839-e2f78a730c28",
     tourName: "Падик адик",
     photos: [],
     banStatus: false,
@@ -31,10 +32,11 @@ const searchResponseDefault: ITour[] = [
     category: "Экскурсия",
     complexity: "3",
     personsNumber: 20,
-    price: {
+    prices: {
       from: 5500,
       to: 15000,
     },
+    price: undefined,
     region: "Алтайский край",
     tourDate: {
       from: "16.08.2023",
@@ -50,10 +52,11 @@ const searchResponseDefault: ITour[] = [
     category: "Конченные прогулки",
     complexity: "5",
     personsNumber: 10,
-    price: {
+    prices: {
       from: 25000,
       to: 35000,
     },
+    price: undefined,
     region: "Орехово-Зуево",
     tourDate: {
       from: "25.10.2023",
@@ -69,9 +72,10 @@ const searchResponseDefault: ITour[] = [
     category: "Кемпинг",
     complexity: "2",
     personsNumber: 30,
-    price: {
+    prices: {
       from: 5500,
     },
+    price: undefined,
     region: "Орехово-Зуево",
     tourDate: {
       from: "1.09.2023",
@@ -87,9 +91,10 @@ const searchResponseDefault: ITour[] = [
     category: "Конченные прогулки",
     complexity: "4",
     personsNumber: 6,
-    price: {
+    prices: {
       from: 15000,
     },
+    price: undefined,
     region: "Владимирская область",
     tourDate: {
       from: "16.07.2023",
@@ -105,9 +110,10 @@ const searchResponseDefault: ITour[] = [
     category: "Падик",
     complexity: "2",
     personsNumber: 100,
-    price: {
+    prices: {
       from: 500,
     },
+    price: undefined,
     region: "Алтайский край",
     tourDate: {
       from: "6.09.2023",

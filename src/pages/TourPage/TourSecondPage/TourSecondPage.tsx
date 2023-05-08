@@ -13,6 +13,7 @@ import {
   ITourBooking,
   ITouristBookingData,
 } from "../../../models/tourModels/ITourBooking";
+import { ITourBookingDate } from "../../../models/tourModels/ITourBookingDate";
 import { ITourInfo } from "../../../models/tourModels/ITourInfo";
 
 interface ITourSecondPageProps {
@@ -20,6 +21,7 @@ interface ITourSecondPageProps {
   bookingData: ITourBooking;
   setBookingData: Dispatch<SetStateAction<ITourBooking>>;
   setPage: (prop: any) => void;
+  bookingDate: ITourBookingDate[];
 }
 
 const defaultTourist: ITouristBookingData = {
@@ -33,6 +35,7 @@ export const TourSecondPage: FC<ITourSecondPageProps> = ({
   setBookingData,
   setPage,
   tourInfo,
+  bookingDate,
 }) => {
   useEffect(() => {
     setBookingData({
@@ -60,6 +63,7 @@ export const TourSecondPage: FC<ITourSecondPageProps> = ({
         bookingData={bookingData}
         setBookingData={setBookingData}
         setPage={setPage}
+        bookingDate={bookingDate}
         isFirstPage={false}
       />
       <Box
