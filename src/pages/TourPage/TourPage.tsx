@@ -19,6 +19,7 @@ function TourPage() {
   const { tourId } = useParams();
   const [page, setPage] = useState<tourStepsMap>(tourStepsMap.first);
   const [bookingDate, setBookingDate] = useState<ITourBookingDate[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const dispatch = useDispatch();
   const tourInfo = useSelector((state: RootState) => state.tourInfo.tourInfo);
@@ -31,8 +32,13 @@ function TourPage() {
       false
     );
     getBookingDate(tourId, (value) => setBookingDate(value), undefined);
+
+    setIsLoading(false);
   }, []);
 
+  if (isLoading) {
+    return <></>;
+  }
   return (
     <>
       <TourRouting page={page} setPage={setPage} />

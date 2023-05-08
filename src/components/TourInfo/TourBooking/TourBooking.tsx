@@ -1,4 +1,11 @@
-import { Stack, Typography, TextField, Box, Button } from "@mui/material";
+import {
+  Stack,
+  Typography,
+  TextField,
+  Box,
+  Button,
+  Skeleton,
+} from "@mui/material";
 import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs, { Dayjs } from "dayjs";
@@ -26,34 +33,6 @@ interface ITourBookingProps {
   isFirstPage: boolean;
 }
 
-interface typicalDate {
-  date: {
-    from: string;
-    to: string;
-  };
-}
-
-const dateRangeDefault: typicalDate[] = [
-  {
-    date: {
-      from: dayjs(new Date()).toDate().toString(),
-      to: dayjs(new Date()).add(4, "day").toDate().toString(),
-    },
-  },
-  {
-    date: {
-      from: dayjs(new Date()).add(8, "day").toDate().toString(),
-      to: dayjs(new Date()).add(15, "day").toDate().toString(),
-    },
-  },
-  {
-    date: {
-      from: dayjs(new Date()).add(17, "day").toDate().toString(),
-      to: dayjs(new Date()).add(28, "day").toDate().toString(),
-    },
-  },
-];
-
 const handlerDateConverter = (dates: ITourBookingDate[]) => {
   return [
     ...dates.map((item, index) => ({
@@ -74,14 +53,13 @@ export const TourBooking: FC<ITourBookingProps> = ({
   bookingDate,
   isFirstPage,
 }) => {
-  const [selectedDate, setSelectedDate] = useState<ITourBookingDate>(
-    bookingDate[0] ?? undefined
-  );
   const [datePickerValue, setDatePickerValue] = useState(
     handlerDateConverter(bookingDate)
   );
+  const [selectedDate, setSelectedDate] = useState<ITourBookingDate>(
+    bookingDate[0]
+  );
   const [errSize, setErrSize] = useState<boolean>(false);
-
   useEffect(() => {
     if (bookingData?.size > selectedDate?.bookingNumber) {
       setErrSize(true);
@@ -89,6 +67,14 @@ export const TourBooking: FC<ITourBookingProps> = ({
       setErrSize(false);
     }
   }, [bookingData?.size]);
+
+  useEffect(() => {
+    if (bookingDate.length) {
+      setDatePickerValue(handlerDateConverter(bookingDate));
+      setSelectedDate(bookingDate[0]);
+    }
+  }, [bookingDate]);
+
   const dateValidation = (value: string) => {
     bookingDate.forEach((item, index) => {
       const fsaf: boolean = dayjs(value).isBetween(
@@ -134,38 +120,44 @@ export const TourBooking: FC<ITourBookingProps> = ({
       console.log("invalid Data format");
     }
   };
+
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <Stack direction={"row"} gap={10} flexWrap={"wrap"} mt={5}>
         <div className="date">
-          <DateRange
-            editableDateInputs={true}
-            showDateDisplay={false}
-            locale={locales["ru"]}
-            dragSelectionEnabled={false}
-            showPreview={false}
-            onChange={(item) => {
-              const selectionName = Object.keys(item).filter((key) => {
-                return item[key];
-              });
-
-              dateValidation(item[selectionName[0]].endDate.toString());
-            }}
-            moveRangeOnFirstSelection={false}
-            ranges={
-              datePickerValue
-                ? [
-                    ...datePickerValue.map(
-                      (item, index) => item["selection" + index]
-                    ),
-                  ]
-                : []
-            }
-          />
+          {datePickerValue.length !== 0 ? (
+            <DateRange
+              editableDateInputs={true}
+              showDateDisplay={false}
+              locale={locales["ru"]}
+              dragSelectionEnabled={false}
+              showPreview={false}
+              onChange={(item) => {
+                const selectionName = Object.keys(item).filter((key) => {
+                  return item[key];
+                });
+                console.log(item);
+                dateValidation(item[selectionName[0]].endDate.toString());
+              }}
+              moveRangeOnFirstSelection={false}
+              ranges={[
+                ...datePickerValue.map(
+                  (item, index) => item["selection" + index]
+                ),
+              ]}
+            />
+          ) : (
+            <Skeleton
+              width={330}
+              height={310}
+              animation={"wave"}
+              variant={"rounded"}
+            />
+          )}
         </div>
         <Stack direction={"column"} gap={2} mt={5}>
           <DatePicker
-            value={dayjs(bookingData.tourDate.from)}
+            value={dayjs(selectedDate?.date?.from)}
             onChange={(newValue) => handleDateChange("from", newValue)}
             disableOpenPicker={true}
             disabled={true}
@@ -182,7 +174,7 @@ export const TourBooking: FC<ITourBookingProps> = ({
             )}
           />
           <DatePicker
-            value={dayjs(bookingData.tourDate.to)}
+            value={dayjs(selectedDate?.date?.to)}
             onChange={(newValue) => handleDateChange("to", newValue)}
             disableOpenPicker={true}
             disabled={true}
@@ -213,7 +205,7 @@ export const TourBooking: FC<ITourBookingProps> = ({
               }
             />
             <Typography variant={"caption"}>
-              Мест свободно: {selectedDate.bookingNumber}
+              Мест свободно: {selectedDate?.bookingNumber ?? 0}
             </Typography>
             {errSize && (
               <Typography

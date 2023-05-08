@@ -191,7 +191,7 @@ export const TourInfo: FC<ITourInfoProps> = ({
             {tourInfo?.price !== undefined
               ? tourInfo?.price ?? 0
               : tourInfo?.prices?.from === tourInfo?.prices?.to
-              ? tourInfo.prices.from
+              ? tourInfo?.prices?.from
               : (tourInfo?.prices?.from ?? 0) +
                 " до " +
                 (tourInfo?.prices?.to ?? 1000000)}
