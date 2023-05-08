@@ -19,8 +19,6 @@ function EditUserInfo({
   linkTo,
   avatarComponent,
 }: editUserInfoProps) {
-  const userInfo = useSelector((state: RootState) => state.userInfo.userInfo);
-
   return (
     <Box sx={{ mt: "95px" }}>
       <Box

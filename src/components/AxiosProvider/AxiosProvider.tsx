@@ -1,6 +1,6 @@
 import axios from "axios";
 import { refreshToken } from "../../API/authAPI/UserAuthAPI/UserAuthAPI";
-import { TOKEN } from "../../config/types";
+import { REFRESH_TOKEN, TOKEN } from "../../config/types";
 import { Cookies } from "react-cookie";
 
 const cookie = new Cookies();
@@ -29,7 +29,11 @@ function AxiosProvider({ children }: { children: JSX.Element }) {
       const originalConfig = err.config;
       if (err.response) {
         // Access Token was expired
-        if (err.response.status === 422 && !originalConfig._retry) {
+        if (
+          err.response.status === 422 &&
+          !originalConfig._retry &&
+          cookie.get(REFRESH_TOKEN)
+        ) {
           originalConfig._retry = true;
 
           try {

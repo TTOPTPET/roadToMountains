@@ -7,8 +7,8 @@ import { CreatorDocuments } from "../../../models/userModels/IUserInfo";
 type variant = "editInfo" | "displayInfo";
 
 type creatorDocumentItemProps = {
-  handleDeleteFile?: (lastModified: number) => void;
-  handlerDownloadClick?: (path: string) => void;
+  handleDeleteFile?: (documentName: string) => void;
+  handlerDownloadClick?: (file: CreatorDocuments) => void;
   file: CreatorDocuments;
   variant: variant;
 };
@@ -30,7 +30,7 @@ function CreatorDocumentItem({
         cursor: variant !== "editInfo" && "pointer",
       }}
       onClick={() => {
-        variant !== "editInfo" && handlerDownloadClick(file.docUrl);
+        variant !== "editInfo" && handlerDownloadClick(file);
       }}
     >
       <Box className="document__item-image-wrapper">
@@ -59,7 +59,7 @@ function CreatorDocumentItem({
                 cursor: "pointer",
               }}
               onClick={() => {
-                handleDeleteFile(file.lastModified);
+                handleDeleteFile(file.documentName);
               }}
             />
           )}
@@ -75,7 +75,7 @@ function CreatorDocumentItem({
           textOverflow: "ellipsis",
         }}
       >
-        {file?.name}
+        {file?.documentName}
       </Typography>
     </Box>
   );

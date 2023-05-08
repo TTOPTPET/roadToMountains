@@ -28,8 +28,8 @@ function TourListPage() {
   }, []);
 
   useEffect(() => {
-    getToursSorted((search) => setTours(search), searchData, undefined, true);
-  }, [searchData]);
+    getToursSorted((search) => setTours(search), searchData, undefined, false);
+  }, []);
 
   const dispatch = useDispatch();
   return (

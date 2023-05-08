@@ -4,20 +4,19 @@ import { RootState } from "../../redux/store";
 import logo from "../../media/logo.svg";
 import { UserType } from "../../models/userModels/IUserInfo";
 import { Link, useNavigate } from "react-router-dom";
-import { Cookies } from "react-cookie";
 import { TOKEN } from "../../config/types";
-
+import { useCookies } from "react-cookie";
 import accIcon from "../../media/accountLinkIcon.svg";
 import calendarIcon from "../../media/calendarIcon.svg";
 
 const Header = () => {
-  const cookie = new Cookies();
+  const [cookies, setCookie, removeCookie] = useCookies([TOKEN]);
 
   const userInfo = useSelector((state: RootState) => state.userInfo.userInfo);
 
   const navigate = useNavigate();
 
-  console.log(cookie.get(TOKEN));
+  console.log(cookies[TOKEN]);
 
   return (
     <Paper variant="header" sx={{ width: "100%" }}>
@@ -38,7 +37,7 @@ const Header = () => {
         >
           <Box
             onClick={() => {
-              if (cookie.get(TOKEN)) {
+              if (cookies[TOKEN]) {
                 navigate("/tours/all");
               }
             }}
@@ -47,7 +46,7 @@ const Header = () => {
               alignItems: "center",
               gap: "10px",
               justifyContent: "flex-start",
-              cursor: cookie.get(TOKEN) ? "pointer" : "",
+              cursor: cookies[TOKEN] ? "pointer" : "",
             }}
             className="header__logo"
           >
@@ -62,7 +61,7 @@ const Header = () => {
               Путь <br /> в Горы
             </Typography>
           </Box>
-          {cookie.get(TOKEN) && (
+          {cookies[TOKEN] && (
             <>
               {userInfo.typeUser === UserType.tourist && (
                 <Box sx={{ m: "0 30px", width: "890px" }}>

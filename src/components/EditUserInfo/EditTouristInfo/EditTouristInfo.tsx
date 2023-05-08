@@ -15,7 +15,6 @@ import Avatar from "../../Avatar/Avatar";
 import EditUserInfo from "../EditUserInfo";
 import { setTouristInfo } from "../../../API/touristAPI/setTouristInfo";
 import { useState, useEffect } from "react";
-import cloneDeep from "lodash/cloneDeep";
 import { useNavigate } from "react-router-dom";
 import { getFilters } from "../../../API/tourListAPI";
 
@@ -32,9 +31,7 @@ function EditTouristInfo() {
 
   const navigate = useNavigate();
 
-  const [editedTouristInfo, setEditedTouristInfo] = useState<ITouristInfo>(
-    cloneDeep(touristInfo)
-  );
+  const [editedTouristInfo, setEditedTouristInfo] = useState(touristInfo);
 
   const autocompleteChanged = (value: string) => {
     setEditedTouristInfo({
@@ -141,7 +138,7 @@ function EditTouristInfo() {
           setTouristInfo(
             editedTouristInfo,
             () => {
-              dispatch(setUserInfo(touristInfo));
+              dispatch(setUserInfo(editedTouristInfo));
               navigate("/tourist/lk");
             },
             () => {}

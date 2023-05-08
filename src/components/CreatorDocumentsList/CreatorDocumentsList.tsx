@@ -4,6 +4,7 @@ import CreatorDocumentItem from "./CreatorDocumentItem/CreatorDocumentItem";
 
 import SkeletonCreatorDocumentsList from "./SkeletonCreatorDocumentsList/SkeletonCreatorDocumentsList";
 import { CreatorDocuments } from "../../models/userModels/IUserInfo";
+import { baseUrl } from "../../config/config";
 
 type variant = "editInfo" | "displayInfo";
 
@@ -20,14 +21,19 @@ function CreatorDocumentsList({
   variant,
   loadingStatus,
 }: creatorDocumentsListProps) {
-  const handleDeleteFile = (lastModified: number) => {
-    setFiles(files.filter((item) => item.lastModified !== lastModified));
+  const handleDeleteFile = (documentName: string) => {
+    setFiles(files.filter((item) => item.documentName !== documentName));
   };
 
-  const handlerDownloadClick = (path: string) => {
+  const handlerDownloadClick = (file: CreatorDocuments) => {
     const link = document.createElement("a");
-    link.download = path;
-    link.href = "./" + path;
+    if (file.documentPath) {
+      link.href = baseUrl + "/" + file.documentPath;
+    } else {
+      link.href = window.URL.createObjectURL(file.file);
+    }
+    console.log("fileDownload", { file, link });
+    link.download = file.documentName;
     link.click();
   };
 
@@ -36,8 +42,8 @@ function CreatorDocumentsList({
     files.map((file, i) => {
       return (
         <CreatorDocumentItem
-          handleDeleteFile={(lastModified) => handleDeleteFile(lastModified)}
-          handlerDownloadClick={(path) => handlerDownloadClick(path)}
+          handleDeleteFile={(documentName) => handleDeleteFile(documentName)}
+          handlerDownloadClick={(file) => handlerDownloadClick(file)}
           key={i}
           file={file}
           variant={variant}
