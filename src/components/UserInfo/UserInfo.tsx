@@ -1,5 +1,3 @@
-import { useEffect, useState } from "react";
-import { getUserInfo } from "../../API/commonAPI";
 import {
   ITouristInfo,
   ICreatorInfo,
@@ -12,7 +10,6 @@ import userPhoto from "../../media/userPhoto.svg";
 
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
-import { setUserInfo } from "../../redux/UserInfo/UserInfoReducer";
 import UserInfoSkeleton from "./UserInfoSkeleton/UserInfoSkeleton";
 import CreatorDocumentsList from "../CreatorDocumentsList/CreatorDocumentsList";
 
@@ -177,7 +174,7 @@ function UserInfo({ header, fields, submitFuntion }: UserInfoProps) {
       <CancelBookingModal />
       <SuccessCancellingBookingModal />
       <SuccessBookingModal />
-      <DeleteTourModal />
+      {/* <DeleteTourModal /> */}
       <SuccessDeleteTourModal />
       <SuccessPayModal />
       <SuccessEditUserInfoModal />

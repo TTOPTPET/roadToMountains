@@ -5,6 +5,7 @@ import {
   RadioGroup,
   FormControlLabel,
   Radio,
+  Autocomplete,
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { ITouristInfo, Sex } from "../../../models/userModels/IUserInfo";
@@ -13,21 +14,37 @@ import { setUserInfo } from "../../../redux/UserInfo/UserInfoReducer";
 import Avatar from "../../Avatar/Avatar";
 import EditUserInfo from "../EditUserInfo";
 import { setTouristInfo } from "../../../API/touristAPI/setTouristInfo";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import cloneDeep from "lodash/cloneDeep";
 import { useNavigate } from "react-router-dom";
+import { getFilters } from "../../../API/tourListAPI";
 
 function EditTouristInfo() {
+  const [regions, setRegions] = useState<string[]>([]);
   const touristInfo = useSelector(
     (state: RootState) => state.userInfo.userInfo as ITouristInfo
   );
   let dispatch = useDispatch();
 
+  useEffect(() => {
+    getFilters((value) => setRegions(value.regions), undefined, false);
+  }, []);
+
   const navigate = useNavigate();
 
-  const [editedTouristInfo, setEditedTouristInfo] = useState(
+  const [editedTouristInfo, setEditedTouristInfo] = useState<ITouristInfo>(
     cloneDeep(touristInfo)
   );
+
+  const autocompleteChanged = (value: string) => {
+    setEditedTouristInfo({
+      ...editedTouristInfo,
+      dataUser: {
+        ...editedTouristInfo.dataUser,
+        region: value,
+      },
+    });
+  };
 
   return (
     <>
@@ -67,19 +84,19 @@ function EditTouristInfo() {
                 })
               }
             />
-            <TextField
-              placeholder="Регион проживания"
-              color="primary"
-              value={editedTouristInfo?.dataUser?.region}
-              onChange={(e) =>
-                setEditedTouristInfo({
-                  ...editedTouristInfo,
-                  dataUser: {
-                    ...editedTouristInfo?.dataUser,
-                    region: e.target.value,
-                  },
-                })
-              }
+            <Autocomplete
+              freeSolo
+              disableClearable
+              onChange={(e, value) => autocompleteChanged(value)}
+              value={editedTouristInfo?.dataUser?.region ?? ""}
+              options={regions}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  placeholder="Регион проживания"
+                  color="primary"
+                />
+              )}
             />
             <FormControl>
               <FormLabel id="demo-radio-buttons-group-label">Пол</FormLabel>
