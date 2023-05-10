@@ -32,8 +32,6 @@ function TourCalendarPage() {
   const [myTours, setMyTours] = useState<ITour[]>([]);
   const [viewMonth, setViewMonth] = useState<Dayjs>(dayjs());
 
-  const dispatch = useDispatch();
-
   useEffect(() => {
     getMyTours(
       (value) => {
@@ -61,16 +59,17 @@ function TourCalendarPage() {
             viewMonth={viewMonth}
             setViewMonth={setViewMonth}
           />
-          <Calendar viewMonth={viewMonth} publicTour={publicTour} />
+          <Calendar
+            viewMonth={viewMonth}
+            publicTour={publicTour}
+            setNewPublic={setNewPublic}
+          />
         </Grid>
         <Grid item xs={4}>
           <CalendarSidebar {...publicTour[0]} />
           {/* Это говнище будет работать по клику, так что потом просто логику малесь переделать */}
         </Grid>
       </Grid>
-      <Button onClick={() => dispatch(setModalActive("newPublicModal"))}>
-        Модалка
-      </Button>
       <NewPublicModal
         myTours={myTours}
         newPublic={newPublic}

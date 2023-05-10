@@ -73,8 +73,8 @@ const publicTourDefault: IPublicTour[] = [
     },
     tourAmount: 1500,
     tourDate: {
-      from: "2023-04-04T16:00:00.000Z",
-      to: "2023-04-14T16:00:00.000Z",
+      from: "2023-05-04T16:00:00.000Z",
+      to: "2023-05-14T16:00:00.000Z",
     },
     updateDeadline: "",
   },
