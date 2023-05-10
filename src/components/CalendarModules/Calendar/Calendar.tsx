@@ -1,15 +1,21 @@
 import { Box, Grid, Paper, TextField, Typography } from "@mui/material";
 import dayjs, { Dayjs } from "dayjs";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Dispatch, SetStateAction } from "react";
 import CalendarRenderObjects from "./CalendarRenderObjects/CalendarRenderObjects";
 import { IPublicTour } from "../../../models/calendarModels/IPublicTour";
+import { useDispatch } from "react-redux";
+import { setModalActive } from "../../../redux/Modal/ModalReducer";
+import { INewPublic } from "../../../models/calendarModels/INewPublic";
 
 type Props = {
   viewMonth: Dayjs;
   publicTour: IPublicTour[];
+  setNewPublic: Dispatch<SetStateAction<INewPublic>>;
 };
 
-export const Calendar = ({ viewMonth, publicTour }: Props) => {
+export const Calendar = ({ viewMonth, publicTour, setNewPublic }: Props) => {
+  const dispatch = useDispatch();
+
   return (
     <Paper variant="whiteBlue" sx={{ width: "100%", height: "65vh" }}>
       <Grid container columns={21} sx={{ height: "100%" }}>
@@ -44,7 +50,24 @@ export const Calendar = ({ viewMonth, publicTour }: Props) => {
         {[...Array(35)].map((_, index) => (
           <Grid item key={index} xs={3} sx={{ height: "16%" }}>
             <Box
+              onClick={() => {
+                console.log("setModalActive");
+                setNewPublic((newPublic) => ({
+                  ...newPublic,
+                  tourDate: {
+                    ...newPublic.tourDate,
+                    from: calcDayIndex(viewMonth)
+                      .add(index, "day")
+                      .toISOString(),
+                    to: calcDayIndex(viewMonth)
+                      .add(index + 7, "day")
+                      .toISOString(),
+                  },
+                }));
+                dispatch(setModalActive("newPublicModal"));
+              }}
               sx={{
+                cursor: "pointer",
                 height: "100%",
                 borderRight:
                   (index + 1) % 7 === 0 ? "none" : "1px solid #154162",
@@ -64,7 +87,10 @@ export const Calendar = ({ viewMonth, publicTour }: Props) => {
               >
                 {calcDayIndex(viewMonth).add(index, "day").format("D")}
               </Typography>
-              <CalendarRenderObjects />
+              <CalendarRenderObjects
+                publicTour={publicTour}
+                date={calcDayIndex(viewMonth).add(index, "day")}
+              />
             </Box>
           </Grid>
         ))}
