@@ -3,5 +3,5 @@ services:
   web-front-prod:
     image: registry.gitlab.com/f3120/road-to-mountains-frontend:prod$CI_COMMIT_SHA
     ports:
-      - 80:80
-      - 443:443
+      - 2000:80
+      # - 443:443
