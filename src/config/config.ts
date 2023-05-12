@@ -1,5 +1,5 @@
 // export const baseUrl = "http://192.168.18.130:5000";
-export const baseUrl = "http://185.154.193.68:5000";
+export const baseUrl = "http://localhost:5000";
 export const urlUser = `${baseUrl}/users`;
 export const adminUrl = `${baseUrl}/admin`;
 export const creatorUrl = `${baseUrl}/users/creator`;
