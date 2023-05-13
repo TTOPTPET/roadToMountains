@@ -5,15 +5,20 @@ import logo from "../../media/logo.svg";
 import { UserType } from "../../models/userModels/IUserInfo";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { TOKEN } from "../../config/types";
-import { useCookies } from "react-cookie";
+import { Cookies, useCookies } from "react-cookie";
 import accIcon from "../../media/accountLinkIcon.svg";
 import calendarIcon from "../../media/calendarIcon.svg";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const Header = () => {
-  const [cookies, setCookie, removeCookie] = useCookies([TOKEN]);
+  let cookie = new Cookies();
+
   const [searchData, setSearchData] = useState<string>("");
   let location = useLocation();
+
+  useEffect(() => {
+    console.log("cookiesUpD", cookie);
+  }, [cookie]);
 
   const userInfo = useSelector((state: RootState) => state.userInfo.userInfo);
 
@@ -38,16 +43,14 @@ const Header = () => {
         >
           <Box
             onClick={() => {
-              if (cookies[TOKEN]) {
-                navigate("/tours/all");
-              }
+              navigate("/tours/all");
             }}
             sx={{
               display: "flex",
               alignItems: "center",
               gap: "10px",
               justifyContent: "flex-start",
-              cursor: cookies[TOKEN] ? "pointer" : "",
+              cursor: "pointer",
             }}
             className="header__logo"
           >
@@ -62,7 +65,7 @@ const Header = () => {
               Путь <br /> в Горы
             </Typography>
           </Box>
-          {cookies[TOKEN] && (
+          {cookie.get(TOKEN) && (
             <>
               {userInfo.typeUser === UserType.tourist && (
                 <Box sx={{ m: "0 30px", width: "890px" }}>

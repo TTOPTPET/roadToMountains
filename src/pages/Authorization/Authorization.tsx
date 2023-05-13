@@ -20,11 +20,17 @@ import { loginUser, registerUser } from "../../API/authAPI";
 import { lightTurquoiseColor, redColor } from "../../config/MUI/color/color";
 import EnterMobileCodeModal from "../../components/Modals/EnterMobileCodeModal/EnterMobileCodeModal";
 import { useDispatch } from "react-redux";
-import { setModalActive } from "../../redux/Modal/ModalReducer";
+import {
+  setModalActive,
+  setModalInactive,
+} from "../../redux/Modal/ModalReducer";
 import { UserType } from "../../models/userModels/IUserInfo";
 import { useEffect } from "react";
 import { setUserInfo } from "../../redux/UserInfo/UserInfoReducer";
 import { getUserInfo } from "../../API/commonAPI";
+import { useNavigate } from "react-router-dom";
+import { REFRESH_TOKEN, TOKEN } from "../../config/types";
+import { Cookies } from "react-cookie";
 
 const registerTypes = [
   { id: UserType.creator, name: "туросоздатель" },
@@ -32,6 +38,8 @@ const registerTypes = [
 ];
 
 function Authorization() {
+  let cookie = new Cookies();
+
   const loginDefault: IUserLogin = {
     login: "",
     password: "",
@@ -53,6 +61,8 @@ function Authorization() {
   const [passwordErrorStatus, setPasswordErrorStatus] = useState(false);
 
   const dispatch = useDispatch();
+
+  const navigate = useNavigate();
 
   const autocompleteChanged = (value: string) => {
     setUserRegisterData({ ...userRegisterData, typeUser: value as UserType });
@@ -97,10 +107,15 @@ function Authorization() {
   const handlerLoginClick = () => {
     loginUser(
       userLoginData,
-      () => {
+      (resp) => {
+        cookie.set(TOKEN, resp.accessToken);
+        cookie.set(REFRESH_TOKEN, resp.refreshToken);
+        cookie.set("USER_ROLE", resp.role);
+        cookie.set("BAN_STATUS", resp.status);
         setErrAuth(false);
         setErrorMessage("");
         getUserInfo((value) => dispatch(setUserInfo(value)));
+        navigate("/tours/all");
       },
       (e) => {
         if (e.response.status >= 400 && e.response.status <= 500) {
@@ -225,7 +240,19 @@ function Authorization() {
           ) : (
             <Button onClick={handlerRegisterClick}>Регистрация</Button>
           )}
-          <EnterMobileCodeModal />
+          <EnterMobileCodeModal
+            successCallback={(resp) => {
+              cookie.set(TOKEN, resp.accessToken);
+              cookie.set(REFRESH_TOKEN, resp.refreshToken);
+              cookie.set("USER_ROLE", resp.role);
+              cookie.set("BAN_STATUS", resp.status);
+              getUserInfo((value) => {
+                dispatch(setUserInfo(value));
+              });
+              dispatch(setModalInactive("enterMobileCodeModal"));
+              navigate("/tours/all");
+            }}
+          />
 
           <Box sx={{ display: "flex", alignItems: "center", mt: "10px" }}>
             <Typography variant="caption">

@@ -22,15 +22,17 @@ function CreatorDocumentsList({
   variant,
   loadingStatus,
 }: creatorDocumentsListProps) {
-  const handleDeleteFile = (documentName: string) => {
-    deleteCreatorFile(
-      files.filter((item) => item.documentName === documentName)[0]
-        .documentPath,
-      () => {
-        setFiles(files.filter((item) => item.documentName !== documentName));
-      }
-    );
-    //setFiles(files.filter((item) => item.documentName !== documentName));
+  const handleDeleteFile = (documentPath: string, tempId: string) => {
+    if (documentPath) {
+      deleteCreatorFile(
+        files.find((item) => item.documentPath === documentPath).documentPath,
+        () => {
+          setFiles(files.filter((item) => item.documentPath !== documentPath));
+        }
+      );
+    } else {
+      setFiles(files.filter((item) => item?.tempId !== tempId));
+    }
   };
 
   const handlerDownloadClick = (file: CreatorDocuments) => {
@@ -50,7 +52,9 @@ function CreatorDocumentsList({
     files.map((file, i) => {
       return (
         <CreatorDocumentItem
-          handleDeleteFile={(documentName) => handleDeleteFile(documentName)}
+          handleDeleteFile={(documentPath, tempId) =>
+            handleDeleteFile(documentPath, tempId)
+          }
           handlerDownloadClick={(file) => handlerDownloadClick(file)}
           key={i}
           file={file}

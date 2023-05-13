@@ -15,7 +15,7 @@ const userAuthDefault: IAuthResponse = {
 
 export const confirmUserRegistration = async (
   data: { confirmationCode: number },
-  successCallback?: any,
+  successCallback?: (prop: any) => void,
   errorCallback?: () => void
 ) => {
   try {
@@ -23,11 +23,8 @@ export const confirmUserRegistration = async (
       urlUser + "/confirmRegistration",
       data
     );
-    cookie.set(TOKEN, response.data.accessToken);
-    cookie.set(REFRESH_TOKEN, response.data.refreshToken);
-    cookie.set("USER_ROLE", response.data.role);
-    cookie.set("BAN_STATUS", response.data.status);
-    successCallback();
+
+    successCallback && successCallback(response.data);
   } catch (e) {
     console.error(e);
     errorCallback && errorCallback();
@@ -46,10 +43,8 @@ export const loginUser = async (
   }
   try {
     let response = await axios.post<IAuthResponse>(urlUser + "/login", data);
-    cookie.set(TOKEN, response.data.accessToken);
-    cookie.set(REFRESH_TOKEN, response.data.refreshToken);
-    cookie.set("USER_ROLE", response.data.role);
-    cookie.set("BAN_STATUS", response.data.status);
+
+    successCallback && successCallback(response.data);
   } catch (e) {
     console.error(e);
     errorCallback && errorCallback(e);

@@ -17,7 +17,40 @@ interface IDefaultState {
   tourFields: IAddTour;
 }
 
-const defaultState: IDefaultState = { tourFields: undefined };
+const defaultState: IDefaultState = {
+  tourFields: {
+    tourName: "",
+    tourDescription: "",
+    category: "",
+    complexity: "",
+    region: "",
+    price: null,
+    photos: [],
+    prices: {
+      from: null,
+      to: null,
+    },
+    recommendedAge: {
+      from: null,
+      to: null,
+    },
+    mapPoints: [],
+    housingInclude: {
+      housingName: "",
+      housingAddress: "",
+      housingDescription: "",
+    },
+    insuranceInclude: {
+      insuranceNumber: null,
+      insuranceAmount: null,
+    },
+    recommendations: [],
+    tourServices: {
+      freeServices: [],
+      additionalServices: [],
+    },
+  },
+};
 
 const AddTourReducer = (state = defaultState, action: IAction) => {
   switch (action.type) {
@@ -29,7 +62,7 @@ const AddTourReducer = (state = defaultState, action: IAction) => {
     case actionTypes.CLEAR_TOUR_FIELDS:
       return {
         ...state,
-        tourFields: undefined,
+        tourFields: defaultState.tourFields,
       };
 
     default:

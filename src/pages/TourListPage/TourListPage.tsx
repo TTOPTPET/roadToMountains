@@ -33,7 +33,7 @@ function TourListPage() {
   }, []);
 
   useEffect(() => {
-    getToursSorted((search) => setTours(search), searchData, undefined, true);
+    getToursSorted((search) => setTours(search), searchData, undefined, false);
   }, []);
 
   useEffect(() => {

@@ -146,14 +146,14 @@ function EditTouristInfo() {
         }}
         header={"Привет, Турист!"}
         linkTo={"/tourist/lk"}
-        avatarComponent={
+        AvatarComponent={() => (
           <Avatar
             photoUrl={editedTouristInfo.photo}
             setUserPhoto={(photoUrl: string) =>
               setEditedTouristInfo({ ...editedTouristInfo, photo: photoUrl })
             }
           />
-        }
+        )}
       />
     </>
   );

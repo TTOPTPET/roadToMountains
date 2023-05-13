@@ -9,7 +9,7 @@ type editUserInfoProps = {
   submitFuntion: () => void;
   header: string;
   linkTo: string;
-  avatarComponent: JSX.Element;
+  AvatarComponent: () => JSX.Element;
 };
 
 function EditUserInfo({
@@ -17,7 +17,7 @@ function EditUserInfo({
   submitFuntion,
   header,
   linkTo,
-  avatarComponent,
+  AvatarComponent,
 }: editUserInfoProps) {
   return (
     <Box sx={{ mt: "95px" }}>
@@ -44,7 +44,9 @@ function EditUserInfo({
         </Box>
       </Box>
       <Box sx={{ mt: "10px", display: "flex", columnGap: "22px" }}>
-        <Box>{avatarComponent}</Box>
+        <Box>
+          <AvatarComponent />
+        </Box>
         <Box
           sx={{
             width: "700px",

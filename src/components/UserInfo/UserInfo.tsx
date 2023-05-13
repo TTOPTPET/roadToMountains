@@ -13,7 +13,10 @@ import { RootState } from "../../redux/store";
 import UserInfoSkeleton from "./UserInfoSkeleton/UserInfoSkeleton";
 import CreatorDocumentsList from "../CreatorDocumentsList/CreatorDocumentsList";
 
-import { setModalActive } from "../../redux/Modal/ModalReducer";
+import {
+  setModalActive,
+  setModalInactive,
+} from "../../redux/Modal/ModalReducer";
 import ErrorReportModal from "../Modals/ErrorReportModal/ErrorReportModal";
 import SuccessMessageSendModal from "../Modals/SuccessMessageSendModal/SuccessMessageSendModal";
 import CancelBookingModal from "../Modals/CancelBookingModal/CancelBookingModal";
@@ -25,6 +28,11 @@ import SuccessPayModal from "../Modals/SuccessPayModal/SuccessPayModal";
 import SuccessEditUserInfoModal from "../Modals/SuccessEditUserInfoModal/SuccessEditUserInfoModal";
 import EnterMobileCodeModal from "../Modals/EnterMobileCodeModal/EnterMobileCodeModal";
 import HelpButton from "../HelpButton/HelpButton";
+import { Cookies } from "react-cookie";
+import { useNavigate } from "react-router-dom";
+import { setUserInfo } from "../../redux/UserInfo/UserInfoReducer";
+import { getUserInfo } from "../../API/commonAPI";
+import { REFRESH_TOKEN, TOKEN } from "../../config/types";
 
 type UserInfoProps = {
   fields: JSX.Element;
@@ -38,6 +46,10 @@ function UserInfo({ header, fields, submitFuntion }: UserInfoProps) {
   const userInfo: ITouristInfo | ICreatorInfo = useSelector(
     (state: RootState) => state.userInfo.userInfo
   );
+
+  let cookie = new Cookies();
+
+  const navigate = useNavigate();
 
   const dispatch = useDispatch();
 
@@ -166,9 +178,6 @@ function UserInfo({ header, fields, submitFuntion }: UserInfoProps) {
           variant="displayInfo"
         />
       )}
-      <Button onClick={() => dispatch(setModalActive("enterMobileCodeModal"))}>
-        Открыть модалку
-      </Button>
       <ErrorReportModal />
       <SuccessMessageSendModal />
       <CancelBookingModal />
@@ -178,7 +187,19 @@ function UserInfo({ header, fields, submitFuntion }: UserInfoProps) {
       <SuccessDeleteTourModal />
       <SuccessPayModal />
       <SuccessEditUserInfoModal />
-      <EnterMobileCodeModal />
+      <EnterMobileCodeModal
+        successCallback={(resp) => {
+          cookie.set(TOKEN, resp.accessToken);
+          cookie.set(REFRESH_TOKEN, resp.refreshToken);
+          cookie.set("USER_ROLE", resp.role);
+          cookie.set("BAN_STATUS", resp.status);
+          getUserInfo((value) => {
+            dispatch(setUserInfo(value));
+          });
+          dispatch(setModalInactive("enterMobileCodeModal"));
+          navigate("/tours/all");
+        }}
+      />
       <HelpButton />
     </>
   );

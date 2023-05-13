@@ -7,7 +7,7 @@ import { CreatorDocuments } from "../../../models/userModels/IUserInfo";
 type variant = "editInfo" | "displayInfo";
 
 type creatorDocumentItemProps = {
-  handleDeleteFile?: (documentName: string) => void;
+  handleDeleteFile?: (documentPath: string, tempId: string) => void;
   handlerDownloadClick?: (file: CreatorDocuments) => void;
   file: CreatorDocuments;
   variant: variant;
@@ -59,7 +59,7 @@ function CreatorDocumentItem({
                 cursor: "pointer",
               }}
               onClick={() => {
-                handleDeleteFile(file.documentName);
+                handleDeleteFile(file?.documentPath, file?.tempId);
               }}
             />
           )}

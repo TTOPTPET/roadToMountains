@@ -16,6 +16,7 @@ declare module "@mui/material/Button" {
     fileInput: true;
     weakTextButton: true;
     arrowButton: true;
+    errorButton: true;
   }
 }
 
@@ -227,6 +228,13 @@ export const mainThemes = createTheme({
             borderRadius: "100%",
             height: "34px",
             padding: "0",
+          },
+        },
+        {
+          props: { variant: "errorButton" },
+          style: {
+            backgroundColor: redColor,
+            "&:hover": { backgroundColor: redColor },
           },
         },
       ],

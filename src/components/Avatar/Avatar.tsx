@@ -21,7 +21,7 @@ function Avatar({ photoUrl, setUserPhoto }: avatarProps) {
         file,
         (url) => setUserPhoto(url),
         () => {},
-        true
+        false
       );
     }
     event.target.value = null;

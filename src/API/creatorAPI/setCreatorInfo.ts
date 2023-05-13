@@ -10,6 +10,7 @@ let cookie = new Cookies();
 export const setCreatorInfo = async (
   data: ICreatorInfo,
   successCallback?: (prop: any) => void,
+  editedCallback?: (prop: any) => void,
   errorCallback?: () => void,
   useDefault?: boolean
 ) => {
@@ -37,7 +38,10 @@ export const setCreatorInfo = async (
       },
     });
     successCallback(response?.data);
-  } catch (e) {
+  } catch (e: any) {
+    if (e.response.status === 300) {
+      editedCallback && editedCallback(e.response.data);
+    }
     console.error(e);
     errorCallback && errorCallback();
   }

@@ -8,6 +8,7 @@ export enum StatusVerify {
   notVerified = "notVerified",
   verified = "verified",
   sendVerified = "sendVerified",
+  waitVerified = "waitVerified",
 }
 
 export enum Sex {
@@ -26,6 +27,7 @@ export interface CreatorDocuments {
   documentName: string;
   documentPath?: string;
   file?: File;
+  tempId?: string;
 }
 
 export interface ICreatorOOOFields {

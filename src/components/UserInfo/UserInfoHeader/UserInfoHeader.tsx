@@ -1,14 +1,15 @@
 import { Box, Typography, Button } from "@mui/material";
 import { DarkStyledTooltip } from "../../../config/MUI/styledComponents/StyledTooltip";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 
 import checked from "../../../media/checkedVerify.svg";
 import clock from "../../../media/clockVerify.svg";
 import alert from "../../../media/alertVerify.svg";
+import banIcon from "../../../media/ban-status-icon.svg";
 
 import {
   ITouristInfo,
@@ -16,6 +17,11 @@ import {
   StatusVerify,
   UserType,
 } from "../../../models/userModels/IUserInfo";
+import { Cookies } from "react-cookie";
+import { REFRESH_TOKEN, TOKEN } from "../../../config/types";
+import { redColor } from "../../../config/MUI/color/color";
+import { sendVerified } from "../../../API/creatorAPI/sendVerified";
+import { setUserInfo } from "../../../redux/UserInfo/UserInfoReducer";
 
 type UserInfoHeaderProps = {
   submitFuntion?: () => void;
@@ -30,6 +36,12 @@ function UserInfoHeader({
   linkTo,
   userInfo,
 }: UserInfoHeaderProps) {
+  const dispatch = useDispatch();
+
+  let cookie = new Cookies();
+
+  const navigate = useNavigate();
+
   console.log(title);
   return (
     <Box
@@ -72,9 +84,23 @@ function UserInfoHeader({
           </DarkStyledTooltip>
         ) : userInfo &&
           userInfo?.typeUser !== UserType.tourist &&
-          userInfo?.dataUser?.statusVerify === StatusVerify.notVerified ? (
+          userInfo?.banStatus ? (
           <DarkStyledTooltip
             title="Аккаунт заблокирован"
+            arrow
+            placement="bottom"
+          >
+            <img
+              src={banIcon}
+              alt="alert icon"
+              style={{ marginLeft: "15px" }}
+            />
+          </DarkStyledTooltip>
+        ) : userInfo &&
+          userInfo?.typeUser !== UserType.tourist &&
+          userInfo.dataUser?.statusVerify === StatusVerify.waitVerified ? (
+          <DarkStyledTooltip
+            title="Отправте данные на проверку"
             arrow
             placement="bottom"
           >
@@ -92,6 +118,19 @@ function UserInfoHeader({
         {userInfo && userInfo?.typeUser !== UserType.tourist && (
           <Button
             sx={{ mb: "10px" }}
+            onClick={() =>
+              sendVerified(() =>
+                dispatch(
+                  setUserInfo({
+                    ...userInfo,
+                    dataUser: {
+                      ...userInfo.dataUser,
+                      statusVerify: StatusVerify.sendVerified,
+                    },
+                  })
+                )
+              )
+            }
             disabled={
               userInfo?.dataUser?.statusVerify === StatusVerify.notVerified
                 ? false
@@ -103,6 +142,17 @@ function UserInfoHeader({
         )}
         <Button component={Link} to={linkTo}>
           Изменить
+        </Button>
+        <Button
+          variant="errorButton"
+          sx={{ mt: "10px" }}
+          onClick={() => {
+            cookie.remove(TOKEN);
+            cookie.remove(REFRESH_TOKEN);
+            navigate("/auth");
+          }}
+        >
+          Выйти
         </Button>
       </Box>
     </Box>

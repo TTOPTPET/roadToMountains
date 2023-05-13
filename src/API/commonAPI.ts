@@ -146,8 +146,11 @@ export const postUserAvatar = async (
     );
     return;
   }
+  const avatar = new FormData();
+  avatar.append("photo", data);
+
   try {
-    let response = await axios.post(urlUser + "/avatar ", data, {
+    let response = await axios.post(urlUser + "/avatar ", avatar, {
       headers: {
         Authorization: `Bearer ${cookie.get(TOKEN)}`,
       },

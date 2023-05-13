@@ -20,6 +20,7 @@ export const addTour = async (
     return;
   }
   try {
+    console.log("addTour", data);
     let formData = new FormData();
     formData.append("data", JSON.stringify(data));
     files.forEach((file) => {

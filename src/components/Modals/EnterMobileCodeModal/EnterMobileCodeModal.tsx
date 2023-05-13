@@ -18,8 +18,17 @@ import {
 } from "../../../redux/Modal/ModalReducer";
 import { RootState } from "../../../redux/store";
 import { setUserInfo } from "../../../redux/UserInfo/UserInfoReducer";
+import { REFRESH_TOKEN, TOKEN } from "../../../config/types";
+import { Cookies } from "react-cookie";
+import { useNavigate } from "react-router-dom";
 
-function EnterMobileCodeModal() {
+type Props = {
+  successCallback: (resp?: any) => void;
+};
+
+function EnterMobileCodeModal({ successCallback }: Props) {
+  let cookie = new Cookies();
+
   const [confirmCode, setConfirmCode] = useState<string>("");
 
   const activeModals = useSelector(
@@ -28,10 +37,11 @@ function EnterMobileCodeModal() {
 
   const dispatch = useDispatch();
 
+  const navigate = useNavigate();
+
   const handlerConfirmClick = () => {
-    confirmUserRegistration({ confirmationCode: +confirmCode }, () => {
-      getUserInfo((value) => dispatch(setUserInfo(value)));
-      dispatch(setModalInactive("enterMobileCodeModal"));
+    confirmUserRegistration({ confirmationCode: +confirmCode }, (resp) => {
+      successCallback(resp);
     });
   };
 

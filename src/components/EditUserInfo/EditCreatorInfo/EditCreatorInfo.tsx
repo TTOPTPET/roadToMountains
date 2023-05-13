@@ -29,6 +29,12 @@ import {
 import cloneDeep from "lodash/cloneDeep";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { v4 } from "uuid";
+import EnterMobileCodeModal from "../../Modals/EnterMobileCodeModal/EnterMobileCodeModal";
+import {
+  setModalActive,
+  setModalInactive,
+} from "../../../redux/Modal/ModalReducer";
 
 function EditCreatorInfo() {
   const creatorInfo = useSelector(
@@ -48,7 +54,11 @@ function EditCreatorInfo() {
     });
   };
 
-  const setInfoStatus = (statusVerify: StatusVerify, timeToSend: string) => {
+  const setInfoStatus = (
+    statusVerify: StatusVerify,
+    timeToSend: string,
+    changeStatus: boolean
+  ) => {
     dispatch(
       setUserInfo({
         ...creatorInfo,
@@ -56,6 +66,7 @@ function EditCreatorInfo() {
           ...creatorInfo?.dataUser,
           statusVerify,
           timeToSend,
+          changeStatus,
         },
       })
     );
@@ -68,10 +79,10 @@ function EditCreatorInfo() {
       let files: CreatorDocuments[] = Array.from(event.target.files).map(
         (file) => {
           // TODO: проверить размер файла
-          return { documentName: file.name, file };
+          return { documentName: file.name, file, tempId: v4() };
         }
       );
-      setFiles(editedCreatorInfo?.dataUser?.documents.concat(files));
+      setFiles(editedCreatorInfo?.dataUser?.documents?.concat(files) || files);
       event.target.value = null;
     }
   };
@@ -80,7 +91,8 @@ function EditCreatorInfo() {
     useState<ICreatorInfo>(creatorInfo);
 
   useEffect(() => {
-    setEditedCreatorInfo(creatorInfo);
+    JSON.stringify(editedCreatorInfo) === JSON.stringify({ dataUser: {} }) &&
+      setEditedCreatorInfo(creatorInfo);
   }, [creatorInfo]);
 
   return (
@@ -191,31 +203,63 @@ function EditCreatorInfo() {
           setCreatorInfo(
             editedCreatorInfo,
             (resp) => {
-              setInfoStatus(resp?.data?.statusVerify, resp?.data?.timeToSend);
+              setInfoStatus(
+                resp?.statusVerify,
+                resp?.timeToSend,
+                resp?.changeStatus
+              );
               dispatch(
                 setUserInfo({
                   ...editedCreatorInfo,
                   dataUser: {
                     ...editedCreatorInfo.dataUser,
-                    documents: resp?.data?.documents,
+                    documents: resp?.documents,
                   },
                 })
               );
               navigate("/creator/lk");
             },
-            () => {}
+            (resp) => {
+              dispatch(
+                setUserInfo({
+                  ...editedCreatorInfo,
+                  email: creatorInfo.email,
+                  phone: creatorInfo.phone,
+                  dataUser: {
+                    ...editedCreatorInfo.dataUser,
+                    documents: resp?.documents,
+                  },
+                })
+              );
+              dispatch(setModalActive("enterMobileCodeModal"));
+            }
           )
         }
         header={"Личный кабинет"}
         linkTo={"/creator/lk"}
-        avatarComponent={
+        AvatarComponent={() => (
           <Avatar
             photoUrl={editedCreatorInfo.photo}
             setUserPhoto={(photoUrl: string) =>
               setEditedCreatorInfo({ ...editedCreatorInfo, photo: photoUrl })
             }
           />
-        }
+        )}
+      />
+      <EnterMobileCodeModal
+        successCallback={(resp) => {
+          dispatch(
+            setUserInfo({
+              ...editedCreatorInfo,
+              dataUser: {
+                ...editedCreatorInfo.dataUser,
+                documents: creatorInfo.dataUser.documents,
+              },
+            })
+          );
+          dispatch(setModalInactive("enterMobileCodeModal"));
+          navigate("/creator/lk");
+        }}
       />
     </>
   );

@@ -98,7 +98,7 @@ export const TourInfo: FC<ITourInfoProps> = ({
               </SvgIcon>
             }
           >
-            {tourInfo?.photos === undefined ? (
+            {!tourInfo?.photos?.length ? (
               images.filter((image) => image?.src === undefined).length !==
               0 ? (
                 images
@@ -215,7 +215,7 @@ export const TourInfo: FC<ITourInfoProps> = ({
           )}
           <Typography variant={"h6"}>Проживание</Typography>
           <Typography variant={"caption"}>
-            {tourInfo?.housingInclude !== null
+            {tourInfo?.housingInclude?.housingName
               ? (tourInfo?.housingInclude?.housingName ?? "Отель") +
                 ", " +
                 (tourInfo?.housingInclude?.housingAddress ?? "Адрес") +
@@ -225,7 +225,7 @@ export const TourInfo: FC<ITourInfoProps> = ({
           </Typography>
           <Typography variant={"h6"}>Страхование</Typography>
           <Typography variant={"caption"}>
-            {tourInfo?.insuranceInclude !== null
+            {tourInfo?.insuranceInclude.insuranceNumber
               ? `Страхование включено, до ${
                   tourInfo?.insuranceInclude?.insuranceAmount ?? 0
                 }₽`
