@@ -30,9 +30,9 @@ export const TourInfo: FC<ITourInfoProps> = ({
     switch (key) {
       case "free": {
         return tourInfo?.tourServices?.freeServices &&
-          tourInfo?.tourServices?.freeServices.length !== 0
+          tourInfo?.tourServices?.freeServices?.length !== 0
           ? tourInfo?.tourServices?.freeServices.map((service, index) =>
-              index === tourInfo?.tourServices?.freeServices.length - 1
+              index === tourInfo?.tourServices?.freeServices?.length - 1
                 ? `${service}`
                 : `${service} • `
             )
@@ -40,9 +40,9 @@ export const TourInfo: FC<ITourInfoProps> = ({
       }
       case "additional": {
         return tourInfo?.tourServices?.additionalServices &&
-          tourInfo?.tourServices?.additionalServices.length !== 0
+          tourInfo?.tourServices?.additionalServices?.length !== 0
           ? tourInfo?.tourServices?.additionalServices.map((service, index) =>
-              index === tourInfo?.tourServices?.additionalServices.length - 1
+              index === tourInfo?.tourServices?.additionalServices?.length - 1
                 ? `${service}`
                 : `${service} • `
             )
@@ -50,9 +50,9 @@ export const TourInfo: FC<ITourInfoProps> = ({
       }
       case "recommend": {
         return tourInfo?.recommendations &&
-          tourInfo?.recommendations.length !== 0
+          tourInfo?.recommendations?.length !== 0
           ? tourInfo?.recommendations.map((service, index) =>
-              index === tourInfo?.recommendations.length - 1
+              index === tourInfo?.recommendations?.length - 1
                 ? `${service}`
                 : `${service} • `
             )
@@ -225,7 +225,7 @@ export const TourInfo: FC<ITourInfoProps> = ({
           </Typography>
           <Typography variant={"h6"}>Страхование</Typography>
           <Typography variant={"caption"}>
-            {tourInfo?.insuranceInclude.insuranceNumber
+            {tourInfo?.insuranceInclude?.insuranceNumber
               ? `Страхование включено, до ${
                   tourInfo?.insuranceInclude?.insuranceAmount ?? 0
                 }₽`

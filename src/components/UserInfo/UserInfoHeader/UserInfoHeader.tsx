@@ -18,7 +18,12 @@ import {
   UserType,
 } from "../../../models/userModels/IUserInfo";
 import { Cookies } from "react-cookie";
-import { REFRESH_TOKEN, TOKEN } from "../../../config/types";
+import {
+  BAN_STATUS,
+  REFRESH_TOKEN,
+  TOKEN,
+  USER_ROLE,
+} from "../../../config/types";
 import { redColor } from "../../../config/MUI/color/color";
 import { sendVerified } from "../../../API/creatorAPI/sendVerified";
 import { setUserInfo } from "../../../redux/UserInfo/UserInfoReducer";
@@ -149,6 +154,8 @@ function UserInfoHeader({
           onClick={() => {
             cookie.remove(TOKEN);
             cookie.remove(REFRESH_TOKEN);
+            cookie.remove(USER_ROLE);
+            cookie.remove(BAN_STATUS);
             navigate("/auth");
           }}
         >

@@ -18,7 +18,7 @@ import "react-date-range/dist/theme/default.css";
 import { DateRange } from "react-date-range";
 import { tourStepsMap } from "../../../pages/TourPage/TourPage";
 import * as locales from "react-date-range/dist/locale";
-import { registrateTour } from "../../../API/touristAPI/registrateTour";
+import { booking } from "../../../API/touristAPI/booking";
 import isBetween from "dayjs/plugin/isBetween";
 import { ITourBookingDate } from "../../../models/tourModels/ITourBookingDate";
 
@@ -64,10 +64,10 @@ export const TourBooking: FC<ITourBookingProps> = ({
   const [errSize, setErrSize] = useState<boolean>(false);
   useEffect(() => {
     if (bookingData?.size >= 50) {
-      setBookingData({
-        ...bookingData,
+      setBookingData((data) => ({
+        ...data,
         size: 50,
-      });
+      }));
     }
     if (bookingData?.size > selectedDate?.bookingNumber) {
       setErrSize(true);
@@ -267,14 +267,14 @@ export const TourBooking: FC<ITourBookingProps> = ({
             <Stack direction={"row"} gap={2}>
               <Button
                 onClick={() => {
-                  registrateTour(true, bookingData, undefined);
+                  booking(true, bookingData, undefined);
                 }}
               >
                 Оплатить
               </Button>
               <Button
                 onClick={() => {
-                  registrateTour(false, bookingData, undefined);
+                  booking(false, bookingData, undefined);
                 }}
               >
                 Оплатить потом

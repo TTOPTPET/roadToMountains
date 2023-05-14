@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useState, useEffect } from "react";
 import { tourStepsMap } from "../TourPage";
 import { TourFirstPage } from "../TourFirstPage/TourFirstPage";
 import { TourSecondPage } from "../TourSecondPage/TourSecondPage";
@@ -35,20 +35,25 @@ export const TourSteps: FC<TourStepsProps> = ({
   bookingDate,
 }) => {
   const [images, setImage] = useState<any[]>([]);
-  const [bookingData, setBookingData] = useState<ITourBooking>({
-    ...tourBookingDefault,
-    tourDate: {
-      from: dayjs(new Date()).toISOString(),
-      to: dayjs(tourInfo?.nearestDate?.to ?? new Date())
-        .add(-1, "day")
-        .toISOString(),
-    },
-    creatorId: tourInfo?.creatorId,
-    tourId: tourInfo?.id,
-  });
+  const [bookingData, setBookingData] =
+    useState<ITourBooking>(tourBookingDefault);
   const [selectedDate, setSelectedDate] = useState<ITourBookingDate>(
     bookingDate[0]
   );
+
+  useEffect(() => {
+    setBookingData((data) => ({
+      ...data,
+      tourDate: {
+        from: dayjs(new Date()).toISOString(),
+        to: dayjs(tourInfo?.nearestDate?.to ?? new Date())
+          .add(-1, "day")
+          .toISOString(),
+      },
+      creatorId: tourInfo?.creatorId,
+      tourId: tourInfo?.id,
+    }));
+  }, [tourInfo]);
 
   switch (page) {
     case tourStepsMap.first: {

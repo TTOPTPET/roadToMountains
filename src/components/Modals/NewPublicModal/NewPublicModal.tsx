@@ -171,7 +171,13 @@ export default function NewPublicModal({
                 value={dayjs(newPublic.meetingTime)}
                 ampm={false}
                 onChange={(newValue) =>
-                  setNewPublic({ ...newPublic, meetingTime: "12:12:12" })
+                  setNewPublic({
+                    ...newPublic,
+                    meetingTime:
+                      !isNaN(+newValue) && newValue
+                        ? newValue?.toISOString()
+                        : "",
+                  })
                 }
                 renderInput={(props) => (
                   <TextField

@@ -38,16 +38,16 @@ function TourCalendarPage() {
         setMyTours(value);
       },
       undefined,
-      true
+      false
     );
   }, []);
 
   useEffect(() => {
     getPublicTours(
-      { calendarDate: "2018-04-04T16:00:00.000Z" },
+      { calendarDate: viewMonth.toISOString() },
       (value) => setPublicTour(value),
       undefined,
-      true
+      false
     );
   }, []);
 

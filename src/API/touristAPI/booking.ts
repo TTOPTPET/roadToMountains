@@ -6,7 +6,7 @@ import { ITourBooking } from "../../models/tourModels/ITourBooking";
 
 let cookie = new Cookies();
 
-export const registrateTour = async (
+export const booking = async (
   momentPay: boolean,
   data: ITourBooking,
   errorCallback?: () => void
