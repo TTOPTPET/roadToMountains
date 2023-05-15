@@ -24,7 +24,7 @@ export const addTour = async (
     let formData = new FormData();
     formData.append("data", JSON.stringify(data));
     files.forEach((file) => {
-      formData.append("creatorPhoto", file);
+      formData.append("tourPhoto", file);
     });
     let respone = await axios.post(creatorUrl + "/tour", formData, {
       headers: {
