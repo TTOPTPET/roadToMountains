@@ -25,7 +25,7 @@ function TouristInfo() {
         <>
           <UserInfoHeader
             title={"Привет, Турист!"}
-            linkTo="/tourist/editInfo"
+            linkTo="/tourist/lk/editInfo"
             userInfo={TouristInfo}
           />
         </>

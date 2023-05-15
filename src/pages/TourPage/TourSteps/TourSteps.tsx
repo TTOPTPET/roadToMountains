@@ -45,10 +45,8 @@ export const TourSteps: FC<TourStepsProps> = ({
     setBookingData((data) => ({
       ...data,
       tourDate: {
-        from: dayjs(new Date()).toISOString(),
-        to: dayjs(tourInfo?.nearestDate?.to ?? new Date())
-          .add(-1, "day")
-          .toISOString(),
+        from: dayjs().toISOString(),
+        to: dayjs(tourInfo?.nearestDate?.to).add(-1, "day").toISOString(),
       },
       creatorId: tourInfo?.creatorId,
       tourId: tourInfo?.id,

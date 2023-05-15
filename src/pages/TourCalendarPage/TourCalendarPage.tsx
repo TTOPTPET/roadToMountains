@@ -49,7 +49,7 @@ function TourCalendarPage() {
       undefined,
       false
     );
-  }, []);
+  }, [viewMonth]);
 
   return (
     <Box pt={10}>
@@ -66,7 +66,7 @@ function TourCalendarPage() {
           />
         </Grid>
         <Grid item xs={4}>
-          <CalendarSidebar {...publicTour[0]} />
+          <CalendarSidebar {...newPublic} />
           {/* Это говнище будет работать по клику, так что потом просто логику малесь переделать */}
         </Grid>
       </Grid>

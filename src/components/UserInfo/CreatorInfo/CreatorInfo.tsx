@@ -23,7 +23,7 @@ function CreatorInfo() {
         <>
           <UserInfoHeader
             title={"Личный кабинет"}
-            linkTo="/creator/editInfo"
+            linkTo="/creator/lk/editInfo"
             userInfo={CreatorInfo}
           />
         </>

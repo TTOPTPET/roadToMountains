@@ -85,7 +85,7 @@ function TourCardContentCreatorLk({
           justifyContent={"flex-end"}
           className="tour-card__button-edit"
         >
-          <Button component={Link} to={`/creator/lk/edit/${tour?.tourId}`}>
+          <Button component={Link} to={`/creator/editTour/${tour?.tourId}`}>
             Редактировать
           </Button>
         </Box>

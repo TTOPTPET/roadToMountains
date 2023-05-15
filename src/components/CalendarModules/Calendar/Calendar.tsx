@@ -51,6 +51,12 @@ export const Calendar = ({ viewMonth, publicTour, setNewPublic }: Props) => {
           <Grid item key={index} xs={3} sx={{ height: "16%" }}>
             <Box
               onClick={() => {
+                if (
+                  calcDayIndex(viewMonth).add(index, "day").month() !==
+                  viewMonth.month()
+                ) {
+                  return;
+                }
                 console.log("setModalActive");
                 setNewPublic((newPublic) => ({
                   ...newPublic,
@@ -67,7 +73,9 @@ export const Calendar = ({ viewMonth, publicTour, setNewPublic }: Props) => {
                 dispatch(setModalActive("newPublicModal"));
               }}
               sx={{
-                cursor: "pointer",
+                cursor:
+                  calcDayIndex(viewMonth).add(index, "day").month() ===
+                    viewMonth.month() && "pointer",
                 height: "100%",
                 borderRight:
                   (index + 1) % 7 === 0 ? "none" : "1px solid #154162",
@@ -82,13 +90,14 @@ export const Calendar = ({ viewMonth, publicTour, setNewPublic }: Props) => {
                   right: "10px",
                   opacity:
                     calcDayIndex(viewMonth).add(index, "day").month() !==
-                      viewMonth.month() && 0.6,
+                      viewMonth.month() && 0,
                 }}
               >
                 {calcDayIndex(viewMonth).add(index, "day").format("D")}
               </Typography>
               <CalendarRenderObjects
                 publicTour={publicTour}
+                setNewPublic={setNewPublic}
                 date={calcDayIndex(viewMonth).add(index, "day")}
               />
             </Box>

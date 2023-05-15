@@ -1,41 +1,34 @@
 import dayjs, { Dayjs } from "dayjs";
 import { IPublicTour } from "../../../../models/calendarModels/IPublicTour";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Dispatch, SetStateAction } from "react";
 import { Box, Paper, Typography } from "@mui/material";
 import {
   darkBlueColor,
   darkTurquoiseColor,
   lightTurquoiseColor,
 } from "../../../../config/MUI/color/color";
+import { INewPublic } from "../../../../models/calendarModels/INewPublic";
+import { setModalActive } from "../../../../redux/Modal/ModalReducer";
+import { useDispatch } from "react-redux";
 
-type Props = { publicTour: IPublicTour[]; date: Dayjs };
+type Props = {
+  publicTour: IPublicTour[];
+  date: Dayjs;
+  setNewPublic: Dispatch<SetStateAction<INewPublic>>;
+};
 
-export default function CalendarRenderObjects({ publicTour, date }: Props) {
-  // useEffect(() => {
-  //   publicTour.forEach((tour) => {
-  //     if (date.isBetween(tour.tourDate.from, tour.tourDate.to, "date", "[]")) {
-  //       setToursThisDay((tours) =>
-  //         tours
-  //           .concat(tour)
-  //           .sort(
-  //             (tour1, tour2) =>
-  //               dayjs(tour1.tourDate.from).unix() -
-  //               dayjs(tour2.tourDate.from).unix()
-  //           )
-  //       );
-  //     } else if(dayjs(tour.tourDate.from).isAfter()){false}
-  //   });
-  //   return () => {
-  //     setToursThisDay([]);
-  //   };
-  // }, [publicTour, date]);
-
+export default function CalendarRenderObjects({
+  publicTour,
+  date,
+  setNewPublic,
+}: Props) {
   return (
     <Box
       key={date.toString()}
       sx={{
         position: "absolute",
-        top: "32px",
+        top: 0,
+        pt: "32px",
         left: 0,
         width: "calc(100% + 2px)",
         height: "100%",
@@ -49,6 +42,10 @@ export default function CalendarRenderObjects({ publicTour, date }: Props) {
         ) {
           return (
             <Box
+              onClick={(e) => {
+                e.stopPropagation();
+                setNewPublic(tour as INewPublic);
+              }}
               sx={{
                 borderTopLeftRadius:
                   date.isSame(tour.tourDate.from, "D") && "10px",
