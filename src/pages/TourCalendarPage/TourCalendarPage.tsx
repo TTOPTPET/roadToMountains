@@ -74,6 +74,7 @@ function TourCalendarPage() {
         myTours={myTours}
         newPublic={newPublic}
         setNewPublic={setNewPublic}
+        defaultPublic={NewPublicDefault}
       />
     </Box>
   );

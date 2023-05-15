@@ -57,20 +57,17 @@ export const Calendar = ({ viewMonth, publicTour, setNewPublic }: Props) => {
                 ) {
                   return;
                 }
-                console.log("setModalActive");
-                setNewPublic((newPublic) => ({
-                  ...newPublic,
-                  tourDate: {
-                    ...newPublic.tourDate,
-                    from: calcDayIndex(viewMonth)
+                dispatch(
+                  setModalActive("newPublicModal", {
+                    newPublic: true,
+                    dateFrom: calcDayIndex(viewMonth)
                       .add(index, "day")
                       .toISOString(),
-                    to: calcDayIndex(viewMonth)
+                    dateTo: calcDayIndex(viewMonth)
                       .add(index + 7, "day")
                       .toISOString(),
-                  },
-                }));
-                dispatch(setModalActive("newPublicModal"));
+                  })
+                );
               }}
               sx={{
                 cursor:

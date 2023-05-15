@@ -17,6 +17,7 @@ type TourCardProps = {
 };
 
 function TourCard({ tour, tourCardType, myTours, setMyTours }: TourCardProps) {
+  console.log(tour);
   return (
     <Box
       className="tour_card"
