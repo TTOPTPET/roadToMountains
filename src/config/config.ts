@@ -1,5 +1,4 @@
-export const baseUrl = "http://185.154.193.68:5000";
-// export const baseUrl = "http://localhost:5000";
+export const baseUrl = import.meta.env.VITE_APP_BASE_URL;
 export const urlUser = `${baseUrl}/users`;
 export const adminUrl = `${baseUrl}/admin`;
 export const creatorUrl = `${baseUrl}/users/creator`;
