@@ -138,11 +138,7 @@ export const getToursSorted = async (
     return;
   }
   try {
-    let response = await axios.post<ITour[]>(urlTour + "/search", data, {
-      headers: {
-        Authorization: `Bearer ${cookie.get(TOKEN)}`,
-      },
-    });
+    let response = await axios.post<ITour[]>(urlTour + "/search", data, {});
     successCallback(response?.data);
   } catch (e) {
     console.error(e);

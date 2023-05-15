@@ -10,6 +10,7 @@ import {
 import { urlUser } from "../config/config";
 import { TOKEN } from "../config/types";
 import { Cookies } from "react-cookie";
+import imageCompression from "browser-image-compression";
 
 let cookie = new Cookies();
 
@@ -56,8 +57,11 @@ const userInfoDefault: ICreatorInfo = {
   createAt: "10-10-2010",
   dataUser: {
     documents: [
-      { name: "123123", docUrl: "asjkdha", lastModified: 123123 },
-      { name: "qwerty", docUrl: "nvmc,x.", lastModified: 1231233123123 },
+      { documentName: "123123", documentPath: "asjkdha" },
+      {
+        documentName: "qwerty",
+        documentPath: "nvmc,x.",
+      },
     ],
     dataVerify: "123",
     creatorType: CreatorType.IP,
@@ -147,7 +151,12 @@ export const postUserAvatar = async (
     return;
   }
   const avatar = new FormData();
-  avatar.append("photo", data);
+  const resizedFile: File = await imageCompression(data, {
+    maxSizeMB: 0.3,
+    maxWidthOrHeight: 1080,
+    useWebWorker: true,
+  });
+  avatar.append("photo", resizedFile);
 
   try {
     let response = await axios.post(urlUser + "/avatar ", avatar, {

@@ -33,6 +33,7 @@ import { useNavigate } from "react-router-dom";
 import { setUserInfo } from "../../redux/UserInfo/UserInfoReducer";
 import { getUserInfo } from "../../API/commonAPI";
 import { REFRESH_TOKEN, TOKEN } from "../../config/types";
+import { baseUrl } from "../../config/config";
 
 type UserInfoProps = {
   fields: JSX.Element;
@@ -100,7 +101,7 @@ function UserInfo({ header, fields, submitFuntion }: UserInfoProps) {
                 >
                   {userInfo && userInfo?.photo ? (
                     <MuiAvatar
-                      src={userInfo?.photo}
+                      src={baseUrl + "/" + userInfo?.photo}
                       alt="user avatar"
                       sx={{ width: "140px", height: "140px" }}
                     />

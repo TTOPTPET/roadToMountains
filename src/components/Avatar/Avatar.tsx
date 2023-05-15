@@ -3,6 +3,7 @@ import { darkTurquoiseColor } from "../../config/MUI/color/color";
 import addPhotoIcon from "../../media/plusIcon.svg";
 import editImageIcon from "../../media/iconEditImage.png";
 import { postUserAvatar } from "../../API/commonAPI";
+import { baseUrl } from "../../config/config";
 
 type avatarProps = {
   photoUrl: string;
@@ -43,8 +44,8 @@ function Avatar({ photoUrl, setUserPhoto }: avatarProps) {
       >
         {photoUrl ? (
           <MuiAvatar
-            alt={photoUrl}
-            src={photoUrl}
+            alt={"avatar"}
+            src={baseUrl + "/" + photoUrl}
             sx={{ width: "140px", height: "140px" }}
           />
         ) : (

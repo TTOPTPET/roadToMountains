@@ -21,12 +21,12 @@ export const setCreatorInfo = async (
   try {
     let formData = new FormData();
     let copyDataUser = _.cloneDeep(data);
-    copyDataUser.dataUser.documents.forEach((doc) => {
+    copyDataUser?.dataUser?.documents?.forEach((doc) => {
       doc.file && formData.append("creatorDocuments", doc.file);
     });
     //Перемещение dataUser в корень
-    const dataUser = copyDataUser.dataUser;
-    delete copyDataUser.dataUser;
+    const dataUser = copyDataUser?.dataUser;
+    delete copyDataUser?.dataUser;
     copyDataUser = Object.assign(copyDataUser, dataUser);
     //
     formData.append("dataUser", JSON.stringify(copyDataUser));
@@ -39,8 +39,8 @@ export const setCreatorInfo = async (
     });
     successCallback(response?.data);
   } catch (e: any) {
-    if (e.response.status === 300) {
-      editedCallback && editedCallback(e.response.data);
+    if (e?.response?.status === 300) {
+      editedCallback && editedCallback(e.response?.data);
     }
     console.error(e);
     errorCallback && errorCallback();
