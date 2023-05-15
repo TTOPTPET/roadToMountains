@@ -46,7 +46,7 @@ function InfoFieldsCreator({ creatorInfo }: fieldsCreatorProps) {
               {fieldsOOO.map((field, i) => {
                 return (
                   creatorInfo?.dataUser?.creatorType === CreatorType.OOO && (
-                    <Typography variant="h6">
+                    <Typography variant="h6" key={field}>
                       {fromModelsToFieldsName.get(field)}:
                     </Typography>
                   )
@@ -64,7 +64,7 @@ function InfoFieldsCreator({ creatorInfo }: fieldsCreatorProps) {
               {fieldsOOO.map((field, i) => {
                 return (
                   creatorInfo?.dataUser?.creatorType === CreatorType.OOO && (
-                    <Typography variant="caption">
+                    <Typography variant="caption" key={field}>
                       {creatorInfo?.dataUser?.fieldsCreator?.[field]}
                     </Typography>
                   )
@@ -94,7 +94,7 @@ function InfoFieldsCreator({ creatorInfo }: fieldsCreatorProps) {
               {fieldsIP.map((field, i) => {
                 return (
                   creatorInfo?.dataUser?.creatorType === CreatorType.IP && (
-                    <Typography variant="h6">
+                    <Typography variant="h6" key={field}>
                       {fromModelsToFieldsName.get(field)}
                     </Typography>
                   )
@@ -112,7 +112,7 @@ function InfoFieldsCreator({ creatorInfo }: fieldsCreatorProps) {
               {fieldsIP.map((field, i) => {
                 return (
                   creatorInfo?.dataUser?.creatorType === CreatorType.IP && (
-                    <Typography variant="caption">
+                    <Typography variant="caption" key={field}>
                       {creatorInfo?.dataUser?.fieldsCreator?.[field]}
                     </Typography>
                   )
@@ -141,7 +141,7 @@ function InfoFieldsCreator({ creatorInfo }: fieldsCreatorProps) {
               {fieldsSELF.map((field, i) => {
                 return (
                   creatorInfo?.dataUser?.creatorType === CreatorType.SELF && (
-                    <Typography variant="h6">
+                    <Typography variant="h6" key={field}>
                       {fromModelsToFieldsName.get(field)}
                     </Typography>
                   )
@@ -159,7 +159,7 @@ function InfoFieldsCreator({ creatorInfo }: fieldsCreatorProps) {
               {fieldsSELF.map((field, i) => {
                 return (
                   creatorInfo?.dataUser?.creatorType === CreatorType.SELF && (
-                    <Typography variant="caption">
+                    <Typography variant="caption" key={field}>
                       {creatorInfo?.dataUser?.fieldsCreator?.[field]}
                     </Typography>
                   )

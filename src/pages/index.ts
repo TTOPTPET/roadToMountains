@@ -9,6 +9,8 @@ import TouristLk from "./TouristLk/TouristLk";
 import TourListPage from "./TourListPage/TourListPage";
 import AddTourPage from "./AddTourPage/AddTourPage";
 import StartPage from "./StartPage/StartPage";
+import EditCreatorInfoPage from "./EditCreatorInfoPage/EditCreatorInfoPage";
+import EditTouristInfoPage from "./EditTouristInfoPage/EditTouristInfoPage";
 
 export {
   AdminPage,
@@ -22,4 +24,6 @@ export {
   TourListPage,
   AddTourPage,
   StartPage,
+  EditCreatorInfoPage,
+  EditTouristInfoPage,
 };

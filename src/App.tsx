@@ -4,7 +4,6 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Container, ThemeProvider } from "@mui/material";
 
 import { mainThemes } from "./config/MUI/themes/mainTheme/mainTheme";
-// import Box from "@mui/materialBox";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import {
@@ -19,18 +18,17 @@ import {
   TourListPage,
   AddTourPage,
   StartPage,
+  EditCreatorInfoPage,
+  EditTouristInfoPage,
 } from "./pages";
-import NavTool from "./components/NavTool/NavTool";
-import EditCreatorInfo from "./components/EditUserInfo/EditCreatorInfo/EditCreatorInfo";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "./redux/store";
-import { UserType } from "./models/userModels/IUserInfo";
-import EditTouristInfo from "./components/EditUserInfo/EditTouristInfo/EditTouristInfo";
+
+import { useDispatch } from "react-redux";
 import TourPage from "./pages/TourPage/TourPage";
 import { useEffect } from "react";
 import { getUserInfo } from "./API/commonAPI";
 import { setUserInfo } from "./redux/UserInfo/UserInfoReducer";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
+import NavTool from "./components/NavTool/NavTool";
 
 function App() {
   dayjs.locale("ru");
@@ -62,23 +60,23 @@ function App() {
               }
             />
             <Route
-              path={"/creator/editInfo"}
+              path={"/creator/lk/editInfo"}
               element={
                 <ProtectedRoute>
-                  <EditCreatorInfo />
+                  <EditCreatorInfoPage />
                 </ProtectedRoute>
               }
             />
             <Route
-              path={"/tourist/editInfo"}
+              path={"/tourist/lk/editInfo"}
               element={
                 <ProtectedRoute>
-                  <EditTouristInfo />
+                  <EditTouristInfoPage />
                 </ProtectedRoute>
               }
             />
             <Route
-              path={"/creator/lk/add"}
+              path={"/creator/addTour"}
               element={
                 <ProtectedRoute>
                   <AddTourPage isEditing={false} />
@@ -86,7 +84,7 @@ function App() {
               }
             />
             <Route
-              path={"/creator/lk/edit/:tourId"}
+              path={"/creator/editTour/:tourId"}
               element={
                 <ProtectedRoute>
                   <AddTourPage isEditing />

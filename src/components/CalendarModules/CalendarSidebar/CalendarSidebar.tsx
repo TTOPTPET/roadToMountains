@@ -5,8 +5,11 @@ import { FC } from "react";
 import { whiteColor } from "../../../config/MUI/color/color";
 import { IPublicTour } from "../../../models/calendarModels/IPublicTour";
 import { TouristOrder } from "./TouristOrder/TouristOrder";
+import { setModalActive } from "../../../redux/Modal/ModalReducer";
+import { useDispatch } from "react-redux";
 
 export const CalendarSidebar: FC<IPublicTour> = (publicTour) => {
+  const dispatch = useDispatch();
   return (
     <Stack direction={"column"} gap={2}>
       <Typography variant={"h5"}>
@@ -31,7 +34,9 @@ export const CalendarSidebar: FC<IPublicTour> = (publicTour) => {
         </Typography>
       </Stack>
       <Stack direction={"column"} width={"55%"} gap={1} alignSelf={"end"}>
-        <Button>Редактировать</Button>
+        <Button onClick={() => dispatch(setModalActive("newPublicModal"))}>
+          Редактировать
+        </Button>
         <Typography variant={"caption"} align={"right"}>
           {dayjs(publicTour?.tourDate?.from)
             .add(-3, "day")
