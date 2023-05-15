@@ -65,26 +65,25 @@ const Header = () => {
               Путь <br /> в Горы
             </Typography>
           </Box>
+          {userInfo.typeUser === UserType.tourist && (
+            <Box sx={{ m: "0 30px", width: "890px" }}>
+              <TextField
+                placeholder="Найти тур"
+                color="secondary"
+                value={searchData}
+                onChange={(e) => setSearchData(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    if (location.state !== "/tours/all") {
+                      navigate(`/tours/all?title=${searchData}`);
+                    }
+                  }
+                }}
+              />
+            </Box>
+          )}
           {cookie.get(TOKEN) && (
             <>
-              {userInfo.typeUser === UserType.tourist && (
-                <Box sx={{ m: "0 30px", width: "890px" }}>
-                  <TextField
-                    placeholder="Найти тур"
-                    color="secondary"
-                    value={searchData}
-                    onChange={(e) => setSearchData(e.target.value)}
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter") {
-                        if (location.state !== "/tours/all") {
-                          navigate(`/tours/all?title=${searchData}`);
-                        }
-                      }
-                    }}
-                  />
-                </Box>
-              )}
-
               <Box
                 className="header__btns"
                 sx={{

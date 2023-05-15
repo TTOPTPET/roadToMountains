@@ -11,8 +11,8 @@ function ProtectedRoute({ children }: Props) {
     return <>{children}</>;
   } else {
     // HACK: Раскоментить для работы приватных роутеров
-    return <Navigate to="/auth" replace />;
-    // return <>{children}</>;
+    // return <Navigate to="/auth" replace />;
+    return <>{children}</>;
   }
 }
 
