@@ -15,12 +15,14 @@ import {
 import mapMarker from "../../../media/map-marker.svg";
 import calendar from "../../../media/calendar.svg";
 import categoryIcon from "../../../media/walking-guy.svg";
+import dayjs from "dayjs";
 
 type TourCardProps = {
   tour: ITour;
 };
 
 function TourCardContentCardList({ tour }: TourCardProps) {
+  console.log(tour);
   return (
     <Box
       className="tour-card__content"
@@ -105,7 +107,8 @@ function TourCardContentCardList({ tour }: TourCardProps) {
                 color: darkBlueColor,
               }}
             >
-              {tour.tourDate.from} - {tour.tourDate.to}
+              {dayjs(tour.tourDate.from).format("DD.MM.YYYY")} -{" "}
+              {dayjs(tour.tourDate.to).format("DD.MM.YYYY")}
             </Box>
           </DarkStyledTooltip>
           {Boolean(tour.publicNum) && (
