@@ -26,6 +26,7 @@ function TourCardContentCreatorLk({
   myTours,
   setMyTours,
 }: TourCardProps) {
+  console.log(tour);
   const dispatch = useDispatch();
   return (
     <Box

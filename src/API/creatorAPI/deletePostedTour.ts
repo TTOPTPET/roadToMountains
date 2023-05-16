@@ -5,23 +5,20 @@ import axios from "axios";
 
 let cookie = new Cookies();
 
-export const deleteTour = async (
-  tourId: string,
+export const deletePostedTour = async (
+  publicTourId: number,
   successCallback?: (params: any) => void,
-  editedCallback?: (prop: any) => void,
   errorCallback?: () => void
 ) => {
   try {
-    let response = await axios.delete(creatorUrl + `/tour?tourId=${tourId}`, {
+    let response = await axios.get(creatorUrl + "/public", {
+      params: { publicTourId: publicTourId },
       headers: {
         Authorization: `Bearer ${cookie.get(TOKEN)}`,
       },
     });
     successCallback(response?.status);
-  } catch (e: any) {
-    if (e?.response?.status === 300) {
-      editedCallback && editedCallback(e.response?.data);
-    }
+  } catch (e) {
     console.error(e);
     errorCallback && errorCallback();
   }

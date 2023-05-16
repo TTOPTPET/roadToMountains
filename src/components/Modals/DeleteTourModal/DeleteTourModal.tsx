@@ -40,13 +40,17 @@ function DeleteTourModal({
   };
 
   const handlerConfirmClick = () => {
-    deleteTour(tourId, (value) => {
-      dispatch(setModalInactive("deleteTourModal"));
-      setMyTours([...myTours.filter((tour) => tour.tourId !== tourId)]);
-      if (value === 200 || 201) {
+    deleteTour(
+      tourId,
+      (value) => {
+        dispatch(setModalInactive("deleteTourModal"));
+        setMyTours([...myTours.filter((tour) => tour.tourId !== tourId)]);
         dispatch(setModalActive("successDeleteTourModal"));
+      },
+      (data) => {
+        dispatch(setModalActive("сancelPostedToursModal", { myTours: data }));
       }
-    });
+    );
   };
   return (
     <Dialog

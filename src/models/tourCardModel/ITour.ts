@@ -18,4 +18,6 @@ export interface ITour {
   photos: string[];
   banStatus: boolean;
   publicNum: number;
+  cancelDeadline: string;
+  publicTourId: number;
 }

@@ -22,7 +22,6 @@ type TourCardProps = {
 };
 
 function TourCardContentCardList({ tour }: TourCardProps) {
-  console.log(tour);
   return (
     <Box
       className="tour-card__content"
