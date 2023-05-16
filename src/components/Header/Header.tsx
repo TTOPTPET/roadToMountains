@@ -1,4 +1,11 @@
-import { Container, Box, Paper, Typography, TextField } from "@mui/material";
+import {
+  Container,
+  Box,
+  Paper,
+  Typography,
+  TextField,
+  Button,
+} from "@mui/material";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import logo from "../../media/logo.svg";
@@ -19,6 +26,8 @@ const Header = () => {
   const userInfo = useSelector((state: RootState) => state.userInfo.userInfo);
 
   const navigate = useNavigate();
+
+  console.log(userInfo);
 
   return (
     <Paper variant="header" sx={{ width: "100%" }}>
@@ -57,12 +66,14 @@ const Header = () => {
               className="logo-img"
             />
 
-            <Typography variant={"button"} className="logo-text">
-              Путь <br /> в Горы
-            </Typography>
+            <Box sx={{ width: "70px" }}>
+              <Typography variant={"button"} className="logo-text">
+                Путь <br /> в Горы
+              </Typography>
+            </Box>
           </Box>
-          {userInfo.typeUser === UserType.tourist && (
-            <Box sx={{ m: "0 30px", width: "890px" }}>
+          {(!cookie.get(TOKEN) || userInfo?.typeUser !== UserType.creator) && (
+            <Box sx={{ m: "0 30px", width: "100%" }}>
               <TextField
                 placeholder="Найти тур"
                 color="secondary"
@@ -78,7 +89,7 @@ const Header = () => {
               />
             </Box>
           )}
-          {cookies[TOKEN] && (
+          {cookies[TOKEN] ? (
             <>
               <Box
                 className="header__btns"
@@ -145,6 +156,10 @@ const Header = () => {
                 )}
               </Box>
             </>
+          ) : (
+            <Button component={Link} to={"/auth"} variant="textButton">
+              Войти
+            </Button>
           )}
         </Container>
       </Box>
