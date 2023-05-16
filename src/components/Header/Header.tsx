@@ -24,6 +24,8 @@ const Header = () => {
 
   const navigate = useNavigate();
 
+  console.log(userInfo);
+
   return (
     <Paper variant="header" sx={{ width: "100%" }}>
       <Box
@@ -65,8 +67,10 @@ const Header = () => {
               Путь <br /> в Горы
             </Typography>
           </Box>
-          {userInfo.typeUser === UserType.tourist && (
-            <Box sx={{ m: "0 30px", width: "890px" }}>
+          {(!cookie.get(TOKEN) || userInfo?.typeUser !== UserType.creator) && (
+            <Box
+              sx={{ m: "0 30px", width: !cookie.get(TOKEN) ? "84%" : "890px" }}
+            >
               <TextField
                 placeholder="Найти тур"
                 color="secondary"
