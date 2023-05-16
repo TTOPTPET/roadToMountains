@@ -1,10 +1,6 @@
 import { touristUrl } from "../../config/config";
-import { Cookies } from "react-cookie";
-import { TOKEN } from "../../config/types";
 import axios from "axios";
 import { ITourBooking } from "../../models/tourModels/ITourBooking";
-
-let cookie = new Cookies();
 
 export const booking = async (
   momentPay: boolean,
@@ -13,10 +9,7 @@ export const booking = async (
 ) => {
   try {
     let response = await axios.post(touristUrl + "/booking", data, {
-      params: { momentPay: momentPay },
-      headers: {
-        Authorization: `Bearer ${cookie.get(TOKEN)}`,
-      },
+      params: { momentPay },
     });
     return response.status;
   } catch (e) {

@@ -1,10 +1,6 @@
 import { urlTour } from "../../config/config";
-import { Cookies } from "react-cookie";
-import { TOKEN } from "../../config/types";
 import axios from "axios";
 import { ITourBookingDate } from "../../models/tourModels/ITourBookingDate";
-
-let cookie = new Cookies();
 
 export const getBookingDate = async (
   tourId: string,
@@ -16,10 +12,7 @@ export const getBookingDate = async (
       urlTour + "/bookingsDate",
       {
         params: {
-          tourId: tourId,
-        },
-        headers: {
-          Authorization: `Bearer ${cookie.get(TOKEN)}`,
+          tourId,
         },
       }
     );

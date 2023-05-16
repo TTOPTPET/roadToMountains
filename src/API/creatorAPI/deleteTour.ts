@@ -1,9 +1,5 @@
 import { creatorUrl } from "../../config/config";
-import { Cookies } from "react-cookie";
-import { TOKEN } from "../../config/types";
 import axios from "axios";
-
-let cookie = new Cookies();
 
 export const deleteTour = async (
   tourId: string,
@@ -11,11 +7,7 @@ export const deleteTour = async (
   errorCallback?: () => void
 ) => {
   try {
-    let response = await axios.delete(creatorUrl + `/tour?tourId=${tourId}`, {
-      headers: {
-        Authorization: `Bearer ${cookie.get(TOKEN)}`,
-      },
-    });
+    let response = await axios.delete(creatorUrl + `/tour?tourId=${tourId}`);
     successCallback(response?.status);
   } catch (e) {
     console.error(e);

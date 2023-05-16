@@ -1,11 +1,7 @@
 import axios from "axios";
-import { urlTour, urlUser } from "../../../config/config";
-import { TOKEN } from "../../../config/types";
-import { Cookies } from "react-cookie";
+import { urlTour } from "../../../config/config";
 import { ISearchRequest } from "../../../models/tourListModels/ISearchRequest";
 import { ITour } from "../../../models/tourCardModel/ITour";
-
-const cookie = new Cookies();
 
 const searchResponseDefault: ITour[] = [
   {

@@ -28,12 +28,17 @@ import SuccessPayModal from "../Modals/SuccessPayModal/SuccessPayModal";
 import SuccessEditUserInfoModal from "../Modals/SuccessEditUserInfoModal/SuccessEditUserInfoModal";
 import EnterMobileCodeModal from "../Modals/EnterMobileCodeModal/EnterMobileCodeModal";
 import HelpButton from "../HelpButton/HelpButton";
-import { Cookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 import { setUserInfo } from "../../redux/UserInfo/UserInfoReducer";
 import { getUserInfo } from "../../API/commonAPI";
-import { REFRESH_TOKEN, TOKEN } from "../../config/types";
+import {
+  BAN_STATUS,
+  REFRESH_TOKEN,
+  TOKEN,
+  USER_ROLE,
+} from "../../config/types";
 import { baseUrl } from "../../config/config";
+import { useCookies } from "react-cookie";
 
 type UserInfoProps = {
   fields: JSX.Element;
@@ -48,7 +53,12 @@ function UserInfo({ header, fields, submitFuntion }: UserInfoProps) {
     (state: RootState) => state.userInfo.userInfo
   );
 
-  let cookie = new Cookies();
+  const [cookies, setCookies] = useCookies([
+    TOKEN,
+    REFRESH_TOKEN,
+    USER_ROLE,
+    BAN_STATUS,
+  ]);
 
   const navigate = useNavigate();
 
@@ -190,10 +200,10 @@ function UserInfo({ header, fields, submitFuntion }: UserInfoProps) {
       <SuccessEditUserInfoModal />
       <EnterMobileCodeModal
         successCallback={(resp) => {
-          cookie.set(TOKEN, resp.accessToken);
-          cookie.set(REFRESH_TOKEN, resp.refreshToken);
-          cookie.set("USER_ROLE", resp.role);
-          cookie.set("BAN_STATUS", resp.status);
+          setCookies(TOKEN, resp.accessToken, { path: "/" });
+          setCookies(REFRESH_TOKEN, resp.refreshToken, { path: "/" });
+          setCookies(USER_ROLE, resp.role, { path: "/" });
+          setCookies(BAN_STATUS, resp.status, { path: "/" });
           getUserInfo((value) => {
             dispatch(setUserInfo(value));
           });

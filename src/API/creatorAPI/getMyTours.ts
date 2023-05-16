@@ -1,10 +1,6 @@
 import { creatorUrl } from "../../config/config";
-import { Cookies } from "react-cookie";
 import axios from "axios";
-import { TOKEN } from "../../config/types";
 import { ITour } from "../../models/tourCardModel/ITour";
-
-let cookie = new Cookies();
 
 const defaultResponse: ITour[] = [
   {
@@ -12,10 +8,7 @@ const defaultResponse: ITour[] = [
     tourName: "Что-то на европейском",
     category: "Рафтинг",
     complexity: "aaa",
-    price: {
-      from: 10000,
-      to: 15000,
-    },
+    price: 500,
     region: "Алтайский край",
     tourDate: {
       from: "16.09.2023",
@@ -31,10 +24,7 @@ const defaultResponse: ITour[] = [
     tourName: "Что-то еще",
     category: "Экскурсия",
     complexity: "aaa",
-    price: {
-      from: 500,
-      to: 15000,
-    },
+    price: 500,
     region: "Московская область",
     tourDate: {
       from: "13.03.2023",
@@ -50,10 +40,7 @@ const defaultResponse: ITour[] = [
     tourName: "Самый дорогой тур",
     category: "Джип-тур",
     complexity: "aaa",
-    price: {
-      from: 531211123312300,
-      to: 15000,
-    },
+    price: 500,
     region: "Владимирская область",
     tourDate: {
       from: "01.01.1985",
@@ -76,12 +63,7 @@ export const getMyTours = async (
     return;
   }
   try {
-    console.log(cookie.get(TOKEN));
-    let response = await axios.get(creatorUrl + "/myTours ", {
-      headers: {
-        Authorization: `Bearer ${cookie.get(TOKEN)}`,
-      },
-    });
+    let response = await axios.get(creatorUrl + "/myTours ");
     successCallback(response?.data);
   } catch (e) {
     console.error(e);

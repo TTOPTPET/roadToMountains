@@ -1,13 +1,12 @@
-import { Cookies } from "react-cookie";
+import { useCookies } from "react-cookie";
 import { TOKEN } from "../../config/types";
-import { Navigate } from "react-router-dom";
 
 type Props = { children: JSX.Element };
 
 function ProtectedRoute({ children }: Props) {
-  const cookie = new Cookies();
+  const [cookies] = useCookies([TOKEN]);
 
-  if (cookie.get(TOKEN)) {
+  if (cookies[TOKEN]) {
     return <>{children}</>;
   } else {
     // HACK: Раскоментить для работы приватных роутеров

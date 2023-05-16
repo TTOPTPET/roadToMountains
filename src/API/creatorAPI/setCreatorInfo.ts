@@ -1,11 +1,7 @@
 import axios from "axios";
 import { creatorUrl } from "../../config/config";
-import { TOKEN } from "../../config/types";
-import { Cookies } from "react-cookie";
 import { ICreatorInfo } from "../../models/userModels/IUserInfo";
 import * as _ from "lodash";
-
-let cookie = new Cookies();
 
 export const setCreatorInfo = async (
   data: ICreatorInfo,
@@ -33,7 +29,6 @@ export const setCreatorInfo = async (
 
     let response = await axios.post(creatorUrl + "/creatorInfo", formData, {
       headers: {
-        Authorization: `Bearer ${cookie.get(TOKEN)}`,
         "Content-Type": "multipart/form-data",
       },
     });

@@ -1,9 +1,5 @@
 import axios from "axios";
 import { creatorUrl } from "../../config/config";
-import { TOKEN } from "../../config/types";
-import { Cookies } from "react-cookie";
-
-let cookie = new Cookies();
 
 export const sendVerified = async (
   successCallback: () => void,
@@ -15,11 +11,7 @@ export const sendVerified = async (
     return;
   }
   try {
-    let response = await axios.get(creatorUrl + "/sendVerified ", {
-      headers: {
-        Authorization: `Bearer ${cookie.get(TOKEN)}`,
-      },
-    });
+    await axios.get(creatorUrl + "/sendVerified");
     successCallback();
   } catch (e) {
     console.error(e);

@@ -1,10 +1,6 @@
 import axios from "axios";
 import { touristUrl } from "../../config/config";
-import { TOKEN } from "../../config/types";
-import { Cookies } from "react-cookie";
 import { ITouristInfo } from "../../models/userModels/IUserInfo";
-
-let cookie = new Cookies();
 
 export const setTouristInfo = async (
   data: ITouristInfo,
@@ -21,11 +17,7 @@ export const setTouristInfo = async (
     delete data.dataUser;
     data = Object.assign(data, dataUser);
     formData.append("dataUser", JSON.stringify(data));
-    let response = await axios.post(touristUrl + "/touristInfo", data, {
-      headers: {
-        Authorization: `Bearer ${cookie.get(TOKEN)}`,
-      },
-    });
+    let response = await axios.post(touristUrl + "/touristInfo", data);
     successCallback(response?.data);
   } catch (e) {
     console.error(e);

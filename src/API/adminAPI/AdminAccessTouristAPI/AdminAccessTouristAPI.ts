@@ -1,10 +1,6 @@
 import axios from "axios";
 import { ITouristList } from "../../../models/adminModels/ITouristList";
 import { adminUrl } from "../../../config/config";
-import { TOKEN } from "../../../config/types";
-import { Cookies } from "react-cookie";
-
-let cookie = new Cookies();
 
 const touristDefault: ITouristList[] = [
   {
@@ -33,11 +29,7 @@ export const getTouristList = async (
     return;
   }
   try {
-    let response = await axios.get(adminUrl + "/touristList ", {
-      headers: {
-        Authorization: `Bearer ${cookie.get(TOKEN)}`,
-      },
-    });
+    let response = await axios.get(adminUrl + "/touristList ");
     successCallback(response?.data);
   } catch (e) {
     console.error(e);

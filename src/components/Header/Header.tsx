@@ -5,20 +5,16 @@ import logo from "../../media/logo.svg";
 import { UserType } from "../../models/userModels/IUserInfo";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { TOKEN } from "../../config/types";
-import { Cookies, useCookies } from "react-cookie";
+import { useCookies } from "react-cookie";
 import accIcon from "../../media/accountLinkIcon.svg";
 import calendarIcon from "../../media/calendarIcon.svg";
 import { useEffect, useState } from "react";
 
 const Header = () => {
-  let cookie = new Cookies();
+  const [cookies] = useCookies([TOKEN]);
 
   const [searchData, setSearchData] = useState<string>("");
   let location = useLocation();
-
-  useEffect(() => {
-    console.log("cookiesUpD", cookie);
-  }, [cookie]);
 
   const userInfo = useSelector((state: RootState) => state.userInfo.userInfo);
 
@@ -82,7 +78,7 @@ const Header = () => {
               />
             </Box>
           )}
-          {cookie.get(TOKEN) && (
+          {cookies[TOKEN] && (
             <>
               <Box
                 className="header__btns"

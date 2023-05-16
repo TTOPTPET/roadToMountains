@@ -1,26 +1,24 @@
 import axios from "axios";
 import { refreshToken } from "../../API/authAPI/UserAuthAPI/UserAuthAPI";
 import { REFRESH_TOKEN, TOKEN } from "../../config/types";
-import { Cookies } from "react-cookie";
-
-const cookie = new Cookies();
+import { useCookies } from "react-cookie";
 
 function AxiosProvider({ children }: { children: JSX.Element }) {
-  // axios?.interceptors.response.use(
-  //   function (response) {
-  //     console.log("res response", response);
-  //     return response;
-  //   },
-  //   async (error) => {
-  //     console.log("res error", error);
-  //     // if (error.response.status === 401 || 422) {
-  //     //   await refreshToken().then(() => {
-  //     //     return axios.request(error?.config);
-  //     //   });
-  //     // }
-  //     return Promise.reject(error);
-  //   }
-  // );
+  const [cookies, setCookies, removeCookies] = useCookies([
+    TOKEN,
+    REFRESH_TOKEN,
+  ]);
+  axios.interceptors.request.use(
+    (config) => {
+      if (cookies[TOKEN])
+        config.headers.Authorization = `Bearer ${cookies[TOKEN]}`;
+      return config;
+    },
+    (error) => {
+      return Promise.reject(error);
+    }
+  );
+
   axios.interceptors.response.use(
     (res) => {
       return res;
@@ -32,17 +30,20 @@ function AxiosProvider({ children }: { children: JSX.Element }) {
         if (
           err.response.status === 422 &&
           !originalConfig._retry &&
-          cookie.get(REFRESH_TOKEN)
+          cookies[REFRESH_TOKEN]
         ) {
           originalConfig._retry = true;
 
           try {
-            await refreshToken();
+            await refreshToken((resp) => {
+              removeCookies(TOKEN);
+              setCookies(TOKEN, resp?.accessToken, { path: "/" });
+            });
             return axios.request({
               ...originalConfig,
               headers: {
                 ...originalConfig.headers,
-                Authorization: `Bearer ${cookie.get(TOKEN)}`,
+                Authorization: `Bearer ${cookies[TOKEN]}`,
               },
             });
           } catch (_error: any) {

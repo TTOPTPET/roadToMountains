@@ -1,10 +1,6 @@
 import axios from "axios";
-import { urlTour, urlUser } from "../../../config/config";
-import { TOKEN } from "../../../config/types";
-import { Cookies } from "react-cookie";
+import { urlTour } from "../../../config/config";
 import { IFilter } from "../../../models/tourListModels/IFilter";
-
-let cookie = new Cookies();
 
 const filterDefault: IFilter = {
   regions: [
@@ -28,11 +24,7 @@ export const getFilters = async (
     return;
   }
   try {
-    let response = await axios.get(urlTour + "/filters", {
-      headers: {
-        Authorization: `Bearer ${cookie.get(TOKEN)}`,
-      },
-    });
+    let response = await axios.get(urlTour + "/filters");
     successCallback(response?.data);
   } catch (e) {
     console.error(e);

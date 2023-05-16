@@ -8,11 +8,7 @@ import {
   UserType,
 } from "../models/userModels/IUserInfo";
 import { urlUser } from "../config/config";
-import { TOKEN } from "../config/types";
-import { Cookies } from "react-cookie";
 import imageCompression from "browser-image-compression";
-
-let cookie = new Cookies();
 
 // const userInfoDefault: ICreatorInfo = {
 //   typeUser: UserType.creator,
@@ -126,11 +122,7 @@ export const getUserInfo = async (
     return;
   }
   try {
-    let response = await axios.get(urlUser + "/userInfo ", {
-      headers: {
-        Authorization: `Bearer ${cookie.get(TOKEN)}`,
-      },
-    });
+    let response = await axios.get(urlUser + "/userInfo ");
     successCallback(response?.data);
   } catch (e) {
     console.error(e);
@@ -159,11 +151,7 @@ export const postUserAvatar = async (
   avatar.append("photo", resizedFile);
 
   try {
-    let response = await axios.post(urlUser + "/avatar ", avatar, {
-      headers: {
-        Authorization: `Bearer ${cookie.get(TOKEN)}`,
-      },
-    });
+    let response = await axios.post(urlUser + "/avatar ", avatar);
     successCallback(response?.data);
   } catch (e) {
     console.error(e);

@@ -2,11 +2,9 @@ import axios from "axios";
 import { IAdminList } from "../../../models/adminModels/IAdminList";
 import { adminUrl } from "../../../config/config";
 import { TOKEN } from "../../../config/types";
-import { Cookies } from "react-cookie";
+
 import { IAdminRegister } from "../../../models/adminModels/IAdminRegister";
 import { IAdminLogin } from "../../../models/adminModels/IAdminLogin";
-
-let cookie = new Cookies();
 
 const adminListDefault: IAdminList[] = [
   {
@@ -28,11 +26,7 @@ export const getAdminList = async (
     return;
   }
   try {
-    let response = await axios.get(adminUrl + "/adminList ", {
-      headers: {
-        Authorization: `Bearer ${cookie.get(TOKEN)}`,
-      },
-    });
+    let response = await axios.get(adminUrl + "/adminList ");
     successCallback(response?.data);
   } catch (e) {
     console.error(e);
@@ -58,12 +52,7 @@ export const registerAdmin = async (
     return;
   }
   try {
-    let respone = await axios.post(adminUrl + "/register", {
-      data: data,
-      headers: {
-        Authorization: `Bearer ${cookie.get(TOKEN)}`,
-      },
-    });
+    let respone = await axios.post(adminUrl + "/register", data);
     successCallback(respone?.data);
   } catch (e) {
     console.error(e);
@@ -88,12 +77,7 @@ export const loginAdmin = async (
     return;
   }
   try {
-    let response = await axios.post(adminUrl + "/login", {
-      data: data,
-      headers: {
-        Authorization: `Bearer ${cookie.get(TOKEN)}`,
-      },
-    });
+    let response = await axios.post(adminUrl + "/login", data);
     successCallback(response?.data);
   } catch (e) {
     console.error(e);

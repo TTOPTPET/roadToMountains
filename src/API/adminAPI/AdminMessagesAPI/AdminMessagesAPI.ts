@@ -1,11 +1,7 @@
 import axios from "axios";
 import { IUserMessage } from "../../../models/adminModels/IUsersMessage";
 import { adminUrl } from "../../../config/config";
-import { TOKEN } from "../../../config/types";
-import { Cookies } from "react-cookie";
 import { IChangeStatus } from "../../../models/adminModels/IChangeStatus";
-
-let cookie = new Cookies();
 
 const userMessageDefault: IUserMessage[] = [
   {
@@ -71,11 +67,7 @@ export const getUserMessages = async (
     return;
   }
   try {
-    let response = await axios.get(adminUrl + "/usersMessage ", {
-      headers: {
-        Authorization: `Bearer ${cookie.get(TOKEN)}`,
-      },
-    });
+    let response = await axios.get(adminUrl + "/usersMessage ");
     successCallback(response?.data);
   } catch (e) {
     console.error(e);
@@ -100,10 +92,7 @@ export const changeMessageStatus = async (
   }
   try {
     let respone = await axios.put(adminUrl + "/errorMessage/changeStatus", {
-      params: params,
-      headers: {
-        Authorization: `Bearer ${cookie.get(TOKEN)}`,
-      },
+      params,
     });
     successCallback(respone?.data);
   } catch (e) {

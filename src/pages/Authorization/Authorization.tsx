@@ -29,8 +29,13 @@ import { useEffect } from "react";
 import { setUserInfo } from "../../redux/UserInfo/UserInfoReducer";
 import { getUserInfo } from "../../API/commonAPI";
 import { useNavigate } from "react-router-dom";
-import { REFRESH_TOKEN, TOKEN } from "../../config/types";
-import { Cookies } from "react-cookie";
+import {
+  BAN_STATUS,
+  REFRESH_TOKEN,
+  TOKEN,
+  USER_ROLE,
+} from "../../config/types";
+import { useCookies } from "react-cookie";
 
 const registerTypes = [
   { id: UserType.creator, name: "туросоздатель" },
@@ -38,7 +43,12 @@ const registerTypes = [
 ];
 
 function Authorization() {
-  let cookie = new Cookies();
+  const [cookies, setCookies] = useCookies([
+    TOKEN,
+    REFRESH_TOKEN,
+    BAN_STATUS,
+    USER_ROLE,
+  ]);
 
   const loginDefault: IUserLogin = {
     login: "",
@@ -108,10 +118,10 @@ function Authorization() {
     loginUser(
       userLoginData,
       (resp) => {
-        cookie.set(TOKEN, resp.accessToken);
-        cookie.set(REFRESH_TOKEN, resp.refreshToken);
-        cookie.set("USER_ROLE", resp.role);
-        cookie.set("BAN_STATUS", resp.status);
+        setCookies(TOKEN, resp.accessToken, { path: "/" });
+        setCookies(REFRESH_TOKEN, resp.refreshToken, { path: "/" });
+        setCookies(USER_ROLE, resp.role, { path: "/" });
+        setCookies(BAN_STATUS, resp.status, { path: "/" });
         setErrAuth(false);
         setErrorMessage("");
         getUserInfo((value) => dispatch(setUserInfo(value)));
@@ -236,16 +246,16 @@ function Authorization() {
           )}
 
           {regState ? (
-            <Button onClick={handlerLoginClick}>Вход</Button>
+            <Button onClick={() => handlerLoginClick()}>Вход</Button>
           ) : (
-            <Button onClick={handlerRegisterClick}>Регистрация</Button>
+            <Button onClick={() => handlerRegisterClick()}>Регистрация</Button>
           )}
           <EnterMobileCodeModal
             successCallback={(resp) => {
-              cookie.set(TOKEN, resp.accessToken);
-              cookie.set(REFRESH_TOKEN, resp.refreshToken);
-              cookie.set("USER_ROLE", resp.role);
-              cookie.set("BAN_STATUS", resp.status);
+              setCookies(TOKEN, resp.accessToken, { path: "/" });
+              setCookies(REFRESH_TOKEN, resp.refreshToken, { path: "/" });
+              setCookies(USER_ROLE, resp.role, { path: "/" });
+              setCookies(BAN_STATUS, resp.status, { path: "/" });
               getUserInfo((value) => {
                 dispatch(setUserInfo(value));
               });

@@ -1,10 +1,6 @@
 import axios from "axios";
 import { touristUrl } from "../../config/config";
-import { TOKEN } from "../../config/types";
-import { Cookies } from "react-cookie";
 import { IUserRecord } from "../../models/userModels/IUserRecord";
-
-let cookie = new Cookies();
 
 const recordsDefault: IUserRecord[] = [
   {
@@ -118,11 +114,7 @@ export const getTouristRecords = async (
     return;
   }
   try {
-    let response = await axios.get<IUserRecord[]>(touristUrl + "/myBookings", {
-      headers: {
-        Authorization: `Bearer ${cookie.get(TOKEN)}`,
-      },
-    });
+    let response = await axios.get<IUserRecord[]>(touristUrl + "/myBookings");
     successCallback(response?.data as IUserRecord[]);
   } catch (e) {
     console.error(e);
