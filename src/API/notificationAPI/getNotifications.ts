@@ -1,11 +1,6 @@
 import { creatorUrl } from "../../config/config";
-import { Cookies } from "react-cookie";
 import axios from "axios";
-import { TOKEN } from "../../config/types";
-import { ITour } from "../../models/tourCardModel/ITour";
 import { INotification } from "../../models/notificationModels/INotification";
-
-let cookie = new Cookies();
 
 const notificationsDefault: INotification[] = [
   {
@@ -54,12 +49,7 @@ export const getNotifications = async (
   }
   try {
     let response = await axios.get<INotification[]>(
-      creatorUrl + "/notifications",
-      {
-        headers: {
-          Authorization: `Bearer ${cookie.get(TOKEN)}`,
-        },
-      }
+      creatorUrl + "/notifications"
     );
     successCallback(response?.data);
   } catch (e) {

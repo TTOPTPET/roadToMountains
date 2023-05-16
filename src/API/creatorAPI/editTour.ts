@@ -1,10 +1,6 @@
 import { creatorUrl } from "../../config/config";
-import { TOKEN } from "../../config/types";
-import { Cookies } from "react-cookie";
 import axios from "axios";
 import { IAddTour } from "../../models/addTourModels/IAddTour";
-
-let cookie = new Cookies();
 
 export const editTour = async (
   tourId: string,
@@ -27,19 +23,13 @@ export const editTour = async (
           tourId: tourId,
         },
         headers: {
-          Authorization: `Bearer ${cookie.get(TOKEN)}`,
           "Content-Type": "multipart/form-data",
         },
       })
       .then(async () => {
         filesToDelete.forEach((file) => async () => {
           await axios.post(
-            creatorUrl + `/tour/photo?pathPhoto=${file}&tourId=${tourId}`,
-            {
-              headers: {
-                Authorization: `Bearer ${cookie.get(TOKEN)}`,
-              },
-            }
+            creatorUrl + `/tour/photo?pathPhoto=${file}&tourId=${tourId}`
           );
         });
       });

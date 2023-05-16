@@ -1,12 +1,8 @@
 import axios from "axios";
 import { urlUser } from "../../../config/config";
-import { Cookies } from "react-cookie";
 import { IUserLogin } from "../../../models/authModels/IUserLogin";
 import { IUserRegister } from "../../../models/authModels/IUserRegister";
 import { IAuthResponse } from "../../../models/authModels/IAuthResponse";
-import { REFRESH_TOKEN, TOKEN } from "../../../config/types";
-
-let cookie = new Cookies();
 
 const userAuthDefault: IAuthResponse = {
   accessToken: "TOKEN",
@@ -69,12 +65,13 @@ export const registerUser = async (
   }
 };
 
-export const refreshToken = async () => {
-  let response = await axios.get<IAuthResponse>(urlUser + "/refresh", {
-    headers: {
-      Authorization: `Bearer ${cookie.get(REFRESH_TOKEN)}`,
-    },
-  });
-  cookie.remove(TOKEN, { path: "/" });
-  cookie.set(TOKEN, response.data?.accessToken, { path: "/" });
+export const refreshToken = async (
+  successCallback: (resp: IAuthResponse) => void
+) => {
+  try {
+    let response = await axios.get<IAuthResponse>(urlUser + "/refresh");
+    successCallback(response.data);
+  } catch (e) {
+    console.error(e);
+  }
 };

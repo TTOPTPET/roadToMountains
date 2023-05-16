@@ -1,10 +1,6 @@
 import axios from "axios";
 import { urlTour } from "../../config/config";
-import { TOKEN } from "../../config/types";
-import { Cookies } from "react-cookie";
 import { ITourInfo } from "../../models/tourModels/ITourInfo";
-
-const cookie = new Cookies();
 
 const responseDefault: ITourInfo = {
   category: "Конченные уроды",
@@ -54,9 +50,6 @@ export const getTourInfo = async (
     let response = await axios.get<ITourInfo>(urlTour + `/tour`, {
       params: {
         tourId,
-      },
-      headers: {
-        Authorization: `Bearer ${cookie.get(TOKEN)}`,
       },
     });
     successCallback(response?.data as ITourInfo);

@@ -17,16 +17,15 @@ import {
   StatusVerify,
   UserType,
 } from "../../../models/userModels/IUserInfo";
-import { Cookies } from "react-cookie";
 import {
   BAN_STATUS,
   REFRESH_TOKEN,
   TOKEN,
   USER_ROLE,
 } from "../../../config/types";
-import { redColor } from "../../../config/MUI/color/color";
 import { sendVerified } from "../../../API/creatorAPI/sendVerified";
 import { setUserInfo } from "../../../redux/UserInfo/UserInfoReducer";
+import { useCookies } from "react-cookie";
 
 type UserInfoHeaderProps = {
   submitFuntion?: () => void;
@@ -43,7 +42,12 @@ function UserInfoHeader({
 }: UserInfoHeaderProps) {
   const dispatch = useDispatch();
 
-  let cookie = new Cookies();
+  const [cookies, setCookies, removeCookies] = useCookies([
+    TOKEN,
+    REFRESH_TOKEN,
+    BAN_STATUS,
+    USER_ROLE,
+  ]);
 
   const navigate = useNavigate();
 
@@ -152,10 +156,10 @@ function UserInfoHeader({
           variant="errorButton"
           sx={{ mt: "10px" }}
           onClick={() => {
-            cookie.remove(TOKEN);
-            cookie.remove(REFRESH_TOKEN);
-            cookie.remove(USER_ROLE);
-            cookie.remove(BAN_STATUS);
+            removeCookies(TOKEN);
+            removeCookies(REFRESH_TOKEN);
+            removeCookies(USER_ROLE);
+            removeCookies(BAN_STATUS);
             navigate("/auth");
           }}
         >

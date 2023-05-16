@@ -1,10 +1,6 @@
 import { creatorUrl } from "../../config/config";
-import { Cookies } from "react-cookie";
 import axios from "axios";
-import { TOKEN } from "../../config/types";
 import { IPublicTour } from "../../models/calendarModels/IPublicTour";
-
-let cookie = new Cookies();
 
 const publicTourDefault: IPublicTour[] = [
   {
@@ -94,11 +90,7 @@ export const getPublicTours = async (
   }
   try {
     let response = await axios.get<IPublicTour[]>(creatorUrl + "/public", {
-      params: params,
-
-      headers: {
-        Authorization: `Bearer ${cookie.get(TOKEN)}`,
-      },
+      params,
     });
     successCallback(response?.data);
   } catch (e) {

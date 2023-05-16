@@ -1,10 +1,6 @@
 import axios from "axios";
 import { ICreatorList } from "../../../models/adminModels/ICreatorList";
 import { adminUrl } from "../../../config/config";
-import { TOKEN } from "../../../config/types";
-import { Cookies } from "react-cookie";
-
-let cookie = new Cookies();
 
 const creatorDefault: ICreatorList[] = [
   {
@@ -37,11 +33,7 @@ export const getCreatorList = async (
     return;
   }
   try {
-    let response = await axios.get(adminUrl + "/creatorList ", {
-      headers: {
-        Authorization: `Bearer ${cookie.get(TOKEN)}`,
-      },
-    });
+    let response = await axios.get(adminUrl + "/creatorList ");
     successCallback(response?.data);
   } catch (e) {
     console.error(e);
@@ -64,9 +56,6 @@ export const verifyCreator = async (
   try {
     let response = await axios.get(adminUrl + "/creatorVerify", {
       params: { creatorId: params, statusVerify: "verified" },
-      headers: {
-        Authorization: `Bearer ${cookie.get(TOKEN)}`,
-      },
     });
     successCallback(response?.data);
   } catch (e) {

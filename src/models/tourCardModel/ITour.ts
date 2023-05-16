@@ -4,11 +4,11 @@ export interface ITour {
   tourName: string;
   category: string;
   complexity: string;
-  prices: {
+  prices?: {
     from: number;
     to?: number;
   };
-  price: number;
+  price?: number;
   region: string;
   tourDate: {
     from: string;

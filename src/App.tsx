@@ -29,19 +29,24 @@ import { getUserInfo } from "./API/commonAPI";
 import { setUserInfo } from "./redux/UserInfo/UserInfoReducer";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 import NavTool from "./components/NavTool/NavTool";
+import { TOKEN } from "./config/types";
+import { useCookies } from "react-cookie";
 
 function App() {
+  const [cookies] = useCookies([TOKEN]);
+
   dayjs.locale("ru");
   const dispatch = useDispatch();
   useEffect(() => {
-    getUserInfo(
-      (value) => {
-        dispatch(setUserInfo(value));
-        // setLoadingStatus(false);
-      },
-      undefined,
-      false
-    );
+    cookies[TOKEN] &&
+      getUserInfo(
+        (value) => {
+          dispatch(setUserInfo(value));
+          // setLoadingStatus(false);
+        },
+        undefined,
+        false
+      );
   }, []);
 
   // const userType = "creator";

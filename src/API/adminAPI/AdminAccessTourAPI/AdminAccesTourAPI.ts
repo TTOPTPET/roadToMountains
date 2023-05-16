@@ -1,10 +1,7 @@
 import axios from "axios";
 import { adminUrl } from "../../../config/config";
 import { TOKEN } from "../../../config/types";
-import { Cookies } from "react-cookie";
 import { ITourList } from "../../../models/adminModels/ITourList";
-
-let cookie = new Cookies();
 
 const tourDefault: ITourList[] = [
   {
@@ -30,11 +27,7 @@ export const getTourList = async (
     return;
   }
   try {
-    let response = await axios.get(adminUrl + "/tourList ", {
-      headers: {
-        Authorization: `Bearer ${cookie.get(TOKEN)}`,
-      },
-    });
+    let response = await axios.get(adminUrl + "/tourList ");
     successCallback(response?.data);
   } catch (e) {
     console.error(e);
@@ -55,12 +48,7 @@ export const tourBan = async (
     return;
   }
   try {
-    let respone = await axios.get(adminUrl + "/tourBan", {
-      params: { tourId: params },
-      headers: {
-        Authorization: `Bearer ${cookie.get(TOKEN)}`,
-      },
-    });
+    let respone = await axios.get(adminUrl + "/tourBan");
     successCallback(respone?.data);
   } catch (e) {
     console.error(e);

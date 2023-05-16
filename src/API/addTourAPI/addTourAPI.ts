@@ -1,10 +1,7 @@
 import axios from "axios";
 import { creatorUrl } from "../../config/config";
 import { TOKEN } from "../../config/types";
-import { Cookies } from "react-cookie";
 import { IAddTour } from "../../models/addTourModels/IAddTour";
-
-let cookie = new Cookies();
 
 const addTourDefault: IAddTour = {};
 
@@ -28,7 +25,6 @@ export const addTour = async (
     });
     let respone = await axios.post(creatorUrl + "/tour", formData, {
       headers: {
-        Authorization: `Bearer ${cookie.get(TOKEN)}`,
         "Content-Type": "multipart/form-data",
       },
     });
