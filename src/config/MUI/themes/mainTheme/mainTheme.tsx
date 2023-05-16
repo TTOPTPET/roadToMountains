@@ -33,6 +33,7 @@ declare module "@mui/material/Paper" {
     bigPadding: true;
     header: true;
     whiteBlue: true;
+    postedTourItem: true;
   }
 }
 
@@ -137,6 +138,15 @@ export const mainThemes = createTheme({
           props: { variant: "whiteBlue" },
           style: {
             backgroundColor: whiteColor,
+          },
+        },
+        {
+          props: { variant: "postedTourItem" },
+          style: {
+            width: "507px",
+            height: "140px",
+            boxShadow: "none",
+            padding: "30px 25px",
           },
         },
       ],

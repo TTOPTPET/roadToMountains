@@ -27,8 +27,6 @@ const Header = () => {
 
   const navigate = useNavigate();
 
-  console.log(userInfo);
-
   return (
     <Paper variant="header" sx={{ width: "100%" }}>
       <Box
