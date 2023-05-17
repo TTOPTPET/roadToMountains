@@ -70,7 +70,7 @@ const Header = () => {
               </Typography>
             </Box>
           </Box>
-          {(!cookie.get(TOKEN) || userInfo?.typeUser !== UserType.creator) && (
+          {(!cookies[TOKEN] || userInfo?.typeUser !== UserType.creator) && (
             <Box sx={{ m: "0 30px", width: "100%" }}>
               <TextField
                 placeholder="Найти тур"
