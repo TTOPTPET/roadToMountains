@@ -1,7 +1,7 @@
 import "./App.css";
 import dayjs from "dayjs";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { Container, ThemeProvider } from "@mui/material";
+import { Container, ThemeProvider, Box } from "@mui/material";
 
 import { mainThemes } from "./config/MUI/themes/mainTheme/mainTheme";
 import Header from "./components/Header/Header";
@@ -31,6 +31,9 @@ import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 import NavTool from "./components/NavTool/NavTool";
 import { TOKEN } from "./config/types";
 import { useCookies } from "react-cookie";
+import HelpButton from "./components/HelpButton/HelpButton";
+import ErrorReportModal from "./components/Modals/ErrorReportModal/ErrorReportModal";
+import SuccessMessageSendModal from "./components/Modals/SuccessMessageSendModal/SuccessMessageSendModal";
 
 function App() {
   const [cookies] = useCookies([TOKEN]);
@@ -54,6 +57,7 @@ function App() {
     <BrowserRouter>
       <ThemeProvider theme={mainThemes}>
         <Header />
+
         <Container sx={{ pb: "70px" }}>
           <Routes>
             <Route
@@ -143,9 +147,14 @@ function App() {
             <Route path={"/tours/tour/:tourId"} element={<TourPage />} />
           </Routes>
         </Container>
+        <Box sx={{ position: "fixed", bottom: "50px", left: "50px" }}>
+          <HelpButton />
+        </Box>
         <Footer />
         {/* HACK:Инструмент навигации для разработки */}
         <NavTool />
+        <ErrorReportModal />
+        <SuccessMessageSendModal />
       </ThemeProvider>
     </BrowserRouter>
   );

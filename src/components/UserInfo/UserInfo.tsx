@@ -27,7 +27,6 @@ import SuccessDeleteTourModal from "../Modals/SuccessDeleteTourModal/SuccessDele
 import SuccessPayModal from "../Modals/SuccessPayModal/SuccessPayModal";
 import SuccessEditUserInfoModal from "../Modals/SuccessEditUserInfoModal/SuccessEditUserInfoModal";
 import EnterMobileCodeModal from "../Modals/EnterMobileCodeModal/EnterMobileCodeModal";
-import HelpButton from "../HelpButton/HelpButton";
 import { useNavigate } from "react-router-dom";
 import { setUserInfo } from "../../redux/UserInfo/UserInfoReducer";
 import { getUserInfo } from "../../API/commonAPI";
@@ -189,8 +188,7 @@ function UserInfo({ header, fields, submitFuntion }: UserInfoProps) {
           variant="displayInfo"
         />
       )}
-      <ErrorReportModal />
-      <SuccessMessageSendModal />
+      s
       <CancelBookingModal />
       <SuccessCancellingBookingModal />
       <SuccessBookingModal />
@@ -211,7 +209,6 @@ function UserInfo({ header, fields, submitFuntion }: UserInfoProps) {
           navigate("/tours/all");
         }}
       />
-      <HelpButton />
     </>
   );
 }
