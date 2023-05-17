@@ -1,5 +1,4 @@
 export interface ITour {
-  id?: string;
   tourId?: string;
   tourName: string;
   category: string;

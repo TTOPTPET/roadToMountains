@@ -2,9 +2,9 @@ import axios from "axios";
 import { creatorUrl } from "../../config/config";
 import { IPublicTour } from "../../models/calendarModels/IPublicTour";
 
-export const postNewPublic = async (
+export const editPublicTour = async (
   data: IPublicTour,
-  successCallback?: ({ publicTourId }: { publicTourId: string }) => void,
+  successCallback?: () => void,
   errorCallback?: () => void,
   useDefault?: boolean
 ) => {
@@ -12,8 +12,10 @@ export const postNewPublic = async (
     return;
   }
   try {
-    let response = await axios.post(creatorUrl + "/public", data);
-    successCallback && successCallback(response?.data);
+    await axios.put(creatorUrl + "/public", data, {
+      params: { tourId: data.tourId },
+    });
+    successCallback && successCallback();
   } catch (e) {
     console.error(e);
     errorCallback && errorCallback();

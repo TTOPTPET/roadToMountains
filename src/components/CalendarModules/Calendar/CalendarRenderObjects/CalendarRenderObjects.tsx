@@ -7,20 +7,19 @@ import {
   darkTurquoiseColor,
   lightTurquoiseColor,
 } from "../../../../config/MUI/color/color";
-import { INewPublic } from "../../../../models/calendarModels/INewPublic";
-import { setModalActive } from "../../../../redux/Modal/ModalReducer";
-import { useDispatch } from "react-redux";
 
 type Props = {
-  publicTour: IPublicTour[];
+  publicTours: IPublicTour[];
   date: Dayjs;
-  setNewPublic: Dispatch<SetStateAction<INewPublic>>;
+  selectedPublic: IPublicTour;
+  setSelectedPublic: Dispatch<SetStateAction<IPublicTour>>;
 };
 
 export default function CalendarRenderObjects({
-  publicTour,
+  publicTours,
   date,
-  setNewPublic,
+  selectedPublic,
+  setSelectedPublic,
 }: Props) {
   return (
     <Box
@@ -36,7 +35,7 @@ export default function CalendarRenderObjects({
         flexDirection: "column",
       }}
     >
-      {publicTour.map((tour) => {
+      {publicTours.map((tour) => {
         if (
           date.isBetween(tour.tourDate.from, tour.tourDate.to, "date", "[]")
         ) {
@@ -44,7 +43,7 @@ export default function CalendarRenderObjects({
             <Box
               onClick={(e) => {
                 e.stopPropagation();
-                setNewPublic(tour as INewPublic);
+                setSelectedPublic(tour);
               }}
               sx={{
                 borderTopLeftRadius:
@@ -55,7 +54,10 @@ export default function CalendarRenderObjects({
                   date.isSame(tour.tourDate.to, "D") && "10px",
                 borderBottomRightRadius:
                   date.isSame(tour.tourDate.to, "D") && "10px",
-                backgroundColor: darkTurquoiseColor,
+                backgroundColor:
+                  selectedPublic?.publicTourId === tour?.publicTourId
+                    ? "#00c7f6"
+                    : darkTurquoiseColor,
                 width: "100%",
                 height: "17px",
                 marginBottom: "2px",

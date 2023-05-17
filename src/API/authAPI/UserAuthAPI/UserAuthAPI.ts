@@ -66,10 +66,13 @@ export const registerUser = async (
 };
 
 export const refreshToken = async (
+  refreshToken: string,
   successCallback: (resp: IAuthResponse) => void
 ) => {
   try {
-    let response = await axios.get<IAuthResponse>(urlUser + "/refresh");
+    let response = await axios.get<IAuthResponse>(urlUser + "/refresh", {
+      headers: { Authorization: `Bearer ${refreshToken}` },
+    });
     successCallback(response.data);
   } catch (e) {
     console.error(e);

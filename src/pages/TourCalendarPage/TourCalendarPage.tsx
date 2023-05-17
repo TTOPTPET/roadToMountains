@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import { IPublicTour } from "../../models/calendarModels/IPublicTour";
 import { getPublicTours } from "../../API/calendarAPI/getPublicTours";
 import { CalendarSidebar } from "../../components/CalendarModules/CalendarSidebar/CalendarSidebar";
-import { INewPublic } from "../../models/calendarModels/INewPublic";
 import { ITour } from "../../models/tourCardModel/ITour";
 import { getMyTours } from "../../API/creatorAPI/getMyTours";
 import { useDispatch } from "react-redux";
@@ -13,22 +12,9 @@ import { Calendar } from "../../components/CalendarModules/Calendar/Calendar";
 import CalendarDatePicker from "../../components/CalendarModules/CalendarDatePicker/CalendarDatePicker";
 import dayjs, { Dayjs } from "dayjs";
 
-const NewPublicDefault: INewPublic = {
-  tourId: "",
-  tourDate: {
-    from: "",
-    to: "",
-  },
-  tourAmount: 0,
-  contactInformation: "",
-  meetingPoint: "",
-  meetingTime: "",
-  maxPersonNum: 0,
-};
-
 function TourCalendarPage() {
-  const [publicTour, setPublicTour] = useState<IPublicTour[]>([]);
-  const [newPublic, setNewPublic] = useState<INewPublic>(NewPublicDefault);
+  const [publicTours, setPublicTours] = useState<IPublicTour[]>([]);
+  const [selectedPublic, setSelectedPublic] = useState<IPublicTour>();
   const [myTours, setMyTours] = useState<ITour[]>([]);
   const [viewMonth, setViewMonth] = useState<Dayjs>(dayjs());
 
@@ -45,7 +31,7 @@ function TourCalendarPage() {
   useEffect(() => {
     getPublicTours(
       { calendarDate: viewMonth.toISOString() },
-      (value) => setPublicTour(value),
+      (value) => setPublicTours(value),
       undefined,
       false
     );
@@ -61,20 +47,21 @@ function TourCalendarPage() {
           />
           <Calendar
             viewMonth={viewMonth}
-            publicTour={publicTour}
-            setNewPublic={setNewPublic}
+            publicTours={publicTours}
+            selectedPublic={selectedPublic}
+            setSelectedPublic={setSelectedPublic}
           />
         </Grid>
         <Grid item xs={4}>
-          <CalendarSidebar {...newPublic} />
+          <CalendarSidebar {...selectedPublic} />
           {/* Это говнище будет работать по клику, так что потом просто логику малесь переделать */}
         </Grid>
       </Grid>
       <NewPublicModal
         myTours={myTours}
-        newPublic={newPublic}
-        setNewPublic={setNewPublic}
-        defaultPublic={NewPublicDefault}
+        selectedPublic={selectedPublic}
+        setSelectedPublic={setSelectedPublic}
+        setPublicTours={setPublicTours}
       />
     </Box>
   );

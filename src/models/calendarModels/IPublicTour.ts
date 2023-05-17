@@ -19,6 +19,7 @@ export interface IBookingInfo {
 }
 
 export interface IPublicTour {
+  tourId: string;
   publicTourId?: string;
   publicTourProfit?: number;
   meetingPoint?: string;
@@ -37,7 +38,6 @@ export interface IPublicTour {
   };
   bookingInfo?: IBookingInfo[];
   tour?: {
-    tourId: string;
     tourName: string;
   };
 }
