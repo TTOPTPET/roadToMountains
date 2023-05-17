@@ -315,7 +315,12 @@ export default function NewPublicModal({
                   editPublicTour(editedPublic, () => {
                     dispatch(setModalInactive("newPublicModal"));
                     setPublicTours((publicTours) =>
-                      publicTours.concat(editedPublic)
+                      publicTours
+                        .filter(
+                          (tour) =>
+                            tour.publicTourId !== editedPublic.publicTourId
+                        )
+                        .concat(editedPublic)
                     );
                     setEditedPublic(undefined);
                   });

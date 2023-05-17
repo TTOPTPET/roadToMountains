@@ -17,7 +17,7 @@ export const CalendarSidebar: FC<IPublicTour> = (selectedPublic) => {
         {selectedPublic?.tour?.tourName ?? "Название тура"}
       </Typography>
       <Typography variant={"caption"} mt={3}>
-        {selectedPublic.tourDate.from && selectedPublic.tourDate.to
+        {selectedPublic?.tourDate?.from && selectedPublic?.tourDate?.to
           ? dayjs(selectedPublic?.tourDate?.from).format("D MMMM YYYY") +
             " - " +
             dayjs(selectedPublic?.tourDate?.to).format("D MMMM YYYY")

@@ -13,7 +13,7 @@ export const editPublicTour = async (
   }
   try {
     await axios.put(creatorUrl + "/public", data, {
-      params: { tourId: data.tourId },
+      params: { publicTourId: data.publicTourId },
     });
     successCallback && successCallback();
   } catch (e) {
