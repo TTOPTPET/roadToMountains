@@ -10,15 +10,18 @@ import { useDispatch } from "react-redux";
 
 export const CalendarSidebar: FC<IPublicTour> = (selectedPublic) => {
   const dispatch = useDispatch();
+
   return (
     <Stack direction={"column"} gap={2}>
       <Typography variant={"h5"}>
         {selectedPublic?.tour?.tourName ?? "Название тура"}
       </Typography>
       <Typography variant={"caption"} mt={3}>
-        {dayjs(selectedPublic?.tourDate?.from).format("D MMMM YYYY") +
-          " - " +
-          dayjs(selectedPublic?.tourDate?.to).format("D MMMM YYYY")}
+        {selectedPublic.tourDate.from && selectedPublic.tourDate.to
+          ? dayjs(selectedPublic?.tourDate?.from).format("D MMMM YYYY") +
+            " - " +
+            dayjs(selectedPublic?.tourDate?.to).format("D MMMM YYYY")
+          : "Дата начала - Дата конца"}
       </Typography>
       <Typography variant={"caption"}>
         {(selectedPublic?.personNum ?? 0) + " человек"}
@@ -41,17 +44,21 @@ export const CalendarSidebar: FC<IPublicTour> = (selectedPublic) => {
           Редактировать
         </Button>
         <Typography variant={"caption"} align={"right"}>
-          {dayjs(selectedPublic?.tourDate?.from)
-            .add(-3, "day")
-            .format("D MMMM YYYY")}
+          {selectedPublic?.tourDate?.from
+            ? dayjs(selectedPublic?.tourDate?.from)
+                .add(-3, "day")
+                .format("D MMMM YYYY")
+            : "Дата конца ред."}
         </Typography>
         <Button disabled={Object.keys(selectedPublic).length === 0}>
           Отменить тур
         </Button>
         <Typography variant={"caption"} align={"right"}>
-          {dayjs(selectedPublic?.tourDate?.from)
-            .add(-1, "day")
-            .format("D MMMM YYYY")}
+          {selectedPublic?.tourDate?.from
+            ? dayjs(selectedPublic?.tourDate?.from)
+                .add(-1, "day")
+                .format("D MMMM YYYY")
+            : "Дата конца отмены"}
         </Typography>
       </Stack>
       <Typography variant={"h6"}>

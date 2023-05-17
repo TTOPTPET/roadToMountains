@@ -16,7 +16,6 @@ function CreatorInfo() {
   const CreatorInfo: ICreatorInfo = useSelector(
     (state: RootState) => state.userInfo.userInfo as ICreatorInfo
   );
-
   return (
     <UserInfo
       header={

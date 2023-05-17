@@ -4,7 +4,13 @@ import {
   UserType,
   CreatorType,
 } from "../../models/userModels/IUserInfo";
-import { Box, Typography, Avatar as MuiAvatar, Button } from "@mui/material";
+import {
+  Box,
+  Typography,
+  Avatar as MuiAvatar,
+  Button,
+  Paper,
+} from "@mui/material";
 import { darkTurquoiseColor } from "../../config/MUI/color/color";
 import userPhoto from "../../media/userPhoto.svg";
 
@@ -96,27 +102,18 @@ function UserInfo({ header, fields, submitFuntion }: UserInfoProps) {
                   display: "flex",
                 }}
               >
-                <Box
-                  className="userInfo__content-avatar"
-                  sx={{
-                    width: "140px",
-                    height: "140px",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    bgcolor: darkTurquoiseColor,
-                    borderRadius: "50%",
-                  }}
-                >
-                  {userInfo && userInfo?.photo ? (
-                    <MuiAvatar
-                      src={baseUrl + "/" + userInfo?.photo}
-                      alt="user avatar"
-                      sx={{ width: "140px", height: "140px" }}
-                    />
-                  ) : (
-                    <img src={userPhoto} alt="person icon" />
-                  )}
+                <Box className="userInfo__content-avatar">
+                  <Paper variant="avatarBg">
+                    {userInfo && userInfo?.photo ? (
+                      <MuiAvatar
+                        src={baseUrl + "/" + userInfo?.photo}
+                        alt="user avatar"
+                        sx={{ width: "140px", height: "140px" }}
+                      />
+                    ) : (
+                      <img src={userPhoto} alt="person icon" />
+                    )}
+                  </Paper>
                 </Box>
                 <Box sx={{ ml: "30px" }}>
                   <Box>
