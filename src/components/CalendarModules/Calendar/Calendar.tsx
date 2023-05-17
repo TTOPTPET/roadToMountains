@@ -52,63 +52,53 @@ export const Calendar = ({
             </Grid>
           ))}
         </Grid>
-        {[...Array(35)].map((_, index) => (
-          <Grid item key={index} xs={3} sx={{ height: "16%" }}>
-            <Box
-              key={viewMonth.toString() + index}
-              onClick={() => {
-                if (
-                  calcDayIndex(viewMonth).add(index, "day").month() !==
-                  viewMonth.month()
-                ) {
-                  return;
-                }
-                dispatch(
-                  setModalActive("newPublicModal", {
-                    newPublic: true,
-                    tourDate: {
-                      from: calcDayIndex(viewMonth)
-                        .add(index, "day")
-                        .toISOString(),
-                      to: calcDayIndex(viewMonth)
-                        .add(index + 7, "day")
-                        .toISOString(),
-                    },
-                  })
-                );
-              }}
-              sx={{
-                cursor:
-                  calcDayIndex(viewMonth).add(index, "day").month() ===
-                    viewMonth.month() && "pointer",
-                height: "100%",
-                borderRight:
-                  (index + 1) % 7 === 0 ? "none" : "1px solid #154162",
-                borderBottom: "1px solid #154162",
-                position: "relative",
-              }}
-            >
-              <Typography
-                style={{
-                  position: "absolute",
-                  top: "10px",
-                  right: "10px",
-                  opacity:
-                    calcDayIndex(viewMonth).add(index, "day").month() !==
-                      viewMonth.month() && 0,
+        {[...Array(35)].map((_, index) => {
+          const thisDay = calcDayIndex(viewMonth).add(index, "day");
+          const isThisMonthDay = thisDay.month() === viewMonth.month();
+          return (
+            <Grid item key={index} xs={3} sx={{ height: "16%" }}>
+              <Box
+                key={viewMonth.toString() + index}
+                onClick={() => {
+                  dispatch(
+                    setModalActive("newPublicModal", {
+                      newPublic: true,
+                      tourDate: {
+                        from: thisDay.toISOString(),
+                        to: thisDay.add(7, "day").toISOString(),
+                      },
+                    })
+                  );
+                }}
+                sx={{
+                  cursor: "pointer",
+                  height: "100%",
+                  borderRight:
+                    (index + 1) % 7 === 0 ? "none" : "1px solid #154162",
+                  borderBottom: "1px solid #154162",
+                  position: "relative",
                 }}
               >
-                {calcDayIndex(viewMonth).add(index, "day").format("D")}
-              </Typography>
-              <CalendarRenderObjects
-                publicTours={publicTours}
-                selectedPublic={selectedPublic}
-                setSelectedPublic={setSelectedPublic}
-                date={calcDayIndex(viewMonth).add(index, "day")}
-              />
-            </Box>
-          </Grid>
-        ))}
+                <Typography
+                  style={{
+                    position: "absolute",
+                    top: "10px",
+                    right: "10px",
+                    opacity: !isThisMonthDay && 0.5,
+                  }}
+                >
+                  {thisDay.format("D")}
+                </Typography>
+                <CalendarRenderObjects
+                  publicTours={publicTours}
+                  selectedPublic={selectedPublic}
+                  setSelectedPublic={setSelectedPublic}
+                  date={thisDay}
+                />
+              </Box>
+            </Grid>
+          );
+        })}
         <Grid container item xs={12} sx={{ height: "10%" }}>
           {[...Array(7)].map((_, index) => (
             <Grid item key={index} xs>

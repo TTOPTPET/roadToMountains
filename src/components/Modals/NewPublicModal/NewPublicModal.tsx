@@ -97,6 +97,7 @@ export default function NewPublicModal({
                 setEditedPublic((editedPublic) => ({
                   ...editedPublic,
                   tourId: newValue.tourId,
+                  tour: { tourName: newValue?.tourName },
                 }))
               }
               options={myTours}

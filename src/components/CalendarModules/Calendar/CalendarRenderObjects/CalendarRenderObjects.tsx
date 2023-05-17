@@ -75,12 +75,24 @@ export default function CalendarRenderObjects({
                     paddingTop: "1px",
                   }}
                 >
-                  {tour.tour.tourName}
+                  {tour?.tour?.tourName}
                 </Typography>
               )}
             </Box>
           );
-        } else {
+        } else if (
+          publicTours.some(
+            (someTour) =>
+              date.isBetween(
+                someTour.tourDate.from,
+                someTour.tourDate.to,
+                "date",
+                "[]"
+              ) &&
+              dayjs(someTour?.tourDate?.from).isBefore(tour?.tourDate?.to) &&
+              dayjs(tour?.tourDate?.from).isBefore(someTour?.tourDate?.to)
+          )
+        ) {
           return (
             <Box
               sx={{
