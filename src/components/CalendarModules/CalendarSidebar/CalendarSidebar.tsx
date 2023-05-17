@@ -8,55 +8,60 @@ import { TouristOrder } from "./TouristOrder/TouristOrder";
 import { setModalActive } from "../../../redux/Modal/ModalReducer";
 import { useDispatch } from "react-redux";
 
-export const CalendarSidebar: FC<IPublicTour> = (publicTour) => {
+export const CalendarSidebar: FC<IPublicTour> = (selectedPublic) => {
   const dispatch = useDispatch();
   return (
     <Stack direction={"column"} gap={2}>
       <Typography variant={"h5"}>
-        {publicTour?.tour?.tourName ?? "Название тура"}
+        {selectedPublic?.tour?.tourName ?? "Название тура"}
       </Typography>
       <Typography variant={"caption"} mt={3}>
-        {dayjs(publicTour?.tourDate?.from).format("D MMMM YYYY") +
+        {dayjs(selectedPublic?.tourDate?.from).format("D MMMM YYYY") +
           " - " +
-          dayjs(publicTour?.tourDate?.to).format("D MMMM YYYY")}
+          dayjs(selectedPublic?.tourDate?.to).format("D MMMM YYYY")}
       </Typography>
       <Typography variant={"caption"}>
-        {(publicTour?.personNum ?? 0) + " человек"}
+        {(selectedPublic?.personNum ?? 0) + " человек"}
       </Typography>
       <Typography variant={"caption"}>
-        {publicTour?.tourAmount ?? 0}₽
+        {selectedPublic?.tourAmount ?? 0}₽
       </Typography>
       <Stack direction={"column"}>
         <Typography variant={"caption"}>Стоимость на платформе:</Typography>
         <Typography variant={"caption"}>
           {" "}
-          {publicTour?.tourAmount ?? 0}₽
+          {selectedPublic?.tourAmount ?? 0}₽
         </Typography>
       </Stack>
       <Stack direction={"column"} width={"55%"} gap={1} alignSelf={"end"}>
-        <Button onClick={() => dispatch(setModalActive("newPublicModal"))}>
+        <Button
+          disabled={Object.keys(selectedPublic).length === 0}
+          onClick={() => dispatch(setModalActive("newPublicModal"))}
+        >
           Редактировать
         </Button>
         <Typography variant={"caption"} align={"right"}>
-          {dayjs(publicTour?.tourDate?.from)
+          {dayjs(selectedPublic?.tourDate?.from)
             .add(-3, "day")
             .format("D MMMM YYYY")}
         </Typography>
-        <Button>Отменить тур</Button>
+        <Button disabled={Object.keys(selectedPublic).length === 0}>
+          Отменить тур
+        </Button>
         <Typography variant={"caption"} align={"right"}>
-          {dayjs(publicTour?.tourDate?.from)
+          {dayjs(selectedPublic?.tourDate?.from)
             .add(-1, "day")
             .format("D MMMM YYYY")}
         </Typography>
       </Stack>
       <Typography variant={"h6"}>
         Заказы{" ("}
-        {publicTour?.bookingInfo ? publicTour?.bookingInfo.length : 0}
+        {selectedPublic?.bookingInfo ? selectedPublic?.bookingInfo.length : 0}
         {")"}
       </Typography>
       <Stack direction={"column"} gap={2} mt={2}>
-        {publicTour?.bookingInfo &&
-          publicTour?.bookingInfo.map((booking, index) => (
+        {selectedPublic?.bookingInfo &&
+          selectedPublic?.bookingInfo.map((booking, index) => (
             <TouristOrder key={index} {...booking} />
           ))}
       </Stack>
@@ -68,7 +73,7 @@ export const CalendarSidebar: FC<IPublicTour> = (publicTour) => {
           sx={{ backgroundColor: whiteColor, borderRadius: 6, padding: 3 }}
         >
           <Typography variant={"button"} align={"center"}>
-            {publicTour?.publicTourProfit ?? 0}₽
+            {selectedPublic?.publicTourProfit ?? 0}₽
           </Typography>
         </Paper>
       </Box>

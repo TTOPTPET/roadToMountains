@@ -24,7 +24,13 @@ enum actionTypes {
 
 interface IActionProps {
   id: modalsId;
-  props?: any;
+  props?: {
+    newPublic?: boolean;
+    tourDate?: {
+      from: string;
+      to: string;
+    };
+  };
 }
 
 interface IAction {

@@ -11,14 +11,14 @@ import { RootState } from "../../redux/store";
 import logo from "../../media/logo.svg";
 import { UserType } from "../../models/userModels/IUserInfo";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { TOKEN } from "../../config/types";
+import { TOKEN, USER_ROLE } from "../../config/types";
 import { useCookies } from "react-cookie";
 import accIcon from "../../media/accountLinkIcon.svg";
 import calendarIcon from "../../media/calendarIcon.svg";
 import { useEffect, useState } from "react";
 
 const Header = () => {
-  const [cookies] = useCookies([TOKEN]);
+  const [cookies] = useCookies([TOKEN, USER_ROLE]);
 
   const [searchData, setSearchData] = useState<string>("");
   let location = useLocation();
@@ -70,7 +70,7 @@ const Header = () => {
               </Typography>
             </Box>
           </Box>
-          {(!cookies[TOKEN] || userInfo?.typeUser !== UserType.creator) && (
+          {(!cookies[TOKEN] || cookies[USER_ROLE] !== UserType.creator) && (
             <Box sx={{ m: "0 30px", width: "100%" }}>
               <TextField
                 placeholder="Найти тур"

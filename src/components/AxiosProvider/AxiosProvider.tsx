@@ -10,7 +10,7 @@ function AxiosProvider({ children }: { children: JSX.Element }) {
   ]);
   axios.interceptors.request.use(
     (config) => {
-      if (cookies[TOKEN])
+      if (cookies[TOKEN] && !config?.headers?.Authorization)
         config.headers.Authorization = `Bearer ${cookies[TOKEN]}`;
       return config;
     },
@@ -35,15 +35,17 @@ function AxiosProvider({ children }: { children: JSX.Element }) {
           originalConfig._retry = true;
 
           try {
-            await refreshToken((resp) => {
+            let newToken: string;
+            await refreshToken(cookies[REFRESH_TOKEN], (resp) => {
               removeCookies(TOKEN);
               setCookies(TOKEN, resp?.accessToken, { path: "/" });
+              newToken = resp?.accessToken;
             });
             return axios.request({
               ...originalConfig,
               headers: {
                 ...originalConfig.headers,
-                Authorization: `Bearer ${cookies[TOKEN]}`,
+                Authorization: `Bearer ${newToken}`,
               },
             });
           } catch (_error: any) {

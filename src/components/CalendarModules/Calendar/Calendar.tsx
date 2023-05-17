@@ -5,15 +5,20 @@ import CalendarRenderObjects from "./CalendarRenderObjects/CalendarRenderObjects
 import { IPublicTour } from "../../../models/calendarModels/IPublicTour";
 import { useDispatch } from "react-redux";
 import { setModalActive } from "../../../redux/Modal/ModalReducer";
-import { INewPublic } from "../../../models/calendarModels/INewPublic";
 
 type Props = {
   viewMonth: Dayjs;
-  publicTour: IPublicTour[];
-  setNewPublic: Dispatch<SetStateAction<INewPublic>>;
+  publicTours: IPublicTour[];
+  selectedPublic: IPublicTour;
+  setSelectedPublic: Dispatch<SetStateAction<IPublicTour>>;
 };
 
-export const Calendar = ({ viewMonth, publicTour, setNewPublic }: Props) => {
+export const Calendar = ({
+  viewMonth,
+  publicTours,
+  selectedPublic,
+  setSelectedPublic,
+}: Props) => {
   const dispatch = useDispatch();
 
   return (
@@ -50,6 +55,7 @@ export const Calendar = ({ viewMonth, publicTour, setNewPublic }: Props) => {
         {[...Array(35)].map((_, index) => (
           <Grid item key={index} xs={3} sx={{ height: "16%" }}>
             <Box
+              key={viewMonth.toString() + index}
               onClick={() => {
                 if (
                   calcDayIndex(viewMonth).add(index, "day").month() !==
@@ -60,12 +66,14 @@ export const Calendar = ({ viewMonth, publicTour, setNewPublic }: Props) => {
                 dispatch(
                   setModalActive("newPublicModal", {
                     newPublic: true,
-                    dateFrom: calcDayIndex(viewMonth)
-                      .add(index, "day")
-                      .toISOString(),
-                    dateTo: calcDayIndex(viewMonth)
-                      .add(index + 7, "day")
-                      .toISOString(),
+                    tourDate: {
+                      from: calcDayIndex(viewMonth)
+                        .add(index, "day")
+                        .toISOString(),
+                      to: calcDayIndex(viewMonth)
+                        .add(index + 7, "day")
+                        .toISOString(),
+                    },
                   })
                 );
               }}
@@ -93,8 +101,9 @@ export const Calendar = ({ viewMonth, publicTour, setNewPublic }: Props) => {
                 {calcDayIndex(viewMonth).add(index, "day").format("D")}
               </Typography>
               <CalendarRenderObjects
-                publicTour={publicTour}
-                setNewPublic={setNewPublic}
+                publicTours={publicTours}
+                selectedPublic={selectedPublic}
+                setSelectedPublic={setSelectedPublic}
                 date={calcDayIndex(viewMonth).add(index, "day")}
               />
             </Box>
