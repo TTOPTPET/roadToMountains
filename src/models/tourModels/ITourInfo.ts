@@ -35,4 +35,9 @@ export interface ITourInfo {
     freeServices?: string[];
     additionalServices?: string[];
   };
+  creatorInfo?: {
+    name: string;
+    creatorType: string;
+    photo: string;
+  };
 }

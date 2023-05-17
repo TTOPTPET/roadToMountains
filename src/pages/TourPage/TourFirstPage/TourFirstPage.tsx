@@ -1,12 +1,20 @@
 import { FC, SetStateAction, Dispatch } from "react";
 import { ITourInfo } from "../../../models/tourModels/ITourInfo";
-import { Stack, Typography, SvgIcon } from "@mui/material";
-import { ReactComponent as Icon } from "../../../media/logo.svg";
+import {
+  Stack,
+  Typography,
+  SvgIcon,
+  Avatar as MuiAvatar,
+  Paper,
+} from "@mui/material";
 import { TourInfo } from "../../../components/TourInfo/TourInfo";
 import { ITourBooking } from "../../../models/tourModels/ITourBooking";
 import { TourBooking } from "../../../components/TourInfo/TourBooking/TourBooking";
 import { tourStepsMap } from "../TourPage";
 import { ITourBookingDate } from "../../../models/tourModels/ITourBookingDate";
+import { baseUrl } from "../../../config/config";
+import { darkTurquoiseColor } from "../../../config/MUI/color/color";
+import userPhoto from "../../../media/userPhoto.svg";
 
 interface TourFirstPageProps {
   images: any[];
@@ -39,11 +47,36 @@ export const TourFirstPage: FC<TourFirstPageProps> = ({
         <Typography variant={"h3"} marginBottom={1}>
           {tourInfo?.tourName ?? "Название тура"}
         </Typography>
-        <Stack direction={"row"} gap={1} alignItems={"center"}>
-          <SvgIcon fontSize={"large"} viewBox={"0 0 70 70"}>
-            <Icon />
-          </SvgIcon>
-          <Typography variant={"button"}>ООО "Алтайский тур"</Typography>
+        <Stack direction={"row"} gap={"20px"} alignItems={"center"}>
+          <Paper
+            variant="avatarBg"
+            className="tourInfo__creator-avatar"
+            sx={{
+              width: "70px",
+              height: "70px",
+            }}
+          >
+            {tourInfo && tourInfo?.creatorInfo?.photo ? (
+              <MuiAvatar
+                src={baseUrl + "/" + tourInfo?.creatorInfo?.photo}
+                alt="user avatar"
+                sx={{ width: "70px", height: "70px" }}
+              />
+            ) : (
+              <img src={userPhoto} alt="person icon" />
+            )}
+          </Paper>
+
+          <Typography variant={"button"}>
+            {tourInfo?.creatorInfo?.creatorType === "SELF"
+              ? ""
+              : tourInfo?.creatorInfo?.creatorType === "OOO"
+              ? "ООО"
+              : "ИП"}{" "}
+            {tourInfo?.creatorInfo?.creatorType === "SELF"
+              ? tourInfo?.creatorInfo?.name
+              : `"${tourInfo?.creatorInfo?.name}"`}
+          </Typography>
         </Stack>
       </Stack>
       <TourInfo
