@@ -5,11 +5,38 @@ import {
   darkTurquoiseColor,
   whiteColor,
 } from "../../../../config/MUI/color/color";
-import { IBookingInfo } from "../../../../models/calendarModels/IPublicTour";
+import {
+  IBookingInfo,
+  IPublicTour,
+} from "../../../../models/calendarModels/IPublicTour";
+import { useDispatch } from "react-redux";
+import { setModalActive } from "../../../../redux/Modal/ModalReducer";
 
-export const TouristOrder: FC<IBookingInfo> = (bookingInfo) => {
+type Props = {
+  bookingInfo: IBookingInfo;
+  selectedPublic: IPublicTour;
+  index: number;
+};
+
+export default function TouristOrder({
+  bookingInfo,
+  selectedPublic,
+  index,
+}: Props) {
+  const dispatch = useDispatch();
+
   return (
-    <Box sx={{ backgroundColor: whiteColor, borderRadius: 10 }}>
+    <Box
+      sx={{ backgroundColor: whiteColor, borderRadius: 10, cursor: "pointer" }}
+      onClick={() => {
+        dispatch(
+          setModalActive("bookingInfoModal", {
+            bookingItem: selectedPublic,
+            index: index,
+          })
+        );
+      }}
+    >
       <Paper sx={{ backgroundColor: whiteColor, borderRadius: 8, padding: 2 }}>
         <Stack
           direction={"row"}
@@ -49,4 +76,4 @@ export const TouristOrder: FC<IBookingInfo> = (bookingInfo) => {
       </Paper>
     </Box>
   );
-};
+}
