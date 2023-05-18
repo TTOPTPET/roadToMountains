@@ -16,15 +16,15 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <CookiesProvider>
-      <Provider store={store}>
-        <AxiosProvider>
-          <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={"ru"}>
+    <Provider store={store}>
+      <AxiosProvider>
+        <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={"ru"}>
+          <CookiesProvider>
             <App />
-          </LocalizationProvider>
-        </AxiosProvider>
-      </Provider>
-    </CookiesProvider>
+          </CookiesProvider>
+        </LocalizationProvider>
+      </AxiosProvider>
+    </Provider>
   </React.StrictMode>
 );
 
