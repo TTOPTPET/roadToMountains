@@ -17,6 +17,7 @@ function AxiosProvider({ children }: { children: JSX.Element }) {
   ]);
   axios.interceptors.request.use(
     (config) => {
+      console.log("tokenn", cookies);
       if (cookies[TOKEN] && !config?.headers?.Authorization)
         config.headers.Authorization = `Bearer ${cookies[TOKEN]}`;
       return config;
