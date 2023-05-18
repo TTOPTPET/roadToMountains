@@ -7,6 +7,8 @@ import {
   darkTurquoiseColor,
   lightTurquoiseColor,
 } from "../../../../config/MUI/color/color";
+import isSameOrAfter from "dayjs/plugin/isSameOrAfter";
+dayjs.extend(isSameOrAfter);
 
 type Props = {
   publicTours: IPublicTour[];
@@ -85,14 +87,9 @@ export default function CalendarRenderObjects({
         } else if (
           publicTours.some(
             (someTour) =>
-              date.isBetween(
-                someTour.tourDate.from,
-                someTour.tourDate.to,
-                "date",
-                "[]"
-              ) &&
-              dayjs(someTour?.tourDate?.from).isBefore(tour?.tourDate?.to) &&
-              dayjs(tour?.tourDate?.from).isBefore(someTour?.tourDate?.to)
+              dayjs(someTour?.tourDate?.from).isSameOrAfter(
+                tour?.tourDate?.from
+              ) && dayjs(someTour?.tourDate?.from).isBefore(tour?.tourDate?.to)
           )
         ) {
           return (
