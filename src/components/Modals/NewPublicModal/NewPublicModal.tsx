@@ -314,14 +314,15 @@ export default function NewPublicModal({
                 } else {
                   editPublicTour(editedPublic, () => {
                     dispatch(setModalInactive("newPublicModal"));
-                    setPublicTours((publicTours) =>
-                      publicTours
-                        .filter(
-                          (tour) =>
-                            tour.publicTourId !== editedPublic.publicTourId
-                        )
-                        .concat(editedPublic)
-                    );
+                    setPublicTours((publicTours) => {
+                      return publicTours.map((tour) => {
+                        if (tour.publicTourId === editedPublic.publicTourId) {
+                          return editedPublic;
+                        }
+                        return tour;
+                      });
+                    });
+                    setSelectedPublic(editedPublic);
                     setEditedPublic(undefined);
                   });
                 }
