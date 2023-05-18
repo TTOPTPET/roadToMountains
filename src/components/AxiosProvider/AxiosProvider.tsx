@@ -1,12 +1,19 @@
 import axios from "axios";
 import { refreshToken } from "../../API/authAPI/UserAuthAPI/UserAuthAPI";
-import { REFRESH_TOKEN, TOKEN } from "../../config/types";
+import {
+  BAN_STATUS,
+  REFRESH_TOKEN,
+  TOKEN,
+  USER_ROLE,
+} from "../../config/types";
 import { useCookies } from "react-cookie";
 
 function AxiosProvider({ children }: { children: JSX.Element }) {
   const [cookies, setCookies, removeCookies] = useCookies([
     TOKEN,
     REFRESH_TOKEN,
+    BAN_STATUS,
+    USER_ROLE,
   ]);
   axios.interceptors.request.use(
     (config) => {
@@ -37,7 +44,7 @@ function AxiosProvider({ children }: { children: JSX.Element }) {
           try {
             let newToken: string;
             await refreshToken(cookies[REFRESH_TOKEN], (resp) => {
-              removeCookies(TOKEN);
+              removeCookies(TOKEN, { path: "/" });
               setCookies(TOKEN, resp?.accessToken, { path: "/" });
               newToken = resp?.accessToken;
             });

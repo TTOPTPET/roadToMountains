@@ -1,6 +1,6 @@
 import "./App.css";
 import dayjs from "dayjs";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
 import { Container, ThemeProvider, Box } from "@mui/material";
 
 import { mainThemes } from "./config/MUI/themes/mainTheme/mainTheme";
@@ -29,14 +29,14 @@ import { getUserInfo } from "./API/commonAPI";
 import { setUserInfo } from "./redux/UserInfo/UserInfoReducer";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 import NavTool from "./components/NavTool/NavTool";
-import { TOKEN } from "./config/types";
+import { BAN_STATUS, REFRESH_TOKEN, TOKEN, USER_ROLE } from "./config/types";
 import { useCookies } from "react-cookie";
 import HelpButton from "./components/HelpButton/HelpButton";
 import ErrorReportModal from "./components/Modals/ErrorReportModal/ErrorReportModal";
 import SuccessMessageSendModal from "./components/Modals/SuccessMessageSendModal/SuccessMessageSendModal";
 
 function App() {
-  const [cookies] = useCookies([TOKEN]);
+  const [cookies] = useCookies([TOKEN, REFRESH_TOKEN, BAN_STATUS, USER_ROLE]);
 
   dayjs.locale("ru");
   const dispatch = useDispatch();
@@ -52,7 +52,6 @@ function App() {
       );
   }, []);
 
-  // const userType = "creator";
   return (
     <BrowserRouter>
       <ThemeProvider theme={mainThemes}>

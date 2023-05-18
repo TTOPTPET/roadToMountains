@@ -38,7 +38,7 @@ function SuccessCancelPostedTourModal() {
     >
       <DialogContent>
         <Typography variant={"h5"} sx={{ mb: "30px" }}>
-          {modal?.props?.arr
+          {modal?.props?.multiply
             ? "Ваши туры успешно отменены!"
             : "Ваш тур успешно отменён!"}
         </Typography>

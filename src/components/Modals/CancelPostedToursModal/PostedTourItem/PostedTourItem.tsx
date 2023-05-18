@@ -13,6 +13,7 @@ import {
   setModalInactive,
   setModalActive,
 } from "../../../../redux/Modal/ModalReducer";
+import { deletePostedTour } from "../../../../API/creatorAPI/deletePostedTour";
 
 interface IPostedTourItem {
   setErrorMessage: Dispatch<SetStateAction<string>>;
@@ -44,15 +45,24 @@ function PostedTourItem({
     }
   }, []);
 
-  const handleDeleteClick = () => {
-    dispatch(
-      setModalActive("confirmCancelPostedTourModal", {
-        arr: false,
-        publicTourId,
-        setErrorMessage,
-        setPostedTours,
-        postedTours,
-      })
+  const handleDeletePostedTour = () => {
+    deletePostedTour(
+      tour.publicTourId,
+      (value) => {
+        setPostedTours &&
+          setPostedTours([
+            ...postedTours.filter((tour) => tour.publicTourId !== publicTourId),
+          ]);
+
+        dispatch(setModalInactive("confirmCancelPostedTourModal"));
+        dispatch(
+          setModalActive("successCancelPostedTourModal", { multiply: false })
+        );
+      },
+      () => {
+        dispatch(setModalInactive("confirmCancelPostedTourModal"));
+        setErrorMessage("Ошибка! Попробуйте позже!");
+      }
     );
   };
 
@@ -87,7 +97,7 @@ function PostedTourItem({
           <Button
             sx={{ width: "100%" }}
             disabled={cancelError}
-            onClick={() => handleDeleteClick()}
+            onClick={handleDeletePostedTour}
           >
             Отменить тур
           </Button>
