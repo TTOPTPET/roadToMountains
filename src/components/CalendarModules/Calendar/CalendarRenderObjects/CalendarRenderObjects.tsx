@@ -23,8 +23,6 @@ export default function CalendarRenderObjects({
   selectedPublic,
   setSelectedPublic,
 }: Props) {
-  console.log(publicTours);
-
   return (
     <Box
       key={date.toString()}

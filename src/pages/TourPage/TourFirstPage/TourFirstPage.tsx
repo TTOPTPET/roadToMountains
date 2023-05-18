@@ -68,14 +68,18 @@ export const TourFirstPage: FC<TourFirstPageProps> = ({
           </Paper>
 
           <Typography variant={"button"}>
-            {tourInfo?.creatorInfo?.creatorType === "SELF"
-              ? ""
-              : tourInfo?.creatorInfo?.creatorType === "OOO"
-              ? "ООО"
-              : "ИП"}{" "}
-            {tourInfo?.creatorInfo?.creatorType === "SELF"
-              ? tourInfo?.creatorInfo?.name
-              : `"${tourInfo?.creatorInfo?.name}"`}
+            {tourInfo?.creatorInfo?.creatorType
+              ? tourInfo?.creatorInfo?.creatorType === "SELF"
+                ? ""
+                : tourInfo?.creatorInfo?.creatorType === "OOO"
+                ? "ООО"
+                : "ИП"
+              : ""}{" "}
+            {tourInfo?.creatorInfo?.name
+              ? tourInfo?.creatorInfo?.creatorType === "SELF"
+                ? tourInfo?.creatorInfo?.name
+                : `"${tourInfo?.creatorInfo?.name}"`
+              : "Название компании"}
           </Typography>
         </Stack>
       </Stack>
