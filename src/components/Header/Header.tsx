@@ -11,14 +11,19 @@ import { RootState } from "../../redux/store";
 import logo from "../../media/logo.svg";
 import { UserType } from "../../models/userModels/IUserInfo";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { TOKEN, USER_ROLE } from "../../config/types";
+import {
+  BAN_STATUS,
+  REFRESH_TOKEN,
+  TOKEN,
+  USER_ROLE,
+} from "../../config/types";
 import { useCookies } from "react-cookie";
 import accIcon from "../../media/accountLinkIcon.svg";
 import calendarIcon from "../../media/calendarIcon.svg";
 import { useEffect, useState } from "react";
 
 const Header = () => {
-  const [cookies] = useCookies([TOKEN, USER_ROLE]);
+  const [cookies] = useCookies([TOKEN, USER_ROLE, REFRESH_TOKEN, BAN_STATUS]);
 
   const [searchData, setSearchData] = useState<string>("");
   let location = useLocation();

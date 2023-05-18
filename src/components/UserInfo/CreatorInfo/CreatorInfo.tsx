@@ -19,13 +19,11 @@ function CreatorInfo() {
   return (
     <UserInfo
       header={
-        <>
-          <UserInfoHeader
-            title={"Личный кабинет"}
-            linkTo="/creator/lk/editInfo"
-            userInfo={CreatorInfo}
-          />
-        </>
+        <UserInfoHeader
+          title={"Личный кабинет"}
+          linkTo="/creator/lk/editInfo"
+          userInfo={CreatorInfo}
+        />
       }
       fields={
         <>

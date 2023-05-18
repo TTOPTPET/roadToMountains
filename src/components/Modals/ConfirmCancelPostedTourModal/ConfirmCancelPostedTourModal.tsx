@@ -8,6 +8,9 @@ import {
 
 import { useDispatch, useSelector } from "react-redux";
 
+import { SetStateAction, Dispatch } from "react";
+import { IPublicTour } from "../../../models/calendarModels/IPublicTour";
+
 import {
   isModalActive,
   setModalInactive,
@@ -17,7 +20,17 @@ import { RootState } from "../../../redux/store";
 import { ITour } from "../../../models/tourCardModel/ITour";
 import { deletePostedTour } from "../../../API/creatorAPI/deletePostedTour";
 
-function ConfirmCancelPostedTourModal() {
+type ConfirmCancelPostedTourModalProps = {
+  setPublicTours?: Dispatch<SetStateAction<IPublicTour[]>>;
+  setSelectedPublic?: Dispatch<SetStateAction<IPublicTour>>;
+  setErrorMessage?: Dispatch<SetStateAction<string>>;
+};
+
+function ConfirmCancelPostedTourModal({
+  setPublicTours,
+  setSelectedPublic,
+  setErrorMessage,
+}: ConfirmCancelPostedTourModalProps) {
   const activeModals = useSelector(
     (state: RootState) => state.modal.activeModals
   );
@@ -43,33 +56,36 @@ function ConfirmCancelPostedTourModal() {
             dispatch(setModalInactive("сancelPostedToursModal"));
             dispatch(setModalInactive("deleteTourModal"));
             dispatch(
-              setModalActive("successCancelPostedTourModal", { arr: true })
+              setModalActive("successCancelPostedTourModal", { multiply: true })
             );
           },
           () => {
-            modal?.props?.setErrorMessage("Ошибка! Попробуйте позже!");
+            setErrorMessage("Ошибка! Попробуйте позже!");
           }
         );
       });
   };
 
   const handlerDeleteClick = () => {
-    dispatch(setModalInactive("confirmCancelPostedTourModal"));
     modal?.props?.publicTourId &&
       deletePostedTour(
         modal?.props?.publicTourId,
         (value) => {
-          modal?.props?.setPostedTours([
-            ...modal?.props?.postedTours.filter(
+          setPublicTours((publicTours) =>
+            publicTours.filter(
               (tour) => tour.publicTourId !== modal?.props?.publicTourId
-            ),
-          ]);
+            )
+          );
+          setSelectedPublic(undefined);
+
+          dispatch(setModalInactive("confirmCancelPostedTourModal"));
           dispatch(
-            setModalActive("successCancelPostedTourModal", { arr: false })
+            setModalActive("successCancelPostedTourModal", { multiply: false })
           );
         },
         () => {
-          modal?.props?.setErrorMessage("Ошибка! Попробуйте позже!");
+          dispatch(setModalInactive("confirmCancelPostedTourModal"));
+          setErrorMessage("Ошибка! Попробуйте позже!");
         }
       );
   };
@@ -84,10 +100,11 @@ function ConfirmCancelPostedTourModal() {
     >
       <DialogContent>
         <Typography variant={"h5"} sx={{ mb: "30px" }}>
-          Подтверждение отмены {modal?.props?.arr ? "туров" : "тура"}
+          Подтверждение отмены {modal?.props?.multiply ? "туров" : "тура"}
         </Typography>
         <Typography variant={"caption"}>
-          Вы уверены, что хотите отменить {modal?.props?.arr ? "туры" : "тур"}?
+          Вы уверены, что хотите отменить{" "}
+          {modal?.props?.multiply ? "туры" : "тур"}?
           <br /> Все денежные средства будут <br />
           возвращены покупателям
         </Typography>
@@ -101,7 +118,9 @@ function ConfirmCancelPostedTourModal() {
           <Button onClick={handlerBackClick}>Назад</Button>
           <Button
             onClick={
-              modal?.props?.arr ? handlerDeleteAllClick : handlerDeleteClick
+              modal?.props?.multiply
+                ? handlerDeleteAllClick
+                : handlerDeleteClick
             }
           >
             Да, отменить

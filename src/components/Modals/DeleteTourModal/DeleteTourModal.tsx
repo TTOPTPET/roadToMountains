@@ -48,7 +48,10 @@ function DeleteTourModal({
         dispatch(setModalActive("successDeleteTourModal"));
       },
       (data) => {
-        dispatch(setModalActive("сancelPostedToursModal", { myTours: data }));
+        console.log(data);
+        dispatch(
+          setModalActive("сancelPostedToursModal", { publicTours: data })
+        );
       }
     );
   };

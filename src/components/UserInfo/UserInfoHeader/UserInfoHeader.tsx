@@ -156,10 +156,10 @@ function UserInfoHeader({
           variant="errorButton"
           sx={{ mt: "10px" }}
           onClick={() => {
-            removeCookies(TOKEN);
-            removeCookies(REFRESH_TOKEN);
-            removeCookies(USER_ROLE);
-            removeCookies(BAN_STATUS);
+            removeCookies(TOKEN, { path: "/" });
+            removeCookies(REFRESH_TOKEN, { path: "/" });
+            removeCookies(USER_ROLE, { path: "/" });
+            removeCookies(BAN_STATUS, { path: "/" });
             navigate("/auth");
           }}
         >

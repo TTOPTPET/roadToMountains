@@ -2,7 +2,7 @@ import { Box, Button, Grid } from "@mui/material";
 import { useState, useEffect } from "react";
 import { IPublicTour } from "../../models/calendarModels/IPublicTour";
 import { getPublicTours } from "../../API/calendarAPI/getPublicTours";
-import { CalendarSidebar } from "../../components/CalendarModules/CalendarSidebar/CalendarSidebar";
+import CalendarSidebar from "../../components/CalendarModules/CalendarSidebar/CalendarSidebar";
 import { ITour } from "../../models/tourCardModel/ITour";
 import { getMyTours } from "../../API/creatorAPI/getMyTours";
 import { useDispatch } from "react-redux";
@@ -11,12 +11,14 @@ import NewPublicModal from "../../components/Modals/NewPublicModal/NewPublicModa
 import { Calendar } from "../../components/CalendarModules/Calendar/Calendar";
 import CalendarDatePicker from "../../components/CalendarModules/CalendarDatePicker/CalendarDatePicker";
 import dayjs, { Dayjs } from "dayjs";
+import ConfirmCancelPostedTourModal from "../../components/Modals/ConfirmCancelPostedTourModal/ConfirmCancelPostedTourModal";
 
 function TourCalendarPage() {
   const [publicTours, setPublicTours] = useState<IPublicTour[]>([]);
   const [selectedPublic, setSelectedPublic] = useState<IPublicTour>();
   const [myTours, setMyTours] = useState<ITour[]>([]);
   const [viewMonth, setViewMonth] = useState<Dayjs>(dayjs());
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     getMyTours(
@@ -38,32 +40,43 @@ function TourCalendarPage() {
   }, [viewMonth]);
 
   return (
-    <Box pt={10}>
-      <Grid container spacing={8}>
-        <Grid item xs={8}>
-          <CalendarDatePicker
-            viewMonth={viewMonth}
-            setViewMonth={setViewMonth}
-          />
-          <Calendar
-            viewMonth={viewMonth}
-            publicTours={publicTours}
-            selectedPublic={selectedPublic}
-            setSelectedPublic={setSelectedPublic}
-          />
+    <>
+      <Box pt={10}>
+        <Grid container spacing={8}>
+          <Grid item xs={8}>
+            <CalendarDatePicker
+              viewMonth={viewMonth}
+              setViewMonth={setViewMonth}
+            />
+            <Calendar
+              viewMonth={viewMonth}
+              publicTours={publicTours}
+              selectedPublic={selectedPublic}
+              setSelectedPublic={setSelectedPublic}
+            />
+          </Grid>
+          <Grid item xs={4}>
+            <CalendarSidebar
+              selectedPublic={selectedPublic}
+              setErrorMessage={setErrorMessage}
+              errorMessage={errorMessage}
+            />
+            {/* Это говнище будет работать по клику, так что потом просто логику малесь переделать */}
+          </Grid>
         </Grid>
-        <Grid item xs={4}>
-          <CalendarSidebar {...selectedPublic} />
-          {/* Это говнище будет работать по клику, так что потом просто логику малесь переделать */}
-        </Grid>
-      </Grid>
-      <NewPublicModal
-        myTours={myTours}
-        selectedPublic={selectedPublic}
-        setSelectedPublic={setSelectedPublic}
+        <NewPublicModal
+          myTours={myTours}
+          selectedPublic={selectedPublic}
+          setSelectedPublic={setSelectedPublic}
+          setPublicTours={setPublicTours}
+        />
+      </Box>
+      <ConfirmCancelPostedTourModal
+        setErrorMessage={setErrorMessage}
         setPublicTours={setPublicTours}
+        setSelectedPublic={setSelectedPublic}
       />
-    </Box>
+    </>
   );
 }
 

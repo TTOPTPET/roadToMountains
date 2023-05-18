@@ -1,14 +1,24 @@
 import { Box, Button, Paper, Typography } from "@mui/material";
 import { Stack } from "@mui/system";
 import dayjs from "dayjs";
-import { FC } from "react";
-import { whiteColor } from "../../../config/MUI/color/color";
+import { FC, useState, Dispatch, SetStateAction } from "react";
+import { redColor, whiteColor } from "../../../config/MUI/color/color";
 import { IPublicTour } from "../../../models/calendarModels/IPublicTour";
 import { TouristOrder } from "./TouristOrder/TouristOrder";
 import { setModalActive } from "../../../redux/Modal/ModalReducer";
 import { useDispatch } from "react-redux";
 
-export const CalendarSidebar: FC<IPublicTour> = (selectedPublic) => {
+type Props = {
+  selectedPublic: IPublicTour;
+  setErrorMessage?: Dispatch<SetStateAction<string>>;
+  errorMessage: string;
+};
+
+export default function CalendarSidebar({
+  selectedPublic,
+  setErrorMessage,
+  errorMessage,
+}: Props) {
   const dispatch = useDispatch();
 
   return (
@@ -38,7 +48,7 @@ export const CalendarSidebar: FC<IPublicTour> = (selectedPublic) => {
       </Stack>
       <Stack direction={"column"} width={"55%"} gap={1} alignSelf={"end"}>
         <Button
-          disabled={Object.keys(selectedPublic).length === 0}
+          disabled={!selectedPublic || Object.keys(selectedPublic).length === 0}
           onClick={() => dispatch(setModalActive("newPublicModal"))}
         >
           Редактировать
@@ -50,7 +60,17 @@ export const CalendarSidebar: FC<IPublicTour> = (selectedPublic) => {
                 .format("D MMMM YYYY")
             : "Дата конца ред."}
         </Typography>
-        <Button disabled={Object.keys(selectedPublic).length === 0}>
+        <Button
+          disabled={!selectedPublic || Object.keys(selectedPublic).length === 0}
+          onClick={() =>
+            dispatch(
+              setModalActive("confirmCancelPostedTourModal", {
+                multiply: false,
+                publicTourId: selectedPublic?.publicTourId,
+              })
+            )
+          }
+        >
           Отменить тур
         </Button>
         <Typography variant={"caption"} align={"right"}>
@@ -61,6 +81,15 @@ export const CalendarSidebar: FC<IPublicTour> = (selectedPublic) => {
             : "Дата конца отмены"}
         </Typography>
       </Stack>
+      {errorMessage && (
+        <Typography
+          variant="caption"
+          textAlign={"center"}
+          sx={{ color: redColor }}
+        >
+          {errorMessage}
+        </Typography>
+      )}
       <Typography variant={"h6"}>
         Заказы{" ("}
         {selectedPublic?.bookingInfo ? selectedPublic?.bookingInfo.length : 0}
@@ -86,4 +115,4 @@ export const CalendarSidebar: FC<IPublicTour> = (selectedPublic) => {
       </Box>
     </Stack>
   );
-};
+}

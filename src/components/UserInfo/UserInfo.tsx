@@ -185,7 +185,6 @@ function UserInfo({ header, fields, submitFuntion }: UserInfoProps) {
           variant="displayInfo"
         />
       )}
-      s
       <CancelBookingModal />
       <SuccessCancellingBookingModal />
       <SuccessBookingModal />
