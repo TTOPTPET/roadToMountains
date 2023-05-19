@@ -315,7 +315,7 @@ export default function NewPublicModal({
                     setEditedPublic(undefined);
                   });
                 } else {
-                  editPublicTour(editedPublic, () => {
+                  editPublicTour(editedPublic, (resp) => {
                     dispatch(setModalInactive("newPublicModal"));
                     setPublicTours((publicTours) => {
                       return publicTours.map((tour) => {
@@ -325,7 +325,13 @@ export default function NewPublicModal({
                         return tour;
                       });
                     });
-                    setSelectedPublic(editedPublic);
+                    setSelectedPublic({
+                      ...editedPublic,
+                      publicTourId: resp?.publicTourId,
+                      cancelDeadline: resp?.cancelDeadline,
+                      updateDeadline: resp?.updateDeadline,
+                      tourAmountWithCommission: resp?.tourAmountWithCommission,
+                    });
                     setEditedPublic(undefined);
                   });
                 }

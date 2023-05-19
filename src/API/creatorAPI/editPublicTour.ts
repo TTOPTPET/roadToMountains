@@ -4,7 +4,17 @@ import { IPublicTour } from "../../models/calendarModels/IPublicTour";
 
 export const editPublicTour = async (
   data: IPublicTour,
-  successCallback?: () => void,
+  successCallback?: ({
+    publicTourId,
+    cancelDeadline,
+    updateDeadline,
+    tourAmountWithCommission,
+  }: {
+    publicTourId: string;
+    cancelDeadline: string;
+    updateDeadline: string;
+    tourAmountWithCommission: number;
+  }) => void,
   errorCallback?: () => void,
   useDefault?: boolean
 ) => {
@@ -12,10 +22,10 @@ export const editPublicTour = async (
     return;
   }
   try {
-    await axios.put(creatorUrl + "/public", data, {
+    let response = await axios.put(creatorUrl + "/public", data, {
       params: { publicTourId: data.publicTourId },
     });
-    successCallback && successCallback();
+    successCallback && successCallback(response?.data);
   } catch (e) {
     console.error(e);
     errorCallback && errorCallback();
