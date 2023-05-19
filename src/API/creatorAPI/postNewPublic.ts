@@ -4,7 +4,17 @@ import { IPublicTour } from "../../models/calendarModels/IPublicTour";
 
 export const postNewPublic = async (
   data: IPublicTour,
-  successCallback?: ({ publicTourId }: { publicTourId: string }) => void,
+  successCallback?: ({
+    publicTourId,
+    cancelDeadline,
+    updateDeadline,
+    tourAmountWithCommission,
+  }: {
+    publicTourId: string;
+    cancelDeadline: string;
+    updateDeadline: string;
+    tourAmountWithCommission: number;
+  }) => void,
   errorCallback?: () => void,
   useDefault?: boolean
 ) => {

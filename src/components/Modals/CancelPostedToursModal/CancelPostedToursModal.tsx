@@ -75,8 +75,6 @@ function CancelPostedToursModal({
     });
   };
 
-  console.log(postedTours);
-
   const elements =
     postedTours &&
     postedTours.map((tour: ITour, key: number) => {
