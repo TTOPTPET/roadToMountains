@@ -11,6 +11,7 @@ import AddTourRouting from "./AddTourRouting/AddTourRouting";
 import AddTourSteps from "./AddTourSteps/AddTourSteps";
 import { IFilter } from "../../models/tourListModels/IFilter";
 import { getFilters } from "../../API/tourListAPI";
+import { getMyTourById } from "../../API/creatorAPI/getMyTourById";
 
 export enum addTourStepsMap {
   first,
@@ -41,7 +42,7 @@ function AddTourPage({ isEditing }: { isEditing: boolean }) {
 
   useEffect(() => {
     if (isEditing) {
-      getTourInfo(tourId, (value) => dispatch(setTourField(value))).then(() =>
+      getMyTourById(tourId, (value) => dispatch(setTourField(value))).then(() =>
         setLoading(false)
       );
     } else {

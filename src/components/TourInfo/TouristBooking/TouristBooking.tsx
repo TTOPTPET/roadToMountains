@@ -36,11 +36,13 @@ export const TouristBooking: FC<ITouristBookingProps> = ({
     });
   };
 
-  const handlerDeleteTourist = (index: number) => {
+  const handlerDeleteTourist = () => {
+    console.log(index);
+    console.log(bookingData?.touristsInfo[index]);
     setBookingData({
       ...bookingData,
       touristsInfo: [
-        ...bookingData.touristsInfo.filter((item, i) => i !== index),
+        ...bookingData.touristsInfo.filter((vale, i) => i !== index),
       ],
       size: bookingData.size - 1,
     });
@@ -53,7 +55,7 @@ export const TouristBooking: FC<ITouristBookingProps> = ({
       padding={4}
     >
       <IconButton
-        onClick={() => handlerDeleteTourist(index)}
+        onClick={handlerDeleteTourist}
         sx={{ float: "right", marginTop: "-20px", marginRight: "-15px" }}
       >
         <DeleteIcon width={20} height={20} />
