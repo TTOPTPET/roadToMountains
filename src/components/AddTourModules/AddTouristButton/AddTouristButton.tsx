@@ -30,6 +30,10 @@ export const AddTouristButton: FC<IAddTouristButton> = ({
         setBookingData({
           ...bookingData,
           size: bookingData.size + 1,
+          touristsInfo: [
+            ...bookingData.touristsInfo,
+            { age: "", name: "", sex: "" },
+          ],
         })
       }
     >

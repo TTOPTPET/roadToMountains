@@ -41,24 +41,28 @@ export const TourSecondPage: FC<ITourSecondPageProps> = ({
   selectedDate,
   setSelectedDate,
 }) => {
-  useEffect(() => {
-    setBookingData({
-      ...bookingData,
-      touristsInfo: new Array(bookingData.size).fill(defaultTourist),
-    });
-  }, [bookingData.size]);
-
-  const touristInfo: JSX.Element[] = [];
-  for (let i = 0; i < bookingData.size; i++) {
-    touristInfo.push(
+  const touristInfo: JSX.Element[] = bookingData.touristsInfo.map(
+    (item, index) => (
       <TouristBooking
-        key={i}
+        key={index}
         bookingData={bookingData}
         setBookingData={setBookingData}
-        index={i}
+        index={index}
       />
-    );
-  }
+    )
+  );
+
+  useEffect(() => {
+    if (
+      touristInfo.length !== bookingData.size - 1 ||
+      touristInfo.length !== bookingData.size + 1
+    ) {
+      setBookingData({
+        ...bookingData,
+        touristsInfo: new Array(bookingData.size).fill(defaultTourist),
+      });
+    }
+  }, [bookingData.size]);
 
   return (
     <Stack gap={2}>
