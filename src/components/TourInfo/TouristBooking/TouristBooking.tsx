@@ -11,12 +11,14 @@ import { ReactComponent as DeleteIcon } from "../../../media/DeleteCreatorDocume
 
 interface ITouristBookingProps {
   bookingData: ITourBooking;
+  touristData: ITouristBookingData;
   setBookingData: Dispatch<SetStateAction<ITourBooking>>;
   index: number;
 }
 
 export const TouristBooking: FC<ITouristBookingProps> = ({
   bookingData,
+  touristData,
   setBookingData,
   index,
 }) => {
@@ -35,14 +37,11 @@ export const TouristBooking: FC<ITouristBookingProps> = ({
       }),
     });
   };
-
   const handlerDeleteTourist = () => {
-    console.log(index);
-    console.log(bookingData?.touristsInfo[index]);
     setBookingData({
       ...bookingData,
       touristsInfo: [
-        ...bookingData.touristsInfo.filter((vale, i) => i !== index),
+        ...bookingData.touristsInfo.filter((val, i) => i !== index),
       ],
       size: bookingData.size - 1,
     });
@@ -67,27 +66,27 @@ export const TouristBooking: FC<ITouristBookingProps> = ({
         <TextField
           placeholder={"ФИО"}
           color={"secondary"}
-          value={bookingData.touristsInfo[index]?.name}
+          value={touristData?.name ?? ""}
           onChange={(e) => handlerFieldChange("name", e.target.value)}
         />
         <TextField
           placeholder={"Возраст"}
           color={"secondary"}
-          value={bookingData.touristsInfo[index]?.age}
+          value={touristData?.age ?? ""}
           onChange={(e) => handlerFieldChange("age", e.target.value)}
         />
         <Autocomplete
           freeSolo
           disableClearable
           onChange={(e, value) => handlerFieldChange("sex", value)}
+          value={touristData?.sex ?? ""}
           options={Object.values(Sex)}
           renderInput={(params) => (
             <TextField
               placeholder={"Пол"}
               color={"secondary"}
               {...params}
-              value={bookingData.touristsInfo[index]?.sex}
-              onChange={(e) => handlerFieldChange("sex", e.target.value)}
+              value={touristData?.sex ?? ""}
               InputProps={{ ...params.InputProps, type: "search" }}
             />
           )}

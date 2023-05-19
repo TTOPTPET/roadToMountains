@@ -42,9 +42,10 @@ function AddTourPage({ isEditing }: { isEditing: boolean }) {
 
   useEffect(() => {
     if (isEditing) {
-      getMyTourById(tourId, (value) => dispatch(setTourField(value))).then(() =>
-        setLoading(false)
-      );
+      getMyTourById(tourId, (value) => {
+        dispatch(setTourField(value));
+        setLoading(false);
+      });
     } else {
       dispatch(clearTourFields());
       setLoading(false);
