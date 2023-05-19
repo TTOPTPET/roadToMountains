@@ -16,7 +16,9 @@ import {
 } from "../../../redux/Modal/ModalReducer";
 import { RootState } from "../../../redux/store";
 import { ITour } from "../../../models/tourCardModel/ITour";
-import { SetStateAction, Dispatch } from "react";
+import { SetStateAction, Dispatch, useState } from "react";
+import CancelPostedToursModal from "../CancelPostedToursModal/CancelPostedToursModal";
+import SuccessCancelPostedTourModal from "../SuccessCancelPostedTourModal/SuccessCancelPostedTourModal";
 
 interface IDeleteTourModalProps {
   tourId: string;
@@ -35,6 +37,8 @@ function DeleteTourModal({
 
   const dispatch = useDispatch();
 
+  const [postedTours, setPostedTours] = useState<ITour[]>([]);
+
   const handlerBackClick = () => {
     dispatch(setModalInactive("deleteTourModal"));
   };
@@ -48,10 +52,8 @@ function DeleteTourModal({
         dispatch(setModalActive("successDeleteTourModal"));
       },
       (data) => {
-        console.log(data);
-        dispatch(
-          setModalActive("сancelPostedToursModal", { publicTours: data })
-        );
+        setPostedTours(data);
+        dispatch(setModalActive("сancelPostedToursModal"));
       }
     );
   };
@@ -81,6 +83,11 @@ function DeleteTourModal({
           <Button onClick={handlerConfirmClick}>Да, удалить</Button>
         </Stack>
       </DialogContent>
+      <CancelPostedToursModal
+        postedTours={postedTours}
+        setPostedTours={setPostedTours}
+      />
+      <SuccessCancelPostedTourModal />
     </Dialog>
   );
 }

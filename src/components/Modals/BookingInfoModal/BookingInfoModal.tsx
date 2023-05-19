@@ -20,8 +20,13 @@ import dayjs from "dayjs";
 import { baseUrl } from "../../../config/config";
 
 import userPhoto from "../../../media/userPhoto.svg";
+import { IPublicTour } from "../../../models/calendarModels/IPublicTour";
 
-function BookingInfoModal() {
+type BookingInfoModalProps = {
+  selectedBooking: IPublicTour;
+};
+
+function BookingInfoModal({ selectedBooking }: BookingInfoModalProps) {
   const activeModals = useSelector(
     (state: RootState) => state.modal.activeModals
   );
@@ -31,43 +36,6 @@ function BookingInfoModal() {
   const dispatch = useDispatch();
 
   const index = modal?.props?.index;
-
-  console.log(modal?.props?.bookingItem);
-
-  const defaultinfo = {
-    userInfo: {
-      photo: "",
-      phone: "89206732953",
-      email: "quyewtyiuqwe@asd.ru",
-      name: "Дмитрий Викторович Пшик",
-    },
-    bookingId: "Египетские пирамиды",
-    tourAmount: 123000,
-    bookingDate: {
-      from: "03-10-2023",
-      to: "03-14-2023",
-    },
-    touristsInfo: [
-      {
-        name: "Алексей",
-        age: "102",
-        sex: "Мужской",
-      },
-      {
-        name: "Алексей",
-        age: "54",
-        sex: "Мужской",
-      },
-      {
-        name: "Алексей",
-        age: "12",
-        sex: "Мужской",
-      },
-    ],
-    comment: "я гей",
-    living: "Гостиница “Космос”, просп. Мира, 150",
-    insurance: "",
-  };
 
   const handlerBackClick = () => {
     dispatch(setModalInactive("bookingInfoModal"));
@@ -97,16 +65,21 @@ function BookingInfoModal() {
           gap={"10px"}
         >
           <Typography variant={"h5"}>
-            {modal?.props?.bookingItem?.tour?.tourName}
+            {selectedBooking
+              ? selectedBooking?.tour?.tourName
+              : "Название тура"}
           </Typography>
           <Typography variant={"caption"} sx={{ mt: "6px" }}>
-            {dayjs(
-              modal?.props?.bookingItem?.bookingInfo?.bookingDate?.from
-            ).format("D MMMM YYYY") +
-              " - " +
-              dayjs(
-                modal?.props?.bookingItem?.bookingInfo?.bookingDate?.to
-              ).format("D MMMM YYYY")}
+            {selectedBooking.bookingInfo &&
+            selectedBooking?.bookingInfo[index]?.bookingDate?.from
+              ? dayjs(
+                  selectedBooking?.bookingInfo[index]?.bookingDate?.from
+                ).format("D MMMM YYYY") +
+                " - " +
+                dayjs(
+                  selectedBooking?.bookingInfo[index]?.bookingDate?.to
+                ).format("D MMMM YYYY")
+              : "Дата начала - Дата конца"}
           </Typography>
         </Stack>
 
@@ -126,85 +99,64 @@ function BookingInfoModal() {
                 height: "50px",
               }}
             >
-              {modal?.props &&
-              modal?.props?.bookingItem?.bookingInfo?.userInfo?.photo ? (
-                <MuiAvatar
-                  src={
-                    baseUrl +
-                    "/" +
-                    modal?.props?.bookingItem?.bookingInfo?.userInfo?.photo
-                  }
-                  alt="user avatar"
-                  sx={{ width: "70px", height: "70px" }}
-                />
-              ) : (
-                <img src={userPhoto} alt="person icon" />
-              )}
+              <img src={userPhoto} alt="person icon" />
             </Paper>
 
             <Typography variant={"caption"}>
-              {modal?.props?.bookingItem?.bookingInfo[index]?.userInfo?.name}
+              {selectedBooking?.bookingInfo[index]?.userInfo?.name
+                ? selectedBooking?.bookingInfo[index]?.userInfo?.name
+                : "Пользователь не указан"}
             </Typography>
           </Stack>
 
           <Typography variant={"caption"}>
-            {/* {`+${modal?.props?.bookingInfo?.userInfo?.phone.substring(
-              0,
-              1
-            )}(${modal?.props?.bookingInfo?.userInfo?.phone.substring(
-              1,
-              4
-            )})${modal?.props?.bookingInfo?.userInfo?.phone.substring(
-              4,
-              7
-            )}-${modal?.props?.bookingInfo?.userInfo?.phone.substring(
-              7,
-              9
-            )}-${modal?.props?.bookingInfo?.userInfo?.phone.substring(9, 11)}`} */}
-            {modal?.props?.bookingItem?.bookingInfo[index]?.userInfo?.phone}
+            {selectedBooking &&
+            selectedBooking?.bookingInfo[index]?.userInfo?.phone
+              ? `+${selectedBooking?.bookingInfo[
+                  index
+                ]?.userInfo?.phone.substring(
+                  0,
+                  1
+                )} (${selectedBooking?.bookingInfo[
+                  index
+                ]?.userInfo?.phone.substring(
+                  1,
+                  4
+                )}) ${selectedBooking?.bookingInfo[
+                  index
+                ]?.userInfo?.phone.substring(
+                  4,
+                  7
+                )}-${selectedBooking?.bookingInfo[
+                  index
+                ]?.userInfo?.phone.substring(
+                  7,
+                  9
+                )}-${selectedBooking?.bookingInfo[
+                  index
+                ]?.userInfo?.phone.substring(9, 11)}`
+              : "Номер телефона"}
           </Typography>
 
-          <Typography variant={"caption"}>{`${new Intl.NumberFormat(
-            "ru-RU"
-          ).format(modal?.props?.bookingItem?.tourAmount)}₽`}</Typography>
-        </Stack>
-
-        <Stack direction={"column"} marginTop={"30px"} gap={"10px"}>
-          <Typography variant={"h6"}>Проживание</Typography>
-          <Typography
-            variant={"caption"}
-            sx={{
-              wordWrap: "initial",
-            }}
-          >
-            {defaultinfo.living ? defaultinfo.living : "Проживание не включено"}
-          </Typography>
-        </Stack>
-
-        <Stack direction={"column"} marginTop={"30px"} gap={"10px"}>
-          <Typography variant={"h6"}>Страхование</Typography>
-          <Typography
-            variant={"caption"}
-            sx={{
-              wordWrap: "initial",
-            }}
-          >
-            {defaultinfo.insurance
-              ? defaultinfo.insurance
-              : "Страхование не включено"}
+          <Typography variant={"caption"}>
+            {selectedBooking && selectedBooking?.bookingInfo[index]?.tourAmount
+              ? `${new Intl.NumberFormat("ru-RU").format(
+                  selectedBooking?.bookingInfo[index]?.tourAmount
+                )}₽`
+              : "Стоимость тура"}
           </Typography>
         </Stack>
 
-        {modal?.props?.bookingItem?.bookingInfo[index]?.comment && (
+        {selectedBooking && selectedBooking?.bookingInfo[index]?.comment && (
           <Stack direction={"column"} marginTop={"30px"} gap={"10px"}>
             <Typography variant={"h6"}>Комментарий к заказу</Typography>
             <Typography
               variant={"caption"}
               sx={{
-                wordWrap: "initial",
+                wordWrap: "break-word",
               }}
             >
-              {modal?.props?.bookingItem?.bookingInfo[index]?.comment}
+              {selectedBooking?.bookingInfo[index]?.comment}
             </Typography>
           </Stack>
         )}
@@ -212,8 +164,9 @@ function BookingInfoModal() {
         <Stack direction={"column"} marginTop={"30px"} gap={"10px"}>
           <Typography variant={"h6"}>Информация о туристах</Typography>
           <Stack direction={"column"}>
-            {modal?.props?.bookingItem?.bookingInfo[index]?.touristsInfo &&
-              modal?.props?.bookingItem?.bookingInfo[index]?.touristsInfo.map(
+            {selectedBooking &&
+              selectedBooking?.bookingInfo[index]?.touristsInfo &&
+              selectedBooking?.bookingInfo[index]?.touristsInfo.map(
                 (tourist, i) => (
                   <Typography
                     variant={"caption"}
@@ -221,7 +174,7 @@ function BookingInfoModal() {
                       wordWrap: "initial",
                     }}
                   >
-                    {i + 1}. {tourist.name}, {tourist.age}
+                    {i + 1}. {tourist.name}, {checkAge(tourist.age)}
                   </Typography>
                 )
               )}
@@ -233,3 +186,23 @@ function BookingInfoModal() {
 }
 
 export default BookingInfoModal;
+
+const checkAge = (stringAge: string) => {
+  const age =
+    stringAge.length > 2 ? Number(stringAge.slice(-2)) : Number(stringAge);
+  const lastSymbol = Number(stringAge.slice(-1));
+
+  if (
+    (age >= 5 && age <= 20) ||
+    (lastSymbol >= 5 && lastSymbol <= 9) ||
+    lastSymbol === 0
+  ) {
+    return `${stringAge} лет`;
+  } else if (lastSymbol >= 2 && lastSymbol <= 4) {
+    return `${stringAge} года`;
+  } else if (lastSymbol === 1) {
+    return `${stringAge} год`;
+  } else {
+    return stringAge;
+  }
+};

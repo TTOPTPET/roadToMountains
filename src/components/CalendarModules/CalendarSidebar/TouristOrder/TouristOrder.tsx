@@ -27,11 +27,14 @@ export default function TouristOrder({
 
   return (
     <Box
-      sx={{ backgroundColor: whiteColor, borderRadius: 10, cursor: "pointer" }}
+      sx={{
+        backgroundColor: whiteColor,
+        borderRadius: 10,
+        cursor: "pointer",
+      }}
       onClick={() => {
         dispatch(
           setModalActive("bookingInfoModal", {
-            bookingItem: selectedPublic,
             index: index,
           })
         );
@@ -43,31 +46,41 @@ export default function TouristOrder({
           justifyContent={"space-between"}
           alignItems={"center"}
         >
-          <Box
-            sx={{
-              width: 64,
-              height: 64,
-              borderRadius: 30,
-              backgroundColor: darkTurquoiseColor,
-              color: "white",
-            }}
-          >
-            <Typography
-              variant={"button"}
-              align={"center"}
-              marginY={"35%"}
-              color={"white"}
+          <Stack direction={"row"}>
+            <Box
+              sx={{
+                width: 64,
+                height: 64,
+                borderRadius: 30,
+                backgroundColor: darkTurquoiseColor,
+                color: "white",
+              }}
             >
-              {bookingInfo?.touristsInfo.length ?? 0}
-            </Typography>
-          </Box>
-          <Stack direction={"column"}>
-            <Typography variant={"h6"}>
-              №{bookingInfo?.bookingId ?? "0"}
-            </Typography>
-            <Typography variant={"caption"}>
-              {bookingInfo?.userInfo?.name ?? "Пользователь не указан"}
-            </Typography>
+              <Typography
+                variant={"button"}
+                align={"center"}
+                marginY={"35%"}
+                color={"white"}
+              >
+                {bookingInfo?.touristsInfo.length ?? 0}
+              </Typography>
+            </Box>
+            <Stack direction={"column"} sx={{ ml: "10px" }} gap={"5px"}>
+              <Typography variant={"h6"}>
+                №{bookingInfo?.bookingId ?? "0"}
+              </Typography>
+              <Typography
+                variant={"caption"}
+                sx={{
+                  width: "150px",
+                  whiteSpace: "nowrap",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                }}
+              >
+                {bookingInfo?.userInfo?.name ?? "Пользователь не указан"}
+              </Typography>
+            </Stack>
           </Stack>
           <Typography variant={"caption"} mr={2}>
             {bookingInfo?.tourAmount ?? 0}₽

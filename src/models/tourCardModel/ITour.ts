@@ -18,5 +18,5 @@ export interface ITour {
   banStatus: boolean;
   publicNum: number;
   cancelDeadline: string;
-  publicTourId: number;
+  publicTourId: string;
 }

@@ -26,37 +26,12 @@ enum actionTypes {
 interface IActionProps {
   id: modalsId;
   props?: {
+    multiply?: boolean;
     index?: number;
     newPublic?: boolean;
     tourDate?: {
       from: string;
       to: string;
-    };
-    bookingItem: {
-      tour?: {
-        tourName?: string;
-      };
-      tourAmount?: number;
-      bookingInfo?: {
-        userInfo?: {
-          photo?: string;
-          phone?: string;
-          email?: string;
-          name?: string;
-        };
-        bookingId?: string;
-        tourAmount?: number;
-        bookingDate?: {
-          from?: string;
-          to?: string;
-        };
-        touristsInfo?: {
-          name?: string;
-          age?: string;
-          sex?: string;
-        }[];
-        comment?: string;
-      };
     };
   };
 }

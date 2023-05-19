@@ -8,7 +8,7 @@ import {
 
 import { useDispatch, useSelector } from "react-redux";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, SetStateAction, Dispatch } from "react";
 
 import {
   isModalActive,
@@ -22,7 +22,15 @@ import { redColor } from "../../../config/MUI/color/color";
 import { deletePostedTour } from "../../../API/creatorAPI/deletePostedTour";
 import ConfirmCancelPostedTourModal from "../ConfirmCancelPostedTourModal/ConfirmCancelPostedTourModal";
 
-function CancelPostedToursModal() {
+interface CancelPostedToursModalProps {
+  postedTours: ITour[];
+  setPostedTours: Dispatch<SetStateAction<ITour[]>>;
+}
+
+function CancelPostedToursModal({
+  postedTours,
+  setPostedTours,
+}: CancelPostedToursModalProps) {
   const activeModals = useSelector(
     (state: RootState) => state.modal.activeModals
   );
@@ -32,15 +40,13 @@ function CancelPostedToursModal() {
   const modal = activeModals.find(
     (modal) => modal.id === "сancelPostedToursModal"
   );
-  const [postedTours, setPostedTours] = useState<ITour[]>([]);
+
   const [cancelAllError, setCancelAllError] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
 
-  useEffect(() => {
-    setPostedTours(modal?.props?.publicTours);
-  }, [modal?.props]);
-
-  console.log(postedTours);
+  // useEffect(() => {
+  //   setPostedTours(modal?.props?.publicTours);
+  // }, [modal?.props]);
 
   const handlerBackClick = () => {
     dispatch(setModalInactive("сancelPostedToursModal"));
@@ -51,7 +57,6 @@ function CancelPostedToursModal() {
     dispatch(
       setModalActive("confirmCancelPostedTourModal", {
         multiply: true,
-        postedTours,
       })
     );
   };
@@ -123,7 +128,10 @@ function CancelPostedToursModal() {
           </Stack>
         </DialogContent>
       </Dialog>
-      <ConfirmCancelPostedTourModal setErrorMessage={setErrorMessage} />
+      <ConfirmCancelPostedTourModal
+        setErrorMessage={setErrorMessage}
+        postedTours={postedTours}
+      />
     </>
   );
 }
