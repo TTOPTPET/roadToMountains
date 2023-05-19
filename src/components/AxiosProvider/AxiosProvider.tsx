@@ -18,8 +18,8 @@ function AxiosProvider({ children }: { children: JSX.Element }) {
   axios.interceptors.request.use(
     (config) => {
       console.log("tokenn", cookies);
-      if (cookies[TOKEN] && !config?.headers?.Authorization)
-        config.headers.Authorization = `Bearer ${cookies[TOKEN]}`;
+      if (!config?.headers?.Authorization)
+        config.headers.Authorization = `Bearer ${cookies.TOKEN}`;
       return config;
     },
     (error) => {
@@ -38,22 +38,20 @@ function AxiosProvider({ children }: { children: JSX.Element }) {
         if (
           err.response.status === 422 &&
           !originalConfig._retry &&
-          cookies[REFRESH_TOKEN]
+          cookies.REFRESH_TOKEN
         ) {
           originalConfig._retry = true;
 
           try {
-            let newToken: string;
-            await refreshToken(cookies[REFRESH_TOKEN], (resp) => {
+            await refreshToken(cookies.REFRESH_TOKEN, (resp) => {
               removeCookies(TOKEN, { path: "/" });
               setCookies(TOKEN, resp?.accessToken, { path: "/" });
-              newToken = resp?.accessToken;
             });
             return axios.request({
               ...originalConfig,
               headers: {
                 ...originalConfig.headers,
-                Authorization: `Bearer ${newToken}`,
+                Authorization: `Bearer ${cookies.TOKEN}`,
               },
             });
           } catch (_error: any) {

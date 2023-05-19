@@ -124,7 +124,6 @@ function Authorization() {
         setCookies(BAN_STATUS, resp.status, { path: "/" });
         setErrAuth(false);
         setErrorMessage("");
-        getUserInfo((value) => dispatch(setUserInfo(value)));
         navigate("/tours/all");
       },
       (e) => {
@@ -256,9 +255,6 @@ function Authorization() {
               setCookies(REFRESH_TOKEN, resp.refreshToken, { path: "/" });
               setCookies(USER_ROLE, resp.role, { path: "/" });
               setCookies(BAN_STATUS, resp.status, { path: "/" });
-              getUserInfo((value) => {
-                dispatch(setUserInfo(value));
-              });
               dispatch(setModalInactive("enterMobileCodeModal"));
               navigate("/tours/all");
             }}

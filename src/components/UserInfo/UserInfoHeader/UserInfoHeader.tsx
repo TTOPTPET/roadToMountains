@@ -26,6 +26,7 @@ import {
 import { sendVerified } from "../../../API/creatorAPI/sendVerified";
 import { setUserInfo } from "../../../redux/UserInfo/UserInfoReducer";
 import { useCookies } from "react-cookie";
+import { logout } from "../../../API/authAPI/logout";
 
 type UserInfoHeaderProps = {
   submitFuntion?: () => void;
@@ -156,6 +157,7 @@ function UserInfoHeader({
           variant="errorButton"
           sx={{ mt: "10px" }}
           onClick={() => {
+            logout();
             removeCookies(TOKEN, { path: "/" });
             removeCookies(REFRESH_TOKEN, { path: "/" });
             removeCookies(USER_ROLE, { path: "/" });

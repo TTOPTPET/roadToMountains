@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import {
   ITouristInfo,
   ICreatorInfo,
@@ -71,17 +72,11 @@ function UserInfo({ header, fields, submitFuntion }: UserInfoProps) {
 
   const { typeUser, dataUser, name, phone, email } = userInfo;
 
-  // useEffect(() => {
-  //   setLoadingStatus(true);
-  //   getUserInfo(
-  //     (value) => {
-  //       dispatch(setUserInfo(value));
-  //       setLoadingStatus(false);
-  //     },
-  //     undefined,
-  //     true
-  //   );
-  // }, []);
+  useEffect(() => {
+    getUserInfo((value) => {
+      dispatch(setUserInfo(value));
+    });
+  }, []);
 
   return (
     <>
@@ -198,9 +193,6 @@ function UserInfo({ header, fields, submitFuntion }: UserInfoProps) {
           setCookies(REFRESH_TOKEN, resp.refreshToken, { path: "/" });
           setCookies(USER_ROLE, resp.role, { path: "/" });
           setCookies(BAN_STATUS, resp.status, { path: "/" });
-          getUserInfo((value) => {
-            dispatch(setUserInfo(value));
-          });
           dispatch(setModalInactive("enterMobileCodeModal"));
           navigate("/tours/all");
         }}

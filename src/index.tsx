@@ -18,13 +18,13 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <AxiosProvider>
-        <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={"ru"}>
-          <CookiesProvider>
+      <CookiesProvider>
+        <AxiosProvider>
+          <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={"ru"}>
             <App />
-          </CookiesProvider>
-        </LocalizationProvider>
-      </AxiosProvider>
+          </LocalizationProvider>
+        </AxiosProvider>
+      </CookiesProvider>
     </Provider>
   </React.StrictMode>
 );

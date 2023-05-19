@@ -41,16 +41,12 @@ function App() {
   dayjs.locale("ru");
   const dispatch = useDispatch();
   useEffect(() => {
-    cookies[TOKEN] &&
-      getUserInfo(
-        (value) => {
-          dispatch(setUserInfo(value));
-          // setLoadingStatus(false);
-        },
-        undefined,
-        false
-      );
-  }, []);
+    cookies.TOKEN &&
+      getUserInfo((value) => {
+        dispatch(setUserInfo(value));
+        // setLoadingStatus(false);
+      });
+  }, [cookies]);
 
   return (
     <BrowserRouter>

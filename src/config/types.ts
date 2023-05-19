@@ -1,4 +1,4 @@
-export const TOKEN = "ACCESS_TOKEN";
+export const TOKEN = "TOKEN";
 export const REFRESH_TOKEN = "REFRESH_TOKEN";
 export const USER_ROLE = "USER_ROLE";
 export const BAN_STATUS = "BAN_STATUS";
