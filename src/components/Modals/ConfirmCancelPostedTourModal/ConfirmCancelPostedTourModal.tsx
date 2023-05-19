@@ -24,12 +24,16 @@ type ConfirmCancelPostedTourModalProps = {
   setPublicTours?: Dispatch<SetStateAction<IPublicTour[]>>;
   setSelectedPublic?: Dispatch<SetStateAction<IPublicTour>>;
   setErrorMessage?: Dispatch<SetStateAction<string>>;
+  publicTourId?: string;
+  postedTours?: ITour[];
 };
 
 function ConfirmCancelPostedTourModal({
   setPublicTours,
   setSelectedPublic,
   setErrorMessage,
+  publicTourId,
+  postedTours,
 }: ConfirmCancelPostedTourModalProps) {
   const activeModals = useSelector(
     (state: RootState) => state.modal.activeModals
@@ -47,11 +51,10 @@ function ConfirmCancelPostedTourModal({
 
   const handlerDeleteAllClick = () => {
     dispatch(setModalInactive("confirmCancelPostedTourModal"));
-    modal?.props?.postedTours &&
-      modal?.props?.postedTours.map((tour: ITour) => {
-        const { publicTourId } = tour;
+    postedTours &&
+      postedTours.map((tour: ITour) => {
         deletePostedTour(
-          publicTourId,
+          tour.publicTourId,
           (value) => {
             dispatch(setModalInactive("сancelPostedToursModal"));
             dispatch(setModalInactive("deleteTourModal"));
@@ -67,14 +70,12 @@ function ConfirmCancelPostedTourModal({
   };
 
   const handlerDeleteClick = () => {
-    modal?.props?.publicTourId &&
+    publicTourId &&
       deletePostedTour(
-        modal?.props?.publicTourId,
+        publicTourId,
         (value) => {
           setPublicTours((publicTours) =>
-            publicTours.filter(
-              (tour) => tour.publicTourId !== modal?.props?.publicTourId
-            )
+            publicTours.filter((tour) => tour.publicTourId !== publicTourId)
           );
           setSelectedPublic(undefined);
 

@@ -2,7 +2,7 @@ import { creatorUrl } from "../../config/config";
 import axios from "axios";
 
 export const deletePostedTour = async (
-  publicTourId: number,
+  publicTourId: string,
   successCallback?: (params: any) => void,
   errorCallback?: () => void
 ) => {

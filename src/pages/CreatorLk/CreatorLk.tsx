@@ -11,8 +11,6 @@ import { ITour } from "../../models/tourCardModel/ITour";
 import CreatorInfo from "../../components/UserInfo/CreatorInfo/CreatorInfo";
 import { Stack } from "@mui/system";
 import { mobileWidth } from "../../config/config";
-import CancelPostedToursModal from "../../components/Modals/CancelPostedToursModal/CancelPostedToursModal";
-import SuccessCancelPostedTourModal from "../../components/Modals/SuccessCancelPostedTourModal/SuccessCancelPostedTourModal";
 
 function CreatorLk() {
   const [myTours, setMyTours] = useState<ITour[]>([]);
@@ -116,8 +114,6 @@ function CreatorLk() {
         </Grid>
         {loadingStatus ? skeleton() : elements}
       </Grid> */}
-      <CancelPostedToursModal />
-      <SuccessCancelPostedTourModal />
     </>
   );
 }
