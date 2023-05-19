@@ -6,7 +6,7 @@ export const editTour = async (
   tourId: string,
   data: IAddTour,
   filesToUpload: any[],
-  filesToDelete: string[],
+  successCallback?: () => void,
   errorCallback?: () => void
 ) => {
   //delete data.photos;
@@ -17,22 +17,15 @@ export const editTour = async (
     formData.append("creatorPhoto", photo);
   });
   try {
-    let response = await axios
-      .put(creatorUrl + "/tour", formData, {
-        params: {
-          tourId: tourId,
-        },
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
-      .then(async () => {
-        filesToDelete.forEach((file) => async () => {
-          await axios.post(
-            creatorUrl + `/tour/photo?pathPhoto=${file}&tourId=${tourId}`
-          );
-        });
-      });
+    await axios.put(creatorUrl + "/tour", formData, {
+      params: {
+        tourId: tourId,
+      },
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    successCallback && successCallback();
   } catch (e) {
     console.error(e);
     errorCallback && errorCallback();

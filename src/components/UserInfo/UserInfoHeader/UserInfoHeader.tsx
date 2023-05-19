@@ -142,7 +142,8 @@ function UserInfoHeader({
               )
             }
             disabled={
-              userInfo?.dataUser?.statusVerify === StatusVerify.notVerified
+              userInfo?.dataUser?.statusVerify === StatusVerify.notVerified ||
+              userInfo?.dataUser?.statusVerify === StatusVerify.waitVerified
                 ? false
                 : true
             }

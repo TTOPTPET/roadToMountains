@@ -16,14 +16,15 @@ function Avatar({ photoUrl, setUserPhoto }: avatarProps) {
   ) => {
     if (event.target.files && event.target.files.length > 0) {
       let file = event.target.files[0];
+      setUserPhoto(file);
       // const { name, lastModified, size } = file;
       // TODO: проверить размер файла
-      postUserAvatar(
-        file,
-        (url) => setUserPhoto(url),
-        () => {},
-        false
-      );
+      // postUserAvatar(
+      //   file,
+      //   (url) => setUserPhoto(url),
+      //   () => {},
+      //   false
+      // );
     }
     event.target.value = null;
   };
@@ -45,7 +46,7 @@ function Avatar({ photoUrl, setUserPhoto }: avatarProps) {
         {photoUrl ? (
           <MuiAvatar
             alt={"avatar"}
-            src={baseUrl + "/" + photoUrl}
+            src={createAvatarUrl(photoUrl)}
             sx={{ width: "140px", height: "140px" }}
           />
         ) : (
@@ -80,3 +81,10 @@ function Avatar({ photoUrl, setUserPhoto }: avatarProps) {
   );
 }
 export default Avatar;
+
+const createAvatarUrl = (avatar: string | File) => {
+  if (avatar instanceof File) {
+    return URL.createObjectURL(avatar);
+  }
+  return baseUrl + "/" + avatar;
+};

@@ -52,7 +52,7 @@ export default function CalendarSidebar({
         <Typography variant={"caption"}>Стоимость на платформе:</Typography>
         <Typography variant={"caption"}>
           {" "}
-          {selectedPublic?.tourAmount ?? 0}₽
+          {selectedPublic?.tourAmountWithCommission ?? 0}₽
         </Typography>
       </Stack>
       <Stack

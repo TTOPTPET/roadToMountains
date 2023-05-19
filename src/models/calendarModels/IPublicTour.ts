@@ -25,6 +25,7 @@ export interface IPublicTour {
   meetingPoint?: string;
   meetingTime?: string;
   tourAmount?: number;
+  tourAmountWithCommission?: number;
   bookingId?: number;
   contactInformation?: string;
   maxPersonNum?: number;

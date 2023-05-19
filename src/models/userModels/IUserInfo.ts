@@ -86,7 +86,7 @@ export interface ITouristData {
 }
 
 interface IUserInfo {
-  photo?: string;
+  photo?: string | File;
   name?: string;
   phone?: string;
   email?: string;

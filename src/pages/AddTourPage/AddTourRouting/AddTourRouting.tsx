@@ -7,6 +7,7 @@ import { RootState } from "../../../redux/store";
 import { addTour } from "../../../API/addTourAPI/addTourAPI";
 import { editTour } from "../../../API/creatorAPI/editTour";
 import { addTourStepsMap } from "../AddTourPage";
+import { deletePhotoTour } from "../../../API/creatorAPI/daletePhotoTour";
 
 interface addTourRoutingProps {
   page: addTourStepsMap;
@@ -32,7 +33,12 @@ export default function AddTourRouting({
 
   const handlerSendTourClick = () => {
     if (isEditing) {
-      editTour(tourId, newTour, files, photosToDelete, undefined);
+      editTour(tourId, newTour, files, () => {
+        photosToDelete.forEach((file) => {
+          deletePhotoTour({ tourId, fileUrl: file });
+        });
+        navigate("/creator/lk");
+      });
     } else {
       addTour(
         () => {

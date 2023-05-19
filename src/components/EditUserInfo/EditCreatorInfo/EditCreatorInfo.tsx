@@ -211,6 +211,7 @@ function EditCreatorInfo() {
               dispatch(
                 setUserInfo({
                   ...editedCreatorInfo,
+                  photo: resp?.photo,
                   dataUser: {
                     ...editedCreatorInfo.dataUser,
                     documents: resp?.documents,
@@ -225,6 +226,7 @@ function EditCreatorInfo() {
                   ...editedCreatorInfo,
                   email: creatorInfo.email,
                   phone: creatorInfo.phone,
+                  photo: resp?.photo,
                   dataUser: {
                     ...editedCreatorInfo.dataUser,
                     documents: resp?.documents,
@@ -239,9 +241,9 @@ function EditCreatorInfo() {
         linkTo={"/creator/lk"}
         AvatarComponent={() => (
           <Avatar
-            photoUrl={editedCreatorInfo.photo}
-            setUserPhoto={(photoUrl: string) =>
-              setEditedCreatorInfo({ ...editedCreatorInfo, photo: photoUrl })
+            photoUrl={editedCreatorInfo.photo as string}
+            setUserPhoto={(photo: string | File) =>
+              setEditedCreatorInfo({ ...editedCreatorInfo, photo })
             }
           />
         )}

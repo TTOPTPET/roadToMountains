@@ -43,15 +43,18 @@ function AxiosProvider({ children }: { children: JSX.Element }) {
           originalConfig._retry = true;
 
           try {
+            let newToken;
             await refreshToken(cookies.REFRESH_TOKEN, (resp) => {
+              newToken = resp?.accessToken;
               removeCookies(TOKEN, { path: "/" });
               setCookies(TOKEN, resp?.accessToken, { path: "/" });
+              newToken = resp?.accessToken;
             });
             return axios.request({
               ...originalConfig,
               headers: {
                 ...originalConfig.headers,
-                Authorization: `Bearer ${cookies.TOKEN}`,
+                Authorization: `Bearer ${newToken}`,
               },
             });
           } catch (_error: any) {
