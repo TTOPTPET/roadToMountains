@@ -12,6 +12,7 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import { setTourField } from "../../../redux/AddTour/AddTourReducer";
+import { redColor } from "../../../config/MUI/color/color";
 
 const turnOnDefault: string[] = ["Не включено", "Включено"];
 
@@ -321,7 +322,16 @@ export const AddTourSecondPage = () => {
                 <FormControlLabel
                   key={index}
                   label={difficult}
-                  control={<Radio />}
+                  control={
+                    <Radio
+                      sx={{
+                        color:
+                          tourInfo?.complexity === "" || undefined
+                            ? redColor
+                            : "",
+                      }}
+                    />
+                  }
                   value={difficult}
                 />
               ))}

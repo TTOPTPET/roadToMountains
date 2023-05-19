@@ -16,7 +16,7 @@ import { RootState } from "../../../redux/store";
 import { Attention } from "../../../components/Attention/Attention";
 import { IFilter } from "../../../models/tourListModels/IFilter";
 import { StyledTextAreaAutosize } from "../../../config/MUI/styledComponents/StyledTextAreaAutosize";
-import { lightTurquoiseColor } from "../../../config/MUI/color/color";
+import { lightTurquoiseColor, redColor } from "../../../config/MUI/color/color";
 
 interface IAddTourFirstPageProps {
   images: any[];
@@ -38,12 +38,14 @@ export const AddTourFirstPage: FC<IAddTourFirstPageProps> = ({
   const dispatch = useDispatch();
 
   const tourInfo = useSelector((state: RootState) => state.addTour.tourFields);
+  console.log(tourInfo);
   return (
     <Stack gap={1} marginTop={2}>
       <TextField
         sx={{ width: "45%" }}
         placeholder={"Название тура"}
         value={tourInfo?.tourName ?? ""}
+        error={tourInfo?.tourName === "" || undefined}
         onChange={(e) => dispatch(setTourField({ tourName: e.target.value }))}
       />
       <Grid container justifyContent={"space-between"}>
@@ -61,10 +63,15 @@ export const AddTourFirstPage: FC<IAddTourFirstPageProps> = ({
           <StyledTextAreaAutosize
             placeholder={"Описание тура (не более 2500 символов)"}
             maxLength={2500}
+            minRows={2}
             sx={{
               minHeight: "30px",
               backgroundColor: lightTurquoiseColor,
               margin: "0 0",
+              border:
+                tourInfo?.tourDescription === "" || undefined
+                  ? `1px solid ${redColor}`
+                  : "",
             }}
             value={tourInfo?.tourDescription ?? ""}
             onChange={(e) =>
@@ -91,6 +98,7 @@ export const AddTourFirstPage: FC<IAddTourFirstPageProps> = ({
                   <TextField
                     placeholder={"Регион"}
                     {...params}
+                    error={tourInfo?.region === "" || undefined}
                     InputProps={{ ...params.InputProps, type: "search" }}
                   />
                 )}
@@ -107,6 +115,7 @@ export const AddTourFirstPage: FC<IAddTourFirstPageProps> = ({
                   type={"number"}
                   placeholder={"От"}
                   value={tourInfo?.recommendedAge?.from ?? ""}
+                  error={tourInfo?.recommendedAge?.from === null}
                   onChange={(e) =>
                     dispatch(
                       setTourField({
@@ -123,6 +132,7 @@ export const AddTourFirstPage: FC<IAddTourFirstPageProps> = ({
                   type={"number"}
                   placeholder={"До"}
                   value={tourInfo?.recommendedAge?.to ?? ""}
+                  error={tourInfo?.recommendedAge?.to === null}
                   onChange={(e) =>
                     dispatch(
                       setTourField({
@@ -145,6 +155,7 @@ export const AddTourFirstPage: FC<IAddTourFirstPageProps> = ({
                 InputProps={{ inputProps: { min: 0 } }}
                 placeholder={"Стоимость тура"}
                 value={tourInfo?.price ?? ""}
+                error={tourInfo?.price === null}
                 onChange={(e) =>
                   dispatch(setTourField({ price: +e.target.value }))
                 }
@@ -162,7 +173,16 @@ export const AddTourFirstPage: FC<IAddTourFirstPageProps> = ({
                   <FormControlLabel
                     key={index}
                     value={category}
-                    control={<Radio />}
+                    control={
+                      <Radio
+                        sx={{
+                          color:
+                            tourInfo?.category === "" || undefined
+                              ? redColor
+                              : "",
+                        }}
+                      />
+                    }
                     label={category}
                   />
                 ))}

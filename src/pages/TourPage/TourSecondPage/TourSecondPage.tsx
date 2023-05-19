@@ -9,10 +9,7 @@ import {
   lightTurquoiseColor,
   whiteColor,
 } from "../../../config/MUI/color/color";
-import {
-  ITourBooking,
-  ITouristBookingData,
-} from "../../../models/tourModels/ITourBooking";
+import { ITourBooking } from "../../../models/tourModels/ITourBooking";
 import { ITourBookingDate } from "../../../models/tourModels/ITourBookingDate";
 import { ITourInfo } from "../../../models/tourModels/ITourInfo";
 
@@ -25,12 +22,7 @@ interface ITourSecondPageProps {
   selectedDate: ITourBookingDate;
   setSelectedDate: Dispatch<SetStateAction<ITourBookingDate>>;
 }
-
-const defaultTourist: ITouristBookingData = {
-  name: "",
-  age: "",
-  sex: "",
-};
+let touristInfo: JSX.Element[] = [];
 
 export const TourSecondPage: FC<ITourSecondPageProps> = ({
   bookingData,
@@ -41,29 +33,28 @@ export const TourSecondPage: FC<ITourSecondPageProps> = ({
   selectedDate,
   setSelectedDate,
 }) => {
-  const touristInfo: JSX.Element[] = bookingData.touristsInfo.map(
-    (item, index) => (
-      <TouristBooking
-        key={index}
-        bookingData={bookingData}
-        setBookingData={setBookingData}
-        index={index}
-      />
-    )
-  );
-
+  console.log(touristInfo.length);
   useEffect(() => {
     if (
-      touristInfo.length !== bookingData.size - 1 ||
-      touristInfo.length !== bookingData.size + 1
+      touristInfo.length < bookingData.size ||
+      touristInfo.length > bookingData.size
     ) {
       setBookingData({
         ...bookingData,
-        touristsInfo: new Array(bookingData.size).fill(defaultTourist),
+        touristsInfo: new Array(bookingData.size).fill({}),
       });
     }
   }, [bookingData.size]);
-
+  console.log(bookingData.touristsInfo);
+  touristInfo = bookingData.touristsInfo.map((item, index) => (
+    <TouristBooking
+      key={index}
+      bookingData={bookingData}
+      touristData={item}
+      setBookingData={setBookingData}
+      index={index}
+    />
+  ));
   return (
     <Stack gap={2}>
       <TourBooking
@@ -88,7 +79,15 @@ export const TourSecondPage: FC<ITourSecondPageProps> = ({
         />
       </Box>
       <Stack direction={"column"} gap={2}>
-        {touristInfo.map((item) => item)}
+        {bookingData.touristsInfo.map((item, index) => (
+          <TouristBooking
+            key={index}
+            bookingData={bookingData}
+            touristData={item}
+            setBookingData={setBookingData}
+            index={index}
+          />
+        ))}
       </Stack>
       <AddTouristButton
         bookingData={bookingData}

@@ -1,19 +1,12 @@
 import { FC, SetStateAction, Dispatch } from "react";
 import { ITourInfo } from "../../../models/tourModels/ITourInfo";
-import {
-  Stack,
-  Typography,
-  SvgIcon,
-  Avatar as MuiAvatar,
-  Paper,
-} from "@mui/material";
+import { Stack, Typography, Avatar as MuiAvatar, Paper } from "@mui/material";
 import { TourInfo } from "../../../components/TourInfo/TourInfo";
 import { ITourBooking } from "../../../models/tourModels/ITourBooking";
 import { TourBooking } from "../../../components/TourInfo/TourBooking/TourBooking";
 import { tourStepsMap } from "../TourPage";
 import { ITourBookingDate } from "../../../models/tourModels/ITourBookingDate";
 import { baseUrl } from "../../../config/config";
-import { darkTurquoiseColor } from "../../../config/MUI/color/color";
 import userPhoto from "../../../media/userPhoto.svg";
 
 interface TourFirstPageProps {
@@ -90,16 +83,20 @@ export const TourFirstPage: FC<TourFirstPageProps> = ({
         tourInfo={tourInfo}
         isEditing={false}
       />
-      <TourBooking
-        tourInfo={tourInfo}
-        bookingData={bookingData}
-        setBookingData={setBookingData}
-        setPage={setPage}
-        bookingDate={bookingDate}
-        isFirstPage
-        selectedDate={selectedDate}
-        setSelectedDate={setSelectedDate}
-      />
+      {bookingDate.length === 0 ? (
+        <></>
+      ) : (
+        <TourBooking
+          tourInfo={tourInfo}
+          bookingData={bookingData}
+          setBookingData={setBookingData}
+          setPage={setPage}
+          bookingDate={bookingDate}
+          isFirstPage
+          selectedDate={selectedDate}
+          setSelectedDate={setSelectedDate}
+        />
+      )}
     </>
   );
 };
