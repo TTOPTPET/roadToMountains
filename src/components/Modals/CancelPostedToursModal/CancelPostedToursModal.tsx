@@ -21,19 +21,29 @@ import { ITour } from "../../../models/tourCardModel/ITour";
 import { redColor } from "../../../config/MUI/color/color";
 import { deletePostedTour } from "../../../API/creatorAPI/deletePostedTour";
 import ConfirmCancelPostedTourModal from "../ConfirmCancelPostedTourModal/ConfirmCancelPostedTourModal";
+import { deleteTour } from "../../../API/creatorAPI/deleteTour";
+import SuccessCancelPostedTourModal from "../SuccessCancelPostedTourModal/SuccessCancelPostedTourModal";
 
 interface CancelPostedToursModalProps {
   postedTours: ITour[];
   setPostedTours: Dispatch<SetStateAction<ITour[]>>;
+  tourId: string;
+  setMyTours: Dispatch<SetStateAction<ITour[]>>;
+  myTours: ITour[];
 }
 
 function CancelPostedToursModal({
   postedTours,
   setPostedTours,
+  tourId,
+  setMyTours,
+  myTours,
 }: CancelPostedToursModalProps) {
   const activeModals = useSelector(
     (state: RootState) => state.modal.activeModals
   );
+
+  console.log(tourId);
 
   const dispatch = useDispatch();
 
@@ -43,10 +53,6 @@ function CancelPostedToursModal({
 
   const [cancelAllError, setCancelAllError] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
-
-  // useEffect(() => {
-  //   setPostedTours(modal?.props?.publicTours);
-  // }, [modal?.props]);
 
   const handlerBackClick = () => {
     dispatch(setModalInactive("сancelPostedToursModal"));
@@ -61,6 +67,16 @@ function CancelPostedToursModal({
     );
   };
 
+  const handlerDeleteTourClick = () => {
+    deleteTour(tourId, (value) => {
+      dispatch(setModalInactive("deleteTourModal"));
+      setMyTours([...myTours.filter((tour) => tour.tourId !== tourId)]);
+      dispatch(setModalActive("successDeleteTourModal"));
+    });
+  };
+
+  console.log(postedTours);
+
   const elements =
     postedTours &&
     postedTours.map((tour: ITour, key: number) => {
@@ -72,6 +88,8 @@ function CancelPostedToursModal({
           setCancelAllError={setCancelAllError}
           postedTours={postedTours}
           setPostedTours={setPostedTours}
+          tourId={tourId}
+          setMyTours={setMyTours}
         />
       );
     });
@@ -88,18 +106,26 @@ function CancelPostedToursModal({
         }}
         open={isModalActive("сancelPostedToursModal", activeModals)}
         fullWidth
-        maxWidth={"md"}
+        maxWidth={postedTours.length > 0 ? "md" : "sm"}
       >
         <DialogContent>
-          <Typography variant={"h4"} sx={{ mb: "50px", textAlign: "center" }}>
-            Отмените размещённые туры
+          <Typography
+            variant={"h4"}
+            sx={{
+              mb: postedTours.length > 0 ? "50px" : "20px",
+              textAlign: "center",
+            }}
+          >
+            {postedTours.length > 0
+              ? "Отмените размещённые туры"
+              : "Удалить выбранный тур?"}
           </Typography>
 
           <Stack
             direction={"column"}
             justifyContent={"center"}
             alignItems={"center"}
-            marginTop={"50px"}
+            marginTop={postedTours.length > 0 && "50px"}
             gap={"10px"}
           >
             {elements}
@@ -122,16 +148,24 @@ function CancelPostedToursModal({
             gap={1}
           >
             <Button onClick={handlerBackClick}>Назад</Button>
-            <Button disabled={cancelAllError} onClick={cancelAllPostedTours}>
-              Отменить все
-            </Button>
+            {postedTours.length > 0 ? (
+              <Button disabled={cancelAllError} onClick={cancelAllPostedTours}>
+                Отменить все
+              </Button>
+            ) : (
+              <Button onClick={handlerDeleteTourClick}>Удалить тур</Button>
+            )}
           </Stack>
         </DialogContent>
       </Dialog>
       <ConfirmCancelPostedTourModal
         setErrorMessage={setErrorMessage}
         postedTours={postedTours}
+        setPostedTours={setPostedTours}
+        tourId={tourId}
+        setMyTours={setMyTours}
       />
+      <SuccessCancelPostedTourModal />
     </>
   );
 }

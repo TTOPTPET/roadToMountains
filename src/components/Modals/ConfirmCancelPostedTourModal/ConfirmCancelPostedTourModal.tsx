@@ -26,6 +26,9 @@ type ConfirmCancelPostedTourModalProps = {
   setErrorMessage?: Dispatch<SetStateAction<string>>;
   publicTourId?: string;
   postedTours?: ITour[];
+  tourId?: string;
+  setMyTours?: Dispatch<SetStateAction<ITour[]>>;
+  setPostedTours?: Dispatch<SetStateAction<ITour[]>>;
 };
 
 function ConfirmCancelPostedTourModal({
@@ -34,6 +37,9 @@ function ConfirmCancelPostedTourModal({
   setErrorMessage,
   publicTourId,
   postedTours,
+  tourId,
+  setMyTours,
+  setPostedTours,
 }: ConfirmCancelPostedTourModalProps) {
   const activeModals = useSelector(
     (state: RootState) => state.modal.activeModals
@@ -52,12 +58,25 @@ function ConfirmCancelPostedTourModal({
   const handlerDeleteAllClick = () => {
     dispatch(setModalInactive("confirmCancelPostedTourModal"));
     postedTours &&
-      postedTours.map((tour: ITour) => {
+      postedTours.forEach((tour: ITour) => {
         deletePostedTour(
           tour.publicTourId,
           (value) => {
-            dispatch(setModalInactive("сancelPostedToursModal"));
-            dispatch(setModalInactive("deleteTourModal"));
+            setPostedTours((postedToursCurrent) =>
+              postedToursCurrent.filter(
+                (postedTour) => postedTour.publicTourId !== tour.publicTourId
+              )
+            );
+
+            setMyTours((myTours) => {
+              return myTours.map((tour) => {
+                if (tour.tourId === tourId) {
+                  tour.publicNum = tour.publicNum - 1;
+                }
+                return tour;
+              });
+            });
+
             dispatch(
               setModalActive("successCancelPostedTourModal", { multiply: true })
             );

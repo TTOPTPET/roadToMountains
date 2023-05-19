@@ -13,6 +13,7 @@ export interface ILoginComponent {
 
 export interface IRegisterComponent {
   email: ITextProps;
+  name: ITextProps;
   phone: ITextProps;
   password: ITextProps;
   passwordSecond: ITextProps;

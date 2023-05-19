@@ -32,6 +32,13 @@ export const AuthComponent = (
           value: "",
           error: false,
         },
+        name: {
+          name: "Имя",
+          required: true,
+          type: "",
+          value: "",
+          error: false,
+        },
         phone: {
           name: "Телефон",
           required: true,
