@@ -80,12 +80,16 @@ function DeleteTourModal({
           gap={1}
         >
           <Button onClick={handlerBackClick}>Назад</Button>
+
           <Button onClick={handlerConfirmClick}>Да, удалить</Button>
         </Stack>
       </DialogContent>
       <CancelPostedToursModal
         postedTours={postedTours}
         setPostedTours={setPostedTours}
+        tourId={tourId}
+        setMyTours={setMyTours}
+        myTours={myTours}
       />
       <SuccessCancelPostedTourModal />
     </Dialog>

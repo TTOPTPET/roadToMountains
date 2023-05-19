@@ -22,6 +22,8 @@ interface IPostedTourItem {
   setCancelAllError: Dispatch<SetStateAction<boolean>>;
   postedTours: ITour[];
   setPostedTours: Dispatch<SetStateAction<ITour[]>>;
+  tourId: string;
+  setMyTours: Dispatch<SetStateAction<ITour[]>>;
 }
 
 function PostedTourItem({
@@ -30,6 +32,8 @@ function PostedTourItem({
   setPostedTours,
   postedTours,
   setErrorMessage,
+  tourId,
+  setMyTours,
 }: IPostedTourItem) {
   const dispatch = useDispatch();
 
@@ -49,18 +53,24 @@ function PostedTourItem({
     deletePostedTour(
       tour.publicTourId,
       (value) => {
-        setPostedTours &&
-          setPostedTours([
-            ...postedTours.filter((tour) => tour.publicTourId !== publicTourId),
-          ]);
+        setPostedTours([
+          ...postedTours.filter((tour) => tour.publicTourId !== publicTourId),
+        ]);
 
-        dispatch(setModalInactive("confirmCancelPostedTourModal"));
+        setMyTours((myTours) => {
+          return myTours.map((tour) => {
+            if (tour.tourId === tourId) {
+              tour.publicNum = tour.publicNum - 1;
+            }
+            return tour;
+          });
+        });
+
         dispatch(
           setModalActive("successCancelPostedTourModal", { multiply: false })
         );
       },
       () => {
-        dispatch(setModalInactive("confirmCancelPostedTourModal"));
         setErrorMessage("Ошибка! Попробуйте позже!");
       }
     );

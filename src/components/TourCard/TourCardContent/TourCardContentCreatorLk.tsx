@@ -26,8 +26,8 @@ function TourCardContentCreatorLk({
   myTours,
   setMyTours,
 }: TourCardProps) {
-  console.log(tour);
   const dispatch = useDispatch();
+
   return (
     <Box
       className="tour-card__content"
@@ -100,6 +100,8 @@ function TourCardContentCreatorLk({
           <Button
             className="tour-card__button-place"
             disabled={tour.banStatus ? true : false}
+            component={Link}
+            to={`/creator/calendar`}
           >
             Разместить
           </Button>

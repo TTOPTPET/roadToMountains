@@ -17,6 +17,7 @@ export const TourDetails: FC<ITourDetailsProps> = ({
   bookingData,
   selectedDate,
 }) => {
+  console.log(record);
   const freeTagConverter = (recordValue: TourDetailsType) => {
     switch (recordValue.type) {
       case "record":
@@ -106,7 +107,9 @@ export const TourDetails: FC<ITourDetailsProps> = ({
           </Stack>
           <Typography variant={"h6"}>Сбор</Typography>
           <Typography variant={"caption"}>
-            {record.meetingPoint + " в " + record.meetingTime}
+            {record.meetingPoint +
+              " в " +
+              dayjs(record.meetingTime).format("hh:mm D MMMM YYYY")}
           </Typography>
           <Typography variant={"h6"}>Включено в стоимость</Typography>
           <Typography variant={"caption"}>
