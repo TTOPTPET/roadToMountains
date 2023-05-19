@@ -308,6 +308,9 @@ export default function NewPublicModal({
                     setSelectedPublic({
                       ...editedPublic,
                       publicTourId: resp?.publicTourId,
+                      cancelDeadline: resp?.cancelDeadline,
+                      updateDeadline: resp?.updateDeadline,
+                      tourAmountWithCommission: resp?.tourAmountWithCommission,
                     });
                     setEditedPublic(undefined);
                   });
