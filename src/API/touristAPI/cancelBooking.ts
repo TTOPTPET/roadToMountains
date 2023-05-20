@@ -6,7 +6,7 @@ export const cancelBooking = async (
   errorCallback?: () => void
 ) => {
   try {
-    let response = await axios.get(touristUrl + "/bookingCancel", {
+    let response = await axios.delete(touristUrl + "/bookingCancel", {
       params: { bookingId },
     });
     return response.status;
