@@ -5,6 +5,8 @@ import { cancelBooking } from "../../../API/touristAPI/cancelBooking";
 import { ITourBooking } from "../../../models/tourModels/ITourBooking";
 import { ITourBookingDate } from "../../../models/tourModels/ITourBookingDate";
 import { TourDetailsType } from "./tourDetailsType/tourDetailsType";
+import { useDispatch } from "react-redux";
+import { setModalActive } from "../../../redux/Modal/ModalReducer";
 
 interface ITourDetailsProps {
   record: TourDetailsType;
@@ -17,7 +19,7 @@ export const TourDetails: FC<ITourDetailsProps> = ({
   bookingData,
   selectedDate,
 }) => {
-  console.log(record);
+  const dispatch = useDispatch();
   const freeTagConverter = (recordValue: TourDetailsType) => {
     switch (recordValue.type) {
       case "record":
@@ -103,7 +105,11 @@ export const TourDetails: FC<ITourDetailsProps> = ({
             <Typography variant={"caption"}>
               {record.contactInformation}
             </Typography>
-            <Button>Сообщить о проблеме</Button>
+            <Button
+              onClick={() => dispatch(setModalActive("errorReportModal"))}
+            >
+              Сообщить о проблеме
+            </Button>
           </Stack>
           <Typography variant={"h6"}>Сбор</Typography>
           <Typography variant={"caption"}>
