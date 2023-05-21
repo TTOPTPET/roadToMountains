@@ -12,7 +12,6 @@ import { useState } from "react";
 import { IUserRecord } from "../../../models/userModels/IUserRecord";
 import { ReactComponent as NavigateIcon } from "../../../media/navigate_before.svg";
 import { TourDetails } from "../TourSummary/TourDetails";
-import ErrorReportModal from "../../Modals/ErrorReportModal/ErrorReportModal";
 import SuccessMessageSendModal from "../../Modals/SuccessMessageSendModal/SuccessMessageSendModal";
 
 export const TourAccordion = ({ record }: { record: IUserRecord }) => {
@@ -84,7 +83,6 @@ export const TourAccordion = ({ record }: { record: IUserRecord }) => {
         <AccordionDetails>
           <TourDetails record={{ ...record, type: "record" }} />
         </AccordionDetails>
-        <ErrorReportModal />
         <SuccessMessageSendModal />
       </Accordion>
     </>

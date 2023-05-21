@@ -52,7 +52,6 @@ function UserInfoHeader({
 
   const navigate = useNavigate();
 
-  console.log(title);
   return (
     <Box
       className="userInfo__header-wrapper"
