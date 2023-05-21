@@ -37,15 +37,19 @@ function ErrorReportModal() {
   console.log(errorReportData);
 
   useEffect(() => {
-    modal?.props?.tour &&
-      setErrorReportData((errorReportData) => ({
-        ...errorReportData,
-        tourInfo: {
-          tourId: modal?.props?.record.tour.tourId,
-          publicTourId: modal?.props?.record.publicTourId,
-          tourName: modal?.props?.record.tour.tourName,
-        },
-      }));
+    modal?.props?.tour
+      ? setErrorReportData((errorReportData) => ({
+          ...errorReportData,
+          tourInfo: {
+            tourId: modal?.props?.record.tour.tourId,
+            publicTourId: modal?.props?.record.publicTourId,
+            tourName: modal?.props?.record.tour.tourName,
+          },
+        }))
+      : setErrorReportData((errorReportData) => ({
+          ...errorReportData,
+          tourInfo: {},
+        }));
   }, [modal?.props?.record]);
 
   const handlerConfirmClick = () => {
