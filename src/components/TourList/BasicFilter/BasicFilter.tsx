@@ -11,7 +11,7 @@ export const BasicFilter: FC<IFilterProps> = ({
   filters,
   searchData,
   setSearchData,
-  setTours,
+  setTourList,
 }) => {
   const { regions } = filters;
 
@@ -69,7 +69,7 @@ export const BasicFilter: FC<IFilterProps> = ({
       />
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DatePicker
-          value={dayjs(searchData.tourDate.from)}
+          value={dayjs(searchData?.tourDate?.from ?? "")}
           onChange={(newValue) => handleDateChange("from", newValue)}
           renderInput={(props) => (
             <TextField
@@ -83,7 +83,7 @@ export const BasicFilter: FC<IFilterProps> = ({
           )}
         />
         <DatePicker
-          value={dayjs(searchData.tourDate.to)}
+          value={dayjs(searchData?.tourDate?.to ?? "")}
           onChange={(newValue) => handleDateChange("to", newValue)}
           renderInput={(props) => (
             <TextField
@@ -101,7 +101,7 @@ export const BasicFilter: FC<IFilterProps> = ({
         type={"number"}
         InputProps={{ inputProps: { min: 0 } }}
         value={
-          searchData.maxPersonNumber === 0 ? "" : searchData.maxPersonNumber
+          searchData?.maxPersonNumber === 0 ? "" : searchData?.maxPersonNumber
         }
         onChange={(e) =>
           handleFieldChange<number>("maxPersonNumber", +e.target.value)
@@ -110,7 +110,9 @@ export const BasicFilter: FC<IFilterProps> = ({
       />
       <Button
         variant="high"
-        onClick={() => getToursSorted((value) => setTours(value), searchData)}
+        onClick={() =>
+          getToursSorted((value) => setTourList(value), searchData)
+        }
       >
         Найти
       </Button>

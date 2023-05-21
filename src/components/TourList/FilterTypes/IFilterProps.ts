@@ -7,5 +7,5 @@ export interface IFilterProps {
   filters: IFilter;
   searchData: ISearchRequest;
   setSearchData: Dispatch<SetStateAction<ISearchRequest>>;
-  setTours: Dispatch<SetStateAction<ITour[]>>;
+  setTourList: Dispatch<SetStateAction<ITour[]>>;
 }

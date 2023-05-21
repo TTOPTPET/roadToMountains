@@ -22,11 +22,13 @@ import { RootState } from "../../../redux/store";
 import { IFilterProps } from "../FilterTypes/IFilterProps";
 import { ISearchRequest } from "../../../models/tourListModels/ISearchRequest";
 import { tourDuration } from "../Constants/tourDuration";
+import { getToursSorted } from "../../../API/tourListAPI/searchAPI/searchAPI";
 
 export const ComplexFilter: FC<IFilterProps> = ({
   filters,
   searchData,
   setSearchData,
+  setTourList,
 }) => {
   const [durationState, setDurationState] = useState<boolean>(true);
   const [durationLabel, setDurationLabel] = useState<string>("");
@@ -54,7 +56,7 @@ export const ComplexFilter: FC<IFilterProps> = ({
   };
 
   const handlerComplexityChange = (e: ChangeEvent<HTMLInputElement>) => {
-    if (searchData.complexity.indexOf(e.target.value) === -1) {
+    if (searchData?.complexity.indexOf(e.target.value) === -1) {
       setSearchData({
         ...searchData,
         complexity: [...searchData.complexity, e.target.value],
@@ -83,8 +85,8 @@ export const ComplexFilter: FC<IFilterProps> = ({
       setSearchData({
         ...searchData,
         tourDuration: {
-          from: e as number,
-          to: 0,
+          from: 0,
+          to: e as number,
         },
       });
     }
@@ -102,28 +104,17 @@ export const ComplexFilter: FC<IFilterProps> = ({
 
   const handlerConfirmClick = () => {
     dispatch(setModalInactive("filterModal"));
+    getToursSorted((value) => setTourList(value), searchData);
   };
 
   const handlerClearClick = () => {
     setSearchData({
       searchParam: searchData.searchParam,
-      category: [],
-      tourDuration: {
-        from: 0,
-        to: 0,
-      },
-      complexity: [],
-      price: {
-        from: 0,
-        to: 5000,
-      },
-      recommendedAge: {
-        from: 0,
-        to: 14,
-      },
       region: searchData.region,
       tourDate: searchData.tourDate,
       maxPersonNumber: searchData.maxPersonNumber,
+      category: [],
+      complexity: [],
     });
   };
 
@@ -165,7 +156,10 @@ export const ComplexFilter: FC<IFilterProps> = ({
                 <FormControlLabel
                   key={index}
                   checked={
-                    searchData.category.indexOf(cat) !== -1 ? true : false
+                    searchData?.category &&
+                    searchData?.category.indexOf(cat) !== -1
+                      ? true
+                      : false
                   }
                   value={cat}
                   control={<Checkbox onChange={handlerCategoryChange} />}
@@ -224,7 +218,10 @@ export const ComplexFilter: FC<IFilterProps> = ({
             <Slider
               max={maxPrice}
               marks={marks}
-              value={[searchData.price.from, searchData.price.to]}
+              value={[
+                searchData?.price?.from ?? 0,
+                searchData?.price?.to ?? 100,
+              ]}
               onChange={(e, value) =>
                 handleChangeField("price", value as number[])
               }
@@ -238,7 +235,10 @@ export const ComplexFilter: FC<IFilterProps> = ({
                 <FormControlLabel
                   key={index}
                   checked={
-                    searchData.complexity.indexOf(compl) !== -1 ? true : false
+                    searchData.complexity &&
+                    searchData?.complexity.indexOf(compl) !== -1
+                      ? true
+                      : false
                   }
                   value={compl}
                   control={<Checkbox onChange={handlerComplexityChange} />}
@@ -253,8 +253,8 @@ export const ComplexFilter: FC<IFilterProps> = ({
               max={120}
               marks={age}
               value={[
-                searchData.recommendedAge.from,
-                searchData.recommendedAge.to,
+                searchData?.recommendedAge?.from ?? 0,
+                searchData?.recommendedAge?.to ?? 120,
               ]}
               onChange={(_, value) =>
                 handleChangeField("recommendedAge", value as number[])

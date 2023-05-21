@@ -17,7 +17,6 @@ import {
 import { ISortFilter } from "../FilterTypes/ISortFilter";
 import { ITour } from "../../../models/tourCardModel/ITour";
 import { SetStateAction, Dispatch, FC, useState } from "react";
-import { parse } from "date-fns";
 
 interface ISorterProps {
   tours: ITour[];
@@ -49,14 +48,17 @@ export const Sorter: FC<ISorterProps> = ({ tours, setTours }) => {
       name: "По возрастанию длительности",
       sort: function () {
         setTours([
-          ...tours.sort((a, b) => {
-            return (
-              Number(parse(a.tourDate.to, "dd.MM.yyyy", new Date())) -
-              Number(parse(a.tourDate.from, "dd.MM.yyyy", new Date())) -
-              (Number(parse(b.tourDate.to, "dd.MM.yyyy", new Date())) -
-                Number(parse(b.tourDate.from, "dd.MM.yyyy", new Date())))
-            );
-          }),
+          ...tours.sort(
+            (a, b) =>
+              Number(
+                new Date(a.tourDate.to).getTime() -
+                  new Date(a.tourDate.from).getTime()
+              ) -
+              Number(
+                new Date(b.tourDate.to).getTime() -
+                  new Date(b.tourDate.from).getTime()
+              )
+          ),
         ]);
       },
     },
@@ -66,10 +68,14 @@ export const Sorter: FC<ISorterProps> = ({ tours, setTours }) => {
         setTours([
           ...tours.sort(
             (a, b) =>
-              Number(parse(b.tourDate.to, "dd.MM.yyyy", new Date())) -
-              Number(parse(b.tourDate.from, "dd.MM.yyyy", new Date())) -
-              (Number(parse(a.tourDate.to, "dd.MM.yyyy", new Date())) -
-                Number(parse(a.tourDate.from, "dd.MM.yyyy", new Date())))
+              Number(
+                new Date(b.tourDate.to).getTime() -
+                  new Date(b.tourDate.from).getTime()
+              ) -
+              Number(
+                new Date(a.tourDate.to).getTime() -
+                  new Date(a.tourDate.from).getTime()
+              )
           ),
         ]);
       },

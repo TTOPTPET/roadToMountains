@@ -1,23 +1,23 @@
 export interface ISearchRequest {
-  searchParam: string;
-  category: string[];
-  tourDuration: {
+  searchParam?: string;
+  category?: string[];
+  tourDuration?: {
     from: number;
     to: number;
   };
-  complexity: string[];
-  price: {
+  complexity?: string[];
+  price?: {
     from: number;
     to: number;
   };
-  recommendedAge: {
+  recommendedAge?: {
     from: number;
     to: number;
   };
-  region: string;
-  tourDate: {
+  region?: string;
+  tourDate?: {
     from: string;
     to: string;
   };
-  maxPersonNumber: number;
+  maxPersonNumber?: number;
 }
