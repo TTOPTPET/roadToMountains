@@ -1,6 +1,6 @@
 import { Button, Grid, Stack, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setModalActive } from "../../redux/Modal/ModalReducer";
 import { BasicFilter, ComplexFilter, Sorter } from "../../components/TourList";
 import { IFilter } from "../../models/tourListModels/IFilter";
@@ -22,25 +22,34 @@ const filterDefault: IFilter = {
 function TourListPage() {
   const [searchParam] = useSearchParams();
   const [filters, setFilters] = useState<IFilter>(filterDefault);
+  const [tourList, setTourList] = useState<ITour[]>([]);
   const [searchData, setSearchData] = useState<ISearchRequest>({
     ...searchDefault,
     searchParam: searchParam.get("title"),
   });
-  const [tours, setTours] = useState<ITour[]>([]);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     getFilters((filter) => setFilters(filter), undefined, false);
-  }, []);
-
-  useEffect(() => {
-    getToursSorted((search) => setTours(search), searchData, undefined, false);
+    getToursSorted(
+      (search) => setTourList(search),
+      searchData,
+      undefined,
+      false
+    );
   }, []);
 
   useEffect(() => {
     setSearchData({ ...searchData, searchParam: searchParam.get("title") });
+    getToursSorted(
+      (search) => setTourList(search),
+      { ...searchData, searchParam: searchParam.get("title") },
+      undefined,
+      false
+    );
   }, [searchParam.get("title")]);
 
-  const dispatch = useDispatch();
   return (
     <Stack gap={1}>
       <Grid container alignItems={"center"} spacing={1}>
@@ -67,15 +76,15 @@ function TourListPage() {
         filters={filters}
         searchData={searchData}
         setSearchData={setSearchData}
-        setTours={setTours}
+        setTours={setTourList}
       />
       <ComplexFilter
         filters={filters}
         searchData={searchData}
         setSearchData={setSearchData}
-        setTours={setTours}
+        setTours={setTourList}
       />
-      <Sorter tours={tours} setTours={setTours} />
+      <Sorter tours={tourList} setTours={setTourList} />
 
       <Stack
         flexDirection={"row"}
@@ -84,8 +93,8 @@ function TourListPage() {
         justifyContent={"center"}
         marginTop={1}
       >
-        {tours &&
-          tours
+        {tourList &&
+          tourList
             .filter((tour) => tour.banStatus !== true)
             .map((tour, index) => (
               <TourCard

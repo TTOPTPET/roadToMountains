@@ -36,13 +36,13 @@ export const Sorter: FC<ISorterProps> = ({ tours, setTours }) => {
     {
       name: "По возрастанию цены",
       sort: function () {
-        setTours([...tours.sort((a, b) => a.price - b.price)]);
+        setTours([...tours.sort((a, b) => a.prices.from - b.prices.from)]);
       },
     },
     {
       name: "По убыванию цены",
       sort: function () {
-        setTours([...tours.sort((a, b) => b.price - a.price)]);
+        setTours([...tours.sort((a, b) => b.prices.from - a.prices.from)]);
       },
     },
     {
