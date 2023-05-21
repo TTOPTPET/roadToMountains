@@ -167,9 +167,8 @@ export const postErrorMessage = async (
   errorCallback?: () => void
 ) => {
   try {
-    let response = await axios.post(urlUser + "/errorMessage", {
-      param: { tour },
-      data,
+    let response = await axios.post(urlUser + "/errorMessage", data, {
+      params: { tour },
     });
     successCallback(response?.status);
   } catch (e) {
