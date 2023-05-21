@@ -1,6 +1,6 @@
 import { Button, Grid, Stack, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setModalActive } from "../../redux/Modal/ModalReducer";
 import { BasicFilter, ComplexFilter, Sorter } from "../../components/TourList";
 import { IFilter } from "../../models/tourListModels/IFilter";
@@ -9,7 +9,6 @@ import { ISearchRequest } from "../../models/tourListModels/ISearchRequest";
 import { getToursSorted } from "../../API/tourListAPI/searchAPI/searchAPI";
 import { ITour } from "../../models/tourCardModel/ITour";
 import TourCard from "../../components/TourCard/TourCard";
-import { searchDefault } from "../../components/TourList/Constants/searchDefault";
 import { useSearchParams } from "react-router-dom";
 
 const filterDefault: IFilter = {
@@ -24,7 +23,8 @@ function TourListPage() {
   const [filters, setFilters] = useState<IFilter>(filterDefault);
   const [tourList, setTourList] = useState<ITour[]>([]);
   const [searchData, setSearchData] = useState<ISearchRequest>({
-    ...searchDefault,
+    complexity: [],
+    category: [],
     searchParam: searchParam.get("title"),
   });
 
@@ -76,13 +76,13 @@ function TourListPage() {
         filters={filters}
         searchData={searchData}
         setSearchData={setSearchData}
-        setTours={setTourList}
+        setTourList={setTourList}
       />
       <ComplexFilter
         filters={filters}
         searchData={searchData}
         setSearchData={setSearchData}
-        setTours={setTourList}
+        setTourList={setTourList}
       />
       <Sorter tours={tourList} setTours={setTourList} />
 
