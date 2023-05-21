@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, Dispatch, SetStateAction } from "react";
 import { useSelector } from "react-redux";
 import { IFilter } from "../../../models/tourListModels/IFilter";
 import { RootState } from "../../../redux/store";
@@ -13,6 +13,8 @@ interface addTourStepsProps {
   setFiles: (prop: any[]) => void;
   filters: IFilter;
   isEditing: boolean;
+  addError: boolean;
+  setAddError: Dispatch<SetStateAction<boolean>>;
 }
 
 const loadImages = {
@@ -34,6 +36,8 @@ function AddTourSteps({
   setFiles,
   filters,
   isEditing,
+  addError,
+  setAddError,
 }: addTourStepsProps) {
   const tourInfo = useSelector((state: RootState) => state.addTour.tourFields);
   const [images, setImage] = useState<any[]>(
@@ -44,6 +48,7 @@ function AddTourSteps({
         )
       : new Array<typeof loadImages>(8).fill(loadImages)
   );
+
   switch (page) {
     case addTourStepsMap.first:
       return (
@@ -54,10 +59,11 @@ function AddTourSteps({
           setFiles={setFiles}
           filters={filters}
           isEditing={isEditing}
+          addError={addError}
         />
       );
     case addTourStepsMap.second:
-      return <AddTourSecondPage />;
+      return <AddTourSecondPage addError={addError} />;
     case addTourStepsMap.third:
       return (
         <AddTourThirdPage

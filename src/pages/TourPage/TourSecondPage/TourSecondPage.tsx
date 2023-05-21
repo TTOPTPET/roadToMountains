@@ -45,8 +45,8 @@ export const TourSecondPage: FC<ITourSecondPageProps> = ({
       });
     }
   }, [bookingData.size]);
-  console.log(bookingData.touristsInfo);
-  touristInfo = bookingData.touristsInfo.map((item, index) => (
+
+  touristInfo = bookingData?.touristsInfo.map((item, index) => (
     <TouristBooking
       key={index}
       bookingData={bookingData}
