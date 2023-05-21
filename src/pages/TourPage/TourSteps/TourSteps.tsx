@@ -14,20 +14,6 @@ interface TourStepsProps {
   bookingDate: ITourBookingDate[];
 }
 
-const tourBookingDefault: ITourBooking = {
-  publicTourId: "",
-  creatorId: "",
-  tourId: "",
-  tourDate: {
-    from: "",
-    to: "",
-  },
-  size: 0,
-  tourAmount: 0,
-  touristsInfo: [],
-  comment: "",
-};
-
 export const TourSteps: FC<TourStepsProps> = ({
   page,
   setPage,
@@ -35,12 +21,17 @@ export const TourSteps: FC<TourStepsProps> = ({
   bookingDate,
 }) => {
   const [images, setImage] = useState<any[]>([]);
-  const [bookingData, setBookingData] =
-    useState<ITourBooking>(tourBookingDefault);
+  const [bookingData, setBookingData] = useState<ITourBooking>({});
   const [selectedDate, setSelectedDate] = useState<ITourBookingDate>(
-    bookingDate[0]
+    bookingDate.reduce(
+      (a, b) =>
+        Number(dayjs(a?.date?.from).toDate()) - Number(new Date()) <
+        Number(dayjs(b?.date?.from).toDate()) - Number(new Date())
+          ? a
+          : b,
+      bookingDate[0]
+    )
   );
-
   useEffect(() => {
     setBookingData((data) => ({
       ...data,
@@ -50,8 +41,13 @@ export const TourSteps: FC<TourStepsProps> = ({
       },
       creatorId: tourInfo?.creatorId,
       tourId: tourInfo?.id,
+      size: 0,
+      tourAmount: selectedDate?.price,
+      publicTourId: selectedDate?.publicTourId,
+      touristsInfo: [],
     }));
-  }, [tourInfo]);
+    console.log(selectedDate);
+  }, [tourInfo, selectedDate]);
 
   switch (page) {
     case tourStepsMap.first: {

@@ -33,6 +33,7 @@ function AddTourPage({ isEditing }: { isEditing: boolean }) {
   const [filters, setFilters] = useState<IFilter>(filterDefault);
   const [files, setFiles] = useState<any[]>([]);
   const [isLoading, setLoading] = useState(true);
+  const [addError, setAddError] = useState<boolean>(false);
 
   useEffect(() => {
     getFilters((value) => setFilters(value), undefined, false);
@@ -63,6 +64,7 @@ function AddTourPage({ isEditing }: { isEditing: boolean }) {
         files={files}
         isEditing={isEditing}
         tourId={tourId}
+        setAddError={setAddError}
       />
       <AddTourSteps
         page={page}
@@ -70,6 +72,8 @@ function AddTourPage({ isEditing }: { isEditing: boolean }) {
         setFiles={setFiles}
         filters={filters}
         isEditing={isEditing}
+        addError={addError}
+        setAddError={setAddError}
       />
     </>
   );

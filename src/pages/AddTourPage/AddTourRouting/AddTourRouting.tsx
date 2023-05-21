@@ -8,6 +8,7 @@ import { addTour } from "../../../API/addTourAPI/addTourAPI";
 import { editTour } from "../../../API/creatorAPI/editTour";
 import { addTourStepsMap } from "../AddTourPage";
 import { deletePhotoTour } from "../../../API/creatorAPI/daletePhotoTour";
+import { Dispatch, SetStateAction } from "react";
 
 interface addTourRoutingProps {
   page: addTourStepsMap;
@@ -15,6 +16,7 @@ interface addTourRoutingProps {
   files: any[];
   isEditing: boolean;
   tourId: string;
+  setAddError: Dispatch<SetStateAction<boolean>>;
 }
 
 export default function AddTourRouting({
@@ -23,6 +25,7 @@ export default function AddTourRouting({
   files,
   isEditing,
   tourId,
+  setAddError,
 }: addTourRoutingProps) {
   const navigate = useNavigate();
   const newTour = useSelector((state: RootState) => state.addTour.tourFields);
@@ -46,7 +49,7 @@ export default function AddTourRouting({
         },
         newTour,
         files,
-        undefined,
+        () => setAddError(true),
         false
       );
     }

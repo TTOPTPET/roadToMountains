@@ -10,7 +10,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { useState } from "react";
+import { useState, FC } from "react";
 import { setTourField } from "../../../redux/AddTour/AddTourReducer";
 import { redColor } from "../../../config/MUI/color/color";
 
@@ -26,7 +26,13 @@ const difficultDefault: string[] = [
   "Экстрим",
 ];
 
-export const AddTourSecondPage = () => {
+interface IAddTourSecondPageProps {
+  addError: boolean;
+}
+
+export const AddTourSecondPage: FC<IAddTourSecondPageProps> = ({
+  addError,
+}) => {
   const [residency, setResidency] = useState<string>(turnOnDefault[0]);
   const [insurance, setInsurance] = useState<string>(turnOnDefault[0]);
 
@@ -326,7 +332,7 @@ export const AddTourSecondPage = () => {
                     <Radio
                       sx={{
                         color:
-                          tourInfo?.complexity === "" || undefined
+                          (addError && tourInfo?.complexity === "") || undefined
                             ? redColor
                             : "",
                       }}
