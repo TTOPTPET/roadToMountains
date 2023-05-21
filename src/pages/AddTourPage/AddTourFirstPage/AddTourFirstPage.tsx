@@ -25,6 +25,7 @@ interface IAddTourFirstPageProps {
   setFiles: (prop: any[]) => void;
   filters: IFilter;
   isEditing: boolean;
+  addError: boolean;
 }
 
 export const AddTourFirstPage: FC<IAddTourFirstPageProps> = ({
@@ -34,6 +35,7 @@ export const AddTourFirstPage: FC<IAddTourFirstPageProps> = ({
   setFiles,
   filters,
   isEditing,
+  addError,
 }) => {
   const dispatch = useDispatch();
 
@@ -45,7 +47,8 @@ export const AddTourFirstPage: FC<IAddTourFirstPageProps> = ({
         sx={{ width: "45%" }}
         placeholder={"Название тура"}
         value={tourInfo?.tourName ?? ""}
-        error={tourInfo?.tourName === "" || undefined}
+        required
+        error={addError && tourInfo?.tourName === ""}
         onChange={(e) => dispatch(setTourField({ tourName: e.target.value }))}
       />
       <Grid container justifyContent={"space-between"}>
@@ -69,7 +72,7 @@ export const AddTourFirstPage: FC<IAddTourFirstPageProps> = ({
               backgroundColor: lightTurquoiseColor,
               margin: "0 0",
               border:
-                tourInfo?.tourDescription === "" || undefined
+                addError && tourInfo?.tourDescription === ""
                   ? `1px solid ${redColor}`
                   : "",
             }}
@@ -98,7 +101,7 @@ export const AddTourFirstPage: FC<IAddTourFirstPageProps> = ({
                   <TextField
                     placeholder={"Регион"}
                     {...params}
-                    error={tourInfo?.region === "" || undefined}
+                    error={addError && tourInfo?.region === ""}
                     InputProps={{ ...params.InputProps, type: "search" }}
                   />
                 )}
@@ -115,7 +118,8 @@ export const AddTourFirstPage: FC<IAddTourFirstPageProps> = ({
                   type={"number"}
                   placeholder={"От"}
                   value={tourInfo?.recommendedAge?.from ?? ""}
-                  error={tourInfo?.recommendedAge?.from === null}
+                  required
+                  error={addError && tourInfo?.recommendedAge?.from === null}
                   onChange={(e) =>
                     dispatch(
                       setTourField({
@@ -132,7 +136,8 @@ export const AddTourFirstPage: FC<IAddTourFirstPageProps> = ({
                   type={"number"}
                   placeholder={"До"}
                   value={tourInfo?.recommendedAge?.to ?? ""}
-                  error={tourInfo?.recommendedAge?.to === null}
+                  required
+                  error={addError && tourInfo?.recommendedAge?.to === null}
                   onChange={(e) =>
                     dispatch(
                       setTourField({
@@ -155,7 +160,8 @@ export const AddTourFirstPage: FC<IAddTourFirstPageProps> = ({
                 InputProps={{ inputProps: { min: 0 } }}
                 placeholder={"Стоимость тура"}
                 value={tourInfo?.price ?? ""}
-                error={tourInfo?.price === null}
+                error={addError && tourInfo?.price === null}
+                required
                 onChange={(e) =>
                   dispatch(setTourField({ price: +e.target.value }))
                 }
@@ -177,7 +183,7 @@ export const AddTourFirstPage: FC<IAddTourFirstPageProps> = ({
                       <Radio
                         sx={{
                           color:
-                            tourInfo?.category === "" || undefined
+                            addError && tourInfo?.category === ""
                               ? redColor
                               : "",
                         }}

@@ -79,7 +79,16 @@ export const TourBooking: FC<ITourBookingProps> = ({
   useEffect(() => {
     if (bookingDate.length) {
       setDatePickerValue(handlerDateConverter(bookingDate));
-      setSelectedDate(bookingDate[0]);
+      setSelectedDate(
+        bookingDate.reduce(
+          (a, b) =>
+            Number(dayjs(a?.date?.from).toDate()) - Number(new Date()) <
+            Number(dayjs(b?.date?.from).toDate()) - Number(new Date())
+              ? a
+              : b,
+          bookingDate[0]
+        )
+      );
     }
   }, [bookingDate]);
 
@@ -248,7 +257,7 @@ export const TourBooking: FC<ITourBookingProps> = ({
               : ""}
           </Typography>
           <Typography variant={"h5"} mt={2}>
-            {selectedDate?.price ?? 0}₽
+            {bookingData?.tourAmount ?? 0}₽
           </Typography>
           <Typography variant={"caption"}>
             Оплатить бронирование необходимо в течение 3 часов
