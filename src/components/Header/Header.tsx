@@ -6,7 +6,7 @@ import {
   TextField,
   Button,
 } from "@mui/material";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import logo from "../../media/logo.svg";
 import { UserType } from "../../models/userModels/IUserInfo";
@@ -25,7 +25,8 @@ import { useEffect, useState } from "react";
 const Header = () => {
   const [cookies] = useCookies([TOKEN, USER_ROLE, REFRESH_TOKEN, BAN_STATUS]);
 
-  const [searchData, setSearchData] = useState<string>("");
+  const [searchParam, setSearchParam] = useState<string>("");
+
   let location = useLocation();
 
   const userInfo = useSelector((state: RootState) => state.userInfo.userInfo);
@@ -80,13 +81,11 @@ const Header = () => {
               <TextField
                 placeholder="Найти тур"
                 color="secondary"
-                value={searchData}
-                onChange={(e) => setSearchData(e.target.value)}
+                value={searchParam}
+                onChange={(e) => setSearchParam(e.target.value)}
                 onKeyDown={(e) => {
                   if (e.key === "Enter") {
-                    if (location.state !== "/tours/all") {
-                      navigate(`/tours/all?title=${searchData}`);
-                    }
+                    navigate(`/tours/all?title=${searchParam}`);
                   }
                 }}
               />
