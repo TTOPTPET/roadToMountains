@@ -28,10 +28,18 @@ interface IActionProps {
   props?: {
     multiply?: boolean;
     index?: number;
+    tour?: boolean;
     newPublic?: boolean;
     tourDate?: {
       from: string;
       to: string;
+    };
+    record?: {
+      tour?: {
+        tourId?: string;
+        tourName?: string;
+      };
+      publicTourId?: string;
     };
   };
 }

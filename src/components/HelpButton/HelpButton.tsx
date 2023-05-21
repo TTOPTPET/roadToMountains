@@ -11,7 +11,9 @@ export default function HelpButton() {
   return (
     <Box
       className="helpButton__wrapper"
-      onClick={() => dispatch(setModalActive("errorReportModal"))}
+      onClick={() =>
+        dispatch(setModalActive("errorReportModal", { tour: false }))
+      }
     >
       <Paper variant="helpButton">
         <img src={helpIcon} alt="helpIcon" />

@@ -9,6 +9,7 @@ import {
 } from "../models/userModels/IUserInfo";
 import { urlUser } from "../config/config";
 import imageCompression from "browser-image-compression";
+import { IErrorMessage } from "../models/errorMessageModels/IErrorMessage";
 
 // const userInfoDefault: ICreatorInfo = {
 //   typeUser: UserType.creator,
@@ -153,6 +154,24 @@ export const postUserAvatar = async (
   try {
     let response = await axios.post(urlUser + "/avatar ", avatar);
     successCallback(response?.data);
+  } catch (e) {
+    console.error(e);
+    errorCallback && errorCallback();
+  }
+};
+
+export const postErrorMessage = async (
+  tour: boolean,
+  data: IErrorMessage,
+  successCallback: (prop: any) => void,
+  errorCallback?: () => void
+) => {
+  try {
+    let response = await axios.post(urlUser + "/errorMessage", {
+      param: { tour },
+      data,
+    });
+    successCallback(response?.status);
   } catch (e) {
     console.error(e);
     errorCallback && errorCallback();

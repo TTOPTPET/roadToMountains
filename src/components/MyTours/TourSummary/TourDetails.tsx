@@ -20,6 +20,7 @@ export const TourDetails: FC<ITourDetailsProps> = ({
   selectedDate,
 }) => {
   const dispatch = useDispatch();
+
   const freeTagConverter = (recordValue: TourDetailsType) => {
     switch (recordValue.type) {
       case "record":
@@ -106,7 +107,15 @@ export const TourDetails: FC<ITourDetailsProps> = ({
               {record.contactInformation}
             </Typography>
             <Button
-              onClick={() => dispatch(setModalActive("errorReportModal"))}
+              onClick={() => {
+                console.log(true);
+                dispatch(
+                  setModalActive("errorReportModal", {
+                    tour: true,
+                    record: record,
+                  })
+                );
+              }}
             >
               Сообщить о проблеме
             </Button>

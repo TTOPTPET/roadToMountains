@@ -47,10 +47,6 @@ function CancelPostedToursModal({
 
   const dispatch = useDispatch();
 
-  const modal = activeModals.find(
-    (modal) => modal.id === "сancelPostedToursModal"
-  );
-
   const [cancelAllError, setCancelAllError] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
 
