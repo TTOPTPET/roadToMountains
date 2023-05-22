@@ -8,6 +8,8 @@ import { tourStepsMap } from "../TourPage";
 import { ITourBookingDate } from "../../../models/tourModels/ITourBookingDate";
 import { baseUrl } from "../../../config/config";
 import userPhoto from "../../../media/userPhoto.svg";
+import { Cookies } from "react-cookie";
+import { USER_ROLE } from "../../../config/types";
 
 interface TourFirstPageProps {
   images: any[];
@@ -21,6 +23,8 @@ interface TourFirstPageProps {
   selectedDate: ITourBookingDate;
   setSelectedDate: Dispatch<SetStateAction<ITourBookingDate>>;
 }
+
+let cookie = new Cookies();
 
 export const TourFirstPage: FC<TourFirstPageProps> = ({
   images,
@@ -83,7 +87,7 @@ export const TourFirstPage: FC<TourFirstPageProps> = ({
         tourInfo={tourInfo}
         isEditing={false}
       />
-      {bookingDate.length === 0 ? (
+      {bookingDate.length === 0 || cookie.get(USER_ROLE) === "creator" ? (
         <></>
       ) : (
         <TourBooking

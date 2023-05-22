@@ -155,7 +155,7 @@ export const TourBooking: FC<ITourBookingProps> = ({
                 const selectionName = Object.keys(item).filter((key) => {
                   return item[key];
                 });
-                console.log(item);
+                console.log(selectionName);
                 dateValidation(item[selectionName[0]].endDate.toString());
               }}
               moveRangeOnFirstSelection={false}
