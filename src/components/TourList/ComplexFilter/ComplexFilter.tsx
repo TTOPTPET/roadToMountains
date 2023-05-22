@@ -220,7 +220,7 @@ export const ComplexFilter: FC<IFilterProps> = ({
               marks={marks}
               value={[
                 searchData?.price?.from ?? 0,
-                searchData?.price?.to ?? 100,
+                searchData?.price?.to || maxPrice || 1000,
               ]}
               onChange={(e, value) =>
                 handleChangeField("price", value as number[])

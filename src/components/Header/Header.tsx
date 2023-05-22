@@ -10,7 +10,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import logo from "../../media/logo.svg";
 import { UserType } from "../../models/userModels/IUserInfo";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import {
+  Link,
+  useLocation,
+  useNavigate,
+  useSearchParams,
+} from "react-router-dom";
 import {
   BAN_STATUS,
   REFRESH_TOKEN,
@@ -23,6 +28,8 @@ import calendarIcon from "../../media/calendarIcon.svg";
 import { useEffect, useState } from "react";
 
 const Header = () => {
+  const [searchParamFromUrl] = useSearchParams();
+
   const [cookies] = useCookies([TOKEN, USER_ROLE, REFRESH_TOKEN, BAN_STATUS]);
 
   const [searchParam, setSearchParam] = useState<string>("");
@@ -81,7 +88,7 @@ const Header = () => {
               <TextField
                 placeholder="Найти тур"
                 color="secondary"
-                value={searchParam}
+                value={searchParam || searchParamFromUrl.get("title")}
                 onChange={(e) => setSearchParam(e.target.value)}
                 onKeyDown={(e) => {
                   if (e.key === "Enter") {
