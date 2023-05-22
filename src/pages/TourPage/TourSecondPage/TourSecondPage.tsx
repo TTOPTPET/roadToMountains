@@ -33,7 +33,6 @@ export const TourSecondPage: FC<ITourSecondPageProps> = ({
   selectedDate,
   setSelectedDate,
 }) => {
-  console.log(touristInfo.length);
   useEffect(() => {
     if (
       touristInfo.length < bookingData.size ||
