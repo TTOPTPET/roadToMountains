@@ -16,7 +16,8 @@ type modalsId =
   | "сancelPostedToursModal"
   | "confirmCancelPostedTourModal"
   | "successCancelPostedTourModal"
-  | "bookingInfoModal";
+  | "bookingInfoModal"
+  | "errorBookingModal";
 
 enum actionTypes {
   SET_MODAL_ACTIVE = "SET_MODAL_ACTIVE",
@@ -30,6 +31,7 @@ interface IActionProps {
     index?: number;
     tour?: boolean;
     newPublic?: boolean;
+    paymentDeadline?: string;
     tourDate?: {
       from: string;
       to: string;
