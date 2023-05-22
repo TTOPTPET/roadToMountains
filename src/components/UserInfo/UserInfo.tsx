@@ -80,7 +80,7 @@ function UserInfo({ header, fields, submitFuntion }: UserInfoProps) {
 
   return (
     <>
-      <Box className="userInfo__wrapper" sx={{ mt: "55px" }}>
+      <Box className="userInfo__wrapper">
         {!userInfo.dataUser ? (
           <UserInfoSkeleton />
         ) : (

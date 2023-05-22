@@ -53,7 +53,7 @@ function App() {
       <ThemeProvider theme={mainThemes}>
         <Header />
 
-        <Container sx={{ pb: "70px" }}>
+        <Container sx={{ p: "95px 0 70px 0" }}>
           <Routes>
             <Route
               path={"/creator/lk"}

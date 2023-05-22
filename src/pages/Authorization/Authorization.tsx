@@ -163,7 +163,7 @@ function Authorization() {
   console.log(userRegisterData);
 
   return (
-    <Stack sx={{ m: "0 auto", mt: "95px", gap: "50px" }}>
+    <Stack sx={{ m: "0 auto", gap: "50px" }}>
       <Typography variant="h3">{regState ? "Вход" : "Регистрация"}</Typography>
       <Box>
         <Paper
