@@ -87,7 +87,7 @@ export const TourFirstPage: FC<TourFirstPageProps> = ({
         tourInfo={tourInfo}
         isEditing={false}
       />
-      {bookingDate.length === 0 || cookie.get(USER_ROLE) === "creator" ? (
+      {bookingDate.length === 0 || cookie.get(USER_ROLE) === "" ? (
         <></>
       ) : (
         <TourBooking

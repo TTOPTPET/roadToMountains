@@ -9,7 +9,7 @@ import {
 import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs, { Dayjs } from "dayjs";
-import { FC, Dispatch, SetStateAction, useState, useEffect } from "react";
+import { FC, Dispatch, SetStateAction, useState, useEffect, memo } from "react";
 import { lightTurquoiseColor, redColor } from "../../../config/MUI/color/color";
 import { ITourBooking } from "../../../models/tourModels/ITourBooking";
 import { ITourInfo } from "../../../models/tourModels/ITourInfo";
@@ -81,7 +81,7 @@ export const TourBooking: FC<ITourBookingProps> = ({
     } else {
       setErrSize(false);
     }
-  }, [bookingData?.size]);
+  }, [bookingData?.size, selectedDate?.bookingNumber, setBookingData]);
 
   useEffect(() => {
     if (bookingDate.length) {
@@ -97,17 +97,17 @@ export const TourBooking: FC<ITourBookingProps> = ({
         )
       );
     }
-  }, [bookingDate]);
+  }, [bookingDate, setSelectedDate]);
 
   const dateValidation = (value: string) => {
     bookingDate.forEach((item, index) => {
-      const fsaf: boolean = dayjs(value).isBetween(
+      const isDateEnd: boolean = dayjs(value).isBetween(
         dayjs(item.date.from),
         dayjs(item.date.to),
         "day",
         "[]"
       );
-      if (fsaf) {
+      if (isDateEnd) {
         setBookingData({
           ...bookingData,
           tourDate: {
@@ -147,31 +147,35 @@ export const TourBooking: FC<ITourBookingProps> = ({
     }
   };
 
+  const DatePickerMemo = memo(() => {
+    return (
+      <DateRange
+        editableDateInputs={true}
+        showDateDisplay={false}
+        locale={locales["ru"]}
+        dragSelectionEnabled={false}
+        showPreview={false}
+        onChange={(item) => {
+          const selectionName = Object.keys(item).filter((key) => {
+            return item[key];
+          });
+          console.log(selectionName);
+          dateValidation(item[selectionName[0]].endDate.toString());
+        }}
+        moveRangeOnFirstSelection={false}
+        ranges={[
+          ...datePickerValue.map((item, index) => item["selection" + index]),
+        ]}
+      />
+    );
+  });
+
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <Stack direction={"row"} gap={10} flexWrap={"wrap"} mt={5}>
         <div className="date">
           {datePickerValue.length !== 0 ? (
-            <DateRange
-              editableDateInputs={true}
-              showDateDisplay={false}
-              locale={locales["ru"]}
-              dragSelectionEnabled={false}
-              showPreview={false}
-              onChange={(item) => {
-                const selectionName = Object.keys(item).filter((key) => {
-                  return item[key];
-                });
-                console.log(selectionName);
-                dateValidation(item[selectionName[0]].endDate.toString());
-              }}
-              moveRangeOnFirstSelection={false}
-              ranges={[
-                ...datePickerValue.map(
-                  (item, index) => item["selection" + index]
-                ),
-              ]}
-            />
+            <DatePickerMemo />
           ) : (
             <Skeleton
               width={330}
