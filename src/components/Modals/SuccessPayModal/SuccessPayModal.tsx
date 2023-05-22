@@ -13,8 +13,9 @@ import {
   setModalInactive,
 } from "../../../redux/Modal/ModalReducer";
 import { RootState } from "../../../redux/store";
+import dayjs from "dayjs";
 
-function SuccessPayModal() {
+function SuccessPayModal({ meetingTime }: { meetingTime: string }) {
   const activeModals = useSelector(
     (state: RootState) => state.modal.activeModals
   );
@@ -36,8 +37,9 @@ function SuccessPayModal() {
         <Typography variant={"h5"} sx={{ mb: "30px" }}>
           Вы успешно оплатили тур!
         </Typography>
-        <Typography variant={"caption"}>Увидимся 13 марта 2023!</Typography>
-        {/* TODO: подставить дату */}
+        <Typography variant={"caption"}>
+          Увидимся {dayjs(meetingTime).format("D MMMM YYYY")}!
+        </Typography>
 
         <Stack direction={"row"} justifyContent={"end"} marginTop={"30px"}>
           <Button onClick={handlerCloseClick}>К бронированию</Button>

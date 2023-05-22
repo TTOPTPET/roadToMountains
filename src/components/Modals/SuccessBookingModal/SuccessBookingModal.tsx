@@ -13,6 +13,9 @@ import {
   setModalInactive,
 } from "../../../redux/Modal/ModalReducer";
 import { RootState } from "../../../redux/store";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+dayjs.extend(relativeTime);
 
 function SuccessBookingModal() {
   const activeModals = useSelector(
@@ -20,6 +23,10 @@ function SuccessBookingModal() {
   );
 
   const dispatch = useDispatch();
+
+  const modal = activeModals.find(
+    (modal) => modal.id === "successBookingModal"
+  );
 
   const handlerCloseClick = () => {
     dispatch(setModalInactive("successBookingModal"));
@@ -41,10 +48,10 @@ function SuccessBookingModal() {
           Вы успешно забронировали тур!
         </Typography>
         <Typography variant={"caption"}>
-          Обратите внимание: бронирование необходимо оплатить до 15:23:52.
-          Времени осталось 2:58:26.
+          Обратите внимание: бронирование необходимо оплатить до{" "}
+          {dayjs(modal?.props?.paymentDeadline).format("hh:mm:ss")}. Времени
+          осталось {dayjs().to(modal?.props?.paymentDeadline, true)}.
         </Typography>
-        {/* TODO: подставить время */}
 
         <Stack
           direction={"row"}

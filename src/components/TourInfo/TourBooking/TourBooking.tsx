@@ -21,6 +21,11 @@ import * as locales from "react-date-range/dist/locale";
 import { booking } from "../../../API/touristAPI/booking";
 import isBetween from "dayjs/plugin/isBetween";
 import { ITourBookingDate } from "../../../models/tourModels/ITourBookingDate";
+import SuccessPayModal from "../../Modals/SuccessPayModal/SuccessPayModal";
+import SuccessBookingModal from "../../Modals/SuccessBookingModal/SuccessBookingModal";
+import ErrorBookingModal from "../../Modals/ErrorBookingModal/ErrorBookingModal";
+import { setModalActive } from "../../../redux/Modal/ModalReducer";
+import { useDispatch } from "react-redux";
 
 dayjs.extend(isBetween);
 
@@ -60,6 +65,8 @@ export const TourBooking: FC<ITourBookingProps> = ({
   const [datePickerValue, setDatePickerValue] = useState(
     handlerDateConverter(bookingDate)
   );
+
+  const dispatch = useDispatch();
 
   const [errSize, setErrSize] = useState<boolean>(false);
   useEffect(() => {
@@ -276,14 +283,36 @@ export const TourBooking: FC<ITourBookingProps> = ({
             <Stack direction={"row"} gap={2}>
               <Button
                 onClick={() => {
-                  booking(true, bookingData, undefined);
+                  booking(
+                    true,
+                    bookingData,
+                    () => {
+                      dispatch(setModalActive("successPayModal"));
+                    },
+                    () => {
+                      dispatch(setModalActive("errorBookingModal"));
+                    }
+                  );
                 }}
               >
                 Оплатить
               </Button>
               <Button
                 onClick={() => {
-                  booking(false, bookingData, undefined);
+                  booking(
+                    false,
+                    bookingData,
+                    (data) => {
+                      dispatch(
+                        setModalActive("successBookingModal", {
+                          paymentDeadline: data?.paymentDeadline,
+                        })
+                      );
+                    },
+                    () => {
+                      dispatch(setModalActive("errorBookingModal"));
+                    }
+                  );
                 }}
               >
                 Оплатить потом
@@ -292,6 +321,9 @@ export const TourBooking: FC<ITourBookingProps> = ({
           )}
         </Box>
       </Stack>
+      <SuccessPayModal meetingTime={selectedDate?.meetingTime} />
+      <SuccessBookingModal />
+      <ErrorBookingModal />
     </LocalizationProvider>
   );
 };
