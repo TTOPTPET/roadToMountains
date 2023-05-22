@@ -58,7 +58,7 @@ function UserInfoHeader({
       sx={{
         display: "flex",
         justifyContent: "space-between",
-        alignItems: "center",
+        alignItems: "flex-start",
       }}
     >
       <Box className="userInfo__header-title-wrapper" sx={{ display: "flex" }}>

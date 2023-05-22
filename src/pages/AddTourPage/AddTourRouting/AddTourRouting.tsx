@@ -1,4 +1,4 @@
-import { Button } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { Stack } from "@mui/system";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -56,7 +56,7 @@ export default function AddTourRouting({
   };
 
   return (
-    <>
+    <Box sx={{ position: "absolute", top: "-55px", width: "100%" }}>
       <Stack direction={"row"} justifyContent={"space-between"}>
         <Button
           variant="textButton"
@@ -89,6 +89,6 @@ export default function AddTourRouting({
           </Button>
         )}
       </Stack>
-    </>
+    </Box>
   );
 }

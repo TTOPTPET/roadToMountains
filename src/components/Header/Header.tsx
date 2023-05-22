@@ -83,21 +83,19 @@ const Header = () => {
               </Typography>
             </Box>
           </Box>
-          {(!cookies.TOKEN || cookies.USER_ROLE !== UserType.creator) && (
-            <Box sx={{ m: "0 30px", width: "100%" }}>
-              <TextField
-                placeholder="Найти тур"
-                color="secondary"
-                value={searchParam || searchParamFromUrl.get("title")}
-                onChange={(e) => setSearchParam(e.target.value)}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") {
-                    navigate(`/tours/all?title=${searchParam}`);
-                  }
-                }}
-              />
-            </Box>
-          )}
+          <Box sx={{ m: "0 30px", width: "100%" }}>
+            <TextField
+              placeholder="Найти тур"
+              color="secondary"
+              value={searchParam || searchParamFromUrl.get("title")}
+              onChange={(e) => setSearchParam(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  navigate(`/tours/all?title=${searchParam}`);
+                }
+              }}
+            />
+          </Box>
           {cookies.TOKEN ? (
             <>
               <Box

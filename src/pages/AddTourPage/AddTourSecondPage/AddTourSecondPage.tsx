@@ -152,7 +152,7 @@ export const AddTourSecondPage: FC<IAddTourSecondPageProps> = ({
   };
 
   return (
-    <Stack gap={1} marginTop={2}>
+    <Stack gap={1}>
       <Typography variant={"h3"}>
         {tourInfo?.tourName ?? "Название тура"}
       </Typography>

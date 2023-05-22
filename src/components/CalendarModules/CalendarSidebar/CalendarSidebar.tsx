@@ -135,34 +135,36 @@ export default function CalendarSidebar({
           {errorMessage}
         </Typography>
       )}
-      <Typography variant={"h6"}>
-        Заказы{" ("}
-        {selectedPublic?.bookingInfo ? selectedPublic?.bookingInfo.length : 0}
-        {")"}
-      </Typography>
-      <Stack direction={"column"} gap={2} mt={2}>
-        {selectedPublic?.bookingInfo &&
-          selectedPublic?.bookingInfo.map((booking, index) => (
-            <TouristOrder
-              key={index}
-              index={index}
-              bookingInfo={booking}
-              selectedPublic={selectedPublic}
-            />
-          ))}
+      <Stack sx={{ height: "31vh" }}>
+        <Typography variant={"h6"}>
+          Заказы{" ("}
+          {selectedPublic?.bookingInfo ? selectedPublic?.bookingInfo.length : 0}
+          {")"}
+        </Typography>
+        <Stack direction={"column"} gap={2} mt={2} flex={1}>
+          {selectedPublic?.bookingInfo &&
+            selectedPublic?.bookingInfo.map((booking, index) => (
+              <TouristOrder
+                key={index}
+                index={index}
+                bookingInfo={booking}
+                selectedPublic={selectedPublic}
+              />
+            ))}
+        </Stack>
+        <Typography variant={"h6"} mt={5}>
+          Доход
+        </Typography>
+        <Box sx={{ mt: "1vh" }}>
+          <Paper
+            sx={{ backgroundColor: whiteColor, borderRadius: 6, padding: 3 }}
+          >
+            <Typography variant={"button"} align={"center"}>
+              {selectedPublic?.publicTourProfit ?? 0}₽
+            </Typography>
+          </Paper>
+        </Box>
       </Stack>
-      <Typography variant={"h6"} mt={5}>
-        Доход
-      </Typography>
-      <Box>
-        <Paper
-          sx={{ backgroundColor: whiteColor, borderRadius: 6, padding: 3 }}
-        >
-          <Typography variant={"button"} align={"center"}>
-            {selectedPublic?.publicTourProfit ?? 0}₽
-          </Typography>
-        </Paper>
-      </Box>
       <ConfirmCancelPostedTourModal
         setErrorMessage={setErrorMessage}
         setPublicTours={setPublicTours}

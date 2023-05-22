@@ -9,6 +9,7 @@ import { TourRouting } from "./TourRouting/TourRouting";
 import { TourSteps } from "./TourSteps/TourSteps";
 import { getBookingDate } from "../../API/tourAPI/getBookingDate";
 import { ITourBookingDate } from "../../models/tourModels/ITourBookingDate";
+import { Box } from "@mui/material";
 
 export enum tourStepsMap {
   first,
@@ -40,7 +41,7 @@ function TourPage() {
     return <></>;
   }
   return (
-    <>
+    <Box sx={{ position: "relative" }}>
       <TourRouting page={page} setPage={setPage} />
       <TourSteps
         page={page}
@@ -48,7 +49,7 @@ function TourPage() {
         setPage={setPage}
         bookingDate={bookingDate}
       />
-    </>
+    </Box>
   );
 }
 

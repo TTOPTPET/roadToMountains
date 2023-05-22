@@ -42,7 +42,7 @@ export const AddTourFirstPage: FC<IAddTourFirstPageProps> = ({
   const tourInfo = useSelector((state: RootState) => state.addTour.tourFields);
   console.log(tourInfo);
   return (
-    <Stack gap={1} marginTop={2}>
+    <Stack gap={1}>
       <TextField
         sx={{ width: "45%" }}
         placeholder={"Название тура"}

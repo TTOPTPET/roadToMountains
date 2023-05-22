@@ -13,7 +13,11 @@ export const TourRouting: FC<TourRoutingProps> = ({ page, setPage }) => {
 
   return (
     <>
-      <Stack direction={"row"} justifyContent={"space-between"}>
+      <Stack
+        direction={"row"}
+        justifyContent={"space-between"}
+        sx={{ position: "absolute", top: "-55px" }}
+      >
         <Button
           variant="textButton"
           onClick={() =>

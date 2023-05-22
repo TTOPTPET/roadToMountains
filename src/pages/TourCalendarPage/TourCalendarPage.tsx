@@ -1,4 +1,4 @@
-import { Box, Button, Grid } from "@mui/material";
+import { Box, Button, Grid, Typography } from "@mui/material";
 import { useState, useEffect } from "react";
 import { IPublicTour } from "../../models/calendarModels/IPublicTour";
 import { getPublicTours } from "../../API/calendarAPI/getPublicTours";
@@ -13,6 +13,7 @@ import CalendarDatePicker from "../../components/CalendarModules/CalendarDatePic
 import dayjs, { Dayjs } from "dayjs";
 import ConfirmCancelPostedTourModal from "../../components/Modals/ConfirmCancelPostedTourModal/ConfirmCancelPostedTourModal";
 import BookingInfoModal from "../../components/Modals/BookingInfoModal/BookingInfoModal";
+import CalendarSidebarSkeleton from "../../components/CalendarModules/CalendarSidebar/CalendarSidebarSkeleton/CalendarSidebarSkeleton";
 
 function TourCalendarPage() {
   const [publicTours, setPublicTours] = useState<IPublicTour[]>([]);
@@ -20,6 +21,8 @@ function TourCalendarPage() {
   const [myTours, setMyTours] = useState<ITour[]>([]);
   const [viewMonth, setViewMonth] = useState<Dayjs>(dayjs());
   const [errorMessage, setErrorMessage] = useState("");
+
+  console.log(!selectedPublic ? true : false);
 
   useEffect(() => {
     getMyTours(
@@ -41,7 +44,11 @@ function TourCalendarPage() {
   }, [viewMonth]);
 
   return (
-    <Box pt={10}>
+    <Box>
+      <Typography variant={"h3"} sx={{ mb: "40px" }}>
+        Мои туры
+      </Typography>
+
       <Grid container spacing={8}>
         <Grid item xs={8}>
           <CalendarDatePicker
@@ -56,13 +63,18 @@ function TourCalendarPage() {
           />
         </Grid>
         <Grid item xs={4}>
-          <CalendarSidebar
-            selectedPublic={selectedPublic}
-            setErrorMessage={setErrorMessage}
-            errorMessage={errorMessage}
-            setSelectedPublic={setSelectedPublic}
-            setPublicTours={setPublicTours}
-          />
+          {selectedPublic ? (
+            <CalendarSidebar
+              selectedPublic={selectedPublic}
+              setErrorMessage={setErrorMessage}
+              errorMessage={errorMessage}
+              setSelectedPublic={setSelectedPublic}
+              setPublicTours={setPublicTours}
+            />
+          ) : (
+            <CalendarSidebarSkeleton />
+          )}
+
           {/* Это говнище будет работать по клику, так что потом просто логику малесь переделать */}
         </Grid>
       </Grid>

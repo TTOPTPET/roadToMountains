@@ -52,7 +52,7 @@ function TourListPage() {
 
   return (
     <Stack gap={1}>
-      <Grid container alignItems={"center"} spacing={1}>
+      <Grid container alignItems={"center"} spacing={1} sx={{ mb: "50px" }}>
         <Grid item sm={9}>
           <Typography variant={"h3"}>Все туры</Typography>
         </Grid>

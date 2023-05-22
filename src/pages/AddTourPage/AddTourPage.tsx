@@ -12,6 +12,7 @@ import AddTourSteps from "./AddTourSteps/AddTourSteps";
 import { IFilter } from "../../models/tourListModels/IFilter";
 import { getFilters } from "../../API/tourListAPI";
 import { getMyTourById } from "../../API/creatorAPI/getMyTourById";
+import { Box } from "@mui/material";
 
 export enum addTourStepsMap {
   first,
@@ -57,7 +58,7 @@ function AddTourPage({ isEditing }: { isEditing: boolean }) {
     return <AddTourSkeleton />;
   }
   return (
-    <>
+    <Box sx={{ position: "relative" }}>
       <AddTourRouting
         page={page}
         setPage={setPage}
@@ -75,7 +76,7 @@ function AddTourPage({ isEditing }: { isEditing: boolean }) {
         addError={addError}
         setAddError={setAddError}
       />
-    </>
+    </Box>
   );
 }
 

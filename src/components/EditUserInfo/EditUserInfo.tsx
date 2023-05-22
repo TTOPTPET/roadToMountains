@@ -20,7 +20,7 @@ function EditUserInfo({
   AvatarComponent,
 }: editUserInfoProps) {
   return (
-    <Box sx={{ mt: "95px" }}>
+    <Box>
       <Box
         sx={{
           display: "flex",
@@ -35,6 +35,7 @@ function EditUserInfo({
             flexDirection: "column",
             width: "132px",
             gap: "10px",
+            mb: "10px",
           }}
         >
           <Button onClick={() => submitFuntion()}>Сохранить</Button>
