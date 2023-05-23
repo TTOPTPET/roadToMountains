@@ -34,7 +34,8 @@ function TourCardPhoto({ tour, tourCardType }: TourCardProps) {
           backgroundImage: `url(${
             tour?.photos[0] ? baseUrl + "/" + tour?.photos[0] : noPhoto
           })`,
-          backgroundSize: "100% 100%",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
         }}
       >
         {tourCardType === "myTours" && (

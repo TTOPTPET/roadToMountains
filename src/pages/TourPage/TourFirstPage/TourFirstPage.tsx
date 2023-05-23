@@ -10,6 +10,7 @@ import { baseUrl } from "../../../config/config";
 import userPhoto from "../../../media/userPhoto.svg";
 import { Cookies } from "react-cookie";
 import { USER_ROLE } from "../../../config/types";
+import { UserType } from "../../../models/userModels/IUserInfo";
 
 interface TourFirstPageProps {
   images: any[];
@@ -87,7 +88,8 @@ export const TourFirstPage: FC<TourFirstPageProps> = ({
         tourInfo={tourInfo}
         isEditing={false}
       />
-      {bookingDate.length === 0 || cookie.get(USER_ROLE) === "" ? (
+      {bookingDate.length === 0 ||
+      cookie.get(USER_ROLE) === UserType.creator ? (
         <></>
       ) : (
         <TourBooking
