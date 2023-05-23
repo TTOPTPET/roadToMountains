@@ -21,7 +21,7 @@ function NavTool() {
         onClick={() => setActiveState((activeState) => !activeState)}
         style={{ cursor: "pointer", fontSize: "40px", textAlign: "start" }}
       >
-        {activeState ? "<" : ">"}
+        {activeState ? ">" : "<"}
       </div>
       <div
         className="nav-tool__panel"

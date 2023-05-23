@@ -1,4 +1,4 @@
-import { createTheme } from "@mui/material";
+import { createTheme, useTheme } from "@mui/material";
 
 import {
   darkBlueColor,
@@ -38,7 +38,9 @@ declare module "@mui/material/Paper" {
   }
 }
 
-export const mainThemes = createTheme({
+let breakpoints = createTheme({});
+
+export const mainThemes = createTheme(breakpoints, {
   typography: {
     fontFamily: "Montserrat",
     h3: {
@@ -59,6 +61,11 @@ export const mainThemes = createTheme({
       fontWeight: "800",
       fontSize: "24px",
       lineHeight: "32px",
+      [breakpoints.breakpoints.down("lg")]: {
+        fontWeight: "900",
+        fontSize: "14px",
+        lineHeight: "16px",
+      },
     },
     h6: {
       fontFamily: "Jost",
