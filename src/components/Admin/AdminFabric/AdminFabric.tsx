@@ -96,22 +96,28 @@ export const AdminComponent: FC<IAdminComponent> = (props: IAdminComponent) => {
       return (
         <Grid
           container
-          borderRadius={5}
+          borderRadius={10}
           gap={4}
-          padding={1}
+          padding={3}
           bgcolor={whiteColor}
           width={mobileWidth}
         >
           <Grid item className="tourist__name">
             <Typography variant={"caption"}>{name}</Typography>
           </Grid>
-
           <Grid item className="tourist__contacts">
             <Typography variant={"caption"}>Контакты:</Typography>
-            <Typography variant={"caption"}>⚫ {phone}</Typography>
-            <Typography variant={"caption"}>⚫ {email}</Typography>
+            <Stack direction={"row"} gap={2}>
+              <Stack>
+                <Typography variant={"caption"}>Тел.</Typography>
+                <Typography variant={"caption"}>Почта</Typography>
+              </Stack>
+              <Stack>
+                <Typography variant={"caption"}>{phone}</Typography>
+                <Typography variant={"caption"}>{email}</Typography>
+              </Stack>
+            </Stack>
           </Grid>
-
           <Grid item className="tourist__ban">
             <Typography variant={"caption"}>Статус блокировки:</Typography>
             {!banStatus ? (
@@ -120,7 +126,6 @@ export const AdminComponent: FC<IAdminComponent> = (props: IAdminComponent) => {
               <Typography variant={"caption"}>Заблокирован</Typography>
             )}
           </Grid>
-
           <Grid
             item
             textAlign={"center"}
@@ -146,18 +151,29 @@ export const AdminComponent: FC<IAdminComponent> = (props: IAdminComponent) => {
           container
           minWidth={mobileWidth}
           gap={4}
-          borderRadius={5}
-          padding={1}
+          borderRadius={10}
+          padding={3}
           bgcolor={whiteColor}
         >
           <Grid item md={3} className="tour__info">
             <Typography variant={"h6"}>{tourName}</Typography>
-            <Typography variant={"caption"}>{name}</Typography>
+            <Typography variant={"caption"} mt={2}>
+              {name}
+            </Typography>
           </Grid>
           <Grid item className="creator__info">
-            <Typography variant={"caption"}>⚫ {phone}</Typography>
-            <Typography variant={"caption"}>⚫ {email}</Typography>
-            <Typography variant={"caption"}>⚫ {name}</Typography>
+            <Stack direction={"row"} gap={2}>
+              <Stack>
+                <Typography variant={"caption"}>Тел.</Typography>
+                <Typography variant={"caption"}>Почта</Typography>
+                <Typography variant={"caption"}>Имя</Typography>
+              </Stack>
+              <Stack>
+                <Typography variant={"caption"}>{phone}</Typography>
+                <Typography variant={"caption"}>{email}</Typography>
+                <Typography variant={"caption"}>{name}</Typography>
+              </Stack>
+            </Stack>
           </Grid>
           <Grid item className="ban__status">
             <Typography variant={"caption"}>Статус блокировки:</Typography>
@@ -188,7 +204,7 @@ export const AdminComponent: FC<IAdminComponent> = (props: IAdminComponent) => {
         props;
       const { phone, email, name } = userInfo;
       const { tourInfo, message } = dataMessage;
-      const { tourDate, publicTourId, tourName, creatorName } = tourInfo;
+      const { tourDate, tourName, creatorName } = tourInfo;
       const { from, to } = tourDate;
 
       return (
@@ -200,53 +216,67 @@ export const AdminComponent: FC<IAdminComponent> = (props: IAdminComponent) => {
             square={true}
           >
             <AccordionSummary id="panel4bh-header">
-              <Grid
-                container
-                padding={1}
-                gap={4}
-                justifyContent={"space-between"}
-              >
-                <Grid item className="user__info">
+              <Grid container padding={2} gap={4}>
+                <Grid item xs={5} className="user__info">
                   <Typography variant={"h5"}>{name}</Typography>
                   <Typography variant={"caption"}>Контакты:</Typography>
-                  <Typography variant={"caption"}>⚫ {phone}</Typography>
-                  <Typography variant={"caption"}>⚫ {email}</Typography>
+                  <Stack direction={"row"} gap={2}>
+                    <Stack>
+                      <Typography variant={"caption"}>Тел.</Typography>
+                      <Typography variant={"caption"}>Почта</Typography>
+                    </Stack>
+                    <Stack>
+                      <Typography variant={"caption"}>{phone}</Typography>
+                      <Typography variant={"caption"}>{email}</Typography>
+                    </Stack>
+                  </Stack>
                 </Grid>
-                <Grid item className="problem__info">
-                  <Typography variant={"h5"}>
-                    Тип: {typeMessage} Статус: {getMessageStatus(statusMessage)}
-                  </Typography>
+                <Grid item xs={6} className="problem__info">
+                  <Stack direction={"row"} gap={2}>
+                    <Stack>
+                      <Typography variant={"h5"}>Тип:</Typography>
+                      <Typography variant={"h5"}>Статус:</Typography>
+                    </Stack>
+                    <Stack>
+                      <Typography variant={"h5"}>{typeMessage}</Typography>
+                      <Typography variant={"h5"}>
+                        {getMessageStatus(statusMessage)}
+                      </Typography>
+                    </Stack>
+                  </Stack>
                   {typeMessage === "tourProblem" && (
                     <>
-                      <Typography variant={"caption"}>⚫ {tourName}</Typography>
+                      <Typography variant={"caption"}> {tourName}</Typography>
+                      <Typography variant={"caption"}>{creatorName}</Typography>
                       <Typography variant={"caption"}>
-                        ⚫ {creatorName}
-                      </Typography>
-                      <Typography variant={"caption"}>
-                        ⚫ {dayjs(from).format("D MMMM YYYY")} -{" "}
+                        {dayjs(from).format("D MMMM YYYY")} -{" "}
                         {dayjs(to).format("D MMMM YYYY")}
                       </Typography>
                     </>
                   )}
                 </Grid>
-                <Grid item marginY={"auto"} className="user__ban">
-                  <Button
-                    variant={"text"}
-                    onClick={() =>
-                      handlerMessageStatusClick({ messageId, statusMessage })
-                    }
-                  >
-                    Переключить статус заявки
-                  </Button>
-                </Grid>
-                <Grid item xs={10}>
-                  <Button onClick={() => setExpanded(!expanded)}>
-                    {!expanded ? (
-                      <>Расскрыть сообщение</>
-                    ) : (
-                      <>Скрыть сообщение</>
-                    )}
-                  </Button>
+                <Grid item xs={5.5} className="user__ban">
+                  <Stack gap={2}>
+                    <Button
+                      variant={"text"}
+                      sx={{ width: "100%" }}
+                      onClick={() =>
+                        handlerMessageStatusClick({ messageId, statusMessage })
+                      }
+                    >
+                      Переключить статус заявки
+                    </Button>
+                    <Button
+                      sx={{ width: "100%" }}
+                      onClick={() => setExpanded(!expanded)}
+                    >
+                      {!expanded ? (
+                        <>Расскрыть сообщение</>
+                      ) : (
+                        <>Скрыть сообщение</>
+                      )}
+                    </Button>
+                  </Stack>
                 </Grid>
               </Grid>
             </AccordionSummary>
@@ -272,9 +302,9 @@ export const AdminComponent: FC<IAdminComponent> = (props: IAdminComponent) => {
         <Stack
           direction={"column"}
           bgcolor={whiteColor}
-          borderRadius={5}
+          borderRadius={10}
           minWidth={mobileWidth}
-          padding={1}
+          padding={3}
         >
           <Grid container justifyContent={"space-between"}>
             <Grid item xs={5.5} className="creator__info">
@@ -296,43 +326,38 @@ export const AdminComponent: FC<IAdminComponent> = (props: IAdminComponent) => {
                     Тип: {ceratorType}
                   </Typography>
                 </Stack>
-                <Stack direction={"column"}>
-                  <Typography variant={"caption"} mt={1}>
+                <Stack direction={"row"} mt={4}>
+                  <Typography variant={"caption"}>
                     Статус блокировки:
                   </Typography>
-                  {!banStatus ? (
-                    <Typography variant={"caption"} mt={1}>
-                      Разблокирован
-                    </Typography>
-                  ) : (
-                    <Typography variant={"caption"} mt={1}>
-                      Заблокирован
-                    </Typography>
-                  )}
+                  <Typography variant={"caption"} ml={2}>
+                    {!banStatus ? "Разблокирован" : "Заблокирован"}
+                  </Typography>
                 </Stack>
               </Stack>
             </Grid>
             <Grid
               container
               item
-              xs={6.5}
+              xs={6}
               gap={1}
               justifyContent={"center"}
               marginY={"auto"}
               className="buttons"
+              mt={4}
             >
               <Typography variant={"caption"}>
                 {getVerifyStatus(statusVerify)}:{" "}
                 {dayjs(changeVerifyDate).format("D MMMM YYYY")}
               </Typography>
               <Button
-                variant="text"
+                sx={{ width: "100%" }}
                 onClick={() => handlerVerifyStatusClick(creatorId)}
               >
                 Переключить статус верификации
               </Button>
               <Button
-                variant="text"
+                sx={{ width: "100%" }}
                 onClick={() => handlerUserBanClick(creatorId)}
               >
                 Переключить статус блокировки
@@ -343,12 +368,16 @@ export const AdminComponent: FC<IAdminComponent> = (props: IAdminComponent) => {
             {documents &&
               documents.map((document, index) => (
                 <Stack direction={"row"} key={index} alignItems={"center"}>
-                  <Button onClick={() => handlerDownloadClick(document.path)}>
+                  <Button
+                    variant="fileInput"
+                    sx={{ width: 30 }}
+                    onClick={() => handlerDownloadClick(document.path)}
+                  >
                     <SvgIcon scale={0.1}>
                       <DownloadIcon />
                     </SvgIcon>{" "}
                   </Button>
-                  <Typography variant={"caption"}>
+                  <Typography variant={"caption"} ml={1}>
                     {document.filename}
                   </Typography>
                 </Stack>
@@ -363,18 +392,27 @@ export const AdminComponent: FC<IAdminComponent> = (props: IAdminComponent) => {
         <Grid
           container
           minWidth={mobileWidth}
-          justifyContent={"space-between"}
-          borderRadius={5}
+          borderRadius={10}
           bgcolor={whiteColor}
-          padding={1}
+          padding={3}
         >
-          <Typography variant={"h5"}>{name}</Typography>
-          <Grid item className="ban__user-info">
-            <Typography variant={"caption"}>Контакты:</Typography>
-            <Typography variant={"caption"}>⚫ {phone}</Typography>
-            <Typography variant={"caption"}>⚫ {email}</Typography>
+          <Grid item xs={4} className="ban__user_name">
+            <Typography variant={"h5"}>{name}</Typography>
           </Grid>
-          <Grid item className="ban__status">
+          <Grid item xs={4} className="ban__user_info">
+            <Typography variant={"caption"}>Контакты:</Typography>
+            <Stack direction={"row"} gap={2}>
+              <Stack>
+                <Typography variant={"caption"}>Тел.</Typography>
+                <Typography variant={"caption"}>Почта</Typography>
+              </Stack>
+              <Stack>
+                <Typography variant={"caption"}>{phone}</Typography>
+                <Typography variant={"caption"}>{email}</Typography>
+              </Stack>
+            </Stack>
+          </Grid>
+          <Grid item xs={4} className="ban__status">
             <Typography variant={"caption"}>Статус блокировки:</Typography>
             {!banStatus ? (
               <Typography variant={"caption"}>Разблокирован</Typography>
@@ -382,9 +420,10 @@ export const AdminComponent: FC<IAdminComponent> = (props: IAdminComponent) => {
               <Typography variant={"caption"}>Заблокирован</Typography>
             )}
           </Grid>
-          <Grid item marginY={"auto"} className="user__ban">
+          <Grid item xs={6} marginY={"auto"} className="user__ban" mt={2}>
             <Button
               variant={"text"}
+              sx={{ width: "100%" }}
               onClick={() => handlerUserBanClick(adminId)}
             >
               {" "}

@@ -52,23 +52,25 @@ function TourListPage() {
 
   return (
     <Stack gap={1}>
-      <Grid container alignItems={"center"} spacing={1} sx={{ mb: "50px" }}>
-        <Grid item sm={9}>
+      <Grid container alignItems={"center"} sx={{ mb: "50px" }}>
+        <Grid item md={8}>
           <Typography variant={"h3"}>Все туры</Typography>
         </Grid>
-        <Grid item sm={3}>
-          <Button
-            variant={"textButton"}
-            onClick={() => dispatch(setModalActive("filterModal"))}
-          >
-            Фильтры
-          </Button>
-          <Button
-            variant={"textButton"}
-            onClick={() => dispatch(setModalActive("sortModal"))}
-          >
-            Сортировать
-          </Button>
+        <Grid item md={4}>
+          <Stack direction={"row"} justifyContent={"right"}>
+            <Button
+              variant={"textButton"}
+              onClick={() => dispatch(setModalActive("filterModal"))}
+            >
+              Фильтры
+            </Button>
+            <Button
+              variant={"textButton"}
+              onClick={() => dispatch(setModalActive("sortModal"))}
+            >
+              Сортировать
+            </Button>
+          </Stack>
         </Grid>
       </Grid>
 
