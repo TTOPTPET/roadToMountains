@@ -9,7 +9,7 @@ function NavTool() {
       style={{
         width: "fit-content",
         position: "fixed",
-        right: 0,
+        left: 0,
         bottom: 0,
         paddingRight: "10px",
         paddingBottom: "20px",
@@ -19,9 +19,9 @@ function NavTool() {
       <div
         className="nav-tool__btn"
         onClick={() => setActiveState((activeState) => !activeState)}
-        style={{ cursor: "pointer", fontSize: "40px", textAlign: "end" }}
+        style={{ cursor: "pointer", fontSize: "40px", textAlign: "start" }}
       >
-        {activeState ? ">" : "<"}
+        {activeState ? "<" : ">"}
       </div>
       <div
         className="nav-tool__panel"
@@ -29,9 +29,9 @@ function NavTool() {
           width: "fit-content",
           display: "flex",
           flexDirection: "column",
-          alignItems: "flex-end",
+          alignItems: "flex-start",
           justifyContent: "center",
-          transform: `translateX(${activeState ? "0" : "150%"})`,
+          transform: `translateX(${activeState ? "-150%" : "5%"})`,
           transition: "all 0.2s",
         }}
       >

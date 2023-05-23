@@ -56,7 +56,7 @@ export default function AddTourRouting({
   };
 
   return (
-    <Box sx={{ position: "absolute", top: "-55px", width: "100%" }}>
+    <Box sx={{ mb: "20px" }}>
       <Stack direction={"row"} justifyContent={"space-between"}>
         <Button
           variant="textButton"

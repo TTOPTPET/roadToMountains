@@ -58,7 +58,7 @@ function AddTourPage({ isEditing }: { isEditing: boolean }) {
     return <AddTourSkeleton />;
   }
   return (
-    <Box sx={{ position: "relative" }}>
+    <>
       <AddTourRouting
         page={page}
         setPage={setPage}
@@ -76,7 +76,7 @@ function AddTourPage({ isEditing }: { isEditing: boolean }) {
         addError={addError}
         setAddError={setAddError}
       />
-    </Box>
+    </>
   );
 }
 
