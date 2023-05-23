@@ -1,4 +1,4 @@
-import { List, ListItem, Stack, Button } from "@mui/material";
+import { List, ListItem, Stack, Button, Divider } from "@mui/material";
 import { NavLink as RouterLink } from "react-router-dom";
 
 interface ISideBarNavItems {
@@ -31,19 +31,22 @@ const sideBarNavItems: ISideBarNavItems[] = [
 
 export const AdminSideBar = () => {
   return (
-    <Stack direction={"column"}>
+    <Stack direction={"column"} position={"fixed"}>
       <List>
         {sideBarNavItems.map((item, index) => (
-          <ListItem key={index} sx={{ width: 340 }}>
-            <Button
-              to={item.to}
-              component={RouterLink}
-              variant="high"
-              sx={{ padding: 2, height: "auto" }}
-            >
-              {item.display}
-            </Button>
-          </ListItem>
+          <>
+            <ListItem key={index} sx={{ width: 340 }}>
+              <Button
+                to={item.to}
+                component={RouterLink}
+                variant={"textButton"}
+                sx={{ padding: 2, height: "auto" }}
+              >
+                {item.display}
+              </Button>
+            </ListItem>
+            {index === sideBarNavItems.length - 1 ? <></> : <Divider />}
+          </>
         ))}
       </List>
     </Stack>

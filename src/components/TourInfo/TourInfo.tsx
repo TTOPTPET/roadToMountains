@@ -234,9 +234,11 @@ export const TourInfo: FC<ITourInfoProps> = ({
           <Typography variant={"h6"}>Рекомендуемый возраст</Typography>
           <Typography variant={"caption"}>
             {tourInfo?.recommendedAge?.from === tourInfo?.recommendedAge?.to
-              ? "C " + tourInfo?.recommendedAge?.to
+              ? "C " + (tourInfo?.recommendedAge?.to ?? "14")
               : (tourInfo?.recommendedAge?.from ?? "") +
-                (tourInfo?.recommendedAge?.to !== undefined ? " - " : "") +
+                (tourInfo?.recommendedAge?.to !== undefined || null
+                  ? " - "
+                  : "") +
                 (tourInfo?.recommendedAge?.to ?? "+")}
           </Typography>
           {addTourInfo ? (

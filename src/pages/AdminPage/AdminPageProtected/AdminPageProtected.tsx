@@ -1,5 +1,5 @@
-import { Stack } from "@mui/material";
-import { AdminHeader, AdminSideBar } from "../../../components/Admin";
+import { Stack, Box, Typography } from "@mui/material";
+import { AdminSideBar } from "../../../components/Admin";
 import { Route, Routes } from "react-router-dom";
 import { AdminAccessTouristPage } from "../AdminAccessTouristPage/AdminAccessTouristPage";
 import { AdminAccessTourPage } from "../AdminAccessTourPage/AdminAccessTourPage";
@@ -9,11 +9,11 @@ import { AdminConfirmAdminPage } from "../AdminConfirmAdminPage/AdminConfirmAdmi
 
 export const AdminPageProptected = () => {
   return (
-    <Stack direction={"column"}>
-      <AdminHeader />
+    <Box>
+      <Typography variant={"h4"}>Панель админа</Typography>
       <Stack direction={"row"} height="100%">
         <AdminSideBar />
-        <div className="admin-panels">
+        <Box className="admin-panels" ml={"350px"}>
           <Routes>
             <Route
               path={"access-tourist"}
@@ -27,8 +27,8 @@ export const AdminPageProptected = () => {
             <Route path={"messages"} element={<AdminMessagesPage />} />
             <Route path={"confirm-admin"} element={<AdminConfirmAdminPage />} />
           </Routes>
-        </div>
+        </Box>
       </Stack>
-    </Stack>
+    </Box>
   );
 };

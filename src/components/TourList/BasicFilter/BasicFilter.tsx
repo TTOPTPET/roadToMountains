@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useCallback, useEffect, useState } from "react";
 import { Autocomplete, Button, Stack, TextField } from "@mui/material";
 import { IFilterProps } from "../FilterTypes/IFilterProps";
 import { ISearchRequest } from "../../../models/tourListModels/ISearchRequest";
@@ -6,6 +6,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import dayjs, { Dayjs } from "dayjs";
 import { getToursSorted } from "../../../API/tourListAPI/searchAPI/searchAPI";
+import { mobile } from "../../../config/config";
 
 export const BasicFilter: FC<IFilterProps> = ({
   filters,
@@ -15,12 +16,25 @@ export const BasicFilter: FC<IFilterProps> = ({
 }) => {
   const { regions } = filters;
 
+  const [windowSize, setWindowSize] = useState<number>();
+
   const handleFieldChange = <T extends any>(
     key: keyof ISearchRequest,
     e: T
   ) => {
     setSearchData({ ...searchData, [key]: e });
   };
+
+  const handleWindowResize = useCallback((event) => {
+    setWindowSize(window.innerWidth);
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener("resize", handleWindowResize);
+    return () => {
+      window.removeEventListener("resize", handleWindowResize);
+    };
+  }, [handleWindowResize]);
 
   const handleDateChange = (type: "from" | "to", value: Dayjs) => {
     try {
@@ -49,7 +63,7 @@ export const BasicFilter: FC<IFilterProps> = ({
   };
 
   return (
-    <Stack direction={"row"} gap={1}>
+    <Stack direction={windowSize <= mobile ? "column" : "row"} gap={1}>
       <Autocomplete
         freeSolo
         disableClearable
