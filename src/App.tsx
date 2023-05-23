@@ -53,7 +53,7 @@ function App() {
       <ThemeProvider theme={mainThemes}>
         <Header />
 
-        <Container sx={{ p: "95px 0 70px 0" }}>
+        <Container sx={{ p: "35px 0 70px 0" }}>
           <Routes>
             <Route
               path={"/creator/lk"}
@@ -142,7 +142,7 @@ function App() {
             <Route path={"/tours/tour/:tourId"} element={<TourPage />} />
           </Routes>
         </Container>
-        <Box sx={{ position: "fixed", bottom: "50px", left: "50px" }}>
+        <Box sx={{ position: "fixed", bottom: "50px", right: "50px" }}>
           <HelpButton />
         </Box>
         <Footer />
