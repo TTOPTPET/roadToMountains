@@ -11,10 +11,16 @@ import { ITour } from "../../models/tourCardModel/ITour";
 import CreatorInfo from "../../components/UserInfo/CreatorInfo/CreatorInfo";
 import { Stack } from "@mui/system";
 import { mobileWidth } from "../../config/config";
+import { useMediaQuery, useTheme } from "@mui/material";
 
 function CreatorLk() {
   const [myTours, setMyTours] = useState<ITour[]>([]);
   const [loadingStatus, setLoadingStatus] = useState<Boolean>(true);
+
+  const theme = useTheme();
+
+  const moreThenMid = useMediaQuery(theme.breakpoints.up("md"));
+  const lessThanSmall = useMediaQuery(theme.breakpoints.down("sm"));
 
   useEffect(() => {
     setLoadingStatus(true);
@@ -32,7 +38,7 @@ function CreatorLk() {
     myTours && myTours.length ? (
       myTours?.map((tour, i) => {
         return (
-          <Grid key={i} item md={1}>
+          <Grid key={i} item xs={3}>
             <TourCard
               tour={tour}
               key={tour.tourId}
@@ -66,24 +72,41 @@ function CreatorLk() {
   const skeleton = () => {
     return (
       <>
-        <Grid item xs={1}>
+        <Grid item lg={3} md={3} sm={4} xs={12}>
           <Skeleton
             variant="rounded"
-            width={326}
-            height={491}
             animation="wave"
-            sx={{ borderRadius: "30px" }}
+            sx={{
+              borderRadius: "30px",
+              width: { xs: 220, sm: 180, md: 205, lg: 280 },
+              height: { xs: 330, sm: 270, md: 310, lg: 420 },
+            }}
           />
         </Grid>
-        <Grid item xs={1}>
+        <Grid item lg={3} md={3} sm={4} xs={12}>
           <Skeleton
             variant="rounded"
-            width={326}
-            height={491}
             animation="wave"
-            sx={{ borderRadius: "30px" }}
+            sx={{
+              borderRadius: "30px",
+              width: { xs: 220, sm: 180, md: 205, lg: 280 },
+              height: { xs: 330, sm: 270, md: 310, lg: 420 },
+            }}
           />
         </Grid>
+        {moreThenMid && (
+          <Grid item lg={3} md={3}>
+            <Skeleton
+              variant="rounded"
+              animation="wave"
+              sx={{
+                borderRadius: "30px",
+                width: { md: 205, lg: 280 },
+                height: { md: 310, lg: 420 },
+              }}
+            />
+          </Grid>
+        )}
       </>
     );
   };
@@ -104,10 +127,13 @@ function CreatorLk() {
       >
         Мои туры
       </Box>
-      <Stack direction={"row"} gap={5} flexWrap={"wrap"}>
-        <AddTourButton />
+      <Grid container spacing={2}>
+        <Grid item lg={3} md={3} sm={4} xs={12}>
+          <AddTourButton />
+        </Grid>
         {loadingStatus ? skeleton() : elements}
-      </Stack>
+      </Grid>
+
       {/* <Grid container spacing={4} columns={3}>
         <Grid item md={1}>
           <AddTourButton />

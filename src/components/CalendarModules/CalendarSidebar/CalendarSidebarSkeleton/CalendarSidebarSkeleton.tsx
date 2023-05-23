@@ -35,23 +35,17 @@ function CalendarSidebarSkeleton() {
           </Typography>
         </Box>
 
-        {/* <Stack gap={"5px"}> */}
-        {/* <Typography variant={"h6"}>Заказы</Typography> */}
         <Skeleton
           variant="rounded"
           height={"13vh"}
           sx={{ borderRadius: "10px" }}
         />
-        {/* </Stack> */}
 
-        {/* <Stack gap={"5px"}> */}
-        {/* <Typography variant={"h6"}>Доход</Typography> */}
         <Skeleton
           variant="rounded"
           height={"13vh"}
           sx={{ borderRadius: "10px" }}
         />
-        {/* </Stack> */}
       </Stack>
     </Stack>
   );

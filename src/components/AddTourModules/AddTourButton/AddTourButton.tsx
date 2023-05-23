@@ -11,8 +11,8 @@ function AddTourButton() {
       className="tour_button"
       sx={{
         display: "block",
-        width: 325,
-        height: 490,
+        width: { xs: 220, sm: 180, md: 205, lg: 280 },
+        height: { xs: 330, sm: 270, md: 310, lg: 420 },
         backgroundColor: darkTurquoiseColor,
         borderRadius: "30px",
         position: "relative",

@@ -21,8 +21,8 @@ function TourCard({ tour, tourCardType, myTours, setMyTours }: TourCardProps) {
     <Box
       className="tour_card"
       sx={{
-        width: 325,
-        height: 490,
+        width: { lg: "280px", md: "207px", sm: "180px", xs: "220px" },
+        height: { lg: "420px", md: "310px", sm: "270px", xs: "330px" },
         borderRadius: "30px",
         position: "relative",
       }}

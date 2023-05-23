@@ -14,6 +14,7 @@ import { setModalActive } from "../../../redux/Modal/ModalReducer";
 import SuccessDeleteTourModal from "../../Modals/SuccessDeleteTourModal/SuccessDeleteTourModal";
 import { SetStateAction, Dispatch } from "react";
 import { MyTours } from "../../MyTours/MyTours";
+import { Typography } from "@mui/material";
 
 type TourCardProps = {
   tour: ITour;
@@ -33,7 +34,7 @@ function TourCardContentCreatorLk({
       className="tour-card__content"
       sx={{
         width: "100%",
-        height: "230px",
+        height: { lg: "205px", md: "157px", sm: "130px", xs: "157px" },
         backgroundColor: lightTurquoiseColor,
         borderBottomLeftRadius: "30px",
         borderBottomRightRadius: "30px",
@@ -43,21 +44,17 @@ function TourCardContentCreatorLk({
         flex: "0 0 auto",
       }}
     >
-      <Box
+      <Typography
+        variant={"h5"}
         className="tour-card__content-title"
         sx={{
-          fontFamily: "Jost",
-          fontWeight: "800",
-          fontSize: "24px",
-          lineHeight: "32px",
-          color: darkBlueColor,
           whiteSpace: "nowrap",
           overflow: "hidden",
           textOverflow: "ellipsis",
         }}
       >
         {tour.tourName}
-      </Box>
+      </Typography>
       <Box
         className="tour-card__content-price"
         sx={{
