@@ -32,7 +32,9 @@ const Header = () => {
 
   const [cookies] = useCookies([TOKEN, USER_ROLE, REFRESH_TOKEN, BAN_STATUS]);
 
-  const [searchParam, setSearchParam] = useState<string>("");
+  const [searchParam, setSearchParam] = useState<string>(
+    searchParamFromUrl.get("title") || ""
+  );
 
   let location = useLocation();
 
@@ -87,7 +89,7 @@ const Header = () => {
             <TextField
               placeholder="Найти тур"
               color="secondary"
-              value={searchParam || searchParamFromUrl.get("title")}
+              value={searchParam}
               onChange={(e) => setSearchParam(e.target.value)}
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
