@@ -1,5 +1,5 @@
 import { useState } from "react";
-import MapLeaflet from "./MapLeaflet/MapLeaflet";
+import MapLeaflet from "../../components/MapLeaflet/MapLeaflet";
 
 function StatisticPage() {
   const [positions, setPositions] = useState<[number, number][]>([]);

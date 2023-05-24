@@ -4,7 +4,7 @@ import { MapContainer, TileLayer } from "react-leaflet";
 import "./LeafletStyles.css";
 import { LatLng } from "leaflet";
 import LocationMarker from "./LocationMarker/LocationMarker";
-import goBack from "../../../media/Icons/mapIcons/go-back-arrow.png";
+import goBack from "../../media/Icons/mapIcons/go-back-arrow.png";
 
 type Props = {
   width: number | string;
@@ -12,6 +12,7 @@ type Props = {
   accessType?: "insert" | "observe";
   positions: [number, number][];
   setPositions?: Dispatch<SetStateAction<[number, number][]>>;
+  mapCenter?: [number, number];
 };
 
 export default function MapLeaflet({
@@ -20,6 +21,7 @@ export default function MapLeaflet({
   accessType = "observe",
   positions = [],
   setPositions,
+  mapCenter = [55.057399, 83.138469],
 }: Props) {
   return (
     <Box width={width} height={height} sx={{ position: "relative" }}>
@@ -59,11 +61,7 @@ export default function MapLeaflet({
           />
         </Box>
       )}
-      <MapContainer
-        center={[55.81149, 37.499709]}
-        zoom={15}
-        scrollWheelZoom={false}
-      >
+      <MapContainer center={mapCenter} zoom={15} scrollWheelZoom={false}>
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

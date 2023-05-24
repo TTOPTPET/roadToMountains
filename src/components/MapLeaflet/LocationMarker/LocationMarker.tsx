@@ -1,6 +1,6 @@
 import * as L from "leaflet";
 import { Marker, Polyline, useMapEvents } from "react-leaflet";
-import iconImage from "../../../../media/Icons/mapIcons/maps-and-flags.png";
+import iconImage from "../../../media/Icons/mapIcons/maps-and-flags.png";
 import { Dispatch, SetStateAction } from "react";
 
 type Props = {
