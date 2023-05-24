@@ -1,4 +1,11 @@
-import { Button, Grid, Stack, Typography } from "@mui/material";
+import {
+  Button,
+  Grid,
+  Stack,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { setModalActive } from "../../redux/Modal/ModalReducer";
@@ -29,6 +36,10 @@ function TourListPage() {
   });
 
   const dispatch = useDispatch();
+
+  const theme = useTheme();
+
+  const lessThanSmall = useMediaQuery(theme.breakpoints.down("sm"));
 
   useEffect(() => {
     getFilters((filter) => setFilters(filter), undefined, false);
@@ -87,31 +98,26 @@ function TourListPage() {
         setTourList={setTourList}
       />
       <Sorter tours={tourList} setTours={setTourList} />
-
-      <Stack
-        flexDirection={"row"}
-        flexWrap={"wrap"}
-        gap={2}
-        justifyContent={"center"}
-        marginTop={1}
-      >
+      <Grid container spacing={2} justifyContent={"flex-start"} marginTop={1}>
         {tourList &&
           tourList
             .filter((tour) => tour.banStatus !== true)
             .map((tour, index) => (
-              <TourCard
-                key={index}
-                tour={tour}
-                tourCardType={"tourList"}
-                myTours={[]}
-                setMyTours={function (
-                  value: React.SetStateAction<ITour[]>
-                ): void {
-                  throw new Error("Function not implemented.");
-                }}
-              />
+              <Grid key={index} item lg={3} md={3} sm={4} xs={12}>
+                <TourCard
+                  key={index}
+                  tour={tour}
+                  tourCardType={"tourList"}
+                  myTours={[]}
+                  setMyTours={function (
+                    value: React.SetStateAction<ITour[]>
+                  ): void {
+                    throw new Error("Function not implemented.");
+                  }}
+                />
+              </Grid>
             ))}
-      </Stack>
+      </Grid>
     </Stack>
   );
 }

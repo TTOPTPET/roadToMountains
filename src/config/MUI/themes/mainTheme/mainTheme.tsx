@@ -17,6 +17,7 @@ declare module "@mui/material/Button" {
     weakTextButton: true;
     arrowButton: true;
     errorButton: true;
+    addTourImage: true;
   }
 }
 
@@ -48,6 +49,11 @@ export const mainThemes = createTheme(breakpoints, {
       fontWeight: "800",
       fontSize: "50px",
       lineHeight: "50px",
+      [breakpoints.breakpoints.down("lg")]: {
+        fontWeight: "900",
+        fontSize: "36px",
+        lineHeight: "40px",
+      },
     },
     h4: {
       fontFamily: "Jost",
@@ -55,6 +61,11 @@ export const mainThemes = createTheme(breakpoints, {
       fontSize: "34px",
       lineHeight: "40px",
       letterSpacing: "0.25px",
+      [breakpoints.breakpoints.down("lg")]: {
+        fontWeight: "900",
+        fontSize: "20px",
+        lineHeight: "24px",
+      },
     },
     h5: {
       fontFamily: "Jost",
@@ -72,18 +83,35 @@ export const mainThemes = createTheme(breakpoints, {
       fontWeight: "800",
       fontSize: "18px",
       lineHeight: "18px",
+      [breakpoints.breakpoints.down("lg")]: {
+        fontWeight: "900",
+        fontSize: "12px",
+        lineHeight: "12px",
+      },
     },
     button: {
       fontFamily: "Jost",
       fontWeight: "700",
       fontSize: "20px",
       lineHeight: "20px",
+      [breakpoints.breakpoints.down("lg")]: {
+        fontSize: "14px",
+        lineHeight: "14px",
+      },
+      [breakpoints.breakpoints.down("md")]: {
+        fontSize: "12px",
+        lineHeight: "12px",
+      },
     },
     caption: {
       fontFamily: "Montserrat",
       fontWeight: "400",
       fontSize: "16px",
       lineHeight: "20px",
+      [breakpoints.breakpoints.down("lg")]: {
+        fontSize: "10px",
+        lineHeight: "12px",
+      },
     },
     body2: {
       fontFamily: "Montserrat",
@@ -101,6 +129,19 @@ export const mainThemes = createTheme(breakpoints, {
     },
   },
   components: {
+    MuiContainer: {
+      styleOverrides: {
+        root: {
+          maxWidth: "1200px !important",
+          [breakpoints.breakpoints.down("lg")]: {
+            maxWidth: "900px !important",
+          },
+          [breakpoints.breakpoints.down("md")]: {
+            maxWidth: "600px !important",
+          },
+        },
+      },
+    },
     MuiPaper: {
       styleOverrides: {
         root: {
@@ -194,7 +235,7 @@ export const mainThemes = createTheme(breakpoints, {
         root: {
           minWidth: "fit-content",
           width: "fit-content",
-          padding: "0 16px",
+          padding: "0 12px",
           backgroundColor: darkTurquoiseColor,
           height: "30px",
           borderRadius: "30px",
@@ -209,6 +250,10 @@ export const mainThemes = createTheme(breakpoints, {
             backgroundColor: "#97d5e4",
             color: whiteColor,
           },
+          [breakpoints.breakpoints.down("lg")]: {
+            height: "20px",
+            padding: "0 6px",
+          },
         },
       },
       variants: [
@@ -216,6 +261,10 @@ export const mainThemes = createTheme(breakpoints, {
           props: { variant: "high" },
           style: {
             height: "50px",
+            [breakpoints.breakpoints.down("lg")]: {
+              height: "50px",
+              padding: "0 10px",
+            },
           },
         },
         {
@@ -248,6 +297,10 @@ export const mainThemes = createTheme(breakpoints, {
             justifyContent: "space-between",
             "&:hover": { backgroundColor: lightTurquoiseColor },
             color: darkBlueColor,
+            [breakpoints.breakpoints.down("lg")]: {
+              height: "50px",
+              padding: "0 16px",
+            },
           },
         },
         {
@@ -260,6 +313,15 @@ export const mainThemes = createTheme(breakpoints, {
             borderRadius: "100%",
             height: "34px",
             padding: "0",
+            [breakpoints.breakpoints.down("lg")]: {
+              minWidth: "34px",
+              width: "fit-content",
+              backgroundColor: whiteColor,
+              color: darkBlueColor,
+              borderRadius: "100%",
+              height: "34px",
+              padding: "0",
+            },
           },
         },
         {
@@ -267,6 +329,19 @@ export const mainThemes = createTheme(breakpoints, {
           style: {
             backgroundColor: redColor,
             "&:hover": { backgroundColor: redColor },
+          },
+        },
+        {
+          props: { variant: "addTourImage" },
+          style: {
+            width: "156px",
+            height: "156px",
+            margin: "0 auto 16px",
+            [breakpoints.breakpoints.down("lg")]: {
+              width: "156px",
+              height: "156px",
+              margin: "0 auto 16px",
+            },
           },
         },
       ],

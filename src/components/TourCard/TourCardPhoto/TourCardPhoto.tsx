@@ -13,6 +13,7 @@ import cardbg from "../../../media/cardbg.png";
 import noPhoto from "../../../media/noPhoto.png";
 
 import { ITour } from "../../../models/tourCardModel/ITour";
+import { Typography } from "@mui/material";
 
 type CardType = "tourList" | "myTours";
 type TourCardProps = {
@@ -27,7 +28,7 @@ function TourCardPhoto({ tour, tourCardType }: TourCardProps) {
         className="tour-card__photo-wrapper"
         sx={{
           width: "100%",
-          height: "261px",
+          height: { lg: "215px", md: "153px", sm: "140px", xs: "174px" },
           position: "relative",
           borderTopLeftRadius: "30px",
           borderTopRightRadius: "30px",
@@ -51,16 +52,13 @@ function TourCardPhoto({ tour, tourCardType }: TourCardProps) {
               borderTopRightRadius: "30px",
             }}
           >
-            <Box
+            <Typography
+              variant="caption"
               className="tour-card__photo-publicNum"
               sx={{
                 width: "100%",
                 textAlign: "center",
-                fontFamily: "Montserrat",
-                fontWeight: "400",
                 color: "#FFFFFF",
-                fontSize: "16px",
-                lineHeight: "20px",
                 position: "absolute",
                 zIndex: "3",
                 top: "50%",
@@ -71,7 +69,7 @@ function TourCardPhoto({ tour, tourCardType }: TourCardProps) {
               {tour.publicNum
                 ? `Размещенных туров: ${tour.publicNum}`
                 : "Нет размещенных туров"}
-            </Box>
+            </Typography>
           </Box>
         )}
       </Box>
@@ -89,8 +87,8 @@ function TourCardPhoto({ tour, tourCardType }: TourCardProps) {
                   className="tour-card__photo-banStatus-wrapper"
                   sx={{
                     position: "absolute",
-                    top: "25px",
-                    left: "25px",
+                    top: 4,
+                    left: 4,
                     width: "50px",
                     height: "50px",
                     borderRadius: "100%",

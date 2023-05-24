@@ -14,7 +14,7 @@ import { setModalActive } from "../../../redux/Modal/ModalReducer";
 import SuccessDeleteTourModal from "../../Modals/SuccessDeleteTourModal/SuccessDeleteTourModal";
 import { SetStateAction, Dispatch } from "react";
 import { MyTours } from "../../MyTours/MyTours";
-import { Typography } from "@mui/material";
+import { Typography, useMediaQuery, useTheme } from "@mui/material";
 
 type TourCardProps = {
   tour: ITour;
@@ -29,6 +29,10 @@ function TourCardContentCreatorLk({
 }: TourCardProps) {
   const dispatch = useDispatch();
 
+  const theme = useTheme();
+
+  const lessThenBig = useMediaQuery(theme.breakpoints.down("lg"));
+
   return (
     <Box
       className="tour-card__content"
@@ -38,14 +42,14 @@ function TourCardContentCreatorLk({
         backgroundColor: lightTurquoiseColor,
         borderBottomLeftRadius: "30px",
         borderBottomRightRadius: "30px",
-        padding: "30px 20px 20px",
+        padding: { lg: "25px 20px 20px", md: "15px", sm: "10px", xs: "15px" },
         display: "flex",
         flexDirection: "column",
         flex: "0 0 auto",
       }}
     >
       <Typography
-        variant={"h5"}
+        variant={lessThenBig ? "h5" : "h6"}
         className="tour-card__content-title"
         sx={{
           whiteSpace: "nowrap",
@@ -55,15 +59,10 @@ function TourCardContentCreatorLk({
       >
         {tour.tourName}
       </Typography>
-      <Box
-        className="tour-card__content-price"
+      <Typography
+        variant="button"
         sx={{
-          fontFamily: "Jost",
-          fontWeight: "700",
-          fontSize: "20px",
-          lineHeight: "20px",
-          color: darkBlueColor,
-          marginTop: "13px",
+          marginTop: { lg: "7px", md: "10px", sm: "10px", xs: "10px" },
           flex: "1 0 auto",
         }}
       >
@@ -71,7 +70,7 @@ function TourCardContentCreatorLk({
           tour?.prices?.from || tour.price
         )}
         ₽
-      </Box>
+      </Typography>
       <Box
         display={"flex"}
         flexDirection={"column"}
@@ -91,8 +90,8 @@ function TourCardContentCreatorLk({
           className="tour-card__buttons-wrapper"
           display="flex"
           justifyContent={"flex-end"}
-          mt="10px"
-          columnGap={"10px"}
+          mt="5px"
+          columnGap={"5px"}
         >
           <Button
             className="tour-card__button-place"

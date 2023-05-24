@@ -16,49 +16,55 @@ import mapMarker from "../../../media/map-marker.svg";
 import calendar from "../../../media/calendar.svg";
 import categoryIcon from "../../../media/walking-guy.svg";
 import dayjs from "dayjs";
+import { Typography, useMediaQuery, useTheme } from "@mui/material";
 
 type TourCardProps = {
   tour: ITour;
 };
 
 function TourCardContentCardList({ tour }: TourCardProps) {
+  const theme = useTheme();
+
+  const lessThenBig = useMediaQuery(theme.breakpoints.down("lg"));
+
   return (
     <Box
       className="tour-card__content"
       sx={{
         width: "100%",
-        height: "230px",
+        height: { lg: "205px", md: "157px", sm: "130px", xs: "157px" },
         backgroundColor: lightTurquoiseColor,
         borderBottomLeftRadius: "30px",
         borderBottomRightRadius: "30px",
-        padding: "16px 15px 20px",
+        padding: {
+          lg: "18px 20px 20px 15px",
+          md: "15px",
+          sm: "10px",
+          xs: "15px",
+        },
         display: "flex",
         flexDirection: "column",
         flex: "0 0 auto",
       }}
     >
-      <Box
+      <Typography
+        variant={lessThenBig ? "h5" : "h6"}
         className="tour-card__content-title"
         sx={{
-          fontFamily: "Jost",
-          fontWeight: "800",
-          fontSize: "24px",
-          lineHeight: "32px",
-          color: darkBlueColor,
           whiteSpace: "nowrap",
           overflow: "hidden",
           textOverflow: "ellipsis",
         }}
       >
         {tour.tourName}
-      </Box>
+      </Typography>
       <Box
         className="tour-card__content-wrapper"
         sx={{
-          mt: "7px",
+          mt: { lg: "7px", md: "10px", sm: "5px", xs: "10px" },
           display: "flex",
           flexDirection: "column",
-          gap: "10px",
+          gap: { lg: "10px", md: "10px", sm: "5px", xs: "10px" },
           flex: "1 0 auto",
         }}
       >
@@ -66,25 +72,31 @@ function TourCardContentCardList({ tour }: TourCardProps) {
           className="tour-card__content-region-wrapper"
           sx={{ display: "flex", gap: "5px", alignItems: "center" }}
         >
-          <Box className="tour-card__content-region-icon">
-            <img src={mapMarker} alt="map marker" />
+          <Box
+            className="tour-card__content-region-icon"
+            sx={{
+              width: { lg: "26px", md: "18px", sm: "18px", xs: "18px" },
+              height: { lg: "26px", md: "18px", sm: "18px", xs: "18px" },
+            }}
+          >
+            <img
+              src={mapMarker}
+              alt="map marker"
+              style={{ objectFit: "contain", width: "100%", height: "100%" }}
+            />
           </Box>
           <DarkStyledTooltip title="Регион" arrow placement="top">
-            <Box
+            <Typography
+              variant="caption"
               className="tour-card__content-region-descr"
               sx={{
-                fontFamily: "Montserrat",
-                fontWeight: "400",
-                fontSize: "16px",
-                lineHeight: "20px",
-                color: darkBlueColor,
                 whiteSpace: "nowrap",
                 overflow: "hidden",
                 textOverflow: "ellipsis",
               }}
             >
               {tour.region}
-            </Box>
+            </Typography>
           </DarkStyledTooltip>
         </Box>
 
@@ -92,56 +104,64 @@ function TourCardContentCardList({ tour }: TourCardProps) {
           className="tour-card__content-date-wrapper"
           sx={{ display: "flex", gap: "5px", alignItems: "center" }}
         >
-          <Box className="tour-card__content-date-icon">
-            <img src={calendar} alt="calendar" />
+          <Box
+            className="tour-card__content-date-icon"
+            sx={{
+              width: { lg: "26px", md: "18px", sm: "18px", xs: "18px" },
+              height: { lg: "26px", md: "18px", sm: "18px", xs: "18px" },
+            }}
+          >
+            <img
+              src={calendar}
+              alt="calendar"
+              style={{ objectFit: "contain", width: "100%", height: "100%" }}
+            />
           </Box>
           <DarkStyledTooltip title="Даты ближайшего тура" arrow placement="top">
-            <Box
+            <Typography
+              variant="caption"
               className="tour-card__content-date-descr"
-              sx={{
-                fontFamily: "Montserrat",
-                fontWeight: "400",
-                fontSize: "16px",
-                lineHeight: "20px",
-                color: darkBlueColor,
-              }}
             >
               {dayjs(tour.tourDate.from).format("DD.MM.YYYY")} -{" "}
               {dayjs(tour.tourDate.to).format("DD.MM.YYYY")}
-            </Box>
+            </Typography>
           </DarkStyledTooltip>
-          {Boolean(tour.publicNum) && (
-            <Box
+          {tour.publicSimilarDatesAmount > 1 && (
+            <Typography
+              variant="caption"
               className="tour-card__content-date-publicNum"
               sx={{
-                ml: "15px",
-                fontFamily: "Montserrat",
-                fontWeight: "400",
-                fontSize: "16px",
-                lineHeight: "20px",
+                ml: { lg: "0px", md: "18px", sm: "1px", xs: "31px" },
                 color: darkTurquoiseColor,
               }}
             >
-              +{tour.publicNum - 1}
-            </Box>
+              +{tour.publicSimilarDatesAmount - 1}
+            </Typography>
           )}
         </Box>
 
         <Box
           className="tour-card__content-category-wrapper"
-          sx={{ display: "flex", gap: "6px", alignItems: "center" }}
+          sx={{ display: "flex", gap: "5px", alignItems: "center" }}
         >
-          <Box className="tour-card__content-category-icon">
-            <img src={categoryIcon} alt="walking guy" />
+          <Box
+            className="tour-card__content-category-icon"
+            sx={{
+              width: { lg: "26px", md: "18px", sm: "18px", xs: "18px" },
+              height: { lg: "26px", md: "18px", sm: "18px", xs: "18px" },
+            }}
+          >
+            <img
+              src={categoryIcon}
+              alt="walking guy"
+              style={{ objectFit: "contain", width: "100%", height: "100%" }}
+            />
           </Box>
           <DarkStyledTooltip title="Категория тура" arrow placement="top">
-            <Box
+            <Typography
+              variant="caption"
               className="tour-card__content-category-descr"
               sx={{
-                fontFamily: "Montserrat",
-                fontWeight: "400",
-                fontSize: "16px",
-                lineHeight: "20px",
                 color: darkTurquoiseColor,
                 whiteSpace: "nowrap",
                 overflow: "hidden",
@@ -149,7 +169,7 @@ function TourCardContentCardList({ tour }: TourCardProps) {
               }}
             >
               {tour.category}
-            </Box>
+            </Typography>
           </DarkStyledTooltip>
         </Box>
       </Box>
