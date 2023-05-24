@@ -87,11 +87,7 @@ export const AddTourImage: FC<IAddTourImageProps> = ({
   };
   return (
     <Stack direction={"row"} gap={1} flexWrap={"wrap"} width={500}>
-      <Button
-        sx={{ width: 156, height: 156, margin: "0 auto 16px" }}
-        variant="contained"
-        component="label"
-      >
+      <Button variant="addTourImage" component="label">
         <input
           type={"file"}
           accept={".jpg, .jpeg, .png"}

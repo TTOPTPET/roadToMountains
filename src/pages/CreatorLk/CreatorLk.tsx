@@ -11,7 +11,7 @@ import { ITour } from "../../models/tourCardModel/ITour";
 import CreatorInfo from "../../components/UserInfo/CreatorInfo/CreatorInfo";
 import { Stack } from "@mui/system";
 import { mobileWidth } from "../../config/config";
-import { useMediaQuery, useTheme } from "@mui/material";
+import { Typography, useMediaQuery, useTheme } from "@mui/material";
 
 function CreatorLk() {
   const [myTours, setMyTours] = useState<ITour[]>([]);
@@ -20,7 +20,6 @@ function CreatorLk() {
   const theme = useTheme();
 
   const moreThenMid = useMediaQuery(theme.breakpoints.up("md"));
-  const lessThanSmall = useMediaQuery(theme.breakpoints.down("sm"));
 
   useEffect(() => {
     setLoadingStatus(true);
@@ -38,7 +37,7 @@ function CreatorLk() {
     myTours && myTours.length ? (
       myTours?.map((tour, i) => {
         return (
-          <Grid key={i} item xs={3}>
+          <Grid key={i} item lg={3} md={3} sm={4} xs={12}>
             <TourCard
               tour={tour}
               key={tour.tourId}
@@ -114,20 +113,16 @@ function CreatorLk() {
   return (
     <>
       <CreatorInfo />
-      <Box
+      <Typography
+        variant="h5"
         sx={{
-          fontFamily: "Jost",
-          fontWeight: "800",
-          fontSize: "24px",
-          lineHeight: "32px",
-          color: darkBlueColor,
-          mb: "19px",
-          mt: "30px",
+          mb: { lg: "19px", md: "20px", sm: "10px", xs: "10px" },
+          mt: { lg: "30px", md: "50px", sm: "50px", xs: "30px" },
         }}
       >
         Мои туры
-      </Box>
-      <Grid container spacing={2}>
+      </Typography>
+      <Grid container spacing={2} justifyContent={"flex-start"}>
         <Grid item lg={3} md={3} sm={4} xs={12}>
           <AddTourButton />
         </Grid>
