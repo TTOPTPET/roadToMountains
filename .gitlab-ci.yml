@@ -12,6 +12,7 @@ build-dev:
   stage: build-dev
   image: node:latest
   script:
+    - export VITE_APP_BASE_URL=http://185.154.193.68:5000
     - npm cache clean --force
     - npm i --force
     - npm run build
@@ -52,6 +53,7 @@ build-production:
   stage: build-production
   image: node:latest
   script:
+    - export VITE_APP_BASE_URL=https://waytomountains.ru/backend
     - npm cache clean --force
     - npm i --force
     - npm run build
