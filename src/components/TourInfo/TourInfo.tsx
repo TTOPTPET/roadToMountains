@@ -271,7 +271,7 @@ export const TourInfo: FC<ITourInfoProps> = ({
         width={"100%"}
         height={"330px"}
         accessType="observe"
-        mapCenter={tourInfo?.mapPoints[0] ?? undefined}
+        mapCenter={tourInfo?.mapPoints ? tourInfo?.mapPoints[0] : undefined}
         positions={tourInfo?.mapPoints}
       />
     </>

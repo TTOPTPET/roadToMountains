@@ -176,7 +176,7 @@ export const TourDetails: FC<ITourDetailsProps> = ({
             width={"100%"}
             height={"330px"}
             accessType="observe"
-            mapCenter={record?.mapPoints[0] ?? undefined}
+            mapCenter={record?.mapPoints ? record?.mapPoints[0] : undefined}
             positions={record?.mapPoints}
           />
         </Stack>
