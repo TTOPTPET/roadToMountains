@@ -9,7 +9,7 @@ function StatisticPage() {
       height={"300px"}
       accessType="insert"
       positions={positions}
-      setPositions={setPositions}
+      setPositions={(pos) => setPositions(pos)}
     />
   );
 }

@@ -10,6 +10,7 @@ import { IAddTour } from "../../models/addTourModels/IAddTour";
 import { ITourInfo } from "../../models/tourModels/ITourInfo";
 import dayjs from "dayjs";
 import { baseUrl } from "../../config/config";
+import MapLeaflet from "../MapLeaflet/MapLeaflet";
 
 interface ITourInfoProps {
   images: any[];
@@ -263,6 +264,16 @@ export const TourInfo: FC<ITourInfoProps> = ({
           </Typography>
         </Grid>
       </Grid>
+      <Typography variant={"h5"} mt={5}>
+        Маршрут
+      </Typography>
+      <MapLeaflet
+        width={"100%"}
+        height={"330px"}
+        accessType="observe"
+        mapCenter={tourInfo?.mapPoints[0] ?? undefined}
+        positions={tourInfo?.mapPoints}
+      />
     </>
   );
 };

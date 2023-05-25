@@ -14,7 +14,7 @@ export interface IAddTour {
     from?: number;
     to?: number;
   };
-  mapPoints?: string[];
+  mapPoints?: [number, number][];
   housingInclude?: {
     housingName: string;
     housingAddress: string;

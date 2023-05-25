@@ -10,9 +10,11 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { useState, FC } from "react";
+import { useState, FC, useEffect } from "react";
 import { setTourField } from "../../../redux/AddTour/AddTourReducer";
 import { redColor } from "../../../config/MUI/color/color";
+import MapLeaflet from "../../../components/MapLeaflet/MapLeaflet";
+import { setTourInfo } from "../../../redux/TourInfo/TourInfoReducer";
 
 const turnOnDefault: string[] = ["Не включено", "Включено"];
 
@@ -363,6 +365,23 @@ export const AddTourSecondPage: FC<IAddTourSecondPageProps> = ({
           />
         </Grid>
       </Grid>
+      <Typography variant={"h5"} mt={5}>
+        Маршрут
+      </Typography>
+      <MapLeaflet
+        width={"100%"}
+        height={"330px"}
+        accessType="insert"
+        positions={tourInfo?.mapPoints}
+        setPositions={(positions) => {
+          dispatch(
+            setTourField({
+              ...tourInfo,
+              mapPoints: positions,
+            })
+          );
+        }}
+      />
     </Stack>
   );
 };

@@ -1,11 +1,9 @@
 import * as L from "leaflet";
 import { Marker, Polyline, useMapEvents } from "react-leaflet";
 import iconImage from "../../../media/Icons/mapIcons/maps-and-flags.png";
-import { Dispatch, SetStateAction } from "react";
-
 type Props = {
   positions: [number, number][];
-  setPositions: Dispatch<SetStateAction<[number, number][]>>;
+  setPositions: (positions: [number, number][]) => void;
   accessType?: "insert" | "observe";
 };
 
@@ -27,8 +25,8 @@ export default function LocationMarker({
   const map = useMapEvents({
     click(e) {
       if (accessType === "insert") {
-        setPositions((pos) => [
-          ...pos,
+        setPositions([
+          ...positions,
           [+e.latlng.lat.toFixed(5), +e.latlng.lng.toFixed(5)],
         ]);
       }
