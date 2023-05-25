@@ -1,8 +1,6 @@
-import { Box, Button, Paper } from "@mui/material";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Box } from "@mui/material";
 import { MapContainer, TileLayer } from "react-leaflet";
 import "./LeafletStyles.css";
-import { LatLng } from "leaflet";
 import LocationMarker from "./LocationMarker/LocationMarker";
 import goBack from "../../media/Icons/mapIcons/go-back-arrow.png";
 
