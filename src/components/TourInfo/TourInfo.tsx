@@ -267,13 +267,37 @@ export const TourInfo: FC<ITourInfoProps> = ({
       <Typography variant={"h5"} mt={5}>
         Маршрут
       </Typography>
-      <MapLeaflet
-        width={"100%"}
-        height={"330px"}
-        accessType="observe"
-        mapCenter={tourInfo?.mapPoints ? tourInfo?.mapPoints[0] : undefined}
-        positions={tourInfo?.mapPoints}
-      />
+      {tourInfo?.mapPoints.length === 0 ? (
+        <Box sx={{ width: "100%", position: "relative" }}>
+          <Skeleton
+            variant="rounded"
+            height={"330px"}
+            sx={{ borderRadius: "10px" }}
+          />
+          <Typography
+            variant={"h4"}
+            sx={{
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              textAlign: "center",
+              transform: "translatey(-50%) translatex(-50%)",
+              color: "rgba(0, 0, 0, 0.2)",
+              textTransform: "uppercase",
+            }}
+          >
+            Маршрут не выбран
+          </Typography>
+        </Box>
+      ) : (
+        <MapLeaflet
+          width={"100%"}
+          height={"330px"}
+          accessType="observe"
+          mapCenter={tourInfo?.mapPoints ? tourInfo?.mapPoints[0] : undefined}
+          positions={tourInfo?.mapPoints}
+        />
+      )}
     </>
   );
 };
