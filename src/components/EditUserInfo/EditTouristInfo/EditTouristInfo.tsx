@@ -17,6 +17,11 @@ import { setTouristInfo } from "../../../API/touristAPI/setTouristInfo";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getFilters } from "../../../API/tourListAPI";
+import {
+  setModalActive,
+  setModalInactive,
+} from "../../../redux/Modal/ModalReducer";
+import EnterMobileCodeModal from "../../Modals/EnterMobileCodeModal/EnterMobileCodeModal";
 
 function EditTouristInfo() {
   const [regions, setRegions] = useState<string[]>([]);
@@ -141,6 +146,10 @@ function EditTouristInfo() {
               dispatch(setUserInfo(editedTouristInfo));
               navigate("/tourist/lk");
             },
+            () => {
+              dispatch(setUserInfo(editedTouristInfo));
+              dispatch(setModalActive("enterMobileCodeModal"));
+            },
             () => {}
           );
         }}
@@ -148,12 +157,19 @@ function EditTouristInfo() {
         linkTo={"/tourist/lk"}
         AvatarComponent={() => (
           <Avatar
-            photoUrl={editedTouristInfo.photo}
+            photoUrl={editedTouristInfo.photo as string}
             setUserPhoto={(photoUrl: string) =>
               setEditedTouristInfo({ ...editedTouristInfo, photo: photoUrl })
             }
           />
         )}
+      />
+      <EnterMobileCodeModal
+        successCallback={(resp) => {
+          dispatch(setUserInfo(editedTouristInfo));
+          dispatch(setModalInactive("enterMobileCodeModal"));
+          navigate("/tourist/lk");
+        }}
       />
     </>
   );

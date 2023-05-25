@@ -43,7 +43,10 @@ function EnterMobileCodeModal({ successCallback }: Props) {
   return (
     <Dialog
       className="enterMobileCodeModal"
-      onClose={() => dispatch(setModalInactive("enterMobileCodeModal"))}
+      onClose={() => {
+        dispatch(setModalInactive("enterMobileCodeModal"));
+        setConfirmCode("");
+      }}
       open={isModalActive("enterMobileCodeModal", activeModals)}
       fullWidth
       maxWidth={"sm"}

@@ -16,7 +16,8 @@ export interface ITour {
   personsNumber: number;
   photos: string[];
   banStatus: boolean;
-  publicSimilarDatesAmount: number;
+  publicSimilarDatesAmount?: number;
+  publicNum?: number;
   cancelDeadline: string;
   publicTourId: string;
 }
