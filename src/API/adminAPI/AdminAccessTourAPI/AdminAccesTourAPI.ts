@@ -48,7 +48,11 @@ export const tourBan = async (
     return;
   }
   try {
-    let respone = await axios.get(adminUrl + "/tourBan");
+    let respone = await axios.get(adminUrl + "/tourBan", {
+      params: {
+        tourId: params,
+      },
+    });
     successCallback(respone?.data);
   } catch (e) {
     console.error(e);

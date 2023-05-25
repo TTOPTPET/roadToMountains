@@ -43,16 +43,18 @@ export const AddTourFirstPage: FC<IAddTourFirstPageProps> = ({
   console.log(tourInfo);
   return (
     <Stack gap={1}>
-      <TextField
-        sx={{ width: "45%" }}
-        placeholder={"Название тура"}
-        value={tourInfo?.tourName ?? ""}
-        required
-        error={addError && tourInfo?.tourName === ""}
-        onChange={(e) => dispatch(setTourField({ tourName: e.target.value }))}
-      />
       <Grid container justifyContent={"space-between"}>
-        <Grid item md={5.6}>
+        <Grid item xs={5.2}>
+          <TextField
+            placeholder={"Название тура"}
+            value={tourInfo?.tourName ?? ""}
+            required
+            error={addError && tourInfo?.tourName === ""}
+            sx={{ marginBottom: "15px" }}
+            onChange={(e) =>
+              dispatch(setTourField({ tourName: e.target.value }))
+            }
+          />
           <AddTourImage
             images={images}
             setImage={setImage}

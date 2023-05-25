@@ -6,25 +6,10 @@ import { Container, ThemeProvider, Box } from "@mui/material";
 import { mainThemes } from "./config/MUI/themes/mainTheme/mainTheme";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
-import {
-  AdminPage,
-  Authorization,
-  CreatorLk,
-  NotificationsPage,
-  PaymentSettingsPage,
-  StatisticPage,
-  TourCalendarPage,
-  TouristLk,
-  TourListPage,
-  AddTourPage,
-  StartPage,
-  EditCreatorInfoPage,
-  EditTouristInfoPage,
-} from "./pages";
 
 import { useDispatch } from "react-redux";
 import TourPage from "./pages/TourPage/TourPage";
-import { useEffect } from "react";
+import { useEffect, Suspense, lazy } from "react";
 import { getUserInfo } from "./API/commonAPI";
 import { setUserInfo } from "./redux/UserInfo/UserInfoReducer";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
@@ -34,6 +19,72 @@ import { useCookies } from "react-cookie";
 import HelpButton from "./components/HelpButton/HelpButton";
 import ErrorReportModal from "./components/Modals/ErrorReportModal/ErrorReportModal";
 import SuccessMessageSendModal from "./components/Modals/SuccessMessageSendModal/SuccessMessageSendModal";
+
+const AdminPage = lazy(() =>
+  import("./pages/AdminPage/AdminPage").then(({ default: AdminPage }) => ({
+    default: AdminPage,
+  }))
+);
+const Authorization = lazy(() =>
+  import("./pages/Authorization/Authorization").then(
+    ({ default: Authorization }) => ({ default: Authorization })
+  )
+);
+const CreatorLk = lazy(() =>
+  import("./pages/CreatorLk/CreatorLk").then(({ default: CreatorLk }) => ({
+    default: CreatorLk,
+  }))
+);
+const NotificationsPage = lazy(() =>
+  import("./pages/NotificationsPage/NotificationsPage").then(
+    ({ default: NotificationsPage }) => ({ default: NotificationsPage })
+  )
+);
+const PaymentSettingsPage = lazy(() =>
+  import("./pages/PaymentSettingsPage/PaymentSettingsPage").then(
+    ({ default: PaymentSettingsPage }) => ({ default: PaymentSettingsPage })
+  )
+);
+const StatisticPage = lazy(() =>
+  import("./pages/StatisticPage/StatisticPage").then(
+    ({ default: StatisticPage }) => ({ default: StatisticPage })
+  )
+);
+const TourCalendarPage = lazy(() =>
+  import("./pages/TourCalendarPage/TourCalendarPage").then(
+    ({ default: TourCalendarPage }) => ({ default: TourCalendarPage })
+  )
+);
+const TouristLk = lazy(() =>
+  import("./pages/TouristLk/TouristLk").then(({ default: TouristLk }) => ({
+    default: TouristLk,
+  }))
+);
+const TourListPage = lazy(() =>
+  import("./pages/TourListPage/TourListPage").then(
+    ({ default: TourListPage }) => ({ default: TourListPage })
+  )
+);
+const AddTourPage = lazy(() =>
+  import("./pages/AddTourPage/AddTourPage").then(
+    ({ default: AddTourPage }) => ({ default: AddTourPage })
+  )
+);
+const StartPage = lazy(() =>
+  import("./pages/StartPage/StartPage").then(({ default: StartPage }) => ({
+    default: StartPage,
+  }))
+);
+const EditCreatorInfoPage = lazy(() =>
+  import("./pages/EditCreatorInfoPage/EditCreatorInfoPage").then(
+    ({ default: EditCreatorInfoPage }) => ({ default: EditCreatorInfoPage })
+  )
+);
+const EditTouristInfoPage = lazy(() =>
+  import("./pages/EditTouristInfoPage/EditTouristInfoPage").then(
+    ({ default: EditTouristInfoPage }) => ({ default: EditTouristInfoPage })
+  )
+);
 
 function App() {
   const [cookies] = useCookies([TOKEN, REFRESH_TOKEN, BAN_STATUS, USER_ROLE]);
@@ -52,96 +103,97 @@ function App() {
     <BrowserRouter>
       <ThemeProvider theme={mainThemes}>
         <Header />
-
-        <Container sx={{ p: "35px 0 70px 0" }}>
-          <Routes>
-            <Route
-              path={"/creator/lk"}
-              element={
-                <ProtectedRoute>
-                  <CreatorLk />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path={"/creator/lk/editInfo"}
-              element={
-                <ProtectedRoute>
-                  <EditCreatorInfoPage />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path={"/tourist/lk/editInfo"}
-              element={
-                <ProtectedRoute>
-                  <EditTouristInfoPage />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path={"/creator/addTour"}
-              element={
-                <ProtectedRoute>
-                  <AddTourPage isEditing={false} />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path={"/creator/editTour/:tourId"}
-              element={
-                <ProtectedRoute>
-                  <AddTourPage isEditing />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path={"/creator/notifications"}
-              element={
-                <ProtectedRoute>
-                  <NotificationsPage />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path={"/creator/payment"}
-              element={
-                <ProtectedRoute>
-                  <PaymentSettingsPage />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path={"/creator/stats"}
-              element={
-                <ProtectedRoute>
-                  <StatisticPage />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path={"/creator/calendar"}
-              element={
-                <ProtectedRoute>
-                  <TourCalendarPage />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path={"/tourist/lk"}
-              element={
-                <ProtectedRoute>
-                  <TouristLk />
-                </ProtectedRoute>
-              }
-            />
-            <Route path={"/"} element={<StartPage />} />
-            <Route path={"/admin/*"} element={<AdminPage />} />
-            <Route path={"/auth"} element={<Authorization />} />
-            <Route path={"/tours/all"} element={<TourListPage />} />
-            <Route path={"/tours/tour/:tourId"} element={<TourPage />} />
-          </Routes>
-        </Container>
+        <Suspense>
+          <Container sx={{ p: "35px 0 70px 0" }}>
+            <Routes>
+              <Route
+                path={"/creator/lk"}
+                element={
+                  <ProtectedRoute>
+                    <CreatorLk />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path={"/creator/lk/editInfo"}
+                element={
+                  <ProtectedRoute>
+                    <EditCreatorInfoPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path={"/tourist/lk/editInfo"}
+                element={
+                  <ProtectedRoute>
+                    <EditTouristInfoPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path={"/creator/addTour"}
+                element={
+                  <ProtectedRoute>
+                    <AddTourPage isEditing={false} />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path={"/creator/editTour/:tourId"}
+                element={
+                  <ProtectedRoute>
+                    <AddTourPage isEditing />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path={"/creator/notifications"}
+                element={
+                  <ProtectedRoute>
+                    <NotificationsPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path={"/creator/payment"}
+                element={
+                  <ProtectedRoute>
+                    <PaymentSettingsPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path={"/creator/stats"}
+                element={
+                  <ProtectedRoute>
+                    <StatisticPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path={"/creator/calendar"}
+                element={
+                  <ProtectedRoute>
+                    <TourCalendarPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path={"/tourist/lk"}
+                element={
+                  <ProtectedRoute>
+                    <TouristLk />
+                  </ProtectedRoute>
+                }
+              />
+              <Route path={"/"} element={<StartPage />} />
+              <Route path={"/admin/*"} element={<AdminPage />} />
+              <Route path={"/auth"} element={<Authorization />} />
+              <Route path={"/tours/all"} element={<TourListPage />} />
+              <Route path={"/tours/tour/:tourId"} element={<TourPage />} />
+            </Routes>
+          </Container>
+        </Suspense>
         <Box sx={{ position: "fixed", bottom: "50px", right: "50px" }}>
           <HelpButton />
         </Box>

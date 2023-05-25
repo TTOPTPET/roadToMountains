@@ -103,10 +103,10 @@ export const AdminComponent: FC<IAdminComponent> = (props: IAdminComponent) => {
           width={mobileWidth}
         >
           <Grid item className="tourist__name">
-            <Typography variant={"caption"}>{name}</Typography>
+            <Typography variant={"h6"}>{name}</Typography>
           </Grid>
           <Grid item className="tourist__contacts">
-            <Typography variant={"caption"}>Контакты:</Typography>
+            <Typography variant={"h6"}>Контакты:</Typography>
             <Stack direction={"row"} gap={2}>
               <Stack>
                 <Typography variant={"caption"}>Тел.</Typography>
@@ -119,7 +119,7 @@ export const AdminComponent: FC<IAdminComponent> = (props: IAdminComponent) => {
             </Stack>
           </Grid>
           <Grid item className="tourist__ban">
-            <Typography variant={"caption"}>Статус блокировки:</Typography>
+            <Typography variant={"h6"}>Статус блокировки:</Typography>
             {!banStatus ? (
               <Typography variant={"caption"}>Разблокирован</Typography>
             ) : (
@@ -176,7 +176,7 @@ export const AdminComponent: FC<IAdminComponent> = (props: IAdminComponent) => {
             </Stack>
           </Grid>
           <Grid item className="ban__status">
-            <Typography variant={"caption"}>Статус блокировки:</Typography>
+            <Typography variant={"h6"}>Статус блокировки:</Typography>
             {!banStatus ? (
               <Typography variant={"caption"}>Разблокирован</Typography>
             ) : (
@@ -218,8 +218,8 @@ export const AdminComponent: FC<IAdminComponent> = (props: IAdminComponent) => {
             <AccordionSummary id="panel4bh-header">
               <Grid container padding={2} gap={4}>
                 <Grid item xs={5} className="user__info">
-                  <Typography variant={"h5"}>{name}</Typography>
-                  <Typography variant={"caption"}>Контакты:</Typography>
+                  <Typography variant={"h6"}>{name}</Typography>
+                  <Typography variant={"h6"}>Контакты:</Typography>
                   <Stack direction={"row"} gap={2}>
                     <Stack>
                       <Typography variant={"caption"}>Тел.</Typography>
@@ -234,12 +234,12 @@ export const AdminComponent: FC<IAdminComponent> = (props: IAdminComponent) => {
                 <Grid item xs={6} className="problem__info">
                   <Stack direction={"row"} gap={2}>
                     <Stack>
-                      <Typography variant={"h5"}>Тип:</Typography>
-                      <Typography variant={"h5"}>Статус:</Typography>
+                      <Typography variant={"h6"}>Тип:</Typography>
+                      <Typography variant={"h6"}>Статус:</Typography>
                     </Stack>
                     <Stack>
-                      <Typography variant={"h5"}>{typeMessage}</Typography>
-                      <Typography variant={"h5"}>
+                      <Typography variant={"h6"}>{typeMessage}</Typography>
+                      <Typography variant={"h6"}>
                         {getMessageStatus(statusMessage)}
                       </Typography>
                     </Stack>
@@ -308,7 +308,7 @@ export const AdminComponent: FC<IAdminComponent> = (props: IAdminComponent) => {
         >
           <Grid container justifyContent={"space-between"}>
             <Grid item xs={5.5} className="creator__info">
-              <Typography variant={"h5"}>{name}</Typography>
+              <Typography variant={"h6"}>{name}</Typography>
               <Stack
                 direction={"row"}
                 flexWrap={"wrap"}
@@ -327,9 +327,7 @@ export const AdminComponent: FC<IAdminComponent> = (props: IAdminComponent) => {
                   </Typography>
                 </Stack>
                 <Stack direction={"row"} mt={4}>
-                  <Typography variant={"caption"}>
-                    Статус блокировки:
-                  </Typography>
+                  <Typography variant={"h6"}>Статус блокировки:</Typography>
                   <Typography variant={"caption"} ml={2}>
                     {!banStatus ? "Разблокирован" : "Заблокирован"}
                   </Typography>
@@ -339,7 +337,7 @@ export const AdminComponent: FC<IAdminComponent> = (props: IAdminComponent) => {
             <Grid
               container
               item
-              xs={6}
+              xs={6.2}
               gap={1}
               justifyContent={"center"}
               marginY={"auto"}
@@ -397,10 +395,10 @@ export const AdminComponent: FC<IAdminComponent> = (props: IAdminComponent) => {
           padding={3}
         >
           <Grid item xs={4} className="ban__user_name">
-            <Typography variant={"h5"}>{name}</Typography>
+            <Typography variant={"h6"}>{name}</Typography>
           </Grid>
           <Grid item xs={4} className="ban__user_info">
-            <Typography variant={"caption"}>Контакты:</Typography>
+            <Typography variant={"h6"}>Контакты:</Typography>
             <Stack direction={"row"} gap={2}>
               <Stack>
                 <Typography variant={"caption"}>Тел.</Typography>
@@ -413,7 +411,7 @@ export const AdminComponent: FC<IAdminComponent> = (props: IAdminComponent) => {
             </Stack>
           </Grid>
           <Grid item xs={4} className="ban__status">
-            <Typography variant={"caption"}>Статус блокировки:</Typography>
+            <Typography variant={"h6"}>Статус блокировки:</Typography>
             {!banStatus ? (
               <Typography variant={"caption"}>Разблокирован</Typography>
             ) : (
