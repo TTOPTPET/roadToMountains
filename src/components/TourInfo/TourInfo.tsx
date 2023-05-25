@@ -267,7 +267,7 @@ export const TourInfo: FC<ITourInfoProps> = ({
       <Typography variant={"h5"} mt={5}>
         Маршрут
       </Typography>
-      {tourInfo?.mapPoints.length === 0 ? (
+      {tourInfo?.mapPoints && tourInfo?.mapPoints.length === 0 ? (
         <Box sx={{ width: "100%", position: "relative" }}>
           <Skeleton
             variant="rounded"
