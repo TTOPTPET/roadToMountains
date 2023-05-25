@@ -11,7 +11,7 @@ type Props = {
   height: number | string;
   accessType?: "insert" | "observe";
   positions: [number, number][];
-  setPositions?: Dispatch<SetStateAction<[number, number][]>>;
+  setPositions?: (positions: [number, number][]) => void;
   mapCenter?: [number, number];
 };
 
@@ -44,14 +44,12 @@ export default function MapLeaflet({
             cursor: "pointer",
           }}
           onClick={(e) => {
-            setPositions(() => {
-              if (positions.length) {
-                console.log("pos", positions, positions.length);
-                return positions.slice(0, positions.length - 1);
-              } else {
-                return positions;
-              }
-            });
+            if (positions.length) {
+              console.log("pos", positions, positions.length);
+              setPositions(positions.slice(0, positions.length - 1));
+            } else {
+              setPositions(positions);
+            }
           }}
         >
           <img

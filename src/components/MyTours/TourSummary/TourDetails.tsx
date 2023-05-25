@@ -7,6 +7,7 @@ import { ITourBookingDate } from "../../../models/tourModels/ITourBookingDate";
 import { TourDetailsType } from "./tourDetailsType/tourDetailsType";
 import { useDispatch } from "react-redux";
 import { setModalActive } from "../../../redux/Modal/ModalReducer";
+import MapLeaflet from "../../MapLeaflet/MapLeaflet";
 
 interface ITourDetailsProps {
   record: TourDetailsType;
@@ -170,6 +171,14 @@ export const TourDetails: FC<ITourDetailsProps> = ({
           <Typography variant={"caption"}>
             {freeTagConverter(record)}
           </Typography>
+          <Typography variant={"h5"}>Маршрут</Typography>
+          <MapLeaflet
+            width={"100%"}
+            height={"330px"}
+            accessType="observe"
+            mapCenter={record?.mapPoints[0] ?? undefined}
+            positions={record?.mapPoints}
+          />
         </Stack>
       );
     default:
