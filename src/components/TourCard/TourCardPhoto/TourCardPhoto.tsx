@@ -9,7 +9,6 @@ import {
 import { LightStyledTooltip } from "../../../config/MUI/styledComponents/StyledTooltip";
 
 import cancelIcon from "../../../media/ban-status-icon.svg";
-import cardbg from "../../../media/cardbg.png";
 import noPhoto from "../../../media/noPhoto.png";
 
 import { ITour } from "../../../models/tourCardModel/ITour";
@@ -87,10 +86,10 @@ function TourCardPhoto({ tour, tourCardType }: TourCardProps) {
                   className="tour-card__photo-banStatus-wrapper"
                   sx={{
                     position: "absolute",
-                    top: 4,
-                    left: 4,
-                    width: "50px",
-                    height: "50px",
+                    top: 15,
+                    left: 15,
+                    width: { lg: "40px", md: "35px", sm: "30px", xs: "30px" },
+                    height: { lg: "40px", md: "35px", sm: "30px", xs: "30px" },
                     borderRadius: "100%",
                     bgcolor: lightTurquoiseColor,
                     zIndex: "5",
@@ -101,7 +100,7 @@ function TourCardPhoto({ tour, tourCardType }: TourCardProps) {
                     src={cancelIcon}
                     alt="cancel icon"
                     style={{
-                      width: "40px",
+                      width: "100%",
                       zIndex: "10",
                       position: "absolute",
                       top: "50%",

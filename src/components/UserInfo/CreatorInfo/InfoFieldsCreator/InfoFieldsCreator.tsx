@@ -32,12 +32,26 @@ function InfoFieldsCreator({ creatorInfo }: fieldsCreatorProps) {
         return (
           <Box
             className="userInfo__data"
-            sx={{ display: "flex", gap: "50px", mt: "21px" }}
+            sx={{
+              display: "flex",
+              gap: {
+                lg: "50px",
+                md: "20px",
+                sm: "20px",
+                xs: "20px",
+              },
+              mt: "21px",
+            }}
           >
             <Box
               className="userInfo__data-titles"
               sx={{
-                width: "280px",
+                width: {
+                  lg: "265px",
+                  md: "200px",
+                  sm: "200px",
+                  xs: "160px",
+                },
                 display: "flex",
                 flexDirection: "column",
                 gap: "5px",
@@ -81,11 +95,27 @@ function InfoFieldsCreator({ creatorInfo }: fieldsCreatorProps) {
           "adressIP",
         ];
         return (
-          <Box sx={{ display: "flex", gap: "50px", mt: "21px" }}>
+          <Box
+            sx={{
+              display: "flex",
+              gap: {
+                lg: "50px",
+                md: "20px",
+                sm: "20px",
+                xs: "20px",
+              },
+              mt: "21px",
+            }}
+          >
             <Box
               className="userInfo__data-titles"
               sx={{
-                width: "280px",
+                width: {
+                  lg: "265px",
+                  md: "200px",
+                  sm: "200px",
+                  xs: "160px",
+                },
                 display: "flex",
                 flexDirection: "column",
                 gap: "5px",
@@ -128,11 +158,27 @@ function InfoFieldsCreator({ creatorInfo }: fieldsCreatorProps) {
           "adressSELF",
         ];
         return (
-          <Box sx={{ display: "flex", gap: "50px", mt: "21px" }}>
+          <Box
+            sx={{
+              display: "flex",
+              gap: {
+                lg: "50px",
+                md: "20px",
+                sm: "20px",
+                xs: "20px",
+              },
+              mt: "21px",
+            }}
+          >
             <Box
               className="userInfo__data-titles"
               sx={{
-                width: "280px",
+                width: {
+                  lg: "265px",
+                  md: "200px",
+                  sm: "200px",
+                  xs: "160px",
+                },
                 display: "flex",
                 flexDirection: "column",
                 gap: "5px",

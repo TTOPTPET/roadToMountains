@@ -98,12 +98,17 @@ function TourListPage() {
         setTourList={setTourList}
       />
       <Sorter tours={tourList} setTours={setTourList} />
-      <Grid container spacing={2} justifyContent={"flex-start"} marginTop={1}>
+      <Grid
+        container
+        spacing={2}
+        justifyContent={{ sm: "flex-start", xs: "center" }}
+        marginTop={1}
+      >
         {tourList &&
           tourList
             .filter((tour) => tour.banStatus !== true)
             .map((tour, index) => (
-              <Grid key={index} item lg={3} md={3} sm={4} xs={12}>
+              <Grid key={index} item lg={3} md={3} sm={4} xs={9}>
                 <TourCard
                   key={index}
                   tour={tour}
