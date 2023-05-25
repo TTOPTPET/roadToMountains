@@ -1,4 +1,10 @@
-import { Box, Typography, Button } from "@mui/material";
+import {
+  Box,
+  Typography,
+  Button,
+  useTheme,
+  useMediaQuery,
+} from "@mui/material";
 import { DarkStyledTooltip } from "../../../config/MUI/styledComponents/StyledTooltip";
 
 import { Link, useNavigate } from "react-router-dom";
@@ -50,6 +56,11 @@ function UserInfoHeader({
     USER_ROLE,
   ]);
 
+  const theme = useTheme();
+
+  const lessThenSmall = useMediaQuery(theme.breakpoints.down("sm"));
+  const lessThenMid = useMediaQuery(theme.breakpoints.down("md"));
+
   const navigate = useNavigate();
 
   return (
@@ -59,10 +70,16 @@ function UserInfoHeader({
         display: "flex",
         justifyContent: "space-between",
         alignItems: "flex-start",
+        position: "relative",
       }}
     >
       <Box className="userInfo__header-title-wrapper" sx={{ display: "flex" }}>
-        <Typography variant="h3">{title}</Typography>
+        <Typography
+          variant={lessThenSmall ? "h4" : "h3"}
+          sx={{ display: "flex", alignItems: "center" }}
+        >
+          {title}
+        </Typography>
         {userInfo &&
         userInfo?.typeUser !== UserType.tourist &&
         userInfo?.dataUser?.statusVerify === StatusVerify.verified ? (
@@ -71,11 +88,19 @@ function UserInfoHeader({
             arrow
             placement="bottom"
           >
-            <img
-              src={checked}
-              alt="checked verify"
-              style={{ marginLeft: "15px" }}
-            />
+            <Box
+              sx={{
+                marginLeft: { lg: "15px", md: "15px", sm: "30px", xs: "30px" },
+                width: { lg: "50px", md: "40px", sm: "40px", xs: "24px" },
+                height: { lg: "50px", md: "40px", sm: "40px", xs: "24px" },
+              }}
+            >
+              <img
+                src={checked}
+                alt="checked verify"
+                style={{ objectFit: "contain", width: "100%", height: "100%" }}
+              />
+            </Box>
           </DarkStyledTooltip>
         ) : userInfo &&
           userInfo?.typeUser !== UserType.tourist &&
@@ -85,11 +110,19 @@ function UserInfoHeader({
             arrow
             placement="bottom"
           >
-            <img
-              src={clock}
-              alt="send to check verify"
-              style={{ marginLeft: "15px" }}
-            />
+            <Box
+              sx={{
+                marginLeft: { lg: "15px", md: "15px", sm: "30px", xs: "30px" },
+                width: { lg: "50px", md: "40px", sm: "40px", xs: "24px" },
+                height: { lg: "50px", md: "40px", sm: "40px", xs: "24px" },
+              }}
+            >
+              <img
+                src={clock}
+                alt="send to check verify"
+                style={{ objectFit: "contain", width: "100%", height: "100%" }}
+              />
+            </Box>
           </DarkStyledTooltip>
         ) : userInfo &&
           userInfo?.typeUser !== UserType.tourist &&
@@ -99,11 +132,19 @@ function UserInfoHeader({
             arrow
             placement="bottom"
           >
-            <img
-              src={banIcon}
-              alt="alert icon"
-              style={{ marginLeft: "15px" }}
-            />
+            <Box
+              sx={{
+                marginLeft: { lg: "15px", md: "15px", sm: "30px", xs: "30px" },
+                width: { lg: "50px", md: "40px", sm: "40px", xs: "24px" },
+                height: { lg: "50px", md: "40px", sm: "40px", xs: "24px" },
+              }}
+            >
+              <img
+                src={banIcon}
+                alt="alert icon"
+                style={{ objectFit: "contain", width: "100%", height: "100%" }}
+              />
+            </Box>
           </DarkStyledTooltip>
         ) : userInfo &&
           userInfo?.typeUser !== UserType.tourist &&
@@ -113,7 +154,19 @@ function UserInfoHeader({
             arrow
             placement="bottom"
           >
-            <img src={alert} alt="alert icon" style={{ marginLeft: "15px" }} />
+            <Box
+              sx={{
+                marginLeft: { lg: "15px", md: "15px", sm: "30px", xs: "30px" },
+                width: { lg: "50px", md: "40px", sm: "40px", xs: "24px" },
+                height: { lg: "50px", md: "40px", sm: "40px", xs: "24px" },
+              }}
+            >
+              <img
+                src={alert}
+                alt="alert icon"
+                style={{ objectFit: "contain", width: "100%", height: "100%" }}
+              />
+            </Box>
           </DarkStyledTooltip>
         ) : null}
       </Box>
@@ -122,11 +175,14 @@ function UserInfoHeader({
           display: "flex",
           flexDirection: "column",
           alignItems: "flex-end",
+          position: lessThenMid ? "absolute" : "",
+          top: lessThenMid ? "45px" : null,
+          right: lessThenMid ? "0px" : null,
         }}
       >
         {userInfo && userInfo?.typeUser !== UserType.tourist && (
           <Button
-            sx={{ mb: "10px" }}
+            sx={{ mb: { lg: "10px", md: "5px", sm: "5px", xs: "5px" } }}
             onClick={() =>
               sendVerified(() =>
                 dispatch(
@@ -155,7 +211,7 @@ function UserInfoHeader({
         </Button>
         <Button
           variant="errorButton"
-          sx={{ mt: "10px" }}
+          sx={{ mt: { lg: "10px", md: "5px", sm: "5px", xs: "5px" } }}
           onClick={() => {
             logout();
             removeCookies(TOKEN, { path: "/" });

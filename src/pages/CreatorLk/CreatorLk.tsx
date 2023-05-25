@@ -37,7 +37,7 @@ function CreatorLk() {
     myTours && myTours.length ? (
       myTours?.map((tour, i) => {
         return (
-          <Grid key={i} item lg={3} md={3} sm={4} xs={12}>
+          <Grid key={i} item lg={3} md={3} sm={4} xs={9}>
             <TourCard
               tour={tour}
               key={tour.tourId}
@@ -117,24 +117,22 @@ function CreatorLk() {
         variant="h5"
         sx={{
           mb: { lg: "19px", md: "20px", sm: "10px", xs: "10px" },
-          mt: { lg: "30px", md: "50px", sm: "50px", xs: "30px" },
+          mt: "30px",
         }}
       >
         Мои туры
       </Typography>
-      <Grid container spacing={2} justifyContent={"flex-start"}>
-        <Grid item lg={3} md={3} sm={4} xs={12}>
+      <Grid
+        container
+        spacing={2}
+        justifyContent={{ sm: "flex-start", xs: "center" }}
+        alignItems={"center"}
+      >
+        <Grid item lg={3} md={3} sm={4} xs={9}>
           <AddTourButton />
         </Grid>
         {loadingStatus ? skeleton() : elements}
       </Grid>
-
-      {/* <Grid container spacing={4} columns={3}>
-        <Grid item md={1}>
-          <AddTourButton />
-        </Grid>
-        {loadingStatus ? skeleton() : elements}
-      </Grid> */}
     </>
   );
 }

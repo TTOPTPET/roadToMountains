@@ -30,7 +30,7 @@ export const setCreatorInfo = async (
       });
     }
 
-    formData.append("photo", resizedFile);
+    resizedFile && formData.append("photo", resizedFile);
     //Перемещение dataUser в корень
     const dataUser = copyDataUser?.dataUser;
     delete copyDataUser?.dataUser;

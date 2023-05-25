@@ -139,6 +139,9 @@ export const mainThemes = createTheme(breakpoints, {
           [breakpoints.breakpoints.down("md")]: {
             maxWidth: "600px !important",
           },
+          [breakpoints.breakpoints.down("sm")]: {
+            maxWidth: "300px !important",
+          },
         },
       },
     },
@@ -181,6 +184,9 @@ export const mainThemes = createTheme(breakpoints, {
             backgroundColor: lightTurquoiseColor,
             height: 70,
             borderRadius: 0,
+            [breakpoints.breakpoints.down("sm")]: {
+              height: "50px",
+            },
           },
         },
         {
@@ -208,8 +214,21 @@ export const mainThemes = createTheme(breakpoints, {
             justifyContent: "center",
             backgroundColor: darkTurquoiseColor,
             borderRadius: "50%",
+            padding: "0",
             boxShadow:
               "0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12)",
+            [breakpoints.breakpoints.down("lg")]: {
+              width: "100px",
+              height: "100px",
+            },
+            [breakpoints.breakpoints.down("md")]: {
+              width: "80px",
+              height: "80px",
+            },
+            [breakpoints.breakpoints.down("sm")]: {
+              width: "50px",
+              height: "50px",
+            },
           },
         },
       ],
@@ -355,6 +374,10 @@ export const mainThemes = createTheme(breakpoints, {
           // "& > fieldset": {
           //   borderColor: lightTurquoiseColor,
           // },
+          [breakpoints.breakpoints.down("sm")]: {
+            height: "30px",
+            borderRadius: "20px",
+          },
         },
       },
     },
@@ -381,6 +404,16 @@ export const mainThemes = createTheme(breakpoints, {
               lineHeight: "20px",
               fontFamily: "Montserrat",
               fontWeight: "400",
+              [breakpoints.breakpoints.down("sm")]: {
+                fontSize: "10px",
+                lineHeight: "12px",
+              },
+            },
+            [breakpoints.breakpoints.down("sm")]: {
+              height: "30px",
+              borderRadius: "20px",
+              fontSize: "10px",
+              lineHeight: "12px",
             },
 
             "&::-webkit-outer-spin-button": {
@@ -403,6 +436,8 @@ export const mainThemes = createTheme(breakpoints, {
               "&:-webkit-autofill": {
                 WebkitBoxShadow: `0 0 0 1000px ${lightTurquoiseColor} inset`,
                 borderRadius: "30px",
+                fontSize: "10px",
+                lineHeight: "12px",
               },
             },
           },
@@ -446,6 +481,9 @@ export const mainThemes = createTheme(breakpoints, {
       styleOverrides: {
         root: {
           padding: "0 15px 0 12px !important ",
+          [breakpoints.breakpoints.down("sm")]: {
+            padding: "0 8px 0 6px !important ",
+          },
         },
       },
       variants: [

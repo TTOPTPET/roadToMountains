@@ -5,6 +5,8 @@ import {
   Typography,
   TextField,
   Button,
+  useTheme,
+  useMediaQuery,
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
@@ -36,6 +38,10 @@ const Header = () => {
     searchParamFromUrl.get("title") || ""
   );
 
+  const theme = useTheme();
+
+  const moreThenSmall = useMediaQuery(theme.breakpoints.up("sm"));
+
   let location = useLocation();
 
   const userInfo = useSelector((state: RootState) => state.userInfo.userInfo);
@@ -57,6 +63,7 @@ const Header = () => {
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
+            padding: { sm: "0px 16px", xs: "0px" },
           }}
         >
           <Box
@@ -69,23 +76,26 @@ const Header = () => {
               gap: "10px",
               justifyContent: "flex-start",
               cursor: "pointer",
+              height: { sm: "50px", xs: "30px" },
             }}
             className="header__logo"
           >
             <img
-              style={{ height: "50px" }}
+              style={{ height: "100%" }}
               src={logo}
               alt="logo"
               className="logo-img"
             />
 
-            <Box sx={{ width: "70px" }}>
-              <Typography variant={"button"} className="logo-text">
-                Путь <br /> в Горы
-              </Typography>
-            </Box>
+            {moreThenSmall && (
+              <Box sx={{ width: "70px" }}>
+                <Typography variant={"button"} className="logo-text">
+                  Путь <br /> в Горы
+                </Typography>
+              </Box>
+            )}
           </Box>
-          <Box sx={{ m: "0 30px", width: "100%" }}>
+          <Box sx={{ m: { sm: "0 30px", xs: "0 10px" }, width: "100%" }}>
             <TextField
               placeholder="Найти тур"
               color="secondary"
@@ -111,17 +121,19 @@ const Header = () => {
               >
                 {userInfo.typeUser === UserType.tourist ? (
                   <Box component={Link} to="/tourist/lk">
-                    <img
-                      style={{ height: "30px" }}
-                      src={accIcon}
-                      alt="accIcon"
-                    />
+                    <Box sx={{ height: { sm: "30px", xs: "20px" } }}>
+                      <img
+                        style={{ height: "100%" }}
+                        src={accIcon}
+                        alt="accIcon"
+                      />
+                    </Box>
                   </Box>
                 ) : (
                   <Box
                     sx={{
                       display: "flex",
-                      gap: "22px",
+                      gap: { sx: "22px", xs: "7px" },
                       alignItems: "center",
                     }}
                   >
@@ -135,11 +147,13 @@ const Header = () => {
                       component={Link}
                       to="/creator/calendar"
                     >
-                      <img
-                        style={{ height: "30px" }}
-                        src={calendarIcon}
-                        alt="calendarIcon"
-                      />
+                      <Box sx={{ height: { sm: "30px", xs: "20px" } }}>
+                        <img
+                          style={{ height: "100%" }}
+                          src={calendarIcon}
+                          alt="calendarIcon"
+                        />
+                      </Box>
                       <Typography variant="caption">Календарь</Typography>
                     </Box>
                     <Box
@@ -152,11 +166,13 @@ const Header = () => {
                       component={Link}
                       to="/creator/lk"
                     >
-                      <img
-                        src={accIcon}
-                        alt="accIcon"
-                        style={{ height: "30px" }}
-                      />
+                      <Box sx={{ height: { sm: "30px", xs: "20px" } }}>
+                        <img
+                          style={{ height: "100%" }}
+                          src={accIcon}
+                          alt="accIcon"
+                        />
+                      </Box>
                       <Typography variant="caption" sx={{ mt: "1px" }}>
                         Профиль
                       </Typography>

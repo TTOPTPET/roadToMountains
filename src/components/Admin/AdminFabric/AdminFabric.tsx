@@ -134,6 +134,7 @@ export const AdminComponent: FC<IAdminComponent> = (props: IAdminComponent) => {
           >
             <Button
               variant="text"
+              sx={{ fontSize: "18px" }}
               onClick={() => handlerUserBanClick(touristId)}
             >
               Переключить статус блокировки
@@ -191,6 +192,7 @@ export const AdminComponent: FC<IAdminComponent> = (props: IAdminComponent) => {
           >
             <Button
               variant={"text"}
+              sx={{ fontSize: "18px" }}
               onClick={() => handlerTourBanClick(tourId)}
             >
               Переключить статус блокировки
@@ -259,7 +261,7 @@ export const AdminComponent: FC<IAdminComponent> = (props: IAdminComponent) => {
                   <Stack gap={2}>
                     <Button
                       variant={"text"}
-                      sx={{ width: "100%" }}
+                      sx={{ width: "100%", fontSize: "18px" }}
                       onClick={() =>
                         handlerMessageStatusClick({ messageId, statusMessage })
                       }
@@ -267,7 +269,7 @@ export const AdminComponent: FC<IAdminComponent> = (props: IAdminComponent) => {
                       Переключить статус заявки
                     </Button>
                     <Button
-                      sx={{ width: "100%" }}
+                      sx={{ width: "100%", fontSize: "18px" }}
                       onClick={() => setExpanded(!expanded)}
                     >
                       {!expanded ? (
@@ -349,13 +351,13 @@ export const AdminComponent: FC<IAdminComponent> = (props: IAdminComponent) => {
                 {dayjs(changeVerifyDate).format("D MMMM YYYY")}
               </Typography>
               <Button
-                sx={{ width: "100%" }}
+                sx={{ width: "100%", fontSize: "18px" }}
                 onClick={() => handlerVerifyStatusClick(creatorId)}
               >
                 Переключить статус верификации
               </Button>
               <Button
-                sx={{ width: "100%" }}
+                sx={{ width: "100%", fontSize: "18px" }}
                 onClick={() => handlerUserBanClick(creatorId)}
               >
                 Переключить статус блокировки
@@ -368,7 +370,7 @@ export const AdminComponent: FC<IAdminComponent> = (props: IAdminComponent) => {
                 <Stack direction={"row"} key={index} alignItems={"center"}>
                   <Button
                     variant="fileInput"
-                    sx={{ width: 30 }}
+                    sx={{ width: 30, fontSize: "18px" }}
                     onClick={() => handlerDownloadClick(document.path)}
                   >
                     <SvgIcon scale={0.1}>
@@ -421,7 +423,7 @@ export const AdminComponent: FC<IAdminComponent> = (props: IAdminComponent) => {
           <Grid item xs={6} marginY={"auto"} className="user__ban" mt={2}>
             <Button
               variant={"text"}
-              sx={{ width: "100%" }}
+              sx={{ width: "100%", fontSize: "18px" }}
               onClick={() => handlerUserBanClick(adminId)}
             >
               {" "}

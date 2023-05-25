@@ -92,25 +92,46 @@ function UserInfo({ header, fields, submitFuntion }: UserInfoProps) {
                 sx={{
                   mt:
                     userInfo && userInfo?.typeUser === UserType.tourist
-                      ? "50px"
-                      : "20px",
+                      ? { lg: "50px", md: "20px", sm: "20px", xs: "20px" }
+                      : { lg: "0px", md: "0px", sm: "20px", xs: "20px" },
                   display: "flex",
+                  flexDirection: { sm: "row", xs: "column" },
                 }}
               >
-                <Box className="userInfo__content-avatar">
+                <Box
+                  className="userInfo__content-avatar"
+                  sx={{ mb: { sm: "0", xs: "10px" } }}
+                >
                   <Paper variant="avatarBg">
                     {userInfo && userInfo?.photo ? (
                       <MuiAvatar
                         src={baseUrl + "/" + userInfo?.photo}
                         alt="user avatar"
-                        sx={{ width: "140px", height: "140px" }}
+                        sx={{
+                          width: {
+                            lg: "140px",
+                            md: "100px",
+                            sm: "80px",
+                            xs: "50px",
+                          },
+                          height: {
+                            lg: "140px",
+                            md: "100px",
+                            sm: "80px",
+                            xs: "50px",
+                          },
+                        }}
                       />
                     ) : (
                       <img src={userPhoto} alt="person icon" />
                     )}
                   </Paper>
                 </Box>
-                <Box sx={{ ml: "30px" }}>
+                <Box
+                  sx={{
+                    ml: { lg: "30px", md: "30px", sm: "20px", xs: "0px" },
+                  }}
+                >
                   <Box>
                     <Box className="userInfo_title">
                       <Typography variant="h5">
@@ -134,8 +155,13 @@ function UserInfo({ header, fields, submitFuntion }: UserInfoProps) {
                         gap:
                           userInfo.typeUser === UserType.tourist
                             ? "10px"
-                            : "50px",
-                        mt: "10px",
+                            : {
+                                lg: "50px",
+                                md: "20px",
+                                sm: "20px",
+                                xs: "20px",
+                              },
+                        mt: { lg: "10px", md: "20px", sm: "20px", xs: "20px" },
                       }}
                     >
                       <Box
@@ -146,7 +172,12 @@ function UserInfo({ header, fields, submitFuntion }: UserInfoProps) {
                           width:
                             userInfo.typeUser === UserType.tourist
                               ? "190px"
-                              : "280px",
+                              : {
+                                  lg: "265px",
+                                  md: "200px",
+                                  sm: "200px",
+                                  xs: "160px",
+                                },
                           gap: "5px",
                         }}
                       >
