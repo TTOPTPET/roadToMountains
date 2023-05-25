@@ -91,8 +91,8 @@ export const changeMessageStatus = async (
     return;
   }
   try {
-    let respone = await axios.put(adminUrl + "/errorMessage/changeStatus", {
-      params,
+    let respone = await axios.get(adminUrl + "/errorMessage/changeStatus", {
+      params: params,
     });
     successCallback(respone?.data);
   } catch (e) {

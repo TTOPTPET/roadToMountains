@@ -255,7 +255,7 @@ export const AdminComponent: FC<IAdminComponent> = (props: IAdminComponent) => {
                     </>
                   )}
                 </Grid>
-                <Grid item xs={5.5} className="user__ban">
+                <Grid item xs={7} className="user__ban">
                   <Stack gap={2}>
                     <Button
                       variant={"text"}
