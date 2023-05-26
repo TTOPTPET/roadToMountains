@@ -85,7 +85,7 @@ function CreatorDocumentsList({
                 <Box
                   className="documents__list-noDocument-text"
                   sx={{
-                    height: "100px",
+                    height: { lg: "100px", sm: "75px", xs: "50px" },
                     display: "flex",
                     alignItems: "center",
                   }}

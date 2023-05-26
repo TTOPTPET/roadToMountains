@@ -1,4 +1,10 @@
-import { Stack, Typography, Button } from "@mui/material";
+import {
+  Stack,
+  Typography,
+  Button,
+  useTheme,
+  useMediaQuery,
+} from "@mui/material";
 import dayjs from "dayjs";
 import { FC } from "react";
 import { cancelBooking } from "../../../API/touristAPI/cancelBooking";
@@ -21,6 +27,10 @@ export const TourDetails: FC<ITourDetailsProps> = ({
   selectedDate,
 }) => {
   const dispatch = useDispatch();
+
+  const theme = useTheme();
+
+  const lessThenSmall = useMediaQuery(theme.breakpoints.down("sm"));
 
   const freeTagConverter = (recordValue: TourDetailsType) => {
     switch (recordValue.type) {
@@ -45,7 +55,7 @@ export const TourDetails: FC<ITourDetailsProps> = ({
   switch (record.type) {
     case "record":
       return (
-        <Stack padding={3} gap={1}>
+        <Stack padding={lessThenSmall ? 1 : 3} gap={1}>
           <Stack
             justifyContent={"space-between"}
             flexWrap={"wrap"}
@@ -53,16 +63,18 @@ export const TourDetails: FC<ITourDetailsProps> = ({
             direction={"row"}
           >
             <Typography variant={"h6"}>Количество человек</Typography>
-            <Button
-              disabled={
-                record.bookingStatus.past || record.bookingStatus.cancellation
-                  ? true
-                  : false
-              }
-              onClick={() => cancelBooking(record.bookingId, undefined)}
-            >
-              Отменить бронирование
-            </Button>
+            {!lessThenSmall && (
+              <Button
+                disabled={
+                  record.bookingStatus.past || record.bookingStatus.cancellation
+                    ? true
+                    : false
+                }
+                onClick={() => cancelBooking(record.bookingId, undefined)}
+              >
+                Отменить бронирование
+              </Button>
+            )}
           </Stack>
           <Stack
             justifyContent={"space-between"}
@@ -73,12 +85,14 @@ export const TourDetails: FC<ITourDetailsProps> = ({
             <Typography variant={"caption"}>
               {record?.bookingNumber ?? 0} человека
             </Typography>
-            <Typography variant={"caption"}>
-              до{" "}
-              {dayjs(record.tourDate.from)
-                .subtract(1, "day")
-                .format("D MMMM YYYY")}
-            </Typography>
+            {!lessThenSmall && (
+              <Typography variant={"caption"}>
+                до{" "}
+                {dayjs(record.tourDate.from)
+                  .subtract(1, "day")
+                  .format("D MMMM YYYY")}
+              </Typography>
+            )}
           </Stack>
           <Typography variant={"h6"}>Проживание</Typography>
           <Typography variant={"caption"}>
@@ -107,19 +121,21 @@ export const TourDetails: FC<ITourDetailsProps> = ({
             <Typography variant={"caption"}>
               {record.contactInformation}
             </Typography>
-            <Button
-              onClick={() => {
-                console.log(true);
-                dispatch(
-                  setModalActive("errorReportModal", {
-                    tour: true,
-                    record: record,
-                  })
-                );
-              }}
-            >
-              Сообщить о проблеме
-            </Button>
+            {!lessThenSmall && (
+              <Button
+                onClick={() => {
+                  console.log(true);
+                  dispatch(
+                    setModalActive("errorReportModal", {
+                      tour: true,
+                      record: record,
+                    })
+                  );
+                }}
+              >
+                Сообщить о проблеме
+              </Button>
+            )}
           </Stack>
           <Typography variant={"h6"}>Сбор</Typography>
           <Typography variant={"caption"}>
@@ -131,6 +147,44 @@ export const TourDetails: FC<ITourDetailsProps> = ({
           <Typography variant={"caption"}>
             {freeTagConverter(record)}
           </Typography>
+          {lessThenSmall && (
+            <Stack width={"200px"} gap="5px" margin={"0 auto"}>
+              <Button
+                sx={{ width: "100%" }}
+                onClick={() => {
+                  console.log(true);
+                  dispatch(
+                    setModalActive("errorReportModal", {
+                      tour: true,
+                      record: record,
+                    })
+                  );
+                }}
+              >
+                Сообщить о проблеме
+              </Button>
+              <Stack gap="3px" alignItems={"flex-end"}>
+                <Button
+                  sx={{ width: "100%" }}
+                  disabled={
+                    record.bookingStatus.past ||
+                    record.bookingStatus.cancellation
+                      ? true
+                      : false
+                  }
+                  onClick={() => cancelBooking(record.bookingId, undefined)}
+                >
+                  Отменить бронирование
+                </Button>
+                <Typography variant={"caption"}>
+                  до{" "}
+                  {dayjs(record.tourDate.from)
+                    .subtract(1, "day")
+                    .format("D MMMM YYYY")}
+                </Typography>
+              </Stack>
+            </Stack>
+          )}
         </Stack>
       );
 

@@ -140,7 +140,7 @@ export const mainThemes = createTheme(breakpoints, {
             maxWidth: "600px !important",
           },
           [breakpoints.breakpoints.down("sm")]: {
-            maxWidth: "300px !important",
+            maxWidth: "260px !important",
           },
         },
       },
@@ -593,6 +593,11 @@ export const mainThemes = createTheme(breakpoints, {
       styleOverrides: {
         root: {
           borderRadius: 30,
+          [breakpoints.breakpoints.down("lg")]: {
+            borderRadius: 20,
+            minHeight: "30px",
+            height: "30px",
+          },
         },
         indicator: {
           visibility: "hidden",
@@ -608,6 +613,10 @@ export const mainThemes = createTheme(breakpoints, {
           "&.Mui-selected": {
             backgroundColor: darkTurquoiseColor,
             color: whiteColor,
+          },
+          [breakpoints.breakpoints.down("lg")]: {
+            minHeight: "30px",
+            padding: "5px 15px",
           },
         },
       },

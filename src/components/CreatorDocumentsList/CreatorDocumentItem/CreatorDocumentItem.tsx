@@ -26,7 +26,7 @@ function CreatorDocumentItem({
         display: "flex",
         flexDirection: "column",
         gap: "10px",
-        width: "100px",
+        width: { lg: "100px", sm: "75px", xs: "50px" },
         cursor: variant !== "editInfo" && "pointer",
       }}
       onClick={() => {
@@ -38,24 +38,26 @@ function CreatorDocumentItem({
           elevation={0}
           sx={{
             backgroundColor: lightTurquoiseColor,
-            borderRadius: "30px",
+            borderRadius: { lg: "30px", sm: "25px", xs: "15px" },
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            width: "100px",
-            height: "100px",
+            padding: "0",
+            width: { lg: "100px", sm: "75px", xs: "50px" },
+            height: { lg: "100px", sm: "75px", xs: "50px" },
             position: "relative",
           }}
         >
           {variant === "editInfo" && (
-            <img
+            <Box
+              component={"img"}
               src={deleteIcon}
               alt="delete button"
-              style={{
+              sx={{
                 position: "absolute",
-                top: "12px",
-                right: "12px",
-                width: "16px",
+                top: { lg: "12px", sm: "10px", xs: "7px" },
+                right: { lg: "12px", sm: "10px", xs: "7px" },
+                width: { lg: "16px", sm: "12px", xs: "8px" },
                 cursor: "pointer",
               }}
               onClick={() => {
@@ -63,7 +65,17 @@ function CreatorDocumentItem({
               }}
             />
           )}
-          <img src={fileIcon} alt="file icon" />
+          <Box
+            sx={{
+              width: { lg: "50px", sm: "35px", xs: "20px" },
+            }}
+          >
+            <img
+              src={fileIcon}
+              alt="file icon"
+              style={{ objectFit: "contain", width: "100%" }}
+            />
+          </Box>
         </Paper>
       </Box>
       <Typography
