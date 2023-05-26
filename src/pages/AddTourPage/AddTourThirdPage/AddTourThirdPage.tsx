@@ -20,7 +20,7 @@ export const AddTourThirdPage: FC<IAddTourThirdPageProps> = ({
   return (
     <Stack gap={1}>
       <Typography variant={"h3"}>
-        {tourInfo?.tourName ?? "Название тура"}
+        {tourInfo?.tourName || "Название тура"}
       </Typography>
       <TourInfo
         images={images}

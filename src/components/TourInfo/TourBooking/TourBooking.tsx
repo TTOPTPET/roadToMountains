@@ -241,7 +241,7 @@ export const TourBooking: FC<ITourBookingProps> = ({
               }
             />
             <Typography variant={"caption"}>
-              Мест свободно: {selectedDate?.bookingNumber ?? 0}
+              Мест свободно: {selectedDate?.bookingNumber || 0}
             </Typography>
             {errSize && (
               <Typography
@@ -264,17 +264,17 @@ export const TourBooking: FC<ITourBookingProps> = ({
           padding={4}
         >
           <Typography variant={"h5"}>
-            {tourInfo?.tourName ?? "Название тура"}
+            {tourInfo?.tourName || "Название тура"}
           </Typography>
           <Typography variant={"caption"}>
             {"nearestDate" in tourInfo
-              ? (dayjs(selectedDate?.date?.from).format("D MMMM YYYY") ?? "") +
+              ? (dayjs(selectedDate?.date?.from).format("D MMMM YYYY") || "") +
                 " - " +
-                (dayjs(selectedDate?.date?.to).format("D MMMM YYYY") ?? "")
+                (dayjs(selectedDate?.date?.to).format("D MMMM YYYY") || "")
               : ""}
           </Typography>
           <Typography variant={"h5"} mt={2}>
-            {bookingData?.tourAmount ?? 0}₽
+            {bookingData?.tourAmount || 0}₽
           </Typography>
           <Typography variant={"caption"}>
             Оплатить бронирование необходимо в течение 3 часов

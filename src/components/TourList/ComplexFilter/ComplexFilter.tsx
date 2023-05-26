@@ -219,7 +219,7 @@ export const ComplexFilter: FC<IFilterProps> = ({
               max={maxPrice}
               marks={marks}
               value={[
-                searchData?.price?.from ?? 0,
+                searchData?.price?.from || 0,
                 searchData?.price?.to || maxPrice || 1000,
               ]}
               onChange={(e, value) =>
@@ -253,8 +253,8 @@ export const ComplexFilter: FC<IFilterProps> = ({
               max={120}
               marks={age}
               value={[
-                searchData?.recommendedAge?.from ?? 0,
-                searchData?.recommendedAge?.to ?? 120,
+                searchData?.recommendedAge?.from || 0,
+                searchData?.recommendedAge?.to || 120,
               ]}
               onChange={(_, value) =>
                 handleChangeField("recommendedAge", value as number[])

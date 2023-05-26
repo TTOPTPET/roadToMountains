@@ -138,18 +138,18 @@ const Header = () => {
                       alignItems: "center",
                     }}
                   >
-                    <Box
-                      sx={{
-                        display: "flex",
-                        flexDirection: "column",
-                        alignItems: "center",
-                        textDecoration: "none",
-                      }}
-                      component={Link}
-                      to="/creator/calendar"
-                    >
-                      {userInfo.typeUser === UserType.creator ? (
-                        <>
+                    {userInfo.typeUser === UserType.creator ? (
+                      <>
+                        <Box
+                          sx={{
+                            display: "flex",
+                            flexDirection: "column",
+                            alignItems: "center",
+                            textDecoration: "none",
+                          }}
+                          component={Link}
+                          to="/creator/calendar"
+                        >
                           <Box sx={{ height: { sm: "30px", xs: "20px" } }}>
                             <img
                               style={{ height: "100%" }}
@@ -158,20 +158,32 @@ const Header = () => {
                             />
                           </Box>
                           <Typography variant="caption">Календарь</Typography>
-                        </>
-                      ) : (
-                        <>
+                        </Box>
+                      </>
+                    ) : (
+                      <>
+                        <Box
+                          sx={{
+                            display: "flex",
+                            flexDirection: "column",
+                            alignItems: "center",
+                            textDecoration: "none",
+                          }}
+                          component={Link}
+                          to="/admin"
+                        >
                           <Box sx={{ height: { sm: "30px", xs: "20px" } }}>
                             <img
                               style={{ height: "100%" }}
                               src={adminIcon}
-                              alt="calendarIcon"
+                              alt="adminIcon"
                             />
                           </Box>
                           <Typography variant="caption">Админка</Typography>
-                        </>
-                      )}
-                    </Box>
+                        </Box>
+                      </>
+                    )}
+
                     <Box
                       sx={{
                         display: "flex",

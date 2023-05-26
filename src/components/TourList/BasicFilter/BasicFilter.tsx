@@ -83,7 +83,7 @@ export const BasicFilter: FC<IFilterProps> = ({
       />
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DatePicker
-          value={dayjs(searchData?.tourDate?.from ?? "")}
+          value={dayjs(searchData?.tourDate?.from || "")}
           onChange={(newValue) => handleDateChange("from", newValue)}
           renderInput={(props) => (
             <TextField
@@ -97,7 +97,7 @@ export const BasicFilter: FC<IFilterProps> = ({
           )}
         />
         <DatePicker
-          value={dayjs(searchData?.tourDate?.to ?? "")}
+          value={dayjs(searchData?.tourDate?.to || "")}
           onChange={(newValue) => handleDateChange("to", newValue)}
           renderInput={(props) => (
             <TextField

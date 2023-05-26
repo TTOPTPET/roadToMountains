@@ -90,7 +90,7 @@ function EditTouristInfo() {
               freeSolo
               disableClearable
               onChange={(e, value) => autocompleteChanged(value)}
-              value={editedTouristInfo?.dataUser?.region ?? ""}
+              value={editedTouristInfo?.dataUser?.region || ""}
               options={regions}
               renderInput={(params) => (
                 <TextField

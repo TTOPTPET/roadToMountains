@@ -12,6 +12,8 @@ import CreatorInfo from "../../components/UserInfo/CreatorInfo/CreatorInfo";
 import { Stack } from "@mui/system";
 import { mobileWidth } from "../../config/config";
 import { Typography, useMediaQuery, useTheme } from "@mui/material";
+import DeleteTourModal from "../../components/Modals/DeleteTourModal/DeleteTourModal";
+import SuccessDeleteTourModal from "../../components/Modals/SuccessDeleteTourModal/SuccessDeleteTourModal";
 
 function CreatorLk() {
   const [myTours, setMyTours] = useState<ITour[]>([]);
@@ -133,6 +135,8 @@ function CreatorLk() {
         </Grid>
         {loadingStatus ? skeleton() : elements}
       </Grid>
+      <DeleteTourModal myTours={myTours} setMyTours={setMyTours} />
+      <SuccessDeleteTourModal />
     </>
   );
 }

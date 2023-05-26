@@ -43,7 +43,7 @@ export const TourFirstPage: FC<TourFirstPageProps> = ({
     <>
       <Stack justifyContent={"space-between"} direction={"row"}>
         <Typography variant={"h3"} marginBottom={1}>
-          {tourInfo?.tourName ?? "Название тура"}
+          {tourInfo?.tourName || "Название тура"}
         </Typography>
         <Stack direction={"row"} gap={"20px"} alignItems={"center"}>
           <Paper

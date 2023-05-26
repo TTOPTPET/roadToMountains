@@ -71,7 +71,7 @@ export const TourDetails: FC<ITourDetailsProps> = ({
             direction={"row"}
           >
             <Typography variant={"caption"}>
-              {record?.bookingNumber ?? 0} человека
+              {record?.bookingNumber || 0} человека
             </Typography>
             <Typography variant={"caption"}>
               до{" "}
@@ -83,11 +83,11 @@ export const TourDetails: FC<ITourDetailsProps> = ({
           <Typography variant={"h6"}>Проживание</Typography>
           <Typography variant={"caption"}>
             {record.tour?.housingInclude &&
-              (record.tour?.housingInclude.housingName ?? "") +
+              (record.tour?.housingInclude.housingName || "") +
                 ", " +
-                (record.tour?.housingInclude.housingAddress ?? "") +
+                (record.tour?.housingInclude.housingAddress || "") +
                 ", " +
-                (record.tour?.housingInclude.housingDescription ?? "")}
+                (record.tour?.housingInclude.housingDescription || "")}
           </Typography>
           <Typography variant={"h6"}>Страхование</Typography>
           <Typography variant={"caption"}>
@@ -150,11 +150,11 @@ export const TourDetails: FC<ITourDetailsProps> = ({
           </Typography>
           <Typography variant={"h6"}>Проживание</Typography>
           <Typography variant={"caption"}>
-            {(record?.housingInclude?.housingName ?? "Отель") +
+            {(record?.housingInclude?.housingName || "Отель") +
               ", " +
-              (record?.housingInclude?.housingAddress ?? "Адрес") +
+              (record?.housingInclude?.housingAddress || "Адрес") +
               ", " +
-              (record?.housingInclude?.housingDescription ?? "Описание")}
+              (record?.housingInclude?.housingDescription || "Описание")}
           </Typography>
           <Typography variant={"h6"}>Страхование</Typography>
           <Typography variant={"caption"}>

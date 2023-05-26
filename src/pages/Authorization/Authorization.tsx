@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useRef, useState } from "react";
 import {
   Button,
   Stack,
@@ -28,7 +28,7 @@ import { UserType } from "../../models/userModels/IUserInfo";
 import { useEffect } from "react";
 import { setUserInfo } from "../../redux/UserInfo/UserInfoReducer";
 import { getUserInfo } from "../../API/commonAPI";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import {
   BAN_STATUS,
   REFRESH_TOKEN,
@@ -160,6 +160,26 @@ function Authorization() {
     setErrAuth(false);
   }, [userRegisterData, userLoginData]);
 
+  const refBtn = useRef();
+
+  useEffect(() => {
+    const listener = (e) => {
+      const event = new MouseEvent("click", {
+        view: window,
+        bubbles: true,
+        cancelable: true,
+      });
+      //@ts-ignore
+      e.code === "Enter" &&
+        refBtn.current &&
+        refBtn.current.dispatchEvent(event);
+    };
+    document.addEventListener("keydown", listener);
+    return () => {
+      document.removeEventListener("keydown", listener);
+    };
+  }, []);
+
   console.log(userRegisterData);
 
   return (
@@ -245,9 +265,13 @@ function Authorization() {
           )}
 
           {regState ? (
-            <Button onClick={() => handlerLoginClick()}>Вход</Button>
+            <Button ref={refBtn} onClick={() => handlerLoginClick()}>
+              Вход
+            </Button>
           ) : (
-            <Button onClick={() => handlerRegisterClick()}>Регистрация</Button>
+            <Button ref={refBtn} onClick={() => handlerRegisterClick()}>
+              Регистрация
+            </Button>
           )}
           <EnterMobileCodeModal
             successCallback={(resp) => {
