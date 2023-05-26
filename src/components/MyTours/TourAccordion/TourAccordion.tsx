@@ -83,7 +83,7 @@ export const TourAccordion = ({ record }: { record: IUserRecord }) => {
         <AccordionDetails>
           <TourDetails record={{ ...record, type: "record" }} />
         </AccordionDetails>
-        <SuccessMessageSendModal />
+        {/* <SuccessMessageSendModal /> */}
       </Accordion>
     </>
   );

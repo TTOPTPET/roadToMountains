@@ -172,7 +172,13 @@ export const TourBooking: FC<ITourBookingProps> = ({
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <Stack direction={"row"} gap={10} flexWrap={"wrap"} mt={5}>
+      <Stack
+        direction={"row"}
+        gap={10}
+        flexWrap={"wrap"}
+        mt={5}
+        justifyContent={"space-between"}
+      >
         <div className="date">
           {datePickerValue.length !== 0 ? (
             <DatePickerMemo />

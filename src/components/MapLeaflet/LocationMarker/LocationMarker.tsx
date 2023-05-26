@@ -1,16 +1,19 @@
 import * as L from "leaflet";
 import { Marker, Polyline, useMapEvents } from "react-leaflet";
 import iconImage from "../../../media/Icons/mapIcons/maps-and-flags.png";
+import { useEffect } from "react";
 type Props = {
   positions: [number, number][];
   setPositions: (positions: [number, number][]) => void;
   accessType?: "insert" | "observe";
+  center: [number, number];
 };
 
 export default function LocationMarker({
   positions,
   setPositions,
   accessType,
+  center,
 }: Props) {
   const LeafIcon: any = L.Icon.extend({
     options: {},
@@ -32,6 +35,11 @@ export default function LocationMarker({
       }
     },
   });
+
+  useEffect(() => {
+    if (accessType === "observe")
+      map.flyTo(center, map.getZoom(), { duration: 0.1 });
+  }, [center]);
 
   return (
     <>

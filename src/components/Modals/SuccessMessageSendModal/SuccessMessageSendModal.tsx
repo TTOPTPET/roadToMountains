@@ -43,7 +43,7 @@ function SuccessMessageSendModal() {
         </Typography>
 
         <Stack direction={"row"} justifyContent={"end"} marginTop={"30px"}>
-          <Button onClick={handlerCloseClick}>К бронированию</Button>
+          <Button onClick={handlerCloseClick}>Отлично</Button>
         </Stack>
       </DialogContent>
     </Dialog>

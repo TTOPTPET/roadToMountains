@@ -5,6 +5,7 @@ import {
   BAN_STATUS,
   USER_ROLE,
 } from "../../config/types";
+import { Navigate } from "react-router-dom";
 
 type Props = { children: JSX.Element };
 
@@ -15,8 +16,8 @@ function ProtectedRoute({ children }: Props) {
     return <>{children}</>;
   } else {
     // HACK: Раскоментить для работы приватных роутеров
-    // return <Navigate to="/auth" replace />;
-    return <>{children}</>;
+    return <Navigate to="/auth" replace />;
+    // return <>{children}</>;
   }
 }
 

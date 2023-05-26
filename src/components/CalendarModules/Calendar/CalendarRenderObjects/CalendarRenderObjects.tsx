@@ -8,7 +8,10 @@ import {
   lightTurquoiseColor,
 } from "../../../../config/MUI/color/color";
 import isSameOrAfter from "dayjs/plugin/isSameOrAfter";
+import isSameOrBefore from "dayjs/plugin/isSameOrBefore";
+import { is } from "date-fns/locale";
 dayjs.extend(isSameOrAfter);
+dayjs.extend(isSameOrBefore);
 
 type Props = {
   publicTours: IPublicTour[];
@@ -43,6 +46,7 @@ export default function CalendarRenderObjects({
         ) {
           return (
             <Box
+              className={tour.tour.tourName}
               onClick={(e) => {
                 e.stopPropagation();
                 setSelectedPublic(tour);
@@ -75,6 +79,7 @@ export default function CalendarRenderObjects({
                     color: "#ffffff",
                     zIndex: 100,
                     paddingTop: "1px",
+                    whiteSpace: "nowrap",
                   }}
                 >
                   {tour?.tour?.tourName}
@@ -92,6 +97,7 @@ export default function CalendarRenderObjects({
         ) {
           return (
             <Box
+              className={tour.tour.tourName}
               sx={{
                 width: "100%",
                 height: "17px",
@@ -104,3 +110,36 @@ export default function CalendarRenderObjects({
     </Box>
   );
 }
+
+// const recursiveCollisionSearch = (publicTours, tourForCheck, date) => {
+//   return publicTours.some((someTour) => {
+//     if (
+//       dayjs(someTour?.tourDate?.from).isSameOrBefore(
+//         tourForCheck?.tourDate?.to
+//       ) &&
+//       dayjs(someTour?.tourDate?.to).isSameOrAfter(
+//         tourForCheck?.tourDate?.from
+//       ) &&
+//       someTour.tourId !== tourForCheck.tourId &&
+//       date.isBetween(someTour.tourDate.from, someTour.tourDate.to, "date", "[]")
+//     ) {
+//       return true;
+//     } else if (
+//       dayjs(someTour?.tourDate?.from).isSameOrBefore(
+//         tourForCheck?.tourDate?.to
+//       ) &&
+//       dayjs(someTour?.tourDate?.to).isSameOrAfter(
+//         tourForCheck?.tourDate?.from
+//       ) &&
+//       someTour.tourId !== tourForCheck.tourId
+//     ) {
+//       recursiveCollisionSearch(
+//         publicTours.filter((tour) => tour.tourId !== tourForCheck.tourId),
+//         someTour,
+//         date
+//       );
+//     } else {
+//       return false;
+//     }
+//   });
+// };

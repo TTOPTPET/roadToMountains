@@ -26,6 +26,7 @@ import {
 } from "../../config/types";
 import { useCookies } from "react-cookie";
 import accIcon from "../../media/accountLinkIcon.svg";
+import adminIcon from "../../media/Icons/headerIcons/adminPanel.svg";
 import calendarIcon from "../../media/calendarIcon.svg";
 import { useEffect, useState } from "react";
 
@@ -147,14 +148,29 @@ const Header = () => {
                       component={Link}
                       to="/creator/calendar"
                     >
-                      <Box sx={{ height: { sm: "30px", xs: "20px" } }}>
-                        <img
-                          style={{ height: "100%" }}
-                          src={calendarIcon}
-                          alt="calendarIcon"
-                        />
-                      </Box>
-                      <Typography variant="caption">Календарь</Typography>
+                      {userInfo.typeUser === UserType.creator ? (
+                        <>
+                          <Box sx={{ height: { sm: "30px", xs: "20px" } }}>
+                            <img
+                              style={{ height: "100%" }}
+                              src={calendarIcon}
+                              alt="calendarIcon"
+                            />
+                          </Box>
+                          <Typography variant="caption">Календарь</Typography>
+                        </>
+                      ) : (
+                        <>
+                          <Box sx={{ height: { sm: "30px", xs: "20px" } }}>
+                            <img
+                              style={{ height: "100%" }}
+                              src={adminIcon}
+                              alt="calendarIcon"
+                            />
+                          </Box>
+                          <Typography variant="caption">Админка</Typography>
+                        </>
+                      )}
                     </Box>
                     <Box
                       sx={{

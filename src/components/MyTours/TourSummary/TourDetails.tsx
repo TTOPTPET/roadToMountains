@@ -131,6 +131,13 @@ export const TourDetails: FC<ITourDetailsProps> = ({
           <Typography variant={"caption"}>
             {freeTagConverter(record)}
           </Typography>
+          <MapLeaflet
+            width={"100%"}
+            height={"330px"}
+            accessType="observe"
+            mapCenter={record?.tour?.mapPoints && record?.tour?.mapPoints[0]}
+            positions={record?.tour?.mapPoints}
+          />
         </Stack>
       );
 
