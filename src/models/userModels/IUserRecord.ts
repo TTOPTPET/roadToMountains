@@ -16,6 +16,7 @@ export interface IUserRecord {
   meetingTime?: string;
   bookingNumber?: number;
   tour?: {
+    mapPoints?: [number, number][];
     tourId: string;
     tourName: string;
     housingInclude?: {

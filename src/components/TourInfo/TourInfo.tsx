@@ -69,13 +69,13 @@ export const TourInfo: FC<ITourInfoProps> = ({
           <MapMarker />
         </SvgIcon>
         <Typography variant={"caption"}>
-          {tourInfo?.region ?? "Регион"}
+          {tourInfo?.region || "Регион"}
         </Typography>
         <SvgIcon>
           <WalkingGuy />
         </SvgIcon>
         <Typography variant={"caption"}>
-          {tourInfo?.category ?? "Категория"}
+          {tourInfo?.category || "Категория"}
         </Typography>
       </Stack>
       <Grid container justifyContent={"space-between"}>
@@ -183,19 +183,19 @@ export const TourInfo: FC<ITourInfoProps> = ({
             Описание
           </Typography>
           <Typography variant={"caption"}>
-            {tourInfo?.tourDescription ?? "Описание тура"}
+            {tourInfo?.tourDescription || "Описание тура"}
           </Typography>
         </Grid>
         <Grid container direction={"column"} item md={6} gap={2}>
           {addTourInfo ? <Attention /> : <></>}
           <Typography variant={"h5"}>
             {tourInfo?.price !== undefined
-              ? tourInfo?.price ?? 0
+              ? tourInfo?.price || 0
               : tourInfo?.prices?.from === tourInfo?.prices?.to
               ? tourInfo?.prices?.from
-              : (tourInfo?.prices?.from ?? 0) +
+              : (tourInfo?.prices?.from || 0) +
                 " до " +
-                (tourInfo?.prices?.to ?? 1000000)}
+                (tourInfo?.prices?.to || 1000000)}
             ₽
           </Typography>
           {addTourInfo ? (
@@ -205,10 +205,10 @@ export const TourInfo: FC<ITourInfoProps> = ({
               <Typography variant={"h6"}>Дата ближайшего тура</Typography>
               <Typography variant={"caption"}>
                 {"nearestDate" in tourInfo
-                  ? (dayjs(tourInfo?.nearestDate?.from).format("D MMMM YYYY") ??
+                  ? (dayjs(tourInfo?.nearestDate?.from).format("D MMMM YYYY") ||
                       "") +
                     " - " +
-                    (dayjs(tourInfo?.nearestDate?.to).format("D MMMM YYYY") ??
+                    (dayjs(tourInfo?.nearestDate?.to).format("D MMMM YYYY") ||
                       "")
                   : ""}
               </Typography>
@@ -217,30 +217,30 @@ export const TourInfo: FC<ITourInfoProps> = ({
           <Typography variant={"h6"}>Проживание</Typography>
           <Typography variant={"caption"}>
             {tourInfo?.housingInclude?.housingName
-              ? (tourInfo?.housingInclude?.housingName ?? "Отель") +
+              ? (tourInfo?.housingInclude?.housingName || "Отель") +
                 ", " +
-                (tourInfo?.housingInclude?.housingAddress ?? "Адрес") +
+                (tourInfo?.housingInclude?.housingAddress || "Адрес") +
                 ", " +
-                (tourInfo?.housingInclude?.housingDescription ?? "Описание")
+                (tourInfo?.housingInclude?.housingDescription || "Описание")
               : "Проживание не включено"}
           </Typography>
           <Typography variant={"h6"}>Страхование</Typography>
           <Typography variant={"caption"}>
             {tourInfo?.insuranceInclude?.insuranceNumber
               ? `Страхование включено, до ${
-                  tourInfo?.insuranceInclude?.insuranceAmount ?? 0
+                  tourInfo?.insuranceInclude?.insuranceAmount || 0
                 }₽`
               : "Страхование не включено"}
           </Typography>
           <Typography variant={"h6"}>Рекомендуемый возраст</Typography>
           <Typography variant={"caption"}>
             {tourInfo?.recommendedAge?.from === tourInfo?.recommendedAge?.to
-              ? "C " + (tourInfo?.recommendedAge?.to ?? "14")
-              : (tourInfo?.recommendedAge?.from ?? "") +
+              ? "C " + (tourInfo?.recommendedAge?.to || "14")
+              : (tourInfo?.recommendedAge?.from || "") +
                 (tourInfo?.recommendedAge?.to !== undefined || null
                   ? " - "
                   : "") +
-                (tourInfo?.recommendedAge?.to ?? "+")}
+                (tourInfo?.recommendedAge?.to || "+")}
           </Typography>
           {addTourInfo ? (
             <></>
@@ -248,7 +248,7 @@ export const TourInfo: FC<ITourInfoProps> = ({
             <>
               <Typography variant={"h6"}>Сложность</Typography>
               <Typography variant={"caption"}>
-                {tourInfo?.complexity ?? "1"}
+                {tourInfo?.complexity || "1"}
               </Typography>
             </>
           )}

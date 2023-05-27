@@ -199,7 +199,7 @@ function App() {
         </Box>
         <Footer />
         {/* HACK:Инструмент навигации для разработки */}
-        <NavTool />
+        {import.meta.env.VITE_APP_ACCESS_TYPE === "DEV" && <NavTool />}
         <ErrorReportModal />
         <SuccessMessageSendModal />
       </ThemeProvider>

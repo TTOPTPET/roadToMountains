@@ -11,12 +11,12 @@ export const Notification = (notification: INotification) => {
         <Grid container justifyContent={"space-between"} padding={1}>
           <Grid item md={3.5}>
             <Typography variant={"h5"}>
-              {(notification?.notifData?.tour?.tourName ?? "Название тура") +
+              {(notification?.notifData?.tour?.tourName || "Название тура") +
                 " №" +
-                (notification?.notifData?.bookingId ?? "0")}
+                (notification?.notifData?.bookingId || "0")}
             </Typography>
             <Typography variant={"caption"} mt={2}>
-              {notification?.notifData?.paymentStatus ?? "Бронирование"}
+              {notification?.notifData?.paymentStatus || "Бронирование"}
             </Typography>
           </Grid>
           <Grid item md={2.5}>
@@ -35,7 +35,7 @@ export const Notification = (notification: INotification) => {
               {dayjs(notification?.createAt).format("D MMM YYYY")}
             </Typography>
             <Typography variant={"button"} mt={2}>
-              {(notification?.notifData?.amount ?? 0) + "₽"}
+              {(notification?.notifData?.amount || 0) + "₽"}
             </Typography>
           </Grid>
         </Grid>

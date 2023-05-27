@@ -42,163 +42,163 @@ export const AddTourFirstPage: FC<IAddTourFirstPageProps> = ({
   const tourInfo = useSelector((state: RootState) => state.addTour.tourFields);
   console.log(tourInfo);
   return (
-    <Stack gap={1}>
-      <Grid container justifyContent={"space-between"}>
-        <Grid item xs={5.2}>
-          <TextField
-            placeholder={"Название тура"}
-            value={tourInfo?.tourName ?? ""}
-            required
-            error={addError && tourInfo?.tourName === ""}
-            sx={{ marginBottom: "15px" }}
-            onChange={(e) =>
-              dispatch(setTourField({ tourName: e.target.value }))
-            }
-          />
-          <AddTourImage
-            images={images}
-            setImage={setImage}
-            files={files}
-            setFiles={setFiles}
-            isEditing={isEditing}
-          />
-          <Typography variant={"h6"} marginBottom={1}>
-            Описание
-          </Typography>
-          <StyledTextAreaAutosize
-            placeholder={"Описание тура (не более 2500 символов)"}
-            maxLength={2500}
-            minRows={2}
-            sx={{
-              minHeight: "30px",
-              backgroundColor: lightTurquoiseColor,
-              margin: "0 0",
-              border:
-                addError && tourInfo?.tourDescription === ""
-                  ? `1px solid ${redColor}`
-                  : "",
-            }}
-            value={tourInfo?.tourDescription ?? ""}
-            onChange={(e) =>
-              dispatch(setTourField({ tourDescription: e.target.value }))
-            }
-          />
+    <Grid container justifyContent={"space-between"}>
+      <Grid item xs={5.2}>
+        <TextField
+          placeholder={"Название тура"}
+          value={tourInfo?.tourName || ""}
+          required
+          error={addError && tourInfo?.tourName === ""}
+          sx={{ marginBottom: "15px" }}
+          onChange={(e) => dispatch(setTourField({ tourName: e.target.value }))}
+        />
+        <AddTourImage
+          images={images}
+          setImage={setImage}
+          files={files}
+          setFiles={setFiles}
+          isEditing={isEditing}
+        />
+        <Typography variant={"h6"} marginBottom={1}>
+          Описание
+        </Typography>
+        <StyledTextAreaAutosize
+          placeholder={"Описание тура (не более 2500 символов)"}
+          maxLength={2500}
+          minRows={2}
+          sx={{
+            minHeight: "30px",
+            backgroundColor: lightTurquoiseColor,
+            margin: "0 0",
+            border:
+              addError && tourInfo?.tourDescription === ""
+                ? `1px solid ${redColor}`
+                : "",
+          }}
+          value={tourInfo?.tourDescription || ""}
+          onChange={(e) =>
+            dispatch(setTourField({ tourDescription: e.target.value }))
+          }
+        />
+      </Grid>
+      <Grid container item md={6} justifyContent={"flex-end"}>
+        <Grid item>
+          <Attention />
         </Grid>
-        <Grid container item md={6}>
-          <Grid item>
-            <Attention />
-          </Grid>
 
-          <Grid container direction={"row"} marginTop={5} spacing={2}>
-            <Grid item md={6}>
-              <Typography variant={"h6"} marginBottom={1}>
-                Регион проведения
-              </Typography>
-              <Autocomplete
-                freeSolo
-                disableClearable
-                options={filters.regions.map((region) => region)}
-                value={tourInfo?.region ?? ""}
-                renderInput={(params) => (
-                  <TextField
-                    placeholder={"Регион"}
-                    {...params}
-                    error={addError && tourInfo?.region === ""}
-                    InputProps={{ ...params.InputProps, type: "search" }}
-                  />
-                )}
-                onChange={(e: any, value: string) =>
-                  dispatch(setTourField({ region: value }))
-                }
-              />
-              <Typography variant={"h6"} marginTop={30}>
-                Рекомендуемый возраст
-              </Typography>
-              <Stack direction={"row"} marginTop={1} gap={2}>
+        <Grid
+          container
+          direction={"row"}
+          marginTop={5}
+          spacing={2}
+          justifyContent={"flex-end"}
+        >
+          <Grid item md={6}>
+            <Typography variant={"h6"} marginBottom={1}>
+              Регион проведения
+            </Typography>
+            <Autocomplete
+              freeSolo
+              disableClearable
+              options={filters.regions.map((region) => region)}
+              value={tourInfo?.region || ""}
+              renderInput={(params) => (
                 <TextField
-                  InputProps={{ inputProps: { min: 0 } }}
-                  type={"number"}
-                  placeholder={"От"}
-                  value={tourInfo?.recommendedAge?.from ?? ""}
-                  required
-                  error={addError && tourInfo?.recommendedAge?.from === null}
-                  onChange={(e) =>
-                    dispatch(
-                      setTourField({
-                        recommendedAge: {
-                          ...tourInfo?.recommendedAge,
-                          from: +e.target.value,
-                        },
-                      })
-                    )
-                  }
+                  placeholder={"Регион"}
+                  {...params}
+                  error={addError && tourInfo?.region === ""}
+                  InputProps={{ ...params.InputProps, type: "search" }}
                 />
-                <TextField
-                  InputProps={{ inputProps: { min: 0 } }}
-                  type={"number"}
-                  placeholder={"До"}
-                  value={tourInfo?.recommendedAge?.to ?? ""}
-                  required
-                  error={addError && tourInfo?.recommendedAge?.to === null}
-                  onChange={(e) =>
-                    dispatch(
-                      setTourField({
-                        recommendedAge: {
-                          ...tourInfo?.recommendedAge,
-                          to: +e.target.value,
-                        },
-                      })
-                    )
-                  }
-                />
-              </Stack>
-              <Typography variant={"h6"} marginTop={2}>
-                Стоимость тура на человека
-              </Typography>
+              )}
+              onChange={(e: any, value: string) =>
+                dispatch(setTourField({ region: value }))
+              }
+            />
+            <Typography variant={"h6"} marginTop={30}>
+              Рекомендуемый возраст
+            </Typography>
+            <Stack direction={"row"} marginTop={1} gap={2}>
               <TextField
-                sx={{ marginTop: 1 }}
-                fullWidth
-                type={"number"}
                 InputProps={{ inputProps: { min: 0 } }}
-                placeholder={"Стоимость тура"}
-                value={tourInfo?.price ?? ""}
-                error={addError && tourInfo?.price === null}
+                type={"number"}
+                placeholder={"От"}
+                value={tourInfo?.recommendedAge?.from || ""}
                 required
+                error={addError && tourInfo?.recommendedAge?.from === null}
                 onChange={(e) =>
-                  dispatch(setTourField({ price: +e.target.value }))
+                  dispatch(
+                    setTourField({
+                      recommendedAge: {
+                        ...tourInfo?.recommendedAge,
+                        from: +e.target.value,
+                      },
+                    })
+                  )
                 }
               />
-            </Grid>
-            <Grid item md={5}>
-              <Typography variant={"h6"}>Категория тура</Typography>
-              <RadioGroup
-                value={tourInfo?.category ?? ""}
+              <TextField
+                InputProps={{ inputProps: { min: 0 } }}
+                type={"number"}
+                placeholder={"До"}
+                value={tourInfo?.recommendedAge?.to || ""}
+                required
+                error={addError && tourInfo?.recommendedAge?.to === null}
                 onChange={(e) =>
-                  dispatch(setTourField({ category: e.target.value }))
+                  dispatch(
+                    setTourField({
+                      recommendedAge: {
+                        ...tourInfo?.recommendedAge,
+                        to: +e.target.value,
+                      },
+                    })
+                  )
                 }
-              >
-                {filters.category.map((category, index) => (
-                  <FormControlLabel
-                    key={index}
-                    value={category}
-                    control={
-                      <Radio
-                        sx={{
-                          color:
-                            addError && tourInfo?.category === ""
-                              ? redColor
-                              : "",
-                        }}
-                      />
-                    }
-                    label={category}
-                  />
-                ))}
-              </RadioGroup>
-            </Grid>
+              />
+            </Stack>
+            <Typography variant={"h6"} marginTop={2}>
+              Стоимость тура на человека
+            </Typography>
+            <TextField
+              sx={{ marginTop: 1 }}
+              fullWidth
+              type={"number"}
+              InputProps={{ inputProps: { min: 0 } }}
+              placeholder={"Стоимость тура"}
+              value={tourInfo?.price || ""}
+              error={addError && tourInfo?.price === null}
+              required
+              onChange={(e) =>
+                dispatch(setTourField({ price: +e.target.value }))
+              }
+            />
+          </Grid>
+          <Grid item md={5}>
+            <Typography variant={"h6"}>Категория тура</Typography>
+            <RadioGroup
+              value={tourInfo?.category || ""}
+              onChange={(e) =>
+                dispatch(setTourField({ category: e.target.value }))
+              }
+            >
+              {filters.category.map((category, index) => (
+                <FormControlLabel
+                  key={index}
+                  value={category}
+                  control={
+                    <Radio
+                      sx={{
+                        color:
+                          addError && tourInfo?.category === "" ? redColor : "",
+                      }}
+                    />
+                  }
+                  label={category}
+                />
+              ))}
+            </RadioGroup>
           </Grid>
         </Grid>
       </Grid>
-    </Stack>
+    </Grid>
   );
 };

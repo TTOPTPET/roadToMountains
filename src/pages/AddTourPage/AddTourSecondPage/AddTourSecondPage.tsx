@@ -71,7 +71,7 @@ export const AddTourSecondPage: FC<IAddTourSecondPageProps> = ({
               freeServices: [
                 ...(tourInfo?.tourServices?.freeServices.filter(
                   (item) => item !== e
-                ) ?? []),
+                ) || []),
               ],
             },
           })
@@ -86,7 +86,7 @@ export const AddTourSecondPage: FC<IAddTourSecondPageProps> = ({
               additionalServices: [
                 ...(tourInfo?.tourServices?.additionalServices.filter(
                   (item) => item !== e
-                ) ?? []),
+                ) || []),
               ],
             },
           })
@@ -97,7 +97,7 @@ export const AddTourSecondPage: FC<IAddTourSecondPageProps> = ({
         dispatch(
           setTourField({
             recommendations: [
-              ...(tourInfo?.recommendations.filter((item) => item !== e) ?? []),
+              ...(tourInfo?.recommendations.filter((item) => item !== e) || []),
             ],
           })
         );
@@ -115,7 +115,7 @@ export const AddTourSecondPage: FC<IAddTourSecondPageProps> = ({
           tourServices: {
             ...tourInfo?.tourServices,
             freeServices: [
-              ...(tourInfo?.tourServices?.freeServices ?? []),
+              ...(tourInfo?.tourServices?.freeServices || []),
               e.target.value,
             ],
           },
@@ -131,7 +131,7 @@ export const AddTourSecondPage: FC<IAddTourSecondPageProps> = ({
           tourServices: {
             ...tourInfo?.tourServices,
             additionalServices: [
-              ...(tourInfo?.tourServices?.additionalServices ?? []),
+              ...(tourInfo?.tourServices?.additionalServices || []),
               e.target.value,
             ],
           },
@@ -145,7 +145,7 @@ export const AddTourSecondPage: FC<IAddTourSecondPageProps> = ({
       dispatch(
         setTourField({
           recommendations: [
-            ...(tourInfo?.recommendations ?? []),
+            ...(tourInfo?.recommendations || []),
             e.target.value,
           ],
         })
@@ -156,7 +156,7 @@ export const AddTourSecondPage: FC<IAddTourSecondPageProps> = ({
   return (
     <Stack gap={1}>
       <Typography variant={"h3"}>
-        {tourInfo?.tourName ?? "Название тура"}
+        {tourInfo?.tourName || "Название тура"}
       </Typography>
       <Grid container item direction={"row"} justifyContent={"space-between"}>
         <Grid item sm={3.5} className="add__residency">
@@ -179,7 +179,7 @@ export const AddTourSecondPage: FC<IAddTourSecondPageProps> = ({
               <TextField
                 placeholder={"Название гостиницы"}
                 disabled={residency === turnOnDefault[0] ? true : false}
-                value={tourInfo?.housingInclude?.housingName ?? ""}
+                value={tourInfo?.housingInclude?.housingName || ""}
                 sx={{ width: "75%" }}
                 onChange={(e) =>
                   dispatch(
@@ -195,7 +195,7 @@ export const AddTourSecondPage: FC<IAddTourSecondPageProps> = ({
               <TextField
                 placeholder={"Адрес гостиницы"}
                 disabled={residency === turnOnDefault[0] ? true : false}
-                value={tourInfo?.housingInclude?.housingAddress ?? ""}
+                value={tourInfo?.housingInclude?.housingAddress || ""}
                 sx={{ width: "75%" }}
                 onChange={(e) =>
                   dispatch(
@@ -211,7 +211,7 @@ export const AddTourSecondPage: FC<IAddTourSecondPageProps> = ({
               <TextField
                 placeholder={"Описание гостиницы"}
                 disabled={residency === turnOnDefault[0] ? true : false}
-                value={tourInfo?.housingInclude?.housingDescription ?? ""}
+                value={tourInfo?.housingInclude?.housingDescription || ""}
                 sx={{ width: "75%" }}
                 onChange={(e) =>
                   dispatch(
@@ -266,7 +266,7 @@ export const AddTourSecondPage: FC<IAddTourSecondPageProps> = ({
                 placeholder={"Номер страхования"}
                 disabled={insurance === turnOnDefault[0] ? true : false}
                 type={"number"}
-                value={tourInfo?.insuranceInclude?.insuranceNumber ?? ""}
+                value={tourInfo?.insuranceInclude?.insuranceNumber || ""}
                 sx={{ width: "75%" }}
                 onChange={(e) =>
                   dispatch(
@@ -283,7 +283,7 @@ export const AddTourSecondPage: FC<IAddTourSecondPageProps> = ({
                 placeholder={"Сумма страхования"}
                 disabled={insurance === turnOnDefault[0] ? true : false}
                 type={"number"}
-                value={tourInfo?.insuranceInclude?.insuranceAmount ?? ""}
+                value={tourInfo?.insuranceInclude?.insuranceAmount || ""}
                 sx={{ width: "75%" }}
                 onChange={(e) =>
                   dispatch(
@@ -321,7 +321,7 @@ export const AddTourSecondPage: FC<IAddTourSecondPageProps> = ({
           <Stack minHeight={350}>
             <Typography variant={"h5"}>Сложность маршрута</Typography>
             <RadioGroup
-              value={tourInfo?.complexity ?? ""}
+              value={tourInfo?.complexity || ""}
               onChange={(e) =>
                 dispatch(setTourField({ complexity: e.target.value }))
               }

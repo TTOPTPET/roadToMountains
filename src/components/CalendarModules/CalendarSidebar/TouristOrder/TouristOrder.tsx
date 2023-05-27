@@ -62,12 +62,12 @@ export default function TouristOrder({
                 marginY={"35%"}
                 color={"white"}
               >
-                {bookingInfo?.touristsInfo.length ?? 0}
+                {bookingInfo?.touristsInfo.length || 0}
               </Typography>
             </Box>
             <Stack direction={"column"} sx={{ ml: "10px" }} gap={"5px"}>
               <Typography variant={"h6"}>
-                №{bookingInfo?.bookingId ?? "0"}
+                №{bookingInfo?.bookingId || "0"}
               </Typography>
               <Typography
                 variant={"caption"}
@@ -78,12 +78,12 @@ export default function TouristOrder({
                   textOverflow: "ellipsis",
                 }}
               >
-                {bookingInfo?.userInfo?.name ?? "Пользователь не указан"}
+                {bookingInfo?.userInfo?.name || "Пользователь не указан"}
               </Typography>
             </Stack>
           </Stack>
           <Typography variant={"caption"} mr={2}>
-            {bookingInfo?.tourAmount ?? 0}₽
+            {bookingInfo?.tourAmount || 0}₽
           </Typography>
         </Stack>
       </Paper>

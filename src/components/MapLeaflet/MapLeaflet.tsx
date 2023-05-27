@@ -21,6 +21,7 @@ export default function MapLeaflet({
   setPositions,
   mapCenter = [55.057399, 83.138469],
 }: Props) {
+  console.log({ mapCenter });
   return (
     <Box width={width} height={height} sx={{ position: "relative" }}>
       {accessType === "insert" && (
@@ -57,7 +58,7 @@ export default function MapLeaflet({
           />
         </Box>
       )}
-      <MapContainer center={mapCenter} zoom={15} scrollWheelZoom={false}>
+      <MapContainer center={mapCenter} zoom={13} scrollWheelZoom={false}>
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -66,6 +67,7 @@ export default function MapLeaflet({
           positions={positions}
           setPositions={setPositions}
           accessType={accessType}
+          center={mapCenter}
         />
       </MapContainer>
     </Box>

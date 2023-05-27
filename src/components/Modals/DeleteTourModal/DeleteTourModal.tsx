@@ -21,19 +21,20 @@ import CancelPostedToursModal from "../CancelPostedToursModal/CancelPostedToursM
 import SuccessCancelPostedTourModal from "../SuccessCancelPostedTourModal/SuccessCancelPostedTourModal";
 
 interface IDeleteTourModalProps {
-  tourId: string;
   myTours: ITour[];
   setMyTours: Dispatch<SetStateAction<ITour[]>>;
 }
 
-function DeleteTourModal({
-  tourId,
-  myTours,
-  setMyTours,
-}: IDeleteTourModalProps) {
+function DeleteTourModal({ myTours, setMyTours }: IDeleteTourModalProps) {
   const activeModals = useSelector(
     (state: RootState) => state.modal.activeModals
   );
+
+  const modalProps = activeModals.find(
+    (modal) => modal.id === "deleteTourModal"
+  );
+
+  let tourId = modalProps?.props?.tourId;
 
   const dispatch = useDispatch();
 

@@ -261,7 +261,7 @@ export default function NewPublicModal({
                   Стоимость на платформе: <br />
                   {/* TODO: Считать процент */}
                   {editedPublic?.tourAmount
-                    ? (editedPublic?.tourAmount * 1.05).toFixed(2)
+                    ? (editedPublic?.tourAmount * 1.03).toFixed(2)
                     : "-"}
                 </Typography>
               </Box>

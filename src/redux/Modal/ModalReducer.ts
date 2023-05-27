@@ -1,3 +1,6 @@
+import { Dispatch, SetStateAction } from "react";
+import { ITour } from "../../models/tourCardModel/ITour";
+
 //HACK: Для того, чтобы задать новый id необходмо вписать его сюда :)
 type modalsId =
   | "filterModal"
@@ -27,6 +30,7 @@ enum actionTypes {
 interface IActionProps {
   id: modalsId;
   props?: {
+    tourId: string;
     multiply?: boolean;
     index?: number;
     tour?: boolean;

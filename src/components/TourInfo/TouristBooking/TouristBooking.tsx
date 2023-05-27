@@ -66,27 +66,27 @@ export const TouristBooking: FC<ITouristBookingProps> = ({
         <TextField
           placeholder={"ФИО"}
           color={"secondary"}
-          value={touristData?.name ?? ""}
+          value={touristData?.name || ""}
           onChange={(e) => handlerFieldChange("name", e.target.value)}
         />
         <TextField
           placeholder={"Возраст"}
           color={"secondary"}
-          value={touristData?.age ?? ""}
+          value={touristData?.age || ""}
           onChange={(e) => handlerFieldChange("age", e.target.value)}
         />
         <Autocomplete
           freeSolo
           disableClearable
           onChange={(e, value) => handlerFieldChange("sex", value)}
-          value={touristData?.sex ?? ""}
+          value={touristData?.sex || ""}
           options={Object.values(Sex)}
           renderInput={(params) => (
             <TextField
               placeholder={"Пол"}
               color={"secondary"}
               {...params}
-              value={touristData?.sex ?? ""}
+              value={touristData?.sex || ""}
               InputProps={{ ...params.InputProps, type: "search" }}
             />
           )}

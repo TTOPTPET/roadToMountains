@@ -103,18 +103,18 @@ function TourCardContentCreatorLk({
           </Button>
           <Button
             className="tour-card__button-delete"
-            onClick={() => dispatch(setModalActive("deleteTourModal"))}
+            onClick={() =>
+              dispatch(
+                setModalActive("deleteTourModal", {
+                  tourId: tour?.tourId,
+                })
+              )
+            }
           >
             Удалить
           </Button>
         </Box>
       </Box>
-      <DeleteTourModal
-        tourId={tour?.tourId}
-        myTours={myTours}
-        setMyTours={setMyTours}
-      />
-      <SuccessDeleteTourModal />
     </Box>
   );
 }

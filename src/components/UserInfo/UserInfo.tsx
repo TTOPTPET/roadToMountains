@@ -136,14 +136,14 @@ function UserInfo({ header, fields, submitFuntion }: UserInfoProps) {
                     <Box className="userInfo_title">
                       <Typography variant="h5">
                         {typeUser && typeUser === UserType.tourist
-                          ? name ?? "Имя пользователя"
+                          ? name || "Имя пользователя"
                           : typeUser === UserType.creator &&
                             dataUser.creatorType === CreatorType.IP
-                          ? `ИП ${name ?? "Имя пользователя"}`
+                          ? `ИП ${name || "Имя пользователя"}`
                           : typeUser === UserType.creator &&
                             dataUser.creatorType === CreatorType.OOO
-                          ? `ООО ${name ?? "Имя пользователя"}`
-                          : `${name ?? "Имя пользователя"}`}
+                          ? `ООО ${name || "Имя пользователя"}`
+                          : `${name || "Имя пользователя"}`}
                       </Typography>
                     </Box>
                   </Box>

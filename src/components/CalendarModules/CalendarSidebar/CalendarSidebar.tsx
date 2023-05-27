@@ -33,7 +33,7 @@ export default function CalendarSidebar({
   return (
     <>
       <Typography variant={"h5"} sx={{ mb: 3, mt: 1 }}>
-        {selectedPublic?.tour?.tourName ?? "Название тура"}
+        {selectedPublic?.tour?.tourName || "Название тура"}
       </Typography>
       <Stack direction={"column"} gap={1} sx={{ height: "65vh" }}>
         <Typography variant={"caption"}>
@@ -44,16 +44,16 @@ export default function CalendarSidebar({
             : "Дата начала - Дата конца"}
         </Typography>
         <Typography variant={"caption"}>
-          {(selectedPublic?.personNum ?? 0) + " человек"}
+          {(selectedPublic?.personNum || 0) + " человек"}
         </Typography>
         <Typography variant={"caption"}>
-          {selectedPublic?.tourAmount ?? 0}₽
+          {selectedPublic?.tourAmount || 0}₽
         </Typography>
         <Stack direction={"column"}>
           <Typography variant={"caption"}>Стоимость на платформе:</Typography>
           <Typography variant={"caption"}>
             {" "}
-            {selectedPublic?.tourAmountWithCommission ?? 0}₽
+            {selectedPublic?.tourAmountWithCommission || 0}₽
           </Typography>
         </Stack>
         <Stack
@@ -171,7 +171,7 @@ export default function CalendarSidebar({
               sx={{ backgroundColor: whiteColor, borderRadius: 6, padding: 3 }}
             >
               <Typography variant={"button"} align={"center"}>
-                {selectedPublic?.publicTourProfit ?? 0}₽
+                {selectedPublic?.publicTourProfit || 0}₽
               </Typography>
             </Paper>
           </Box>

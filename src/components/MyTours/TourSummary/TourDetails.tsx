@@ -83,7 +83,7 @@ export const TourDetails: FC<ITourDetailsProps> = ({
             direction={"row"}
           >
             <Typography variant={"caption"}>
-              {record?.bookingNumber ?? 0} человека
+              {record?.bookingNumber || 0} человека
             </Typography>
             {!lessThenSmall && (
               <Typography variant={"caption"}>
@@ -97,11 +97,11 @@ export const TourDetails: FC<ITourDetailsProps> = ({
           <Typography variant={"h6"}>Проживание</Typography>
           <Typography variant={"caption"}>
             {record.tour?.housingInclude &&
-              (record.tour?.housingInclude.housingName ?? "") +
+              (record.tour?.housingInclude.housingName || "") +
                 ", " +
-                (record.tour?.housingInclude.housingAddress ?? "") +
+                (record.tour?.housingInclude.housingAddress || "") +
                 ", " +
-                (record.tour?.housingInclude.housingDescription ?? "")}
+                (record.tour?.housingInclude.housingDescription || "")}
           </Typography>
           <Typography variant={"h6"}>Страхование</Typography>
           <Typography variant={"caption"}>
@@ -185,6 +185,13 @@ export const TourDetails: FC<ITourDetailsProps> = ({
               </Stack>
             </Stack>
           )}
+          <MapLeaflet
+            width={"100%"}
+            height={"330px"}
+            accessType="observe"
+            mapCenter={record?.tour?.mapPoints && record?.tour?.mapPoints[0]}
+            positions={record?.tour?.mapPoints}
+          />
         </Stack>
       );
 
@@ -197,11 +204,11 @@ export const TourDetails: FC<ITourDetailsProps> = ({
           </Typography>
           <Typography variant={"h6"}>Проживание</Typography>
           <Typography variant={"caption"}>
-            {(record?.housingInclude?.housingName ?? "Отель") +
+            {(record?.housingInclude?.housingName || "Отель") +
               ", " +
-              (record?.housingInclude?.housingAddress ?? "Адрес") +
+              (record?.housingInclude?.housingAddress || "Адрес") +
               ", " +
-              (record?.housingInclude?.housingDescription ?? "Описание")}
+              (record?.housingInclude?.housingDescription || "Описание")}
           </Typography>
           <Typography variant={"h6"}>Страхование</Typography>
           <Typography variant={"caption"}>

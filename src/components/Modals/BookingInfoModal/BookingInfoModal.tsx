@@ -174,7 +174,8 @@ function BookingInfoModal({ selectedBooking }: BookingInfoModalProps) {
                       wordWrap: "initial",
                     }}
                   >
-                    {i + 1}. {tourist.name}, {checkAge(tourist.age)}
+                    {i + 1}. {tourist.name}, {checkAge(tourist.age)},{" "}
+                    {tourist.sex}
                   </Typography>
                 )
               )}
