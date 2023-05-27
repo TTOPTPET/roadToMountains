@@ -108,7 +108,7 @@ function TourListPage() {
           tourList
             .filter((tour) => tour.banStatus !== true)
             .map((tour, index) => (
-              <Grid key={index} item lg={3} md={3} sm={4} xs={9}>
+              <Grid key={index} item lg={3} md={3} sm={4}>
                 <TourCard
                   key={index}
                   tour={tour}

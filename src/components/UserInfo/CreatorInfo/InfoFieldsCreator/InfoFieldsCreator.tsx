@@ -125,7 +125,7 @@ function InfoFieldsCreator({ creatorInfo }: fieldsCreatorProps) {
                 return (
                   creatorInfo?.dataUser?.creatorType === CreatorType.IP && (
                     <Typography variant="h6" key={field}>
-                      {fromModelsToFieldsName.get(field)}
+                      {fromModelsToFieldsName.get(field)}:
                     </Typography>
                   )
                 );
@@ -188,7 +188,7 @@ function InfoFieldsCreator({ creatorInfo }: fieldsCreatorProps) {
                 return (
                   creatorInfo?.dataUser?.creatorType === CreatorType.SELF && (
                     <Typography variant="h6" key={field}>
-                      {fromModelsToFieldsName.get(field)}
+                      {fromModelsToFieldsName.get(field)}:
                     </Typography>
                   )
                 );

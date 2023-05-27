@@ -42,6 +42,7 @@ const Header = () => {
   const theme = useTheme();
 
   const moreThenSmall = useMediaQuery(theme.breakpoints.up("sm"));
+  const lessThenSmall = useMediaQuery(theme.breakpoints.down("sm"));
 
   let location = useLocation();
 
@@ -134,7 +135,7 @@ const Header = () => {
                   <Box
                     sx={{
                       display: "flex",
-                      gap: { sx: "22px", xs: "7px" },
+                      gap: { sx: "22px", xs: "10px" },
                       alignItems: "center",
                     }}
                   >
@@ -157,7 +158,7 @@ const Header = () => {
                               alt="calendarIcon"
                             />
                           </Box>
-                          <Typography variant="caption">Календарь</Typography>
+                          {!lessThenSmall && (<Typography variant="caption">Календарь</Typography>)}
                         </Box>
                       </>
                     ) : (
@@ -179,11 +180,10 @@ const Header = () => {
                               alt="adminIcon"
                             />
                           </Box>
-                          <Typography variant="caption">Админка</Typography>
+                          {!lessThenSmall && (<Typography variant="caption">Админка</Typography>)}
                         </Box>
                       </>
                     )}
-
                     <Box
                       sx={{
                         display: "flex",
@@ -201,9 +201,11 @@ const Header = () => {
                           alt="accIcon"
                         />
                       </Box>
-                      <Typography variant="caption" sx={{ mt: "1px" }}>
-                        Профиль
-                      </Typography>
+                      {!lessThenSmall && (
+                        <Typography variant="caption" sx={{ mt: "1px" }}>
+                          Профиль
+                        </Typography>
+                      )}
                     </Box>
                   </Box>
                 )}
