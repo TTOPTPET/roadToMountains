@@ -1,4 +1,4 @@
-import { Stack, Box, Typography } from "@mui/material";
+import { Stack, Box } from "@mui/material";
 import { AdminSideBar } from "../../../components/Admin";
 import { Route, Routes } from "react-router-dom";
 import { AdminAccessTouristPage } from "../AdminAccessTouristPage/AdminAccessTouristPage";
@@ -10,10 +10,9 @@ import { AdminConfirmAdminPage } from "../AdminConfirmAdminPage/AdminConfirmAdmi
 export const AdminPageProptected = () => {
   return (
     <Box>
-      <Typography variant={"h4"}>Панель админа</Typography>
       <Stack direction={"row"} height="100%">
         <AdminSideBar />
-        <Box className="admin-panels" ml={"350px"}>
+        <Box className="admin-panels" ml={"350px"} mt={"50px"}>
           <Routes>
             <Route
               path={"access-tourist"}

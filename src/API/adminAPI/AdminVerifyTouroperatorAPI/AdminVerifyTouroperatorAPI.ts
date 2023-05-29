@@ -1,6 +1,7 @@
 import axios from "axios";
 import { ICreatorList } from "../../../models/adminModels/ICreatorList";
 import { adminUrl } from "../../../config/config";
+import { IChangeStatus } from "../../../models/adminModels/IChangeStatus";
 
 const creatorDefault: ICreatorList[] = [
   {
@@ -45,7 +46,7 @@ const creatorVerifyDefault: string = "2";
 
 export const verifyCreator = async (
   successCallback: (prop: string) => void,
-  params: string,
+  params: IChangeStatus,
   errorCallback?: () => void,
   useDefault?: boolean
 ) => {
@@ -55,7 +56,10 @@ export const verifyCreator = async (
   }
   try {
     let response = await axios.get(adminUrl + "/creatorVerify", {
-      params: { creatorId: params, statusVerify: "verified" },
+      params: {
+        creatorId: params.messageId,
+        statusVerify: params.statusMessage,
+      },
     });
     successCallback(response?.data);
   } catch (e) {

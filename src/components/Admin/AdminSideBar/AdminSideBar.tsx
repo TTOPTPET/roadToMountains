@@ -1,4 +1,11 @@
-import { List, ListItem, Stack, Button, Divider } from "@mui/material";
+import {
+  List,
+  ListItem,
+  Stack,
+  Button,
+  Divider,
+  Typography,
+} from "@mui/material";
 import { NavLink as RouterLink, useLocation } from "react-router-dom";
 import { lightTurquoiseColor } from "../../../config/MUI/color/color";
 
@@ -34,6 +41,7 @@ export const AdminSideBar = () => {
   const location = useLocation();
   return (
     <Stack direction={"column"} position={"fixed"}>
+      <Typography variant={"h4"}>Панель админа</Typography>
       <List>
         {sideBarNavItems.map((item, index) => (
           <>

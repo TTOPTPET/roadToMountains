@@ -1,6 +1,6 @@
 import "./App.css";
 import dayjs from "dayjs";
-import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Container, ThemeProvider, Box } from "@mui/material";
 
 import { mainThemes } from "./config/MUI/themes/mainTheme/mainTheme";
@@ -9,7 +9,7 @@ import Footer from "./components/Footer/Footer";
 
 import { useDispatch } from "react-redux";
 import TourPage from "./pages/TourPage/TourPage";
-import { useEffect, Suspense, lazy } from "react";
+import { useEffect, Suspense } from "react";
 import { getUserInfo } from "./API/commonAPI";
 import { setUserInfo } from "./redux/UserInfo/UserInfoReducer";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
@@ -18,69 +18,70 @@ import { BAN_STATUS, REFRESH_TOKEN, TOKEN, USER_ROLE } from "./config/types";
 import { useCookies } from "react-cookie";
 import HelpButton from "./components/HelpButton/HelpButton";
 import ErrorReportModal from "./components/Modals/ErrorReportModal/ErrorReportModal";
+import { lazyWithRetry } from "./tools/lazyWithRetry";
 import SuccessMessageSendModal from "./components/Modals/SuccessMessageSendModal/SuccessMessageSendModal";
 
-const AdminPage = lazy(() =>
+const AdminPage = lazyWithRetry(() =>
   import("./pages/AdminPage/AdminPage").then(({ default: AdminPage }) => ({
     default: AdminPage,
   }))
 );
-const Authorization = lazy(() =>
+const Authorization = lazyWithRetry(() =>
   import("./pages/Authorization/Authorization").then(
     ({ default: Authorization }) => ({ default: Authorization })
   )
 );
-const CreatorLk = lazy(() =>
+const CreatorLk = lazyWithRetry(() =>
   import("./pages/CreatorLk/CreatorLk").then(({ default: CreatorLk }) => ({
     default: CreatorLk,
   }))
 );
-const NotificationsPage = lazy(() =>
+const NotificationsPage = lazyWithRetry(() =>
   import("./pages/NotificationsPage/NotificationsPage").then(
     ({ default: NotificationsPage }) => ({ default: NotificationsPage })
   )
 );
-const PaymentSettingsPage = lazy(() =>
+const PaymentSettingsPage = lazyWithRetry(() =>
   import("./pages/PaymentSettingsPage/PaymentSettingsPage").then(
     ({ default: PaymentSettingsPage }) => ({ default: PaymentSettingsPage })
   )
 );
-const StatisticPage = lazy(() =>
+const StatisticPage = lazyWithRetry(() =>
   import("./pages/StatisticPage/StatisticPage").then(
     ({ default: StatisticPage }) => ({ default: StatisticPage })
   )
 );
-const TourCalendarPage = lazy(() =>
+const TourCalendarPage = lazyWithRetry(() =>
   import("./pages/TourCalendarPage/TourCalendarPage").then(
     ({ default: TourCalendarPage }) => ({ default: TourCalendarPage })
   )
 );
-const TouristLk = lazy(() =>
+const TouristLk = lazyWithRetry(() =>
   import("./pages/TouristLk/TouristLk").then(({ default: TouristLk }) => ({
     default: TouristLk,
   }))
 );
-const TourListPage = lazy(() =>
+const TourListPage = lazyWithRetry(() =>
   import("./pages/TourListPage/TourListPage").then(
     ({ default: TourListPage }) => ({ default: TourListPage })
   )
 );
-const AddTourPage = lazy(() =>
+const AddTourPage = lazyWithRetry(() =>
   import("./pages/AddTourPage/AddTourPage").then(
     ({ default: AddTourPage }) => ({ default: AddTourPage })
   )
 );
-const StartPage = lazy(() =>
+const StartPage = lazyWithRetry(() =>
   import("./pages/StartPage/StartPage").then(({ default: StartPage }) => ({
     default: StartPage,
   }))
 );
-const EditCreatorInfoPage = lazy(() =>
+const EditCreatorInfoPage = lazyWithRetry(() =>
   import("./pages/EditCreatorInfoPage/EditCreatorInfoPage").then(
     ({ default: EditCreatorInfoPage }) => ({ default: EditCreatorInfoPage })
   )
 );
-const EditTouristInfoPage = lazy(() =>
+const EditTouristInfoPage = lazyWithRetry(() =>
   import("./pages/EditTouristInfoPage/EditTouristInfoPage").then(
     ({ default: EditTouristInfoPage }) => ({ default: EditTouristInfoPage })
   )
