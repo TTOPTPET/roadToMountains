@@ -4,10 +4,12 @@ import {
   Accordion,
   AccordionDetails,
   AccordionSummary,
+  Autocomplete,
   Button,
   Grid,
   Stack,
   SvgIcon,
+  TextField,
   Typography,
 } from "@mui/material";
 import { mobileWidth } from "../../../config/config";
@@ -18,25 +20,41 @@ import {
   userBan,
   verifyCreator,
 } from "../../../API/adminAPI";
-import { IChangeStatus } from "../../../models/adminModels/IChangeStatus";
 import { ReactComponent as DownloadIcon } from "../../../media/download.svg";
 import dayjs from "dayjs";
 
-enum messageStatus {
+enum MessageStatus {
   notRead = "notRead",
   read = "read",
   solved = "solved",
 }
 
-enum verifyStatus {
+enum VerifyStatus {
   notVerified = "notVerified",
   verified = "verified",
   sendVerified = "sendVerified",
   waitVerified = "waitVerified",
 }
 
+const verifyTypes = [
+  { id: VerifyStatus.notVerified, name: "Не подтверждён" },
+  { id: VerifyStatus.verified, name: "Подтверджён" },
+  { id: VerifyStatus.sendVerified, name: "Отправлен на подтверждение" },
+  { id: VerifyStatus.waitVerified, name: "Ожидает подтверждения" },
+];
+
+const messageTypes = [
+  { id: MessageStatus.notRead, name: "Не прочитано" },
+  { id: MessageStatus.read, name: "Прочитано" },
+  { id: MessageStatus.solved, name: "Решено" },
+];
+
 export const AdminComponent: FC<IAdminComponent> = (props: IAdminComponent) => {
   const [expanded, setExpanded] = useState<boolean>(false);
+  const [statusVerify, setStatusVerify] = useState<string>(
+    VerifyStatus.verified
+  );
+  const [statusMessage, setStatusMessage] = useState<string>(undefined);
 
   const handlerUserBanClick = (touristId: string) => {
     userBan((value) => value, touristId, undefined, false);
@@ -46,12 +64,22 @@ export const AdminComponent: FC<IAdminComponent> = (props: IAdminComponent) => {
     tourBan((value) => value, tourId, undefined, false);
   };
 
-  const handlerMessageStatusClick = (status: IChangeStatus) => {
-    changeMessageStatus((value) => value, status, undefined, false);
+  const handlerMessageStatusClick = (messageId: string) => {
+    changeMessageStatus(
+      (value) => value,
+      { messageId: messageId, statusMessage: statusMessage },
+      undefined,
+      false
+    );
   };
 
   const handlerVerifyStatusClick = (creatorId: string) => {
-    verifyCreator((value) => value, creatorId, undefined, false);
+    verifyCreator(
+      (value) => value,
+      { messageId: creatorId, statusMessage: statusVerify },
+      undefined,
+      false
+    );
   };
 
   const handlerDownloadClick = (path: string) => {
@@ -63,11 +91,11 @@ export const AdminComponent: FC<IAdminComponent> = (props: IAdminComponent) => {
 
   const getMessageStatus = (status: string): string => {
     switch (status) {
-      case messageStatus.notRead:
+      case MessageStatus.notRead:
         return "Не прочитано";
-      case messageStatus.read:
+      case MessageStatus.read:
         return "Прочитано";
-      case messageStatus.solved:
+      case MessageStatus.solved:
         return "Решено";
       default:
         return "Неизвестный тип";
@@ -76,16 +104,29 @@ export const AdminComponent: FC<IAdminComponent> = (props: IAdminComponent) => {
 
   const getVerifyStatus = (status: string): string => {
     switch (status) {
-      case verifyStatus.notVerified:
-        return "Не подтверджен";
-      case verifyStatus.verified:
-        return "Подтверджен";
-      case verifyStatus.sendVerified:
+      case VerifyStatus.notVerified:
+        return "Не подтверджён";
+      case VerifyStatus.verified:
+        return "Подтверджён";
+      case VerifyStatus.sendVerified:
         return "Отправлен на подтверждение";
-      case verifyStatus.waitVerified:
+      case VerifyStatus.waitVerified:
         return "Ожидает подтверждения";
       default:
         return "Неизвестный статус";
+    }
+  };
+
+  const autocompleteChanged = (value: string) => {
+    switch (props.type) {
+      case "creator":
+        setStatusVerify(value);
+        break;
+      case "message":
+        setStatusMessage(value);
+        break;
+      default:
+        break;
     }
   };
 
@@ -208,7 +249,9 @@ export const AdminComponent: FC<IAdminComponent> = (props: IAdminComponent) => {
       const { tourInfo, message } = dataMessage;
       const { tourDate, tourName, creatorName } = tourInfo;
       const { from, to } = tourDate;
-
+      if (statusMessage === undefined) {
+        setStatusMessage(statusMessage);
+      }
       return (
         <div>
           <Accordion
@@ -259,12 +302,23 @@ export const AdminComponent: FC<IAdminComponent> = (props: IAdminComponent) => {
                 </Grid>
                 <Grid item xs={7} className="user__ban">
                   <Stack gap={2}>
+                    <Autocomplete
+                      id="statusPicker"
+                      onChange={(e, value) => autocompleteChanged(value?.id)}
+                      options={messageTypes}
+                      getOptionLabel={(option) => option.name}
+                      renderInput={(params) => (
+                        <TextField
+                          {...params}
+                          placeholder="Выбор статуса"
+                          color="secondary"
+                        />
+                      )}
+                    />
                     <Button
                       variant={"text"}
                       sx={{ width: "100%", fontSize: "18px" }}
-                      onClick={() =>
-                        handlerMessageStatusClick({ messageId, statusMessage })
-                      }
+                      onClick={() => handlerMessageStatusClick(messageId)}
                     >
                       Переключить статус заявки
                     </Button>
@@ -350,6 +404,19 @@ export const AdminComponent: FC<IAdminComponent> = (props: IAdminComponent) => {
                 {getVerifyStatus(statusVerify)}:{" "}
                 {dayjs(changeVerifyDate).format("D MMMM YYYY")}
               </Typography>
+              <Autocomplete
+                id="statusPicker"
+                onChange={(e, value) => autocompleteChanged(value?.id)}
+                options={verifyTypes}
+                getOptionLabel={(option) => option.name}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    placeholder="Выбор статуса"
+                    color="secondary"
+                  />
+                )}
+              />
               <Button
                 sx={{ width: "100%", fontSize: "18px" }}
                 onClick={() => handlerVerifyStatusClick(creatorId)}

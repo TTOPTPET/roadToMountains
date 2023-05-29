@@ -10,11 +10,10 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { useState, FC, useEffect } from "react";
+import { useState, FC } from "react";
 import { setTourField } from "../../../redux/AddTour/AddTourReducer";
 import { redColor } from "../../../config/MUI/color/color";
 import MapLeaflet from "../../../components/MapLeaflet/MapLeaflet";
-import { setTourInfo } from "../../../redux/TourInfo/TourInfoReducer";
 
 const turnOnDefault: string[] = ["Не включено", "Включено"];
 

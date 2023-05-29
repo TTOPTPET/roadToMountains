@@ -4,6 +4,8 @@ import {
   Button,
   useTheme,
   useMediaQuery,
+  Skeleton,
+  Box,
 } from "@mui/material";
 import dayjs from "dayjs";
 import { FC } from "react";
@@ -35,6 +37,13 @@ export const TourDetails: FC<ITourDetailsProps> = ({
   const freeTagConverter = (recordValue: TourDetailsType) => {
     switch (recordValue.type) {
       case "record":
+        if (
+          Object.values(recordValue.tour?.freeServices).every(
+            (item) => item === "" || undefined
+          )
+        ) {
+          return "Ничего не включено";
+        }
         return recordValue.tour?.freeServices
           ? recordValue.tour?.freeServices.map((service, index) =>
               index === recordValue.tour?.freeServices.length - 1
@@ -43,6 +52,13 @@ export const TourDetails: FC<ITourDetailsProps> = ({
             )
           : "Ничего не включено";
       case "tourInfo":
+        if (
+          Object.values(recordValue?.tourServices?.freeServices).every(
+            (item) => item === "" || undefined
+          )
+        ) {
+          return "Ничего не включено";
+        }
         return recordValue?.tourServices?.freeServices
           ? recordValue?.tourServices?.freeServices.map((service, index) =>
               index === recordValue?.tourServices?.freeServices.length - 1
@@ -52,6 +68,29 @@ export const TourDetails: FC<ITourDetailsProps> = ({
           : "Ничего не включено";
     }
   };
+
+  const housingIncludeConverter = (housingInclude: {
+    housingName: string;
+    housingAddress: string;
+    housingDescription?: string;
+  }) => {
+    if (Object.values(housingInclude).every((item) => item === "")) {
+      return "Проживание не включено";
+    } else {
+      let housingLabel = "";
+      Object.values(housingInclude)
+        .filter((item) => item !== "" || undefined)
+        .forEach((item, index) => {
+          if (index === Object.values(housingInclude).length - 1) {
+            housingLabel += item;
+            return;
+          }
+          housingLabel += item + ", ";
+        });
+      return housingLabel;
+    }
+  };
+
   switch (record.type) {
     case "record":
       return (
@@ -96,12 +135,7 @@ export const TourDetails: FC<ITourDetailsProps> = ({
           </Stack>
           <Typography variant={"h6"}>Проживание</Typography>
           <Typography variant={"caption"}>
-            {record.tour?.housingInclude &&
-              (record.tour?.housingInclude.housingName || "") +
-                ", " +
-                (record.tour?.housingInclude.housingAddress || "") +
-                ", " +
-                (record.tour?.housingInclude.housingDescription || "")}
+            {housingIncludeConverter(record?.tour?.housingInclude)}
           </Typography>
           <Typography variant={"h6"}>Страхование</Typography>
           <Typography variant={"caption"}>
@@ -119,7 +153,7 @@ export const TourDetails: FC<ITourDetailsProps> = ({
             direction={"row"}
           >
             <Typography variant={"caption"}>
-              {record.contactInformation}
+              {record?.contactInformation || "Контакты не указаны"}
             </Typography>
             {!lessThenSmall && (
               <Button
@@ -185,13 +219,39 @@ export const TourDetails: FC<ITourDetailsProps> = ({
               </Stack>
             </Stack>
           )}
-          <MapLeaflet
-            width={"100%"}
-            height={"330px"}
-            accessType="observe"
-            mapCenter={record?.tour?.mapPoints && record?.tour?.mapPoints[0]}
-            positions={record?.tour?.mapPoints}
-          />
+          {record?.tour?.mapPoints && record?.tour?.mapPoints.length === 0 ? (
+            <Box sx={{ width: "100%", position: "relative" }}>
+              <Skeleton
+                variant="rounded"
+                height={"330px"}
+                sx={{ borderRadius: "10px" }}
+              />
+              <Typography
+                variant={"h4"}
+                sx={{
+                  position: "absolute",
+                  top: "50%",
+                  left: "50%",
+                  textAlign: "center",
+                  transform: "translatey(-50%) translatex(-50%)",
+                  color: "rgba(0, 0, 0, 0.2)",
+                  textTransform: "uppercase",
+                }}
+              >
+                Маршрут не выбран
+              </Typography>
+            </Box>
+          ) : (
+            <MapLeaflet
+              width={"100%"}
+              height={"330px"}
+              accessType="observe"
+              mapCenter={
+                record?.tour?.mapPoints ? record?.tour?.mapPoints[0] : undefined
+              }
+              positions={record?.tour?.mapPoints}
+            />
+          )}
         </Stack>
       );
 
@@ -204,11 +264,7 @@ export const TourDetails: FC<ITourDetailsProps> = ({
           </Typography>
           <Typography variant={"h6"}>Проживание</Typography>
           <Typography variant={"caption"}>
-            {(record?.housingInclude?.housingName || "Отель") +
-              ", " +
-              (record?.housingInclude?.housingAddress || "Адрес") +
-              ", " +
-              (record?.housingInclude?.housingDescription || "Описание")}
+            {housingIncludeConverter(record?.housingInclude)}
           </Typography>
           <Typography variant={"h6"}>Страхование</Typography>
           <Typography variant={"caption"}>
@@ -233,13 +289,37 @@ export const TourDetails: FC<ITourDetailsProps> = ({
             {freeTagConverter(record)}
           </Typography>
           <Typography variant={"h5"}>Маршрут</Typography>
-          <MapLeaflet
-            width={"100%"}
-            height={"330px"}
-            accessType="observe"
-            mapCenter={record?.mapPoints ? record?.mapPoints[0] : undefined}
-            positions={record?.mapPoints}
-          />
+          {record?.mapPoints && record?.mapPoints.length === 0 ? (
+            <Box sx={{ width: "100%", position: "relative" }}>
+              <Skeleton
+                variant="rounded"
+                height={"330px"}
+                sx={{ borderRadius: "10px" }}
+              />
+              <Typography
+                variant={"h4"}
+                sx={{
+                  position: "absolute",
+                  top: "50%",
+                  left: "50%",
+                  textAlign: "center",
+                  transform: "translatey(-50%) translatex(-50%)",
+                  color: "rgba(0, 0, 0, 0.2)",
+                  textTransform: "uppercase",
+                }}
+              >
+                Маршрут не выбран
+              </Typography>
+            </Box>
+          ) : (
+            <MapLeaflet
+              width={"100%"}
+              height={"330px"}
+              accessType="observe"
+              mapCenter={record?.mapPoints ? record?.mapPoints[0] : undefined}
+              positions={record?.mapPoints}
+            />
+          )}
         </Stack>
       );
     default:
