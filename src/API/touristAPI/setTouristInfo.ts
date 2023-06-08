@@ -1,6 +1,7 @@
 import axios from "axios";
 import { touristUrl } from "../../config/config";
 import { ITouristInfo } from "../../models/userModels/IUserInfo";
+import cloneDeep from "lodash/cloneDeep";
 
 export const setTouristInfo = async (
   data: ITouristInfo,
@@ -13,12 +14,13 @@ export const setTouristInfo = async (
     return;
   }
   try {
+    let copyData = cloneDeep(data);
     let formData = new FormData();
-    const dataUser = data.dataUser;
-    delete data.dataUser;
-    data = Object.assign(data, dataUser);
-    formData.append("dataUser", JSON.stringify(data));
-    let response = await axios.post(touristUrl + "/touristInfo", data);
+    const dataUser = copyData.dataUser;
+    delete copyData.dataUser;
+    copyData = Object.assign(copyData, dataUser);
+    formData.append("dataUser", JSON.stringify(copyData));
+    let response = await axios.post(touristUrl + "/touristInfo", copyData);
     successCallback(response?.data);
   } catch (e: any) {
     if (e?.response?.status === 300) {

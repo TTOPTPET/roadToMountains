@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 
 function NavTool() {
-  const [activeState, setActiveState] = useState<Boolean>();
+  const [activeState, setActiveState] = useState<Boolean>(true);
   return (
     <div
       className="nav-tool"
@@ -14,12 +14,18 @@ function NavTool() {
         paddingRight: "10px",
         paddingBottom: "20px",
         overflow: "hidden",
+        pointerEvents: activeState ? "none" : "all",
       }}
     >
       <div
         className="nav-tool__btn"
         onClick={() => setActiveState((activeState) => !activeState)}
-        style={{ cursor: "pointer", fontSize: "40px", textAlign: "start" }}
+        style={{
+          cursor: "pointer",
+          fontSize: "40px",
+          textAlign: "start",
+          pointerEvents: "all",
+        }}
       >
         {activeState ? ">" : "<"}
       </div>

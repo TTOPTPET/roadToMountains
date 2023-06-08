@@ -3,6 +3,7 @@ import { urlUser } from "../../../config/config";
 import { IUserLogin } from "../../../models/authModels/IUserLogin";
 import { IUserRegister } from "../../../models/authModels/IUserRegister";
 import { IAuthResponse } from "../../../models/authModels/IAuthResponse";
+import { cloneDeep } from "lodash";
 
 const userAuthDefault: IAuthResponse = {
   accessToken: "TOKEN",
@@ -53,10 +54,11 @@ export const registerUser = async (
   errorCallback?: (prop: any) => void,
   useDefault?: boolean
 ) => {
-  delete data.passwordSecond;
+  let copyData = cloneDeep(data);
+  delete copyData.passwordSecond;
 
   try {
-    let response = await axios.post(urlUser + "/register", data);
+    let response = await axios.post(urlUser + "/register", copyData);
 
     successCallback(response?.status);
   } catch (e) {

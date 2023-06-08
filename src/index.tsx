@@ -16,17 +16,17 @@ const root = ReactDOM.createRoot(
 );
 
 root.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <CookiesProvider>
+  <CookiesProvider>
+    <React.StrictMode>
+      <Provider store={store}>
         <AxiosProvider>
           <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={"ru"}>
             <App />
           </LocalizationProvider>
         </AxiosProvider>
-      </CookiesProvider>
-    </Provider>
-  </React.StrictMode>
+      </Provider>
+    </React.StrictMode>
+  </CookiesProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function

@@ -19,7 +19,7 @@ function AxiosProvider({ children }: { children: JSX.Element }) {
     (config) => {
       console.log("tokenn", cookies);
       if (!config?.headers?.Authorization)
-        config.headers.Authorization = `Bearer ${cookies.TOKEN}`;
+        config.headers.Authorization = `Bearer ${cookies?.TOKEN}`;
       return config;
     },
     (error) => {
@@ -38,7 +38,7 @@ function AxiosProvider({ children }: { children: JSX.Element }) {
         if (
           err.response.status === 422 &&
           !originalConfig._retry &&
-          cookies.REFRESH_TOKEN
+          cookies?.REFRESH_TOKEN
         ) {
           originalConfig._retry = true;
 
@@ -46,9 +46,8 @@ function AxiosProvider({ children }: { children: JSX.Element }) {
             let newToken;
             await refreshToken(cookies.REFRESH_TOKEN, (resp) => {
               newToken = resp?.accessToken;
-              removeCookies(TOKEN, { path: "/" });
+              // removeCookies(TOKEN, { path: "/" });
               setCookies(TOKEN, resp?.accessToken, { path: "/" });
-              newToken = resp?.accessToken;
             });
             return axios.request({
               ...originalConfig,
