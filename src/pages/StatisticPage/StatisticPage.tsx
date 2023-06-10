@@ -1,16 +1,45 @@
-import { useState } from "react";
-import MapLeaflet from "../../components/MapLeaflet/MapLeaflet";
+import { useEffect, useState } from "react";
+import { Box, Typography } from "@mui/material";
+import {
+  StatisticItem,
+  StatisticSearch,
+  StatisticTable,
+} from "../../components/StatisticModules";
+import { IStatistic } from "../../models/statisticModels/IStatistic";
+import getStatistic from "../../API/statisticAPI/getStatistic";
+import { IStatisticSearch } from "../../models/statisticModels/IStatisticSearch";
 
 function StatisticPage() {
-  const [positions, setPositions] = useState<[number, number][]>([]);
+  const [statistic, setStatistic] = useState<IStatistic[]>([]);
+  const [statisticSearch, setStatisticSearch] = useState<IStatisticSearch>({
+    dateFrom: "",
+    dateTo: "",
+  });
+
+  useEffect(() => {
+    getStatistic(
+      statisticSearch,
+      (value) => setStatistic(value),
+      undefined,
+      true
+    );
+  }, []);
   return (
-    <MapLeaflet
-      width={"300px"}
-      height={"300px"}
-      accessType="insert"
-      positions={positions}
-      setPositions={(pos) => setPositions(pos)}
-    />
+    <Box>
+      <Typography variant={"h3"} mb={5}>
+        Статистика
+      </Typography>
+      <StatisticSearch
+        statisticSearch={statisticSearch}
+        setStatisticSearch={setStatisticSearch}
+      />
+      <StatisticTable>
+        {statistic &&
+          statistic.map((item, index) => (
+            <StatisticItem key={index} statistic={item} />
+          ))}
+      </StatisticTable>
+    </Box>
   );
 }
 
