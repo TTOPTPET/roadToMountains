@@ -131,7 +131,12 @@ export default function NewPublicModal({
                   <TextField
                     color="secondary"
                     {...props}
-                    error={props.error && props.inputProps.value !== ""}
+                    error={
+                      (props.error && props.inputProps.value !== "") ||
+                      dayjs(editedPublic?.tourDate?.from).isBefore(
+                        dayjs(new Date())
+                      )
+                    }
                     inputProps={{
                       ...props.inputProps,
                       placeholder: "Дата и время начала",
@@ -158,7 +163,12 @@ export default function NewPublicModal({
                   <TextField
                     color="secondary"
                     {...props}
-                    error={props.error && props.inputProps.value !== ""}
+                    error={
+                      (props.error && props.inputProps.value !== "") ||
+                      dayjs(editedPublic?.tourDate?.to).isBefore(
+                        dayjs(new Date())
+                      )
+                    }
                     inputProps={{
                       ...props.inputProps,
                       placeholder: "Дата и время конца",

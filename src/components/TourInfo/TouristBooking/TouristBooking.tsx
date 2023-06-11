@@ -14,6 +14,7 @@ interface ITouristBookingProps {
   touristData: ITouristBookingData;
   setBookingData: Dispatch<SetStateAction<ITourBooking>>;
   index: number;
+  purchaseError: boolean;
 }
 
 export const TouristBooking: FC<ITouristBookingProps> = ({
@@ -21,6 +22,7 @@ export const TouristBooking: FC<ITouristBookingProps> = ({
   touristData,
   setBookingData,
   index,
+  purchaseError,
 }) => {
   const handlerFieldChange = (
     key: keyof ITouristBookingData,
@@ -67,12 +69,20 @@ export const TouristBooking: FC<ITouristBookingProps> = ({
           placeholder={"ФИО"}
           color={"secondary"}
           value={touristData?.name || ""}
+          error={
+            touristData?.name === "" ||
+            (touristData?.name === undefined && purchaseError)
+          }
           onChange={(e) => handlerFieldChange("name", e.target.value)}
         />
         <TextField
           placeholder={"Возраст"}
           color={"secondary"}
           value={touristData?.age || ""}
+          error={
+            touristData?.age === "" ||
+            (touristData?.age === undefined && purchaseError)
+          }
           onChange={(e) => handlerFieldChange("age", e.target.value)}
         />
         <Autocomplete
@@ -85,6 +95,11 @@ export const TouristBooking: FC<ITouristBookingProps> = ({
             <TextField
               placeholder={"Пол"}
               color={"secondary"}
+              error={
+                touristData?.sex === "" ||
+                (touristData?.sex === undefined && purchaseError)
+              }
+              onChange={(e) => handlerFieldChange("sex", e.target.value)}
               {...params}
               value={touristData?.sex || ""}
               InputProps={{ ...params.InputProps, type: "search" }}

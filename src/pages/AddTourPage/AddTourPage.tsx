@@ -6,13 +6,11 @@ import {
   clearTourFields,
   setTourField,
 } from "../../redux/AddTour/AddTourReducer";
-import { getTourInfo } from "../../API/tourAPI/getTourInfo";
 import AddTourRouting from "./AddTourRouting/AddTourRouting";
 import AddTourSteps from "./AddTourSteps/AddTourSteps";
 import { IFilter } from "../../models/tourListModels/IFilter";
 import { getFilters } from "../../API/tourListAPI";
 import { getMyTourById } from "../../API/creatorAPI/getMyTourById";
-import { Box } from "@mui/material";
 
 export enum addTourStepsMap {
   first,

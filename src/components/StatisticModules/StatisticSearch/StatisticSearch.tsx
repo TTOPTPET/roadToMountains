@@ -1,6 +1,6 @@
 import { Dispatch, FC, SetStateAction } from "react";
 import { IStatisticSearch } from "../../../models/statisticModels/IStatisticSearch";
-import { Autocomplete, Button, Stack, TextField } from "@mui/material";
+import { Button, Stack, TextField } from "@mui/material";
 import { DatePicker } from "@mui/x-date-pickers";
 import dayjs, { Dayjs } from "dayjs";
 
@@ -23,21 +23,6 @@ const StatisticSearch: FC<IStatisticSearchProps> = ({
 
   return (
     <Stack direction={"row"} columnGap={5}>
-      <Autocomplete
-        freeSolo
-        disableClearable
-        value={""}
-        options={[]}
-        renderInput={(params) => (
-          <TextField
-            placeholder={"Пол"}
-            color={"primary"}
-            {...params}
-            value={""}
-            InputProps={{ ...params.InputProps, type: "search" }}
-          />
-        )}
-      />
       <DatePicker
         value={dayjs(statisticSearch?.dateFrom || "")}
         onChange={(newValue) => handlerChangeSearchField("dateFrom", newValue)}
@@ -47,7 +32,7 @@ const StatisticSearch: FC<IStatisticSearchProps> = ({
             error={props.error && props.inputProps.value !== ""}
             inputProps={{
               ...props.inputProps,
-              placeholder: "Дата заезда",
+              placeholder: "Дата начала",
             }}
           />
         )}
@@ -61,7 +46,7 @@ const StatisticSearch: FC<IStatisticSearchProps> = ({
             error={props.error && props.inputProps.value !== ""}
             inputProps={{
               ...props.inputProps,
-              placeholder: "Дата выезда",
+              placeholder: "Дата конца",
             }}
           />
         )}

@@ -26,9 +26,7 @@ import {
 } from "../../redux/Modal/ModalReducer";
 import { UserType } from "../../models/userModels/IUserInfo";
 import { useEffect } from "react";
-import { setUserInfo } from "../../redux/UserInfo/UserInfoReducer";
-import { getUserInfo } from "../../API/commonAPI";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   BAN_STATUS,
   REFRESH_TOKEN,
@@ -42,6 +40,19 @@ const registerTypes = [
   { id: UserType.tourist, name: "турист" },
 ];
 
+const loginDefault: IUserLogin = {
+  login: undefined,
+  password: undefined,
+};
+
+const registerDefault: IUserRegister = {
+  email: undefined,
+  password: undefined,
+  phone: undefined,
+  typeUser: undefined,
+  passwordSecond: undefined,
+};
+
 function Authorization() {
   const [cookies, setCookies] = useCookies([
     TOKEN,
@@ -50,17 +61,6 @@ function Authorization() {
     USER_ROLE,
   ]);
 
-  const loginDefault: IUserLogin = {
-    login: "",
-    password: "",
-  };
-  const registerDefault: IUserRegister = {
-    email: "",
-    phone: "",
-    password: "",
-    passwordSecond: "",
-    typeUser: null,
-  };
   const [userLoginData, setUserLoginData] = useState<IUserLogin>(loginDefault);
   const [userRegisterData, setUserRegisterData] =
     useState<IUserRegister>(registerDefault);
@@ -207,7 +207,10 @@ function Authorization() {
                     key={index}
                     placeholder={value.name}
                     type={value.type}
-                    error={errAuth}
+                    error={
+                      errAuth ||
+                      userLoginData[key as keyof ILoginComponent] === ""
+                    }
                     required={value.required}
                     value={userLoginData[key as keyof ILoginComponent]}
                     onChange={(e) =>
@@ -226,7 +229,9 @@ function Authorization() {
                     placeholder={value.name}
                     type={value.type}
                     error={
-                      value.name === "Повторите пароль" && passwordErrorStatus
+                      (value.name === "Повторите пароль" &&
+                        passwordErrorStatus) ||
+                      userRegisterData[key as keyof ILoginComponent] === ""
                     }
                     required={value.required}
                     value={userRegisterData[key as keyof IRegisterComponent]}

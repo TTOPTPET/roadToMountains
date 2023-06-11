@@ -1,6 +1,6 @@
 import { TextField, Typography } from "@mui/material";
 import { Box, Stack } from "@mui/system";
-import { Dispatch, SetStateAction, FC, useEffect } from "react";
+import { Dispatch, SetStateAction, FC, useEffect, useState } from "react";
 import { AddTouristButton } from "../../../components/AddTourModules/AddTouristButton/AddTouristButton";
 import { TourDetails } from "../../../components/MyTours/TourSummary/TourDetails";
 import { TourBooking } from "../../../components/TourInfo/TourBooking/TourBooking";
@@ -33,6 +33,7 @@ export const TourSecondPage: FC<ITourSecondPageProps> = ({
   selectedDate,
   setSelectedDate,
 }) => {
+  const [purchaseError, setPurchaseError] = useState<boolean>(false);
   useEffect(() => {
     if (
       touristInfo.length < bookingData.size ||
@@ -52,6 +53,7 @@ export const TourSecondPage: FC<ITourSecondPageProps> = ({
       touristData={item}
       setBookingData={setBookingData}
       index={index}
+      purchaseError={purchaseError}
     />
   ));
   return (
@@ -65,6 +67,7 @@ export const TourSecondPage: FC<ITourSecondPageProps> = ({
         isFirstPage={false}
         selectedDate={selectedDate}
         setSelectedDate={setSelectedDate}
+        setError={setPurchaseError}
       />
       <Box
         sx={{ width: "100%", backgroundColor: whiteColor }}
@@ -85,6 +88,7 @@ export const TourSecondPage: FC<ITourSecondPageProps> = ({
             touristData={item}
             setBookingData={setBookingData}
             index={index}
+            purchaseError={purchaseError}
           />
         ))}
       </Stack>
