@@ -38,6 +38,7 @@ interface ITourBookingProps {
   selectedDate: ITourBookingDate;
   setSelectedDate: Dispatch<SetStateAction<ITourBookingDate>>;
   isFirstPage: boolean;
+  setError: Dispatch<SetStateAction<boolean>>;
 }
 
 const handlerDateConverter = (dates: ITourBookingDate[]) => {
@@ -61,6 +62,7 @@ export const TourBooking: FC<ITourBookingProps> = ({
   selectedDate,
   setSelectedDate,
   isFirstPage,
+  setError,
 }) => {
   const [datePickerValue, setDatePickerValue] = useState(
     handlerDateConverter(bookingDate)
@@ -121,6 +123,7 @@ export const TourBooking: FC<ITourBookingProps> = ({
       }
     });
   };
+
   const handleDateChange = (type: "from" | "to", value: Dayjs) => {
     try {
       const stringDate = value ? value.toISOString() : "";
@@ -145,6 +148,28 @@ export const TourBooking: FC<ITourBookingProps> = ({
     } catch (error) {
       console.log("invalid Data format");
     }
+  };
+
+  const handlerPurchaseClick = (momentPay: boolean) => {
+    booking(
+      momentPay,
+      bookingData,
+      (data) => {
+        if (momentPay) {
+          dispatch(setModalActive("successPayModal"));
+        } else {
+          dispatch(
+            setModalActive("successBookingModal", {
+              paymentDeadline: data?.paymentDeadline,
+            })
+          );
+        }
+      },
+      () => {
+        dispatch(setModalActive("errorBookingModal"));
+        setError(true);
+      }
+    );
   };
 
   const DatePickerMemo = memo(() => {
@@ -291,40 +316,10 @@ export const TourBooking: FC<ITourBookingProps> = ({
             </Button>
           ) : (
             <Stack direction={"row"} gap={2}>
-              <Button
-                onClick={() => {
-                  booking(
-                    true,
-                    bookingData,
-                    () => {
-                      dispatch(setModalActive("successPayModal"));
-                    },
-                    () => {
-                      dispatch(setModalActive("errorBookingModal"));
-                    }
-                  );
-                }}
-              >
+              <Button onClick={() => handlerPurchaseClick(true)}>
                 Оплатить
               </Button>
-              <Button
-                onClick={() => {
-                  booking(
-                    false,
-                    bookingData,
-                    (data) => {
-                      dispatch(
-                        setModalActive("successBookingModal", {
-                          paymentDeadline: data?.paymentDeadline,
-                        })
-                      );
-                    },
-                    () => {
-                      dispatch(setModalActive("errorBookingModal"));
-                    }
-                  );
-                }}
-              >
+              <Button onClick={() => handlerPurchaseClick(false)}>
                 Оплатить потом
               </Button>
             </Stack>

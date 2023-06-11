@@ -19,20 +19,20 @@ interface IDefaultState {
 
 const defaultState: IDefaultState = {
   tourFields: {
-    tourName: "",
-    tourDescription: "",
-    category: "",
-    complexity: "",
-    region: "",
-    price: null,
+    tourName: undefined,
+    tourDescription: undefined,
+    category: undefined,
+    complexity: undefined,
+    region: undefined,
+    price: undefined,
     photos: [],
     prices: {
-      from: null,
-      to: null,
+      from: undefined,
+      to: undefined,
     },
     recommendedAge: {
-      from: null,
-      to: null,
+      from: undefined,
+      to: undefined,
     },
     mapPoints: [],
     housingInclude: {

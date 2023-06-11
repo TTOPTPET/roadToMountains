@@ -333,7 +333,8 @@ export const AddTourSecondPage: FC<IAddTourSecondPageProps> = ({
                     <Radio
                       sx={{
                         color:
-                          (addError && tourInfo?.complexity === "") || undefined
+                          (addError && tourInfo?.complexity === undefined) ||
+                          tourInfo?.complexity === ""
                             ? redColor
                             : "",
                       }}
