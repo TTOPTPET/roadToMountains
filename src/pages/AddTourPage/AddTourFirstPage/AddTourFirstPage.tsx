@@ -10,19 +10,17 @@ import {
 } from "@mui/material";
 import { AddTourImage } from "../../../components/AddTourModules/AddTourImage/AddTourImage";
 import { Dispatch, SetStateAction, FC } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { setTourField } from "../../../redux/AddTour/AddTourReducer";
-import { RootState } from "../../../redux/store";
 import { Attention } from "../../../components/Attention/Attention";
 import { IFilter } from "../../../models/tourListModels/IFilter";
 import { StyledTextAreaAutosize } from "../../../config/MUI/styledComponents/StyledTextAreaAutosize";
 import { lightTurquoiseColor, redColor } from "../../../config/MUI/color/color";
+import { IAddTour } from "../../../models/addTourModels/IAddTour";
 
 interface IAddTourFirstPageProps {
   images: any[];
   setImage: Dispatch<SetStateAction<any[]>>;
-  files: any[];
-  setFiles: (prop: any[]) => void;
+  tourInfo: IAddTour;
+  setTourInfo: Dispatch<SetStateAction<IAddTour>>;
   filters: IFilter;
   isEditing: boolean;
   addError: boolean;
@@ -31,19 +29,15 @@ interface IAddTourFirstPageProps {
 export const AddTourFirstPage: FC<IAddTourFirstPageProps> = ({
   images,
   setImage,
-  files,
-  setFiles,
+  tourInfo,
+  setTourInfo,
   filters,
   isEditing,
   addError,
 }) => {
-  const dispatch = useDispatch();
-
-  const tourInfo = useSelector((state: RootState) => state.addTour.tourFields);
-  console.log(tourInfo);
   return (
     <Grid container justifyContent={"space-between"}>
-      <Grid item xs={5.2}>
+      <Grid item xs={5.2} minWidth={500}>
         <TextField
           placeholder={"Название тура"}
           value={tourInfo?.tourName || ""}
@@ -53,13 +47,15 @@ export const AddTourFirstPage: FC<IAddTourFirstPageProps> = ({
             tourInfo?.tourName === ""
           }
           sx={{ marginBottom: "15px" }}
-          onChange={(e) => dispatch(setTourField({ tourName: e.target.value }))}
+          onChange={(e) =>
+            setTourInfo({ ...tourInfo, tourName: e.target.value })
+          }
         />
         <AddTourImage
           images={images}
           setImage={setImage}
-          files={files}
-          setFiles={setFiles}
+          tourInfo={tourInfo}
+          setTourInfo={setTourInfo}
           isEditing={isEditing}
         />
         <Typography variant={"h6"} marginBottom={1}>
@@ -81,11 +77,11 @@ export const AddTourFirstPage: FC<IAddTourFirstPageProps> = ({
           }}
           value={tourInfo?.tourDescription || ""}
           onChange={(e) =>
-            dispatch(setTourField({ tourDescription: e.target.value }))
+            setTourInfo({ ...tourInfo, tourDescription: e.target.value })
           }
         />
       </Grid>
-      <Grid container item md={6} justifyContent={"flex-end"}>
+      <Grid container item xs={6} justifyContent={"flex-end"}>
         <Grid item>
           <Attention />
         </Grid>
@@ -115,13 +111,13 @@ export const AddTourFirstPage: FC<IAddTourFirstPageProps> = ({
                     tourInfo?.region === ""
                   }
                   onChange={(e) =>
-                    dispatch(setTourField({ region: e.target.value }))
+                    setTourInfo({ ...tourInfo, region: e.target.value })
                   }
                   InputProps={{ ...params.InputProps, type: "search" }}
                 />
               )}
               onChange={(e: any, value: string) =>
-                dispatch(setTourField({ region: value }))
+                setTourInfo({ ...tourInfo, region: e.target.value })
               }
             />
             <Typography variant={"h6"} marginTop={30}>
@@ -139,14 +135,13 @@ export const AddTourFirstPage: FC<IAddTourFirstPageProps> = ({
                   tourInfo?.recommendedAge?.from === 0
                 }
                 onChange={(e) =>
-                  dispatch(
-                    setTourField({
-                      recommendedAge: {
-                        ...tourInfo?.recommendedAge,
-                        from: +e.target.value,
-                      },
-                    })
-                  )
+                  setTourInfo({
+                    ...tourInfo,
+                    recommendedAge: {
+                      ...tourInfo?.recommendedAge,
+                      from: +e.target.value,
+                    },
+                  })
                 }
               />
               <TextField
@@ -160,14 +155,13 @@ export const AddTourFirstPage: FC<IAddTourFirstPageProps> = ({
                   tourInfo?.recommendedAge?.to === 0
                 }
                 onChange={(e) =>
-                  dispatch(
-                    setTourField({
-                      recommendedAge: {
-                        ...tourInfo?.recommendedAge,
-                        to: +e.target.value,
-                      },
-                    })
-                  )
+                  setTourInfo({
+                    ...tourInfo,
+                    recommendedAge: {
+                      ...tourInfo?.recommendedAge,
+                      to: +e.target.value,
+                    },
+                  })
                 }
               />
             </Stack>
@@ -187,7 +181,10 @@ export const AddTourFirstPage: FC<IAddTourFirstPageProps> = ({
               }
               required
               onChange={(e) =>
-                dispatch(setTourField({ price: +e.target.value }))
+                setTourInfo({
+                  ...tourInfo,
+                  price: +e.target.value,
+                })
               }
             />
           </Grid>
@@ -196,7 +193,10 @@ export const AddTourFirstPage: FC<IAddTourFirstPageProps> = ({
             <RadioGroup
               value={tourInfo?.category || ""}
               onChange={(e) =>
-                dispatch(setTourField({ category: e.target.value }))
+                setTourInfo({
+                  ...tourInfo,
+                  category: e.target.value,
+                })
               }
             >
               {filters.category.map((category, index) => (

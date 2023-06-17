@@ -15,15 +15,18 @@ const StatisticTable = ({ children }: { children: JSX.Element[] }) => {
         borderRadius: 5,
         boxShadow:
           "0px 1px 1px rgba(0, 0, 0, 0.2), 0px 2px 2px rgba(0, 0, 0, 0.14), 0px 1px 5px rgba(0, 0, 0, 0.12);",
+        overflowX: "hidden",
       }}
     >
       <Table>
         <TableHead>
-          <TableCell />
-          <TableCell>Тур</TableCell>
-          <TableCell>Статус</TableCell>
-          <TableCell>Доход</TableCell>
-          <TableCell>Количество человек</TableCell>
+          <TableCell style={{ fontWeight: "bold" }} />
+          <TableCell style={{ fontWeight: "bold" }}>Тур</TableCell>
+          <TableCell style={{ fontWeight: "bold" }}>Статус</TableCell>
+          <TableCell style={{ fontWeight: "bold" }}>Доход</TableCell>
+          <TableCell style={{ fontWeight: "bold" }}>
+            Количество человек
+          </TableCell>
         </TableHead>
         <TableBody>{children}</TableBody>
       </Table>

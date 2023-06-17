@@ -8,20 +8,18 @@ import {
 } from "@mui/material";
 import imageCompression, { Options } from "browser-image-compression";
 import { Dispatch, SetStateAction, useState, FC } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { baseUrl } from "../../../config/config";
 import { ReactComponent as AddImageLogo } from "../../../media/add-image.svg";
 import { ReactComponent as DeleteIcon } from "../../../media/DeleteCreatorDocumentIcon.svg";
-import { setPhotoToDelete } from "../../../redux/Photo/PhotoReducer";
-import { RootState } from "../../../redux/store";
+import { IAddTour } from "../../../models/addTourModels/IAddTour";
 
 const MAXIMUM_UPLOAD = 100 * 1024 * 1024;
 
 interface IAddTourImageProps {
   images: any[];
   setImage: Dispatch<SetStateAction<any[]>>;
-  files: any[];
-  setFiles: (prop: any[]) => void;
+  tourInfo: IAddTour;
+  setTourInfo: Dispatch<SetStateAction<IAddTour>>;
   isEditing: boolean;
 }
 
@@ -34,15 +32,11 @@ const resizeOptions: Options = {
 export const AddTourImage: FC<IAddTourImageProps> = ({
   images,
   setImage,
-  files,
-  setFiles,
+  tourInfo,
+  setTourInfo,
   isEditing,
 }) => {
   const [reader] = useState(new FileReader());
-
-  const tourInfo = useSelector((state: RootState) => state.addTour.tourFields);
-
-  const dispatch = useDispatch();
 
   const fileHandler = async (e: any) => {
     const file = e.target.files[0];
@@ -57,14 +51,15 @@ export const AddTourImage: FC<IAddTourImageProps> = ({
       });
       images.pop();
       setImage([...images]);
-      setFiles([...files, resizedFile]);
-      //new File([resizedFile], resizedFile.name, { type: resizedFile.type })
+      setTourInfo({
+        ...tourInfo,
+        photos: [...(tourInfo.photos || []), resizedFile],
+      });
     }
   };
   const handlerDeleteImage = (index: number) => {
     if (isEditing) {
       if (tourInfo.photos.includes(images[index])) {
-        dispatch(setPhotoToDelete(images[index]));
       }
 
       setImage([
@@ -82,7 +77,10 @@ export const AddTourImage: FC<IAddTourImageProps> = ({
           loading: true,
         },
       ]);
-      setFiles([...files.filter((item, i) => i !== index)]);
+      setTourInfo({
+        ...tourInfo,
+        photos: [...tourInfo.photos.filter((item, i) => i !== index)],
+      });
     }
   };
   return (

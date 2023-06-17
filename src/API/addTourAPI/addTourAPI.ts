@@ -1,14 +1,13 @@
 import axios from "axios";
 import { creatorUrl } from "../../config/config";
-import { TOKEN } from "../../config/types";
 import { IAddTour } from "../../models/addTourModels/IAddTour";
+import { cloneDeep } from "lodash";
 
 const addTourDefault: IAddTour = {};
 
 export const addTour = async (
   successCallback: (prop: IAddTour) => void,
   data: IAddTour,
-  files: any[],
   errorCallback?: () => void,
   useDefault?: boolean
 ) => {
@@ -19,9 +18,15 @@ export const addTour = async (
   try {
     console.log("addTour", data);
     let formData = new FormData();
-    formData.append("data", JSON.stringify(data));
-    files.forEach((file) => {
-      formData.append("tourPhoto", file);
+    const dataWihoutPhotos = cloneDeep(data);
+    if ("photos" in dataWihoutPhotos) {
+      delete dataWihoutPhotos.photos;
+    }
+    formData.append("data", JSON.stringify(dataWihoutPhotos));
+    data.photos.forEach((file) => {
+      if (typeof file !== "string") {
+        formData.append("tourPhoto", file);
+      }
     });
     let respone = await axios.post(creatorUrl + "/tour", formData, {
       headers: {

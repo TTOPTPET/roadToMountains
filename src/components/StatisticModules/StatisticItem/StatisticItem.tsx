@@ -9,6 +9,7 @@ import {
   TableCell,
   TableRow,
   Stack,
+  Grid,
 } from "@mui/material";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
@@ -56,12 +57,14 @@ const StatisticItem: FC<IStatisticItemProps> = ({ statistic }) => {
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={5}>
           <Collapse in={open} timeout={"auto"} unmountOnExit>
-            <Stack direction={"row"} gap={3} flexWrap={"wrap"}>
+            <Grid container padding={2} gap={5} ml={"5%"} mr={"5%"}>
               {statistic?.stats &&
                 statistic?.stats.map((item, index) => (
-                  <StatisticDiagram stat={item} key={index} />
+                  <Grid item md={5}>
+                    <StatisticDiagram stat={item} key={index} />
+                  </Grid>
                 ))}
-            </Stack>
+            </Grid>
           </Collapse>
         </TableCell>
       </TableRow>

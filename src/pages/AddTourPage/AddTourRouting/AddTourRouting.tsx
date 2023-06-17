@@ -1,19 +1,17 @@
 import { Box, Button } from "@mui/material";
 import { Stack } from "@mui/system";
-import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { clearPhotoToDelete } from "../../../redux/Photo/PhotoReducer";
-import { RootState } from "../../../redux/store";
 import { addTour } from "../../../API/addTourAPI/addTourAPI";
 import { editTour } from "../../../API/creatorAPI/editTour";
 import { addTourStepsMap } from "../AddTourPage";
-import { deletePhotoTour } from "../../../API/creatorAPI/daletePhotoTour";
 import { Dispatch, SetStateAction } from "react";
+import { IAddTour } from "../../../models/addTourModels/IAddTour";
 
 interface addTourRoutingProps {
   page: addTourStepsMap;
   setPage: (prop: any) => void;
-  files: any[];
+  tourInfo: IAddTour;
+  setTourInfo: Dispatch<SetStateAction<IAddTour>>;
   isEditing: boolean;
   tourId: string;
   setAddError: Dispatch<SetStateAction<boolean>>;
@@ -21,34 +19,28 @@ interface addTourRoutingProps {
 
 export default function AddTourRouting({
   page,
+  tourInfo,
+  setTourInfo,
   setPage,
-  files,
   isEditing,
   tourId,
   setAddError,
 }: addTourRoutingProps) {
   const navigate = useNavigate();
-  const newTour = useSelector((state: RootState) => state.addTour.tourFields);
-  const photosToDelete = useSelector(
-    (state: RootState) => state.photoToDelete.photo
-  );
-  const dispatch = useDispatch();
 
   const handlerSendTourClick = () => {
     if (isEditing) {
-      editTour(tourId, newTour, files, () => {
-        photosToDelete.forEach((file) => {
-          deletePhotoTour({ tourId, fileUrl: file });
-        });
+      console.log(tourInfo);
+      editTour(tourId, tourInfo, () => {
         navigate("/creator/lk");
       });
     } else {
+      console.log(tourInfo);
       addTour(
         () => {
           navigate("/creator/lk");
         },
-        newTour,
-        files,
+        tourInfo,
         () => setAddError(true),
         false
       );
@@ -66,7 +58,6 @@ export default function AddTourRouting({
                 return page - 1;
               } else {
                 navigate("/creator/lk");
-                dispatch(clearPhotoToDelete());
                 return page;
               }
             })
