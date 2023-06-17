@@ -1,5 +1,3 @@
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../../redux/store";
 import {
   Chip,
   FormControlLabel,
@@ -10,10 +8,10 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { useState, FC } from "react";
-import { setTourField } from "../../../redux/AddTour/AddTourReducer";
+import { useState, FC, Dispatch, SetStateAction } from "react";
 import { redColor } from "../../../config/MUI/color/color";
 import MapLeaflet from "../../../components/MapLeaflet/MapLeaflet";
+import { IAddTour } from "../../../models/addTourModels/IAddTour";
 
 const turnOnDefault: string[] = ["Не включено", "Включено"];
 
@@ -29,17 +27,17 @@ const difficultDefault: string[] = [
 
 interface IAddTourSecondPageProps {
   addError: boolean;
+  tourInfo: IAddTour;
+  setTourInfo: Dispatch<SetStateAction<IAddTour>>;
 }
 
 export const AddTourSecondPage: FC<IAddTourSecondPageProps> = ({
   addError,
+  tourInfo,
+  setTourInfo,
 }) => {
   const [residency, setResidency] = useState<string>(turnOnDefault[0]);
   const [insurance, setInsurance] = useState<string>(turnOnDefault[0]);
-
-  const dispatch = useDispatch();
-
-  const tourInfo = useSelector((state: RootState) => state.addTour.tourFields);
 
   const handleChangeResidency = () => {
     if (residency === turnOnDefault[0]) {
@@ -63,43 +61,40 @@ export const AddTourSecondPage: FC<IAddTourSecondPageProps> = ({
   ) => {
     switch (key) {
       case "free": {
-        dispatch(
-          setTourField({
-            tourServices: {
-              ...tourInfo?.tourServices,
-              freeServices: [
-                ...(tourInfo?.tourServices?.freeServices.filter(
-                  (item) => item !== e
-                ) || []),
-              ],
-            },
-          })
-        );
+        setTourInfo({
+          ...tourInfo,
+          tourServices: {
+            ...tourInfo?.tourServices,
+            freeServices: [
+              ...(tourInfo?.tourServices?.freeServices.filter(
+                (item) => item !== e
+              ) || []),
+            ],
+          },
+        });
         break;
       }
       case "additional": {
-        dispatch(
-          setTourField({
-            tourServices: {
-              ...tourInfo?.tourServices,
-              additionalServices: [
-                ...(tourInfo?.tourServices?.additionalServices.filter(
-                  (item) => item !== e
-                ) || []),
-              ],
-            },
-          })
-        );
+        setTourInfo({
+          ...tourInfo,
+          tourServices: {
+            ...tourInfo?.tourServices,
+            additionalServices: [
+              ...(tourInfo?.tourServices?.additionalServices.filter(
+                (item) => item !== e
+              ) || []),
+            ],
+          },
+        });
         break;
       }
       case "recommend": {
-        dispatch(
-          setTourField({
-            recommendations: [
-              ...(tourInfo?.recommendations.filter((item) => item !== e) || []),
-            ],
-          })
-        );
+        setTourInfo({
+          ...tourInfo,
+          recommendations: [
+            ...(tourInfo?.recommendations.filter((item) => item !== e) || []),
+          ],
+        });
         break;
       }
       default:
@@ -109,46 +104,40 @@ export const AddTourSecondPage: FC<IAddTourSecondPageProps> = ({
 
   const handleFreeServices = (e: any) => {
     if (e.keyCode === 13) {
-      dispatch(
-        setTourField({
-          tourServices: {
-            ...tourInfo?.tourServices,
-            freeServices: [
-              ...(tourInfo?.tourServices?.freeServices || []),
-              e.target.value,
-            ],
-          },
-        })
-      );
+      setTourInfo({
+        ...tourInfo,
+        tourServices: {
+          ...tourInfo?.tourServices,
+          freeServices: [
+            ...(tourInfo?.tourServices?.freeServices || []),
+            e.target.value,
+          ],
+        },
+      });
     }
   };
 
   const handleAdditionalServices = (e: any) => {
     if (e.keyCode === 13) {
-      dispatch(
-        setTourField({
-          tourServices: {
-            ...tourInfo?.tourServices,
-            additionalServices: [
-              ...(tourInfo?.tourServices?.additionalServices || []),
-              e.target.value,
-            ],
-          },
-        })
-      );
+      setTourInfo({
+        ...tourInfo,
+        tourServices: {
+          ...tourInfo?.tourServices,
+          additionalServices: [
+            ...(tourInfo?.tourServices?.additionalServices || []),
+            e.target.value,
+          ],
+        },
+      });
     }
   };
 
   const handleRecommendations = (e: any) => {
     if (e.keyCode === 13) {
-      dispatch(
-        setTourField({
-          recommendations: [
-            ...(tourInfo?.recommendations || []),
-            e.target.value,
-          ],
-        })
-      );
+      setTourInfo({
+        ...tourInfo,
+        recommendations: [...(tourInfo?.recommendations || []), e.target.value],
+      });
     }
   };
 
@@ -181,14 +170,13 @@ export const AddTourSecondPage: FC<IAddTourSecondPageProps> = ({
                 value={tourInfo?.housingInclude?.housingName || ""}
                 sx={{ width: "75%" }}
                 onChange={(e) =>
-                  dispatch(
-                    setTourField({
-                      housingInclude: {
-                        ...tourInfo?.housingInclude,
-                        housingName: e.target.value,
-                      },
-                    })
-                  )
+                  setTourInfo({
+                    ...tourInfo,
+                    housingInclude: {
+                      ...tourInfo?.housingInclude,
+                      housingName: e.target.value,
+                    },
+                  })
                 }
               />
               <TextField
@@ -197,14 +185,13 @@ export const AddTourSecondPage: FC<IAddTourSecondPageProps> = ({
                 value={tourInfo?.housingInclude?.housingAddress || ""}
                 sx={{ width: "75%" }}
                 onChange={(e) =>
-                  dispatch(
-                    setTourField({
-                      housingInclude: {
-                        ...tourInfo?.housingInclude,
-                        housingAddress: e.target.value,
-                      },
-                    })
-                  )
+                  setTourInfo({
+                    ...tourInfo,
+                    housingInclude: {
+                      ...tourInfo?.housingInclude,
+                      housingAddress: e.target.value,
+                    },
+                  })
                 }
               />
               <TextField
@@ -213,14 +200,13 @@ export const AddTourSecondPage: FC<IAddTourSecondPageProps> = ({
                 value={tourInfo?.housingInclude?.housingDescription || ""}
                 sx={{ width: "75%" }}
                 onChange={(e) =>
-                  dispatch(
-                    setTourField({
-                      housingInclude: {
-                        ...tourInfo?.housingInclude,
-                        housingDescription: e.target.value,
-                      },
-                    })
-                  )
+                  setTourInfo({
+                    ...tourInfo,
+                    housingInclude: {
+                      ...tourInfo?.housingInclude,
+                      housingDescription: e.target.value,
+                    },
+                  })
                 }
               />
             </Stack>
@@ -268,14 +254,13 @@ export const AddTourSecondPage: FC<IAddTourSecondPageProps> = ({
                 value={tourInfo?.insuranceInclude?.insuranceNumber || ""}
                 sx={{ width: "75%" }}
                 onChange={(e) =>
-                  dispatch(
-                    setTourField({
-                      insuranceInclude: {
-                        ...tourInfo?.insuranceInclude,
-                        insuranceNumber: +e.target.value,
-                      },
-                    })
-                  )
+                  setTourInfo({
+                    ...tourInfo,
+                    insuranceInclude: {
+                      ...tourInfo?.insuranceInclude,
+                      insuranceNumber: +e.target.value,
+                    },
+                  })
                 }
               />
               <TextField
@@ -285,14 +270,13 @@ export const AddTourSecondPage: FC<IAddTourSecondPageProps> = ({
                 value={tourInfo?.insuranceInclude?.insuranceAmount || ""}
                 sx={{ width: "75%" }}
                 onChange={(e) =>
-                  dispatch(
-                    setTourField({
-                      insuranceInclude: {
-                        ...tourInfo?.insuranceInclude,
-                        insuranceAmount: +e.target.value,
-                      },
-                    })
-                  )
+                  setTourInfo({
+                    ...tourInfo,
+                    insuranceInclude: {
+                      ...tourInfo?.insuranceInclude,
+                      insuranceAmount: +e.target.value,
+                    },
+                  })
                 }
               />
             </Stack>
@@ -322,7 +306,7 @@ export const AddTourSecondPage: FC<IAddTourSecondPageProps> = ({
             <RadioGroup
               value={tourInfo?.complexity || ""}
               onChange={(e) =>
-                dispatch(setTourField({ complexity: e.target.value }))
+                setTourInfo({ ...tourInfo, complexity: e.target.value })
               }
             >
               {difficultDefault.map((difficult, index) => (
@@ -374,12 +358,7 @@ export const AddTourSecondPage: FC<IAddTourSecondPageProps> = ({
         accessType="insert"
         positions={tourInfo?.mapPoints}
         setPositions={(positions) => {
-          dispatch(
-            setTourField({
-              ...tourInfo,
-              mapPoints: positions,
-            })
-          );
+          setTourInfo({ ...tourInfo, mapPoints: positions });
         }}
       />
     </Stack>

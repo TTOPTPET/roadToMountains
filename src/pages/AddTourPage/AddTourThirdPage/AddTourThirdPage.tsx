@@ -1,22 +1,21 @@
-import { useSelector } from "react-redux";
-import { RootState } from "../../../redux/store";
 import { Dispatch, SetStateAction, FC } from "react";
 import { Stack, Typography } from "@mui/material";
 import { TourInfo } from "../../../components/TourInfo/TourInfo";
+import { IAddTour } from "../../../models/addTourModels/IAddTour";
 
 interface IAddTourThirdPageProps {
   images: any[];
   setImage: Dispatch<SetStateAction<any[]>>;
+  tourInfo: IAddTour;
   isEditing: boolean;
 }
 
 export const AddTourThirdPage: FC<IAddTourThirdPageProps> = ({
   images,
   setImage,
+  tourInfo,
   isEditing,
 }) => {
-  const tourInfo = useSelector((state: RootState) => state.addTour.tourFields);
-
   return (
     <Stack gap={1}>
       <Typography variant={"h3"}>

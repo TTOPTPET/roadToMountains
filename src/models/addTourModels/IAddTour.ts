@@ -5,7 +5,7 @@ export interface IAddTour {
   complexity?: string;
   region?: string;
   price?: number;
-  photos?: string[];
+  photos?: (string | File)[];
   prices?: {
     from?: number;
     to?: number;

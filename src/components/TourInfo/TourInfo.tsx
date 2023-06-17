@@ -62,6 +62,9 @@ export const TourInfo: FC<ITourInfoProps> = ({
     }
   };
 
+  console.log(images);
+  console.log(tourInfo.photos);
+
   return (
     <>
       <Stack direction={"row"} alignItems={"center"} gap={1} marginBottom={2}>
@@ -99,84 +102,48 @@ export const TourInfo: FC<ITourInfoProps> = ({
               </SvgIcon>
             }
           >
-            {!tourInfo?.photos?.length ? (
-              images.filter((image) => image?.src === undefined).length !==
-              0 ? (
-                images
-                  .filter((image) => image?.src === undefined)
-                  .map((image, index) => (
-                    <Box key={index} style={{ width: 490, height: 490 }}>
-                      <img
-                        src={image}
-                        alt={`tour`}
-                        style={{
-                          width: "100%",
-                          height: "100%",
-                          objectFit: "cover",
-                          borderRadius: 40,
-                        }}
-                      />
-                    </Box>
-                  ))
-              ) : (
-                <Skeleton
-                  variant="rounded"
-                  sx={{
-                    width: 490,
-                    height: 490,
-                    borderRadius: 8,
-                  }}
-                />
-              )
-            ) : isEditing ? (
-              images.filter((image) => image?.src === undefined).length !==
-              0 ? (
-                images
-                  .filter((image) => image?.src === undefined)
-                  .map((image, index) => (
-                    <Box key={index} style={{ width: 490, height: 490 }}>
-                      <img
-                        src={
-                          image.includes("data:image/")
-                            ? image
-                            : baseUrl + "/" + image
-                        }
-                        alt={`tour`}
-                        style={{
-                          width: "100%",
-                          height: "100%",
-                          objectFit: "cover",
-                          borderRadius: 40,
-                        }}
-                      />
-                    </Box>
-                  ))
-              ) : (
-                <Skeleton
-                  variant="rounded"
-                  sx={{
-                    width: 490,
-                    height: 490,
-                    borderRadius: 8,
-                  }}
-                />
-              )
-            ) : (
-              tourInfo?.photos &&
+            {tourInfo?.photos ? (
               tourInfo?.photos.map((image, index) => (
                 <Box key={index} style={{ width: 490, height: 490 }}>
                   <img
-                    src={baseUrl + "/" + image}
+                    src={
+                      typeof image === "string"
+                        ? baseUrl + "/" + image
+                        : URL.createObjectURL(image)
+                    }
                     alt={`tour`}
                     style={{
                       width: "100%",
                       height: "100%",
                       objectFit: "cover",
-                      borderRadius: 40,
+                      borderRadius: "40px",
                     }}
                   />
                 </Box>
               ))
+            ) : (
+              <Box style={{ width: 490, height: 490 }}>
+                <Skeleton
+                  width={"100%"}
+                  height={"100%"}
+                  variant="rounded"
+                  sx={{ borderRadius: "40px" }}
+                />
+                <Typography
+                  variant={"h4"}
+                  sx={{
+                    position: "absolute",
+                    top: "50%",
+                    left: "50%",
+                    textAlign: "center",
+                    transform: "translatey(-50%) translatex(-50%)",
+                    color: "rgba(0, 0, 0, 0.2)",
+                    textTransform: "uppercase",
+                  }}
+                >
+                  Выберите фото
+                </Typography>{" "}
+              </Box>
             )}
           </Carousel>
           <Typography variant={"h6"} marginY={2}>
