@@ -14,7 +14,6 @@ export enum StatusVerify {
 export enum Sex {
   male = "мужской",
   female = "женский",
-  other = "другое",
 }
 
 export enum UserType {

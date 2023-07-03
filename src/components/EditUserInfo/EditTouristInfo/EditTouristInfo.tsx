@@ -130,11 +130,6 @@ function EditTouristInfo() {
                   control={<Radio />}
                   label="Женский"
                 />
-                <FormControlLabel
-                  value={Sex.other}
-                  control={<Radio />}
-                  label="Другое"
-                />
               </RadioGroup>
             </FormControl>
           </>
