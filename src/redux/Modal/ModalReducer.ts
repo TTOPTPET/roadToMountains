@@ -20,7 +20,8 @@ type modalsId =
   | "confirmCancelPostedTourModal"
   | "successCancelPostedTourModal"
   | "bookingInfoModal"
-  | "errorBookingModal";
+  | "errorBookingModal"
+  | "cardLostModal";
 
 enum actionTypes {
   SET_MODAL_ACTIVE = "SET_MODAL_ACTIVE",
