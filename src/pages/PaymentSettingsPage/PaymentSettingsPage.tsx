@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 
-import { IPaymentSettings } from "../../models/paymentSettingsModels/IPaymentSettings";
+import { ICardInfo } from "../../models/paymentSettingsModels/IPaymentSettings";
+import { IBankAccount } from "../../models/paymentSettingsModels/IPaymentSettings";
 
 import CardInfo from "../../components/PaymentSettingsModules/CardInfo/CardInfo";
 import MoneyOutput from "../../components/PaymentSettingsModules/MoneyOutput/MoneyOutput";
@@ -8,14 +9,26 @@ import MoneyOutput from "../../components/PaymentSettingsModules/MoneyOutput/Mon
 import { getCardInfo } from "../../API/paymentAPI/getCardInfo";
 
 import { Typography, Grid } from "@mui/material";
+import { getBankAccInfo } from "../../API/paymentAPI/getBankAccInfo";
+import MoneyAmount from "../../components/PaymentSettingsModules/MoneyAmount/MoneyAmount";
+import RecentOperations from "../../components/PaymentSettingsModules/RecentOperations/RecentOperations";
+import CardLostModal from "../../components/Modals/CardLostModal/CardLostModal";
 
 function PaymentSettingsPage() {
-  const [cardInfo, setCardInfo] = useState<IPaymentSettings>();
+  const [cardInfo, setCardInfo] = useState<ICardInfo>();
+  const [bankAccInfo, setBankAccInfo] = useState<IBankAccount>({});
 
   useEffect(() => {
     getCardInfo((value) => {
       setCardInfo(value);
     });
+    getBankAccInfo(
+      (value) => {
+        setBankAccInfo(value);
+      },
+      undefined,
+      true
+    );
   }, []);
 
   return (
@@ -23,7 +36,7 @@ function PaymentSettingsPage() {
       <Typography variant="h3" sx={{ mb: "50px" }}>
         Оплата
       </Typography>
-      <Grid container spacing={8}>
+      <Grid container justifyContent={"space-between"}>
         <Grid item xs={5.5}>
           {cardInfo && (
             <CardInfo
@@ -31,9 +44,16 @@ function PaymentSettingsPage() {
               statusConnectCard={cardInfo.statusConnectCard}
             />
           )}
-          <MoneyOutput />
+          <MoneyOutput accauntAmount={bankAccInfo.accauntAmount} />
+        </Grid>
+        <Grid item xs={5}>
+          <MoneyAmount accauntAmount={bankAccInfo.accauntAmount} />
+          <RecentOperations
+            accauntTransactions={bankAccInfo.accauntTransactions}
+          />
         </Grid>
       </Grid>
+      <CardLostModal />
     </>
   );
 }

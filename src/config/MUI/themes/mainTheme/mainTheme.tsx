@@ -148,7 +148,7 @@ export const mainThemes = createTheme(breakpoints, {
     MuiPaper: {
       styleOverrides: {
         root: {
-          borderRadius: 20,
+          borderRadius: 30,
           padding: 30,
           "&.MuiPickersPopper-paper": {
             padding: 5,

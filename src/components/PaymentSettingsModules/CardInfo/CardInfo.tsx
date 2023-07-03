@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
+import { useDispatch } from "react-redux";
+import { setModalActive } from "../../../redux/Modal/ModalReducer";
 
 import { whiteColor } from "../../../config/MUI/color/color";
 
@@ -14,7 +16,6 @@ import {
   TextField,
   Button,
 } from "@mui/material";
-import InputMask from "react-input-mask";
 
 import checked from "../../../media/checkedVerify.svg";
 import clock from "../../../media/clockVerify.svg";
@@ -29,6 +30,8 @@ type CardInfoProps = {
 };
 
 export default function CardInfo({ cardId, statusConnectCard }: CardInfoProps) {
+  const dispatch = useDispatch();
+
   return (
     <>
       <Typography variant="h5">Информация о Вашем счёте</Typography>
@@ -104,7 +107,13 @@ export default function CardInfo({ cardId, statusConnectCard }: CardInfoProps) {
           gap="10px"
           justifyContent={"flex-end"}
         >
-          <Button>Привязать новую карту</Button>
+          <Button
+            onClick={() => {
+              dispatch(setModalActive("cardLostModal"));
+            }}
+          >
+            Привязать новую карту
+          </Button>
           {statusConnectCard === StatusConnectCard.linked && (
             <Button onClick={() => deleteCard()}>Отвязать карту</Button>
           )}

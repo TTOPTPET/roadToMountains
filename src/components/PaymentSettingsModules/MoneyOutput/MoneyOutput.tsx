@@ -4,7 +4,11 @@ import { Typography, Paper, TextField, Button, Stack } from "@mui/material";
 import { redColor, whiteColor } from "../../../config/MUI/color/color";
 import { postWithdrawal } from "../../../API/paymentAPI/postWithdrawal";
 
-export default function MoneyOutput(accountAmount: string) {
+type MoneyOutputProps = {
+  accauntAmount: number;
+};
+
+export default function MoneyOutput({ accauntAmount }: MoneyOutputProps) {
   const [amount, setAmount] = useState("");
 
   return (
@@ -29,10 +33,10 @@ export default function MoneyOutput(accountAmount: string) {
           type="number"
           value={amount}
           onChange={(e) => setAmount(e.target.value)}
-          error={Number(accountAmount) < Number(amount)}
+          error={Number(accauntAmount) < Number(amount)}
         />
 
-        {Number(accountAmount) < Number(amount) && (
+        {Number(accauntAmount) < Number(amount) && (
           <Typography
             variant="caption"
             sx={{ color: redColor, mt: "10px", textAlign: "center" }}
@@ -44,10 +48,10 @@ export default function MoneyOutput(accountAmount: string) {
         <Stack direction="row" justifyContent="flex-end">
           <Button
             sx={{
-              mt: Number(accountAmount) < Number(amount) ? "5px" : "30px",
+              mt: Number(accauntAmount) < Number(amount) ? "5px" : "30px",
             }}
             onClick={(amount) => postWithdrawal(String(amount))}
-            disabled={Number(accountAmount) < Number(amount)}
+            disabled={Number(accauntAmount) < Number(amount)}
           >
             Вывести
           </Button>
