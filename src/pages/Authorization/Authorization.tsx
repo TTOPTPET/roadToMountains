@@ -53,6 +53,16 @@ const registerDefault: IUserRegister = {
   passwordSecond: undefined,
 };
 
+type RegisterErrors = {
+  [key in keyof Omit<IUserRegister, "typeUser" | "passwordSecond">]: boolean;
+};
+
+const registerErrorsDefault: RegisterErrors = {
+  email: false,
+  password: false,
+  phone: false,
+};
+
 function Authorization() {
   const [cookies, setCookies] = useCookies([
     TOKEN,
@@ -67,8 +77,14 @@ function Authorization() {
   const [regState, setRegState] = useState<boolean>(true);
   const [errAuth, setErrAuth] = useState(false);
   const [errReg, setErrReg] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
-  const [passwordErrorStatus, setPasswordErrorStatus] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string>("");
+  const [passwordErrorStatus, setPasswordErrorStatus] =
+    useState<boolean>(false);
+  const [registerInputError, setRegisterInputError] = useState<RegisterErrors>(
+    registerErrorsDefault
+  );
+
+  const refBtn = useRef<HTMLButtonElement | null>(null);
 
   const dispatch = useDispatch();
 
@@ -91,6 +107,36 @@ function Authorization() {
     setUserRegisterData({ ...userRegisterData, [key]: e.target.value });
   };
 
+  const registerValidation = (
+    type: string,
+    value: string,
+    key: string
+  ): boolean => {
+    switch (type) {
+      case "number":
+        if (value === "") {
+          return false;
+        }
+        return value.length > 10 ? false : true;
+      case "email":
+        if (value === "") {
+          return false;
+        }
+        let re =
+          /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return !re.test(value);
+      default:
+        return false;
+    }
+  };
+
+  const handlerRegisterErrorChange = (
+    key: keyof RegisterErrors,
+    error: boolean
+  ) => {
+    setRegisterInputError({ ...registerInputError, [key]: error });
+  };
+
   const handlerOnTransition = () => {
     setUserLoginData(loginDefault);
     setUserRegisterData(registerDefault);
@@ -98,10 +144,8 @@ function Authorization() {
   };
 
   const handlerRegisterClick = () => {
-    let codeStatus;
     registerUser(
-      (value) => {
-        codeStatus = value;
+      () => {
         dispatch(setModalActive("enterMobileCodeModal"));
       },
       userRegisterData,
@@ -111,7 +155,6 @@ function Authorization() {
       },
       false
     );
-    console.log(codeStatus);
   };
 
   const handlerLoginClick = () => {
@@ -145,22 +188,21 @@ function Authorization() {
   }, [regState]);
 
   useEffect(() => {
-    console.log("userRegisterData");
     if (
       userRegisterData.password !== userRegisterData?.passwordSecond &&
       userRegisterData.password !== "" &&
       userRegisterData?.passwordSecond !== ""
     ) {
       setPasswordErrorStatus(true);
+      setRegisterInputError({ ...registerInputError, password: true });
       setErrorMessage("Пароли не совпадают!");
     } else {
       setPasswordErrorStatus(false);
+      setRegisterInputError({ ...registerInputError, password: false });
       setErrorMessage("");
     }
     setErrAuth(false);
   }, [userRegisterData, userLoginData]);
-
-  const refBtn = useRef();
 
   useEffect(() => {
     const listener = (e) => {
@@ -169,7 +211,6 @@ function Authorization() {
         bubbles: true,
         cancelable: true,
       });
-      //@ts-ignore
       e.code === "Enter" &&
         refBtn.current &&
         refBtn.current.dispatchEvent(event);
@@ -179,8 +220,6 @@ function Authorization() {
       document.removeEventListener("keydown", listener);
     };
   }, []);
-
-  console.log(userRegisterData);
 
   return (
     <Stack sx={{ m: "0 auto", gap: "50px" }}>
@@ -229,17 +268,20 @@ function Authorization() {
                     placeholder={value.name}
                     type={value.type}
                     error={
-                      (value.name === "Повторите пароль" &&
-                        passwordErrorStatus) ||
-                      userRegisterData[key as keyof ILoginComponent] === ""
+                      key in registerErrorsDefault
+                        ? registerInputError[key]
+                        : false
                     }
                     required={value.required}
                     value={userRegisterData[key as keyof IRegisterComponent]}
                     onChange={(e) => {
-                      handlerUpdateRegisterField(
-                        key as keyof IRegisterComponent,
-                        e
-                      );
+                      if (key in registerErrorsDefault && key !== "password") {
+                        handlerRegisterErrorChange(
+                          key as keyof RegisterErrors,
+                          registerValidation(value.type, e.target.value, key)
+                        );
+                      }
+                      handlerUpdateRegisterField(key as keyof IUserRegister, e);
                     }}
                   />
                 ))}
@@ -259,7 +301,7 @@ function Authorization() {
               />
             )}
           </Stack>
-          {(passwordErrorStatus || errAuth || setErrReg) && (
+          {(passwordErrorStatus || errAuth || errReg) && (
             <Typography
               variant="caption"
               className="author__error"
@@ -274,7 +316,13 @@ function Authorization() {
               Вход
             </Button>
           ) : (
-            <Button ref={refBtn} onClick={() => handlerRegisterClick()}>
+            <Button
+              ref={refBtn}
+              onClick={() => handlerRegisterClick()}
+              disabled={Object.values(registerInputError).some(
+                (value) => value === true
+              )}
+            >
               Регистрация
             </Button>
           )}
@@ -288,7 +336,6 @@ function Authorization() {
               navigate("/tours/all");
             }}
           />
-
           <Box sx={{ display: "flex", alignItems: "center", mt: "10px" }}>
             <Typography variant="caption">
               {regState ? "Нет аккаунта?" : "Уже есть аккаунт?"}
