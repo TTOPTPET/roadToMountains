@@ -28,7 +28,7 @@ export const AuthComponent = (
         email: {
           name: "Почта",
           required: true,
-          type: "",
+          type: "email",
           value: "",
           error: false,
         },
@@ -42,7 +42,7 @@ export const AuthComponent = (
         phone: {
           name: "Телефон",
           required: true,
-          type: "",
+          type: "number",
           value: "",
           error: false,
         },
