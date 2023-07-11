@@ -7,6 +7,7 @@ import {
   Stack,
   TextField,
   Typography,
+  useMediaQuery,
 } from "@mui/material";
 import { AddTourImage } from "../../../components/AddTourModules/AddTourImage/AddTourImage";
 import { Dispatch, SetStateAction, FC } from "react";
@@ -35,8 +36,9 @@ export const AddTourFirstPage: FC<IAddTourFirstPageProps> = ({
   isEditing,
   addError,
 }) => {
+  const media = useMediaQuery("(max-width: 1200px)", { noSsr: true });
   return (
-    <Grid container justifyContent={"space-between"}>
+    <Grid container justifyContent={media ? "center" : "space-between"}>
       <Grid item xs={5.2} minWidth={500}>
         <TextField
           placeholder={"Название тура"}
@@ -81,7 +83,7 @@ export const AddTourFirstPage: FC<IAddTourFirstPageProps> = ({
           }
         />
       </Grid>
-      <Grid container item xs={6} justifyContent={"flex-end"}>
+      <Grid container item xs={6} justifyContent={"flex-end"} minWidth={500}>
         <Grid item>
           <Attention />
         </Grid>
@@ -91,7 +93,7 @@ export const AddTourFirstPage: FC<IAddTourFirstPageProps> = ({
           direction={"row"}
           marginTop={5}
           spacing={2}
-          justifyContent={"flex-end"}
+          justifyContent={media ? "left" : "flex-end"}
         >
           <Grid item md={6}>
             <Typography variant={"h6"} marginBottom={1}>
@@ -117,7 +119,7 @@ export const AddTourFirstPage: FC<IAddTourFirstPageProps> = ({
                 />
               )}
               onChange={(e: any, value: string) =>
-                setTourInfo({ ...tourInfo, region: e.target.value })
+                setTourInfo({ ...tourInfo, region: value })
               }
             />
             <Typography variant={"h6"} marginTop={30}>

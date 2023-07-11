@@ -21,7 +21,7 @@ function StatisticPage() {
       statisticSearch,
       (value) => setStatistic(value),
       undefined,
-      true
+      false
     );
   }, []);
   return (
@@ -32,6 +32,7 @@ function StatisticPage() {
       <StatisticSearch
         statisticSearch={statisticSearch}
         setStatisticSearch={setStatisticSearch}
+        setStatistic={setStatistic}
       />
       <StatisticTable>
         {statistic &&

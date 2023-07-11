@@ -26,7 +26,7 @@ Chart.register(...registerables);
 interface IStatisticDiagramProps {
   stat: {
     name?: string;
-    lables?: string[];
+    labels?: string[];
     data?: number[];
     units?: string;
   };
@@ -48,8 +48,8 @@ const StatisticDiagram: FC<IStatisticDiagramProps> = ({ stat }) => {
           width={130}
           height={50}
           data={{
-            labels: stat?.lables || [],
-            datasets: [{ data: stat?.data || [] }],
+            labels: stat.labels,
+            datasets: [{ data: stat.data }],
           }}
           options={{
             backgroundColor: darkTurquoiseColor,
