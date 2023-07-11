@@ -4,6 +4,7 @@ import {
   TableCell,
   TableContainer,
   TableHead,
+  TableRow,
 } from "@mui/material";
 
 const StatisticTable = ({ children }: { children: JSX.Element[] }) => {
@@ -20,13 +21,15 @@ const StatisticTable = ({ children }: { children: JSX.Element[] }) => {
     >
       <Table>
         <TableHead>
-          <TableCell style={{ fontWeight: "bold" }} />
-          <TableCell style={{ fontWeight: "bold" }}>Тур</TableCell>
-          <TableCell style={{ fontWeight: "bold" }}>Статус</TableCell>
-          <TableCell style={{ fontWeight: "bold" }}>Доход</TableCell>
-          <TableCell style={{ fontWeight: "bold" }}>
-            Количество человек
-          </TableCell>
+          <TableRow>
+            <TableCell style={{ fontWeight: "bold" }} />
+            <TableCell style={{ fontWeight: "bold" }}>Тур</TableCell>
+            <TableCell style={{ fontWeight: "bold" }}>Статус</TableCell>
+            <TableCell style={{ fontWeight: "bold" }}>Доход</TableCell>
+            <TableCell style={{ fontWeight: "bold" }}>
+              Количество человек
+            </TableCell>
+          </TableRow>
         </TableHead>
         <TableBody>{children}</TableBody>
       </Table>

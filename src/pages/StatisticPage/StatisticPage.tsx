@@ -8,12 +8,13 @@ import {
 import { IStatistic } from "../../models/statisticModels/IStatistic";
 import getStatistic from "../../API/statisticAPI/getStatistic";
 import { IStatisticSearch } from "../../models/statisticModels/IStatisticSearch";
+import dayjs from "dayjs";
 
 function StatisticPage() {
   const [statistic, setStatistic] = useState<IStatistic[]>([]);
   const [statisticSearch, setStatisticSearch] = useState<IStatisticSearch>({
-    dateFrom: "",
-    dateTo: "",
+    dateFrom: dayjs(new Date()).date(1).toISOString(),
+    dateTo: dayjs(new Date()).toISOString(),
   });
 
   useEffect(() => {
@@ -21,7 +22,7 @@ function StatisticPage() {
       statisticSearch,
       (value) => setStatistic(value),
       undefined,
-      true
+      false
     );
   }, []);
   return (
@@ -32,6 +33,7 @@ function StatisticPage() {
       <StatisticSearch
         statisticSearch={statisticSearch}
         setStatisticSearch={setStatisticSearch}
+        setStatistic={setStatistic}
       />
       <StatisticTable>
         {statistic &&

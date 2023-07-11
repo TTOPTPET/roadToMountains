@@ -3,15 +3,19 @@ import { IStatisticSearch } from "../../../models/statisticModels/IStatisticSear
 import { Button, Stack, TextField } from "@mui/material";
 import { DatePicker } from "@mui/x-date-pickers";
 import dayjs, { Dayjs } from "dayjs";
+import { IStatistic } from "../../../models/statisticModels/IStatistic";
+import getStatistic from "../../../API/statisticAPI/getStatistic";
 
 interface IStatisticSearchProps {
   statisticSearch: IStatisticSearch;
   setStatisticSearch: Dispatch<SetStateAction<IStatisticSearch>>;
+  setStatistic: Dispatch<SetStateAction<IStatistic[]>>;
 }
 
 const StatisticSearch: FC<IStatisticSearchProps> = ({
   statisticSearch,
   setStatisticSearch,
+  setStatistic,
 }) => {
   const handlerChangeSearchField = (
     type: keyof IStatisticSearch,
@@ -19,6 +23,15 @@ const StatisticSearch: FC<IStatisticSearchProps> = ({
   ) => {
     const stringDate = value ? value.toISOString() : "";
     setStatisticSearch({ ...statisticSearch, [type]: stringDate });
+  };
+
+  const handlerSearchClick = () => {
+    getStatistic(
+      statisticSearch,
+      (value) => setStatistic(value),
+      undefined,
+      false
+    );
   };
 
   return (
@@ -51,7 +64,9 @@ const StatisticSearch: FC<IStatisticSearchProps> = ({
           />
         )}
       />
-      <Button variant="high">Найти</Button>
+      <Button variant="high" onClick={handlerSearchClick}>
+        Найти
+      </Button>
     </Stack>
   );
 };

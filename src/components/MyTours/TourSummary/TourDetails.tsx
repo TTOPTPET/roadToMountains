@@ -73,21 +73,25 @@ export const TourDetails: FC<ITourDetailsProps> = ({
     housingName: string;
     housingAddress: string;
     housingDescription?: string;
-  }) => {
-    if (Object.values(housingInclude).every((item) => item === "")) {
-      return "Проживание не включено";
+  }): string => {
+    if (housingInclude) {
+      if (Object.values(housingInclude).every((item) => item === "")) {
+        return "Проживание не включено";
+      } else {
+        let housingLabel = "";
+        Object.values(housingInclude)
+          .filter((item) => item !== "" || undefined)
+          .forEach((item, index) => {
+            if (index === Object.values(housingInclude).length - 1) {
+              housingLabel += item;
+              return;
+            }
+            housingLabel += item + ", ";
+          });
+        return housingLabel;
+      }
     } else {
-      let housingLabel = "";
-      Object.values(housingInclude)
-        .filter((item) => item !== "" || undefined)
-        .forEach((item, index) => {
-          if (index === Object.values(housingInclude).length - 1) {
-            housingLabel += item;
-            return;
-          }
-          housingLabel += item + ", ";
-        });
-      return housingLabel;
+      return "";
     }
   };
 

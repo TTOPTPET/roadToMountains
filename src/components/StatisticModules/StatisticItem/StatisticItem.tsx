@@ -60,7 +60,7 @@ const StatisticItem: FC<IStatisticItemProps> = ({ statistic }) => {
             <Grid container padding={2} gap={5} ml={"5%"} mr={"5%"}>
               {statistic?.stats &&
                 statistic?.stats.map((item, index) => (
-                  <Grid item md={5}>
+                  <Grid item md={5} key={index}>
                     <StatisticDiagram stat={item} key={index} />
                   </Grid>
                 ))}
