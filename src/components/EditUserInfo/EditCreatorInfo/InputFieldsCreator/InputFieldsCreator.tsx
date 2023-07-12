@@ -62,7 +62,7 @@ function InputFieldsCreator({
             editedCreatorInfo?.dataUser?.creatorType === CreatorType.OOO && (
               <TextField
                 key={i}
-                placeholder={fromModelsToFieldsName.get(field)}
+                label={fromModelsToFieldsName.get(field)}
                 color="primary"
                 value={editedCreatorInfo?.dataUser?.fieldsCreator?.[field]}
                 onChange={(e) => {
@@ -93,7 +93,7 @@ function InputFieldsCreator({
             editedCreatorInfo?.dataUser?.creatorType === CreatorType.IP && (
               <TextField
                 key={i}
-                placeholder={fromModelsToFieldsName.get(field)}
+                label={fromModelsToFieldsName.get(field)}
                 color="primary"
                 value={
                   editedCreatorInfo?.dataUser?.fieldsCreator?.[field] || ""
@@ -125,7 +125,7 @@ function InputFieldsCreator({
             editedCreatorInfo?.dataUser?.creatorType === CreatorType.SELF && (
               <TextField
                 key={i}
-                placeholder={fromModelsToFieldsName.get(field)}
+                label={fromModelsToFieldsName.get(field)}
                 color="primary"
                 value={
                   editedCreatorInfo?.dataUser?.fieldsCreator?.[field] || ""

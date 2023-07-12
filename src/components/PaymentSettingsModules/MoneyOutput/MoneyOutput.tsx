@@ -27,7 +27,7 @@ export default function MoneyOutput({ accauntAmount }: MoneyOutputProps) {
         <Typography variant="h6">Сумма</Typography>
 
         <TextField
-          placeholder="Сумма"
+          label="Сумма"
           color="secondary"
           sx={{ mt: "20px" }}
           type="number"

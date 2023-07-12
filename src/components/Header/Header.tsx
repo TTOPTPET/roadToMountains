@@ -99,7 +99,7 @@ const Header = () => {
           </Box>
           <Box sx={{ m: { sm: "0 30px", xs: "0 10px" }, width: "100%" }}>
             <TextField
-              placeholder="Найти тур"
+              label="Найти тур"
               color="secondary"
               value={searchParam}
               onChange={(e) => setSearchParam(e.target.value)}
@@ -158,7 +158,9 @@ const Header = () => {
                               alt="calendarIcon"
                             />
                           </Box>
-                          {!lessThenSmall && (<Typography variant="caption">Календарь</Typography>)}
+                          {!lessThenSmall && (
+                            <Typography variant="caption">Календарь</Typography>
+                          )}
                         </Box>
                       </>
                     ) : (
@@ -180,7 +182,9 @@ const Header = () => {
                               alt="adminIcon"
                             />
                           </Box>
-                          {!lessThenSmall && (<Typography variant="caption">Админка</Typography>)}
+                          {!lessThenSmall && (
+                            <Typography variant="caption">Админка</Typography>
+                          )}
                         </Box>
                       </>
                     )}

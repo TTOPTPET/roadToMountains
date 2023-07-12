@@ -104,11 +104,7 @@ export default function NewPublicModal({
               getOptionLabel={(option) => option.tourName}
               noOptionsText={"У вас еще нет созданных туров!"}
               renderInput={(params) => (
-                <TextField
-                  {...params}
-                  placeholder="Выбор тура"
-                  color="secondary"
-                />
+                <TextField {...params} label="Выбор тура" color="secondary" />
               )}
             />
             <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -139,7 +135,7 @@ export default function NewPublicModal({
                     }
                     inputProps={{
                       ...props.inputProps,
-                      placeholder: "Дата и время начала",
+                      label: "Дата и время начала",
                     }}
                   />
                 )}
@@ -171,7 +167,7 @@ export default function NewPublicModal({
                     }
                     inputProps={{
                       ...props.inputProps,
-                      placeholder: "Дата и время конца",
+                      label: "Дата и время конца",
                     }}
                   />
                 )}
@@ -186,7 +182,7 @@ export default function NewPublicModal({
                   meetingPoint: e.target.value,
                 })
               }
-              placeholder={"Место встречи"}
+              label={"Место встречи"}
             />
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DateTimePicker
@@ -219,7 +215,7 @@ export default function NewPublicModal({
                     }
                     inputProps={{
                       ...props.inputProps,
-                      placeholder: "Время встречи",
+                      label: "Время встречи",
                     }}
                   />
                 )}
@@ -236,10 +232,10 @@ export default function NewPublicModal({
                   maxPersonNum: +e.target.value,
                 }))
               }
-              placeholder={"Количество человек"}
+              label={"Количество человек"}
             />
             <StyledTextAreaAutosize
-              placeholder="Контактная информация"
+              label="Контактная информация"
               sx={{ m: "0", minHeight: "50px" }}
               value={editedPublic?.contactInformation}
               onChange={(e) =>
@@ -262,7 +258,7 @@ export default function NewPublicModal({
                       tourAmount: +e.target.value,
                     }))
                   }
-                  placeholder={"Стоимость"}
+                  label={"Стоимость"}
                 />
               </Box>
 

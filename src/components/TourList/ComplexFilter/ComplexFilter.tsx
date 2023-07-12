@@ -210,7 +210,7 @@ export const ComplexFilter: FC<IFilterProps> = ({
               disabled={durationState}
               type={"number"}
               onChange={(e) => handlerDurationChange(false, +e.target.value)}
-              placeholder="Введите колличество дней"
+              label="Введите колличество дней"
             />
             <Typography variant={"h5"} marginTop={2}>
               Стоимость

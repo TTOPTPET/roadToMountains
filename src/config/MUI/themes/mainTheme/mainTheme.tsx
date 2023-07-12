@@ -238,7 +238,7 @@ export const mainThemes = createTheme(breakpoints, {
         root: {
           width: "100%",
           borderRadius: "30px",
-          "&::placeholder": {
+          "&::label": {
             color: darkBlueColor,
             opacity: "1",
             fontSize: "16px",
@@ -397,7 +397,7 @@ export const mainThemes = createTheme(breakpoints, {
             fontFamily: "Montserrat",
             fontWeight: "400",
             boxSizing: "border-box",
-            "&::placeholder": {
+            "&::label": {
               color: darkBlueColor,
               opacity: "1",
               fontSize: "16px",

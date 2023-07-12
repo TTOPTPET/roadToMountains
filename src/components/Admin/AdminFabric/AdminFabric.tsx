@@ -310,7 +310,7 @@ export const AdminComponent: FC<IAdminComponent> = (props: IAdminComponent) => {
                       renderInput={(params) => (
                         <TextField
                           {...params}
-                          placeholder="Выбор статуса"
+                          label="Выбор статуса"
                           color="secondary"
                         />
                       )}
@@ -412,7 +412,7 @@ export const AdminComponent: FC<IAdminComponent> = (props: IAdminComponent) => {
                 renderInput={(params) => (
                   <TextField
                     {...params}
-                    placeholder="Выбор статуса"
+                    label="Выбор статуса"
                     color="secondary"
                   />
                 )}

@@ -18,7 +18,7 @@ export const StyledTextAreaAutosize = styled(TextareaAutosize)((props) => ({
     border: "none",
     outline: "none",
   },
-  "&::placeholder": {
+  "&::label": {
     color: darkBlueColor,
     opacity: 1,
   },

@@ -81,7 +81,7 @@ function ErrorReportModal() {
       <DialogContent>
         <Typography variant={"h5"}>Сообщение о проблеме</Typography>
         <StyledTextAreaAutosize
-          placeholder="Опишите Вашу проблему"
+          label="Опишите Вашу проблему"
           onChange={(e) =>
             setErrorReportData((errorReportData) => ({
               ...errorReportData,

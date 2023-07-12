@@ -101,7 +101,7 @@ function EditCreatorInfo() {
         fields={
           <>
             <TextField
-              placeholder="Имя"
+              label="Имя"
               color="primary"
               value={editedCreatorInfo?.name}
               onChange={(e) =>
@@ -112,7 +112,7 @@ function EditCreatorInfo() {
               }
             />
             <TextField
-              placeholder="Телефон"
+              label="Телефон"
               color="primary"
               value={editedCreatorInfo?.phone}
               onChange={(e) =>
@@ -123,7 +123,7 @@ function EditCreatorInfo() {
               }
             />
             <TextField
-              placeholder="Электронная почта"
+              label="Электронная почта"
               color="primary"
               value={editedCreatorInfo?.email}
               onChange={(e) =>

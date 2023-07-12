@@ -41,7 +41,7 @@ export const AddTourFirstPage: FC<IAddTourFirstPageProps> = ({
     <Grid container justifyContent={media ? "center" : "space-between"}>
       <Grid item xs={5.2} minWidth={500}>
         <TextField
-          placeholder={"Название тура"}
+          label={"Название тура"}
           value={tourInfo?.tourName || ""}
           required
           error={
@@ -64,7 +64,7 @@ export const AddTourFirstPage: FC<IAddTourFirstPageProps> = ({
           Описание
         </Typography>
         <StyledTextAreaAutosize
-          placeholder={"Описание тура (не более 2500 символов)"}
+          label={"Описание тура (не более 2500 символов)"}
           maxLength={2500}
           minRows={2}
           sx={{
@@ -106,7 +106,7 @@ export const AddTourFirstPage: FC<IAddTourFirstPageProps> = ({
               value={tourInfo?.region || ""}
               renderInput={(params) => (
                 <TextField
-                  placeholder={"Регион"}
+                  label={"Регион"}
                   {...params}
                   error={
                     (addError && tourInfo?.region === undefined) ||
@@ -129,7 +129,7 @@ export const AddTourFirstPage: FC<IAddTourFirstPageProps> = ({
               <TextField
                 InputProps={{ inputProps: { min: 0 } }}
                 type={"number"}
-                placeholder={"От"}
+                label={"От"}
                 value={tourInfo?.recommendedAge?.from || ""}
                 required
                 error={
@@ -149,7 +149,7 @@ export const AddTourFirstPage: FC<IAddTourFirstPageProps> = ({
               <TextField
                 InputProps={{ inputProps: { min: 0 } }}
                 type={"number"}
-                placeholder={"До"}
+                label={"До"}
                 value={tourInfo?.recommendedAge?.to || ""}
                 required
                 error={
@@ -175,7 +175,7 @@ export const AddTourFirstPage: FC<IAddTourFirstPageProps> = ({
               fullWidth
               type={"number"}
               InputProps={{ inputProps: { min: 0 } }}
-              placeholder={"Стоимость тура"}
+              label={"Стоимость тура"}
               value={tourInfo?.price || ""}
               error={
                 (addError && tourInfo?.price === undefined) ||

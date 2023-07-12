@@ -165,7 +165,7 @@ export const AddTourSecondPage: FC<IAddTourSecondPageProps> = ({
             </RadioGroup>
             <Stack gap={1}>
               <TextField
-                placeholder={"Название гостиницы"}
+                label={"Название гостиницы"}
                 disabled={residency === turnOnDefault[0] ? true : false}
                 value={tourInfo?.housingInclude?.housingName || ""}
                 sx={{ width: "75%" }}
@@ -180,7 +180,7 @@ export const AddTourSecondPage: FC<IAddTourSecondPageProps> = ({
                 }
               />
               <TextField
-                placeholder={"Адрес гостиницы"}
+                label={"Адрес гостиницы"}
                 disabled={residency === turnOnDefault[0] ? true : false}
                 value={tourInfo?.housingInclude?.housingAddress || ""}
                 sx={{ width: "75%" }}
@@ -195,7 +195,7 @@ export const AddTourSecondPage: FC<IAddTourSecondPageProps> = ({
                 }
               />
               <TextField
-                placeholder={"Описание гостиницы"}
+                label={"Описание гостиницы"}
                 disabled={residency === turnOnDefault[0] ? true : false}
                 value={tourInfo?.housingInclude?.housingDescription || ""}
                 sx={{ width: "75%" }}
@@ -225,7 +225,7 @@ export const AddTourSecondPage: FC<IAddTourSecondPageProps> = ({
               ))}
           </Stack>
           <TextField
-            placeholder={"Услуга"}
+            label={"Услуга"}
             sx={{ width: "75%" }}
             onKeyDown={handleFreeServices}
           />
@@ -248,7 +248,7 @@ export const AddTourSecondPage: FC<IAddTourSecondPageProps> = ({
             </RadioGroup>
             <Stack gap={1}>
               <TextField
-                placeholder={"Номер страхования"}
+                label={"Номер страхования"}
                 disabled={insurance === turnOnDefault[0] ? true : false}
                 type={"number"}
                 value={tourInfo?.insuranceInclude?.insuranceNumber || ""}
@@ -264,7 +264,7 @@ export const AddTourSecondPage: FC<IAddTourSecondPageProps> = ({
                 }
               />
               <TextField
-                placeholder={"Сумма страхования"}
+                label={"Сумма страхования"}
                 disabled={insurance === turnOnDefault[0] ? true : false}
                 type={"number"}
                 value={tourInfo?.insuranceInclude?.insuranceAmount || ""}
@@ -295,7 +295,7 @@ export const AddTourSecondPage: FC<IAddTourSecondPageProps> = ({
               ))}
           </Stack>
           <TextField
-            placeholder={"Услуга"}
+            label={"Услуга"}
             sx={{ width: "75%" }}
             onKeyDown={handleAdditionalServices}
           />
@@ -343,7 +343,7 @@ export const AddTourSecondPage: FC<IAddTourSecondPageProps> = ({
               ))}
           </Stack>
           <TextField
-            placeholder={"Услуга"}
+            label={"Услуга"}
             sx={{ width: "75%" }}
             onKeyDown={handleRecommendations}
           />
