@@ -42,12 +42,96 @@ type NewPublicModalProps = {
   setPublicTours: Dispatch<SetStateAction<IPublicTour[]>>;
 };
 
+type NewPublicErrorsNoDate = {
+  [key in keyof Omit<
+    IPublicTour,
+    | "publicTourId"
+    | "publicTourProfit"
+    | "tourAmountWithCommission"
+    | "bookingId"
+    | "personNum"
+    | "bookingNumber"
+    | "cancelDeadline"
+    | "updateDeadline"
+    | "bookingInfo"
+    | "tour"
+    | "tourDate"
+    | "contactInformation"
+  >]: boolean;
+};
+
+type NewPublicErrors = NewPublicErrorsNoDate & {
+  tourDateFrom: boolean;
+  tourDateTo: boolean;
+};
+
+const newPublicErrorsDefault: NewPublicErrors = {
+  tourId: undefined,
+  meetingPoint: undefined,
+  meetingTime: undefined,
+  tourAmount: undefined,
+  maxPersonNum: undefined,
+  tourDateFrom: undefined,
+  tourDateTo: undefined,
+};
+
 export default function NewPublicModal({
   myTours,
   selectedPublic,
   setSelectedPublic,
   setPublicTours,
 }: NewPublicModalProps) {
+  const [newPublicInputError, setNewPublicInputError] =
+    useState<NewPublicErrors>(newPublicErrorsDefault);
+
+  const newPublicInputValidation = (
+    type: keyof NewPublicErrors,
+    value: string
+  ): boolean => {
+    switch (type) {
+      case "tourId":
+        return value ? false : true;
+      case "meetingPoint":
+        return value ? false : true;
+      case "maxPersonNum":
+        return value ? false : true;
+      case "tourAmount":
+        return value ? false : true;
+      case "meetingTime":
+        return value &&
+          dayjs(value).isBefore(dayjs(editedPublic?.tourDate?.from))
+          ? false
+          : true;
+
+      case "tourDateFrom":
+        return value &&
+          dayjs(value).isAfter(dayjs()) &&
+          dayjs(editedPublic?.tourDate?.to).isAfter(dayjs(value))
+          ? false
+          : true;
+
+      case "tourDateTo":
+        return value &&
+          dayjs(value).isAfter(dayjs()) &&
+          dayjs(value).isAfter(dayjs(editedPublic?.tourDate?.from))
+          ? false
+          : true;
+
+      default:
+        return false;
+    }
+  };
+
+  const handlerNewPublicErrorChange = (
+    key: keyof NewPublicErrors,
+    error: boolean
+  ) => {
+    setNewPublicInputError((CurNewPublicInputError) => ({
+      ...CurNewPublicInputError,
+      [key]: error,
+    }));
+  };
+
   const activeModals = useSelector(
     (state: RootState) => state.modal.activeModals
   );
@@ -70,12 +154,24 @@ export default function NewPublicModal({
     }
   }, [activeModals]);
 
+  useEffect(() => {
+    handlerNewPublicErrorChange(
+      "tourDateFrom",
+      newPublicInputValidation("tourDateFrom", editedPublic?.tourDate?.from)
+    );
+    handlerNewPublicErrorChange(
+      "tourDateTo",
+      newPublicInputValidation("tourDateTo", editedPublic?.tourDate?.to)
+    );
+  }, [editedPublic]);
+
   return (
     <Dialog
       className="newPublicModal"
       onClose={() => {
         dispatch(setModalInactive("newPublicModal"));
         setEditedPublic(undefined);
+        setNewPublicInputError(newPublicErrorsDefault);
       }}
       open={isModalActive("newPublicModal", activeModals)}
       fullWidth
@@ -93,25 +189,35 @@ export default function NewPublicModal({
                 myTours.find((tour) => tour?.tourId === editedPublic?.tourId) ||
                 null
               }
-              onChange={(event: any, newValue) =>
+              onChange={(event: any, newValue) => {
                 setEditedPublic((editedPublic) => ({
                   ...editedPublic,
-                  tourId: newValue.tourId,
+                  tourId: newValue?.tourId,
                   tour: { tourName: newValue?.tourName },
-                }))
-              }
+                }));
+                handlerNewPublicErrorChange(
+                  "tourId",
+                  newPublicInputValidation("tourId", newValue?.tourId)
+                );
+                console.log({ tourId: newValue?.tourId });
+              }}
               options={myTours}
               getOptionLabel={(option) => option.tourName}
               noOptionsText={"У вас еще нет созданных туров!"}
               renderInput={(params) => (
-                <TextField {...params} label="Выбор тура" color="secondary" />
+                <TextField
+                  {...params}
+                  label="Выбор тура"
+                  color="secondary"
+                  error={newPublicInputError.tourId}
+                />
               )}
             />
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DateTimePicker
                 value={dayjs(editedPublic?.tourDate?.from)}
                 ampm={false}
-                onChange={(newValue) =>
+                onChange={(newValue) => {
                   setEditedPublic((editedPublic) => ({
                     ...editedPublic,
                     tourDate: {
@@ -121,18 +227,13 @@ export default function NewPublicModal({
                           ? newValue?.toISOString()
                           : "",
                     },
-                  }))
-                }
+                  }));
+                }}
                 renderInput={(props) => (
                   <TextField
                     color="secondary"
                     {...props}
-                    error={
-                      (props.error && props.inputProps.value !== "") ||
-                      dayjs(editedPublic?.tourDate?.from).isBefore(
-                        dayjs(new Date())
-                      )
-                    }
+                    error={newPublicInputError.tourDateFrom}
                     inputProps={{
                       ...props.inputProps,
                       label: "Дата и время начала",
@@ -143,7 +244,7 @@ export default function NewPublicModal({
               <DateTimePicker
                 value={dayjs(editedPublic?.tourDate?.to)}
                 ampm={false}
-                onChange={(newValue) =>
+                onChange={(newValue) => {
                   setEditedPublic((editedPublic) => ({
                     ...editedPublic,
                     tourDate: {
@@ -153,18 +254,13 @@ export default function NewPublicModal({
                           ? newValue?.toISOString()
                           : "",
                     },
-                  }))
-                }
+                  }));
+                }}
                 renderInput={(props) => (
                   <TextField
                     color="secondary"
                     {...props}
-                    error={
-                      (props.error && props.inputProps.value !== "") ||
-                      dayjs(editedPublic?.tourDate?.to).isBefore(
-                        dayjs(new Date())
-                      )
-                    }
+                    error={newPublicInputError.tourDateTo}
                     inputProps={{
                       ...props.inputProps,
                       label: "Дата и время конца",
@@ -176,12 +272,17 @@ export default function NewPublicModal({
             <TextField
               color="secondary"
               value={editedPublic?.meetingPoint || ""}
-              onChange={(e) =>
+              error={newPublicInputError.meetingPoint}
+              onChange={(e) => {
                 setEditedPublic({
                   ...editedPublic,
                   meetingPoint: e.target.value,
-                })
-              }
+                });
+                handlerNewPublicErrorChange(
+                  "meetingPoint",
+                  newPublicInputValidation("meetingPoint", e.target.value)
+                );
+              }}
               label={"Место встречи"}
             />
             <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -192,21 +293,27 @@ export default function NewPublicModal({
                   ""
                 }
                 ampm={false}
-                onChange={(newValue: Dayjs) =>
+                onChange={(newValue: Dayjs) => {
                   setEditedPublic((editedPublic) => ({
                     ...editedPublic,
                     meetingTime:
                       !isNaN(+newValue) && newValue
                         ? newValue?.toISOString()
                         : "",
-                  }))
-                }
+                  }));
+                  handlerNewPublicErrorChange(
+                    "meetingTime",
+                    newPublicInputValidation(
+                      "meetingTime",
+                      newValue.toISOString()
+                    )
+                  );
+                }}
                 renderInput={(props) => (
                   <TextField
                     color="secondary"
                     {...props}
                     error={
-                      // (props?.error && props?.inputProps?.value !== "") ||
                       editedPublic?.meetingTime &&
                       Boolean(
                         dayjs(editedPublic?.tourDate?.from) <
@@ -226,38 +333,49 @@ export default function NewPublicModal({
               color="secondary"
               value={editedPublic?.maxPersonNum || ""}
               InputProps={{ inputProps: { min: 0 } }}
-              onChange={(e) =>
+              error={newPublicInputError.maxPersonNum}
+              onChange={(e) => {
                 setEditedPublic((editedPublic) => ({
                   ...editedPublic,
                   maxPersonNum: +e.target.value,
-                }))
-              }
+                }));
+                handlerNewPublicErrorChange(
+                  "maxPersonNum",
+                  newPublicInputValidation("maxPersonNum", e.target.value)
+                );
+              }}
               label={"Количество человек"}
             />
             <StyledTextAreaAutosize
+              // @ts-ignore
               label="Контактная информация"
               sx={{ m: "0", minHeight: "50px" }}
               value={editedPublic?.contactInformation}
-              onChange={(e) =>
+              onChange={(e) => {
                 setEditedPublic({
                   ...editedPublic,
                   contactInformation: e.target.value,
-                })
-              }
+                });
+              }}
             />
             <Stack direction={"row"} gap="14px" alignItems={"center"}>
               <Box>
                 <TextField
                   type={"number"}
                   color="secondary"
+                  error={newPublicInputError.tourAmount}
                   value={editedPublic?.tourAmount || ""}
                   InputProps={{ inputProps: { min: 0 } }}
-                  onChange={(e) =>
+                  onChange={(e) => {
                     setEditedPublic((editedPublic) => ({
                       ...editedPublic,
                       tourAmount: +e.target.value,
-                    }))
-                  }
+                    }));
+                    handlerNewPublicErrorChange(
+                      "tourAmount",
+                      newPublicInputValidation("tourAmount", e.target.value)
+                    );
+                  }}
                   label={"Стоимость"}
                 />
               </Box>
@@ -265,7 +383,6 @@ export default function NewPublicModal({
               <Box sx={{ flexGrow: "1" }}>
                 <Typography variant="caption">
                   Стоимость на платформе: <br />
-                  {/* TODO: Считать процент */}
                   {editedPublic?.tourAmount
                     ? (editedPublic?.tourAmount * 1.03).toFixed(2)
                     : "-"}
@@ -301,6 +418,9 @@ export default function NewPublicModal({
               Отменить
             </Button>
             <Button
+              disabled={Object.values(newPublicInputError).some(
+                (value) => value !== false
+              )}
               onClick={() => {
                 if (modal?.props?.newPublic) {
                   postNewPublic(editedPublic, (resp) => {
