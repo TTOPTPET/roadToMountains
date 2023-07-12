@@ -66,7 +66,7 @@ export const TouristBooking: FC<ITouristBookingProps> = ({
       </Typography>
       <Stack direction={"row"} gap={4}>
         <TextField
-          placeholder={"ФИО"}
+          label={"ФИО"}
           color={"secondary"}
           value={touristData?.name || ""}
           error={
@@ -76,7 +76,7 @@ export const TouristBooking: FC<ITouristBookingProps> = ({
           onChange={(e) => handlerFieldChange("name", e.target.value)}
         />
         <TextField
-          placeholder={"Возраст"}
+          label={"Возраст"}
           color={"secondary"}
           value={touristData?.age || ""}
           error={
@@ -93,7 +93,7 @@ export const TouristBooking: FC<ITouristBookingProps> = ({
           options={Object.values(Sex)}
           renderInput={(params) => (
             <TextField
-              placeholder={"Пол"}
+              label={"Пол"}
               color={"secondary"}
               error={
                 touristData?.sex === "" ||

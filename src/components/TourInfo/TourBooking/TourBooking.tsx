@@ -228,7 +228,7 @@ export const TourBooking: FC<ITourBookingProps> = ({
                 error={props.error && props.inputProps.value !== ""}
                 inputProps={{
                   ...props.inputProps,
-                  placeholder: "Дата заезда",
+                  label: "Дата заезда",
                 }}
                 sx={{ color: "black" }}
               />
@@ -245,7 +245,7 @@ export const TourBooking: FC<ITourBookingProps> = ({
                 error={props.error && props.inputProps.value !== ""}
                 inputProps={{
                   ...props.inputProps,
-                  placeholder: "Дата выезда",
+                  label: "Дата выезда",
                 }}
                 sx={{ color: "black" }}
               />
@@ -253,7 +253,7 @@ export const TourBooking: FC<ITourBookingProps> = ({
           />
           <Stack direction={"column"}>
             <TextField
-              placeholder={"Количество человек"}
+              label={"Количество человек"}
               type={"number"}
               InputProps={{ inputProps: { min: 0, max: 50 } }}
               error={errSize}

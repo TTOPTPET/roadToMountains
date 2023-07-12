@@ -71,7 +71,7 @@ export const BasicFilter: FC<IFilterProps> = ({
         options={regions.map((region) => region)}
         renderInput={(params) => (
           <TextField
-            placeholder={"Регион"}
+            label={"Регион"}
             {...params}
             value={searchData.region}
             onChange={(e) =>
@@ -91,7 +91,7 @@ export const BasicFilter: FC<IFilterProps> = ({
               error={props.error && props.inputProps.value !== ""}
               inputProps={{
                 ...props.inputProps,
-                placeholder: "Дата заезда",
+                label: "Дата заезда",
               }}
             />
           )}
@@ -105,7 +105,7 @@ export const BasicFilter: FC<IFilterProps> = ({
               error={props.error && props.inputProps.value !== ""}
               inputProps={{
                 ...props.inputProps,
-                placeholder: "Дата выезда",
+                label: "Дата выезда",
               }}
             />
           )}
@@ -120,7 +120,7 @@ export const BasicFilter: FC<IFilterProps> = ({
         onChange={(e) =>
           handleFieldChange<number>("maxPersonNumber", +e.target.value)
         }
-        placeholder={"Количество человек"}
+        label={"Количество человек"}
       />
       <Button
         variant="high"

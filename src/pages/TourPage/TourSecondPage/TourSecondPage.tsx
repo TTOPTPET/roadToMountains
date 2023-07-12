@@ -105,7 +105,7 @@ export const TourSecondPage: FC<ITourSecondPageProps> = ({
           Комментарий к заказу
         </Typography>
         <TextField
-          placeholder={"Введите комментарий (не более 1500 символов)"}
+          label={"Введите комментарий (не более 1500 символов)"}
           color={"secondary"}
           value={bookingData?.comment}
           onChange={(e) =>

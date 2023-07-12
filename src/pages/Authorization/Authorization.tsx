@@ -244,7 +244,7 @@ function Authorization() {
                   <TextField
                     color="secondary"
                     key={index}
-                    placeholder={value.name}
+                    label={value.name}
                     type={value.type}
                     error={
                       errAuth ||
@@ -265,7 +265,7 @@ function Authorization() {
                   <TextField
                     color="secondary"
                     key={index}
-                    placeholder={value.name}
+                    label={value.name}
                     type={value.type}
                     error={
                       key in registerErrorsDefault
@@ -292,11 +292,7 @@ function Authorization() {
                 options={registerTypes}
                 getOptionLabel={(option) => option.name}
                 renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    placeholder="Выбор роли"
-                    color="secondary"
-                  />
+                  <TextField {...params} label="Выбор роли" color="secondary" />
                 )}
               />
             )}

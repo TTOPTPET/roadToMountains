@@ -54,7 +54,7 @@ function EditTouristInfo() {
         fields={
           <>
             <TextField
-              placeholder="Имя"
+              label="Имя"
               color="primary"
               value={editedTouristInfo?.name}
               onChange={(e) =>
@@ -65,7 +65,7 @@ function EditTouristInfo() {
               }
             />
             <TextField
-              placeholder="Номер телефона"
+              label="Номер телефона"
               color="primary"
               value={editedTouristInfo?.phone}
               onChange={(e) =>
@@ -76,7 +76,7 @@ function EditTouristInfo() {
               }
             />
             <TextField
-              placeholder="Электронная почта"
+              label="Электронная почта"
               color="primary"
               value={editedTouristInfo?.email}
               onChange={(e) =>
@@ -95,7 +95,7 @@ function EditTouristInfo() {
               renderInput={(params) => (
                 <TextField
                   {...params}
-                  placeholder="Регион проживания"
+                  label="Регион проживания"
                   color="primary"
                 />
               )}

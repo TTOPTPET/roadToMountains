@@ -32,7 +32,7 @@ const StatisticSearch: FC<IStatisticSearchProps> = ({
             error={props.error && props.inputProps.value !== ""}
             inputProps={{
               ...props.inputProps,
-              placeholder: "Дата начала",
+              label: "Дата начала",
             }}
           />
         )}
@@ -46,7 +46,7 @@ const StatisticSearch: FC<IStatisticSearchProps> = ({
             error={props.error && props.inputProps.value !== ""}
             inputProps={{
               ...props.inputProps,
-              placeholder: "Дата конца",
+              label: "Дата конца",
             }}
           />
         )}
