@@ -23,7 +23,9 @@ type modalsId =
   | "errorBookingModal"
   | "cardLostModal"
   | "deleteCardModal"
-  | "noLoginModal";
+  | "noLoginModal"
+  | "confirmCancelBooking"
+  | "successCancelBooking";
 
 enum actionTypes {
   SET_MODAL_ACTIVE = "SET_MODAL_ACTIVE",
@@ -34,6 +36,7 @@ interface IActionProps {
   id: modalsId;
   props?: {
     tourId: string;
+    bookingId: number;
     multiply?: boolean;
     index?: number;
     tour?: boolean;

@@ -10,6 +10,9 @@ import { SyntheticEvent, useEffect, useState } from "react";
 import { IUserRecord } from "../../models/userModels/IUserRecord";
 import { getTouristRecords } from "../../API/touristAPI/getTouristRecords";
 import { TourAccordion } from "./TourAccordion/TourAccordion";
+import ErrorBookingModal from "../Modals/ErrorBookingModal/ErrorBookingModal";
+import ConfirmCancelBooking from "../Modals/ConfirmCancelBooking/ConfirmCancelBooking";
+import SuccessCancelBooking from "../Modals/SuccessCancelBooking/SuccessCancelBooking";
 
 enum tabValues {
   upcomming,
@@ -96,6 +99,9 @@ export const MyTours = () => {
             <TourAccordion key={index} record={record} />
           ))}
       </Stack>
+      <ErrorBookingModal />
+      <ConfirmCancelBooking />
+      <SuccessCancelBooking />
     </>
   );
 };
