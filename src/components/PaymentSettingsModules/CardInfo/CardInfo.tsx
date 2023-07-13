@@ -89,15 +89,7 @@ export default function CardInfo({ cardId, statusConnectCard }: CardInfoProps) {
               justifyContent={"space-between"}
             >
               <Typography variant="caption">Карта</Typography>
-              <Typography variant="button">
-                {cardId.slice(0, 4) +
-                  " " +
-                  "****" +
-                  " " +
-                  "****" +
-                  " " +
-                  cardId.slice(12, 16)}
-              </Typography>
+              <Typography variant="button">{cardId}</Typography>
             </Stack>
           </Paper>
         )}
