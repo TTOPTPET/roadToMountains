@@ -9,7 +9,6 @@ import {
 } from "@mui/material";
 import dayjs from "dayjs";
 import { FC } from "react";
-import { cancelBooking } from "../../../API/touristAPI/cancelBooking";
 import { ITourBooking } from "../../../models/tourModels/ITourBooking";
 import { ITourBookingDate } from "../../../models/tourModels/ITourBookingDate";
 import { TourDetailsType } from "./tourDetailsType/tourDetailsType";
@@ -113,7 +112,13 @@ export const TourDetails: FC<ITourDetailsProps> = ({
                     ? true
                     : false
                 }
-                onClick={() => cancelBooking(record.bookingId, undefined)}
+                onClick={() =>
+                  dispatch(
+                    setModalActive("confirmCancelBooking", {
+                      bookingId: record.bookingId,
+                    })
+                  )
+                }
               >
                 Отменить бронирование
               </Button>
@@ -210,7 +215,13 @@ export const TourDetails: FC<ITourDetailsProps> = ({
                       ? true
                       : false
                   }
-                  onClick={() => cancelBooking(record.bookingId, undefined)}
+                  onClick={() =>
+                    dispatch(
+                      setModalActive("confirmCancelBooking", {
+                        bookingId: record.bookingId,
+                      })
+                    )
+                  }
                 >
                   Отменить бронирование
                 </Button>
