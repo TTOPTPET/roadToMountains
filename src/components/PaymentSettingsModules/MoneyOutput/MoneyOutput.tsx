@@ -13,7 +13,7 @@ export default function MoneyOutput({ accauntAmount }: MoneyOutputProps) {
 
   return (
     <>
-      <Typography variant="h5" sx={{ mt: "70px" }}>
+      <Typography variant="h5" sx={{ mt: "90px" }}>
         Вывод средств
       </Typography>
       <Paper

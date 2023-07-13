@@ -21,7 +21,9 @@ type modalsId =
   | "successCancelPostedTourModal"
   | "bookingInfoModal"
   | "errorBookingModal"
-  | "cardLostModal";
+  | "cardLostModal"
+  | "deleteCardModal"
+  | "noLoginModal";
 
 enum actionTypes {
   SET_MODAL_ACTIVE = "SET_MODAL_ACTIVE",

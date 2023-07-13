@@ -195,7 +195,13 @@ function App() {
             </Routes>
           </Container>
         </Suspense>
-        <Box sx={{ position: "fixed", bottom: "50px", right: "50px" }}>
+        <Box
+          sx={{
+            position: "fixed",
+            bottom: "50px",
+            right: "50px",
+          }}
+        >
           <HelpButton />
         </Box>
         <Footer />

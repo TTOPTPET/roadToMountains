@@ -6,8 +6,6 @@ import { whiteColor } from "../../../config/MUI/color/color";
 
 import { StatusConnectCard } from "../../../models/paymentSettingsModels/IPaymentSettings";
 
-import { deleteCard } from "../../../API/paymentAPI/deleteCard";
-
 import {
   Typography,
   Paper,
@@ -107,7 +105,13 @@ export default function CardInfo({ cardId, statusConnectCard }: CardInfoProps) {
             Привязать новую карту
           </Button>
           {statusConnectCard === StatusConnectCard.linked && (
-            <Button onClick={() => deleteCard()}>Отвязать карту</Button>
+            <Button
+              onClick={() => {
+                dispatch(setModalActive("deleteCardModal"));
+              }}
+            >
+              Отвязать карту
+            </Button>
           )}
         </Stack>
       </Paper>

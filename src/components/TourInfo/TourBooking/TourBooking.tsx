@@ -26,6 +26,9 @@ import SuccessBookingModal from "../../Modals/SuccessBookingModal/SuccessBooking
 import ErrorBookingModal from "../../Modals/ErrorBookingModal/ErrorBookingModal";
 import { setModalActive } from "../../../redux/Modal/ModalReducer";
 import { useDispatch } from "react-redux";
+import { REFRESH_TOKEN, TOKEN } from "../../../config/types";
+import { useCookies } from "react-cookie";
+import NoLoginModal from "../../Modals/NoLoginModal/NoLoginModal";
 
 dayjs.extend(isBetween);
 
@@ -67,6 +70,8 @@ export const TourBooking: FC<ITourBookingProps> = ({
   const [datePickerValue, setDatePickerValue] = useState(
     handlerDateConverter(bookingDate)
   );
+
+  const [cookies] = useCookies([TOKEN, REFRESH_TOKEN]);
 
   const dispatch = useDispatch();
 
@@ -309,7 +314,11 @@ export const TourBooking: FC<ITourBookingProps> = ({
               variant={"contained"}
               sx={{ marginTop: 1 }}
               onClick={() => {
-                setPage((page: tourStepsMap) => (page < 2 ? page + 1 : page));
+                cookies.REFRESH_TOKEN && cookies.TOKEN
+                  ? setPage((page: tourStepsMap) =>
+                      page < 2 ? page + 1 : page
+                    )
+                  : dispatch(setModalActive("noLoginModal"));
               }}
             >
               Забронировать
@@ -329,6 +338,7 @@ export const TourBooking: FC<ITourBookingProps> = ({
       <SuccessPayModal meetingTime={selectedDate?.meetingTime} />
       <SuccessBookingModal />
       <ErrorBookingModal />
+      <NoLoginModal />
     </LocalizationProvider>
   );
 };
