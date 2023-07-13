@@ -58,9 +58,9 @@ type RegisterErrors = {
 };
 
 const registerErrorsDefault: RegisterErrors = {
-  email: false,
-  password: false,
-  phone: false,
+  email: undefined,
+  password: undefined,
+  phone: undefined,
 };
 
 function Authorization() {
@@ -243,7 +243,7 @@ function Authorization() {
                 ).map(([key, value], index) => (
                   <TextField
                     color="secondary"
-                    key={index}
+                    key={index + "log"}
                     label={value.name}
                     type={value.type}
                     error={
@@ -264,9 +264,11 @@ function Authorization() {
                 ).map(([key, value], index) => (
                   <TextField
                     color="secondary"
-                    key={index}
+                    key={index + "reg"}
+                    name={value.name + "reg"}
                     label={value.name}
                     type={value.type}
+                    autoComplete="new-password"
                     error={
                       key in registerErrorsDefault
                         ? registerInputError[key]
@@ -316,7 +318,7 @@ function Authorization() {
               ref={refBtn}
               onClick={() => handlerRegisterClick()}
               disabled={Object.values(registerInputError).some(
-                (value) => value === true
+                (value) => value !== false
               )}
             >
               Регистрация

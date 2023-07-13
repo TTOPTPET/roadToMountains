@@ -154,7 +154,11 @@ export const TourInfo: FC<ITourInfoProps> = ({
           </Typography>
         </Grid>
         <Grid container direction={"column"} item md={6} gap={2}>
-          {addTourInfo ? <Attention /> : <></>}
+          {addTourInfo ? (
+            <Attention text="Обращаем Ваше внимание, что все изменения будут применены только к предстоящим записям. Забронированные туры обслуживаются по старому тарифу." />
+          ) : (
+            <></>
+          )}
           <Typography variant={"h5"}>
             {tourInfo?.price !== undefined
               ? tourInfo?.price || 0
