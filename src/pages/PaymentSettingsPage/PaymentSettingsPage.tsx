@@ -13,6 +13,7 @@ import { getBankAccInfo } from "../../API/paymentAPI/getBankAccInfo";
 import MoneyAmount from "../../components/PaymentSettingsModules/MoneyAmount/MoneyAmount";
 import RecentOperations from "../../components/PaymentSettingsModules/RecentOperations/RecentOperations";
 import CardLostModal from "../../components/Modals/CardLostModal/CardLostModal";
+import DeleteCardModal from "../../components/Modals/DeleteCardModal/DeleteCardmodal";
 
 function PaymentSettingsPage() {
   const [cardInfo, setCardInfo] = useState<ICardInfo>();
@@ -54,6 +55,7 @@ function PaymentSettingsPage() {
         </Grid>
       </Grid>
       <CardLostModal />
+      <DeleteCardModal />
     </>
   );
 }

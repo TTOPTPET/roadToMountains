@@ -19,7 +19,7 @@ export default function RecentOperations({
     });
 
   return (
-    <>
+    <Stack sx={{ height: "100%" }}>
       <Typography variant="h5" sx={{ mt: "30px" }}>
         Последние операции
       </Typography>
@@ -47,9 +47,18 @@ export default function RecentOperations({
           </Typography>
         </Stack>
       </Paper>
-      <Stack direction={"column"} gap="10px" sx={{ mt: "10px" }}>
+      <Stack
+        direction={"column"}
+        gap="10px"
+        height={"37vh"}
+        overflow={"scroll"}
+        sx={{
+          mt: "10px",
+          overflowX: "hidden",
+        }}
+      >
         {elements}
       </Stack>
-    </>
+    </Stack>
   );
 }
