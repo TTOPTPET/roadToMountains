@@ -15,9 +15,11 @@ function ProtectedRoute({ children }: Props) {
   if (cookies.TOKEN) {
     return <>{children}</>;
   } else {
-    // HACK: Раскоментить для работы приватных роутеров
-    return <Navigate to="/auth" replace />;
-    // return <>{children}</>;
+    return import.meta.env.VITE_APP_ACCESS_TYPE === "DEV" ? (
+      <>{children}</>
+    ) : (
+      <Navigate to="/auth" replace />
+    );
   }
 }
 

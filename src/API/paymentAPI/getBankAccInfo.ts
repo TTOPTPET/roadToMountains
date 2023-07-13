@@ -35,6 +35,27 @@ const responseDefault: IBankAccount = {
       description: "Пивко за школой",
       price: "306000",
     },
+    {
+      type: AccauntTransactionsType.penalty,
+      success: true,
+      createAt: "03-07-2023",
+      description: "Пивко за школой",
+      price: "306000",
+    },
+    {
+      type: AccauntTransactionsType.penalty,
+      success: true,
+      createAt: "03-07-2023",
+      description: "Пивко за школой",
+      price: "306000",
+    },
+    {
+      type: AccauntTransactionsType.penalty,
+      success: true,
+      createAt: "03-07-2023",
+      description: "Пивко за школой",
+      price: "306000",
+    },
   ],
 };
 
