@@ -347,8 +347,7 @@ export default function NewPublicModal({
               label={"Количество человек"}
             />
             <StyledTextAreaAutosize
-              // @ts-ignore
-              label="Контактная информация"
+              placeholder="Контактная информация"
               sx={{ m: "0", minHeight: "50px" }}
               value={editedPublic?.contactInformation}
               onChange={(e) => {

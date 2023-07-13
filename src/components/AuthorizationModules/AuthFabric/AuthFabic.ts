@@ -43,7 +43,7 @@ export const AuthComponent = (
           name: "Телефон",
           required: true,
           type: "number",
-          value: "",
+          value: null,
           error: false,
         },
         password: {

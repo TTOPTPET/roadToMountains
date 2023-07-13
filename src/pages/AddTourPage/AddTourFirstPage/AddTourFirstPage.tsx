@@ -64,7 +64,7 @@ export const AddTourFirstPage: FC<IAddTourFirstPageProps> = ({
           Описание
         </Typography>
         <StyledTextAreaAutosize
-          label={"Описание тура (не более 2500 символов)"}
+          placeholder={"Описание тура (не более 2500 символов)"}
           maxLength={2500}
           minRows={2}
           sx={{
@@ -85,7 +85,7 @@ export const AddTourFirstPage: FC<IAddTourFirstPageProps> = ({
       </Grid>
       <Grid container item xs={6} justifyContent={"flex-end"} minWidth={500}>
         <Grid item>
-          <Attention />
+          <Attention text="Обращаем Ваше внимание, что все изменения будут применены только к предстоящим записям. Забронированные туры обслуживаются по старому тарифу." />
         </Grid>
 
         <Grid
