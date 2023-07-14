@@ -18,6 +18,7 @@ import { getToursSorted } from "../../API/tourListAPI/searchAPI/searchAPI";
 import { ITour } from "../../models/tourCardModel/ITour";
 import TourCard from "../../components/TourCard/TourCard";
 import { useSearchParams } from "react-router-dom";
+import { ChipLabelType } from "../../components/TourList/getChipLabels";
 
 const filterDefault: IFilter = {
   regions: [],
@@ -43,6 +44,53 @@ function TourListPage() {
 
   const lessThanSmall = useMediaQuery(theme.breakpoints.down("sm"));
 
+  const clearSearchField = (key: keyof ISearchRequest, value: string) => {
+    const searchValue = searchData[key];
+    if (searchValue instanceof Array) {
+      const newArray = searchValue.filter((item) => item !== value);
+      console.log(newArray);
+      setSearchData({
+        ...searchData,
+        [key]: newArray,
+      });
+    } else {
+      setSearchData({
+        ...searchData,
+        [key]: undefined,
+      });
+    }
+    setFiltersLabels([...filtersLabels.filter((item) => item !== value)]);
+  };
+
+  const handlerDeleteLabel = (value: string) => {
+    const chipLabelTypeIndex = Object.values(ChipLabelType).indexOf(
+      value as ChipLabelType
+    );
+    if (chipLabelTypeIndex !== -1) {
+      const searchKey = Object.keys(ChipLabelType)[chipLabelTypeIndex];
+      clearSearchField(searchKey as keyof ISearchRequest, value);
+    } else {
+      const searchDataKeys = Object.keys(searchData);
+      Object.values(searchData).forEach((item, key) => {
+        if (typeof item === "string") {
+          if (item === value) {
+            clearSearchField(
+              searchDataKeys[key] as keyof ISearchRequest,
+              value
+            );
+          }
+        } else if (item instanceof Array) {
+          if (item.indexOf(value) !== -1) {
+            clearSearchField(
+              searchDataKeys[key] as keyof ISearchRequest,
+              value
+            );
+          }
+        }
+      });
+    }
+  };
+
   useEffect(() => {
     getFilters((filter) => setFilters(filter), undefined, false);
     getToursSorted(
@@ -51,7 +99,7 @@ function TourListPage() {
       undefined,
       false
     );
-  }, []);
+  }, [filtersLabels]);
 
   useEffect(() => {
     setSearchData({ ...searchData, searchParam: searchParam.get("title") });
@@ -95,9 +143,14 @@ function TourListPage() {
         filtersLabels={filtersLabels}
         setFiltersLabels={setFiltersLabels}
       />
-      <Stack direction={"row"} flexWrap={"wrap"} gap={2} mt={2}>
+      <Stack direction={"row"} flexWrap={"wrap"} gap={2}>
         {filtersLabels.map((item, index) => (
-          <Chip key={index} variant={"outlined"} label={item} />
+          <Chip
+            key={index}
+            variant={"outlined"}
+            label={item}
+            onDelete={() => handlerDeleteLabel(item)}
+          />
         ))}
       </Stack>
       <ComplexFilter
