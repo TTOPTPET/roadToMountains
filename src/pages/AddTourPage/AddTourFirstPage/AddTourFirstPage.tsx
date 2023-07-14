@@ -83,19 +83,19 @@ export const AddTourFirstPage: FC<IAddTourFirstPageProps> = ({
           }
         />
       </Grid>
-      <Grid container item xs={6} justifyContent={"flex-end"} minWidth={500}>
+      <Grid
+        container
+        item
+        xs={6}
+        justifyContent={"flex-start"}
+        minWidth={500}
+        mt={media ? 2 : 0}
+      >
         <Grid item>
           <Attention text="Обращаем Ваше внимание, что все изменения будут применены только к предстоящим записям. Забронированные туры обслуживаются по старому тарифу." />
         </Grid>
-
-        <Grid
-          container
-          direction={"row"}
-          marginTop={5}
-          spacing={2}
-          justifyContent={media ? "left" : "flex-end"}
-        >
-          <Grid item md={6}>
+        <Grid container item justifyContent={"space-between"} mt={2}>
+          <Stack direction={"column"}>
             <Typography variant={"h6"} marginBottom={1}>
               Регион проведения
             </Typography>
@@ -122,75 +122,8 @@ export const AddTourFirstPage: FC<IAddTourFirstPageProps> = ({
                 setTourInfo({ ...tourInfo, region: value })
               }
             />
-            <Typography variant={"h6"} marginTop={30}>
-              Рекомендуемый возраст
-            </Typography>
-            <Stack direction={"row"} marginTop={1} gap={2}>
-              <TextField
-                InputProps={{ inputProps: { min: 0 } }}
-                type={"number"}
-                label={"От"}
-                value={tourInfo?.recommendedAge?.from || ""}
-                required
-                error={
-                  (addError && tourInfo?.recommendedAge?.from === undefined) ||
-                  tourInfo?.recommendedAge?.from === 0
-                }
-                onChange={(e) =>
-                  setTourInfo({
-                    ...tourInfo,
-                    recommendedAge: {
-                      ...tourInfo?.recommendedAge,
-                      from: +e.target.value,
-                    },
-                  })
-                }
-              />
-              <TextField
-                InputProps={{ inputProps: { min: 0 } }}
-                type={"number"}
-                label={"До"}
-                value={tourInfo?.recommendedAge?.to || ""}
-                required
-                error={
-                  (addError && tourInfo?.recommendedAge?.to === undefined) ||
-                  tourInfo?.recommendedAge?.to === 0
-                }
-                onChange={(e) =>
-                  setTourInfo({
-                    ...tourInfo,
-                    recommendedAge: {
-                      ...tourInfo?.recommendedAge,
-                      to: +e.target.value,
-                    },
-                  })
-                }
-              />
-            </Stack>
-            <Typography variant={"h6"} marginTop={2}>
-              Стоимость тура на человека
-            </Typography>
-            <TextField
-              sx={{ marginTop: 1 }}
-              fullWidth
-              type={"number"}
-              InputProps={{ inputProps: { min: 0 } }}
-              label={"Стоимость тура"}
-              value={tourInfo?.price || ""}
-              error={
-                (addError && tourInfo?.price === undefined) ||
-                tourInfo?.price === 0
-              }
-              required
-              onChange={(e) =>
-                setTourInfo({
-                  ...tourInfo,
-                  price: +e.target.value,
-                })
-              }
-            />
-          </Grid>
-          <Grid item md={5}>
+          </Stack>
+          <Stack direction={"column"}>
             <Typography variant={"h6"}>Категория тура</Typography>
             <RadioGroup
               value={tourInfo?.category || ""}
@@ -220,7 +153,74 @@ export const AddTourFirstPage: FC<IAddTourFirstPageProps> = ({
                 />
               ))}
             </RadioGroup>
-          </Grid>
+          </Stack>
+        </Grid>
+        <Grid item container md={6}>
+          <Typography variant={"h6"}>Рекомендуемый возраст</Typography>
+          <Stack direction={"row"} marginTop={1} gap={2} width={"100%"}>
+            <TextField
+              InputProps={{ inputProps: { min: 0 } }}
+              type={"number"}
+              label={"От"}
+              value={tourInfo?.recommendedAge?.from || ""}
+              required
+              error={
+                (addError && tourInfo?.recommendedAge?.from === undefined) ||
+                tourInfo?.recommendedAge?.from === 0
+              }
+              onChange={(e) =>
+                setTourInfo({
+                  ...tourInfo,
+                  recommendedAge: {
+                    ...tourInfo?.recommendedAge,
+                    from: +e.target.value,
+                  },
+                })
+              }
+            />
+            <TextField
+              InputProps={{ inputProps: { min: 0 } }}
+              type={"number"}
+              label={"До"}
+              value={tourInfo?.recommendedAge?.to || ""}
+              required
+              error={
+                (addError && tourInfo?.recommendedAge?.to === undefined) ||
+                tourInfo?.recommendedAge?.to === 0
+              }
+              onChange={(e) =>
+                setTourInfo({
+                  ...tourInfo,
+                  recommendedAge: {
+                    ...tourInfo?.recommendedAge,
+                    to: +e.target.value,
+                  },
+                })
+              }
+            />
+          </Stack>
+          <Typography variant={"h6"} marginTop={2}>
+            Стоимость тура на человека
+          </Typography>
+          <TextField
+            sx={{ marginTop: 1 }}
+            fullWidth
+            type={"number"}
+            InputProps={{ inputProps: { min: 0 } }}
+            label={"Стоимость тура"}
+            value={tourInfo?.price || ""}
+            error={
+              (addError && tourInfo?.price === undefined) ||
+              tourInfo?.price === 0
+            }
+            required
+            onChange={(e) =>
+              setTourInfo({
+                ...tourInfo,
+                price: +e.target.value,
+              })
+            }
+          />
         </Grid>
       </Grid>
     </Grid>
