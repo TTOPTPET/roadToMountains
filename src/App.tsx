@@ -200,6 +200,7 @@ function App() {
             position: "fixed",
             bottom: "50px",
             right: "50px",
+            zIndex: "1000",
           }}
         >
           <HelpButton />

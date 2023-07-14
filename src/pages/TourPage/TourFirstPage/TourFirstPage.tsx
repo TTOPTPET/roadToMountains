@@ -1,16 +1,23 @@
 import { FC, SetStateAction, Dispatch } from "react";
 import { ITourInfo } from "../../../models/tourModels/ITourInfo";
-import { Stack, Typography, Avatar as MuiAvatar, Paper } from "@mui/material";
+import {
+  Stack,
+  Typography,
+  Avatar as MuiAvatar,
+  Paper,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import { TourInfo } from "../../../components/TourInfo/TourInfo";
 import { ITourBooking } from "../../../models/tourModels/ITourBooking";
 import { TourBooking } from "../../../components/TourInfo/TourBooking/TourBooking";
 import { tourStepsMap } from "../TourPage";
 import { ITourBookingDate } from "../../../models/tourModels/ITourBookingDate";
-import { baseUrl } from "../../../config/config";
-import userPhoto from "../../../media/userPhoto.svg";
+
 import { Cookies } from "react-cookie";
 import { USER_ROLE } from "../../../config/types";
 import { UserType } from "../../../models/userModels/IUserInfo";
+import TourCreatorInfo from "../TourCreatorInfo/TourCreatorInfo";
 
 interface TourFirstPageProps {
   images: any[];
@@ -39,47 +46,18 @@ export const TourFirstPage: FC<TourFirstPageProps> = ({
   selectedDate,
   setSelectedDate,
 }) => {
+  const theme = useTheme();
+
+  const lessThenSmall = useMediaQuery(theme.breakpoints.down("sm"));
+  const upperThenMid = useMediaQuery(theme.breakpoints.up("md"));
+
   return (
     <>
       <Stack justifyContent={"space-between"} direction={"row"}>
-        <Typography variant={"h3"} marginBottom={1}>
+        <Typography variant={lessThenSmall ? "h4" : "h3"} marginBottom={1}>
           {tourInfo?.tourName || "Название тура"}
         </Typography>
-        <Stack direction={"row"} gap={"20px"} alignItems={"center"}>
-          <Paper
-            variant="avatarBg"
-            className="tourInfo__creator-avatar"
-            sx={{
-              width: "70px",
-              height: "70px",
-            }}
-          >
-            {tourInfo && tourInfo?.creatorInfo?.photo ? (
-              <MuiAvatar
-                src={baseUrl + "/" + tourInfo?.creatorInfo?.photo}
-                alt="user avatar"
-                sx={{ width: "70px", height: "70px" }}
-              />
-            ) : (
-              <img src={userPhoto} alt="person icon" />
-            )}
-          </Paper>
-
-          <Typography variant={"button"}>
-            {tourInfo?.creatorInfo?.creatorType
-              ? tourInfo?.creatorInfo?.creatorType === "SELF"
-                ? ""
-                : tourInfo?.creatorInfo?.creatorType === "OOO"
-                ? "ООО"
-                : "ИП"
-              : ""}{" "}
-            {tourInfo?.creatorInfo?.name
-              ? tourInfo?.creatorInfo?.creatorType === "SELF"
-                ? tourInfo?.creatorInfo?.name
-                : `"${tourInfo?.creatorInfo?.name}"`
-              : "Название компании"}
-          </Typography>
-        </Stack>
+        {upperThenMid && <TourCreatorInfo tourInfo={tourInfo} />}
       </Stack>
       <TourInfo
         images={images}

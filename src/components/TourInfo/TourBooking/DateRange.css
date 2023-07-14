@@ -1,0 +1,20 @@
+.customDatePickerWidth, 
+.customDatePickerWidth > div > div > div.rdrMonth, 
+.customDatePickerWidth > div > div.rdrMonthAndYearWrapper{
+   width: 280px;
+   padding-top: 0;
+}
+
+.customDatePickerWidth, 
+.customDatePickerWidth > div > div > div.rdrMonth {
+    padding-left: 0;
+    padding-right: 1.833em;
+}
+
+.customDatePickerWidth > div > div.rdrMonthAndYearWrapper > button.rdrNextPrevButton{
+    margin-left: 0;
+}
+
+.customDatePickerWidth > div > div.rdrMonthAndYearWrapper > button.rdrNextButton{
+    margin-right: 24px;
+}

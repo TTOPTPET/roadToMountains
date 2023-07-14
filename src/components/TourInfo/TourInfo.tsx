@@ -1,8 +1,17 @@
-import { Box, Grid, Skeleton, Stack, SvgIcon, Typography } from "@mui/material";
-import { ReactComponent as WalkingGuy } from "../../media/walking-guy.svg";
-import { ReactComponent as MapMarker } from "../../media/map-marker.svg";
-import { ReactComponent as ArrowRight } from "../../media/right-arrow-navigation.svg";
-import { ReactComponent as ArrlowLeft } from "../../media/left-arrow-navigation.svg";
+import {
+  Box,
+  Grid,
+  Skeleton,
+  Stack,
+  SvgIcon,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
+import WalkingGuy from "../../media/walking-guy.svg";
+import MapMarker from "../../media/map-marker.svg";
+import ArrowRight from "../../media/right-arrow-navigation.svg";
+import ArrowLeft from "../../media/left-arrow-navigation.svg";
 import Carousel from "react-material-ui-carousel";
 import { Dispatch, FC, SetStateAction } from "react";
 import { Attention } from "../../components/Attention/Attention";
@@ -11,6 +20,7 @@ import { ITourInfo } from "../../models/tourModels/ITourInfo";
 import dayjs from "dayjs";
 import { baseUrl } from "../../config/config";
 import MapLeaflet from "../MapLeaflet/MapLeaflet";
+import TourCreatorInfo from "../../pages/TourPage/TourCreatorInfo/TourCreatorInfo";
 
 interface ITourInfoProps {
   images: any[];
@@ -27,6 +37,13 @@ export const TourInfo: FC<ITourInfoProps> = ({
   tourInfo,
   isEditing,
 }) => {
+  const theme = useTheme();
+
+  const lessThenBig = useMediaQuery(theme.breakpoints.down("lg"));
+  const lessThenMid = useMediaQuery(theme.breakpoints.down("md"));
+  const upperThenSmall = useMediaQuery(theme.breakpoints.up("sm"));
+  const lessThenSmall = useMediaQuery(theme.breakpoints.down("sm"));
+
   const tagsConverter = (key: "free" | "additional" | "recommend") => {
     switch (key) {
       case "free": {
@@ -68,43 +85,134 @@ export const TourInfo: FC<ITourInfoProps> = ({
   return (
     <>
       <Stack direction={"row"} alignItems={"center"} gap={1} marginBottom={2}>
-        <SvgIcon>
-          <MapMarker />
-        </SvgIcon>
-        <Typography variant={"caption"}>
-          {tourInfo?.region || "Регион"}
-        </Typography>
-        <SvgIcon>
-          <WalkingGuy />
-        </SvgIcon>
-        <Typography variant={"caption"}>
-          {tourInfo?.category || "Категория"}
-        </Typography>
+        <Stack direction={"row"} alignItems={"center"}>
+          <Box
+            className="tour-info-region-icon"
+            sx={{
+              width: { lg: "26px", xs: "18px" },
+              height: { lg: "26px", xs: "18px" },
+            }}
+          >
+            <img
+              src={MapMarker}
+              alt="Map Marker"
+              style={{ objectFit: "contain", width: "100%", height: "100%" }}
+            />
+          </Box>
+          <Typography variant={"caption"}>
+            {tourInfo?.region || "Регион"}
+          </Typography>
+        </Stack>
+        <Stack direction={"row"} alignItems={"center"}>
+          <Box
+            className="tour-info-region-icon"
+            sx={{
+              width: { lg: "26px", xs: "18px" },
+              height: { lg: "26px", xs: "18px" },
+            }}
+          >
+            <img
+              src={WalkingGuy}
+              alt="Walking Guy"
+              style={{ objectFit: "contain", width: "100%", height: "100%" }}
+            />
+          </Box>
+          <Typography variant={"caption"}>
+            {tourInfo?.category || "Категория"}
+          </Typography>
+        </Stack>
       </Stack>
       <Grid container justifyContent={"space-between"}>
-        <Grid item width={"100%"} md={5.1} className="addtour__carousel">
+        <Grid
+          item
+          width={{
+            lg: "490px",
+            md: "348px",
+            sm: "300px",
+            xs: "260px",
+          }}
+          md={5.1}
+          sm={5.1}
+          className="addtour__carousel"
+        >
           <Carousel
             navButtonsAlwaysVisible
+            sx={{
+              height: { lg: "490px", md: "348px", sm: "300px", xs: "260px" },
+              width: { lg: "490px", md: "348px", sm: "300px", xs: "260px" },
+            }}
             indicators={false}
             navButtonsProps={{
               style: {
                 backgroundColor: "white",
+                width: lessThenBig ? "24px" : "36px",
+                height: lessThenBig ? "24px" : "36px",
               },
             }}
             NextIcon={
-              <SvgIcon fontSize="small">
-                <ArrowRight width={24} height={24} />
-              </SvgIcon>
+              <Box
+                className="tour-info-region-icon"
+                sx={{
+                  width: "20px",
+                  height: "20px",
+                }}
+              >
+                <img
+                  src={ArrowRight}
+                  alt="Map Marker"
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    objectFit: "contain",
+                    width: "100%",
+                    height: "100%",
+                  }}
+                />
+              </Box>
             }
             PrevIcon={
-              <SvgIcon fontSize="small">
-                <ArrlowLeft width={24} height={24} />
-              </SvgIcon>
+              <Box
+                className="tour-info-region-icon"
+                sx={{
+                  width: "20px",
+                  height: "20px",
+                }}
+              >
+                <img
+                  src={ArrowLeft}
+                  alt="Map Marker"
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    objectFit: "contain",
+                    width: "100%",
+                    height: "100%",
+                  }}
+                />
+              </Box>
             }
           >
             {tourInfo?.photos ? (
               tourInfo?.photos.map((image, index) => (
-                <Box key={index} style={{ width: 490, height: 490 }}>
+                <Box
+                  key={index}
+                  sx={{
+                    width: {
+                      lg: "490px",
+                      md: "348px",
+                      sm: "300px",
+                      xs: "260px",
+                    },
+                    height: {
+                      lg: "490px",
+                      md: "348px",
+                      sm: "300px",
+                      xs: "260px",
+                    },
+                  }}
+                >
                   <img
                     src={
                       typeof image === "string"
@@ -122,7 +230,22 @@ export const TourInfo: FC<ITourInfoProps> = ({
                 </Box>
               ))
             ) : (
-              <Box style={{ width: 490, height: 490 }}>
+              <Box
+                sx={{
+                  width: {
+                    lg: "490px",
+                    md: "348px",
+                    sm: "300px",
+                    xs: "260px",
+                  },
+                  height: {
+                    lg: "490px",
+                    md: "348px",
+                    sm: "300px",
+                    xs: "260px",
+                  },
+                }}
+              >
                 <Skeleton
                   width={"100%"}
                   height={"100%"}
@@ -146,20 +269,34 @@ export const TourInfo: FC<ITourInfoProps> = ({
               </Box>
             )}
           </Carousel>
-          <Typography variant={"h6"} marginY={2}>
-            Описание
-          </Typography>
-          <Typography variant={"caption"}>
-            {tourInfo?.tourDescription || "Описание тура"}
-          </Typography>
+          {upperThenSmall && (
+            <>
+              <Typography variant={"h6"} marginY={{ lg: 2, sm: 1 }}>
+                Описание
+              </Typography>
+              <Typography variant={"caption"}>
+                {tourInfo?.tourDescription || "Описание тура"}
+              </Typography>
+            </>
+          )}
         </Grid>
-        <Grid container direction={"column"} item md={6} gap={2}>
+        <Grid
+          container
+          direction={"column"}
+          item
+          md={6}
+          sm={4.5}
+          gap={{ lg: 2, sm: 1, xs: 1 }}
+        >
+          {lessThenMid && upperThenSmall && (
+            <TourCreatorInfo tourInfo={tourInfo as ITourInfo} />
+          )}
           {addTourInfo ? (
             <Attention text="Обращаем Ваше внимание, что все изменения будут применены только к предстоящим записям. Забронированные туры обслуживаются по старому тарифу." />
           ) : (
             <></>
           )}
-          <Typography variant={"h5"}>
+          <Typography variant={"h5"} sx={{ mt: lessThenSmall ? "10px" : "" }}>
             {tourInfo?.price !== undefined
               ? tourInfo?.price || 0
               : tourInfo?.prices?.from === tourInfo?.prices?.to
@@ -233,9 +370,22 @@ export const TourInfo: FC<ITourInfoProps> = ({
           <Typography variant={"caption"}>
             {tagsConverter("recommend")}
           </Typography>
+          {lessThenSmall && (
+            <>
+              <Typography variant={"h6"}>Описание</Typography>
+              <Typography variant={"caption"} sx={{ mb: "10px" }}>
+                {tourInfo?.tourDescription || "Описание тура"}
+              </Typography>
+              <TourCreatorInfo tourInfo={tourInfo as ITourInfo} />
+            </>
+          )}
         </Grid>
       </Grid>
-      <Typography variant={"h5"} mt={5}>
+      <Typography
+        variant={"h5"}
+        mt={{ lg: 4, sm: 2, xs: 1 }}
+        mb={{ sm: 2, xs: 1 }}
+      >
         Маршрут
       </Typography>
       {tourInfo?.mapPoints && tourInfo?.mapPoints.length === 0 ? (
