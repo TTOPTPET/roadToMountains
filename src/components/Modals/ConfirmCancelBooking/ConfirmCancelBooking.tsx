@@ -29,6 +29,8 @@ function ConfirmCancelBooking() {
   );
 
   let bookingId = modalProps?.props?.bookingId;
+  let records = modalProps?.props?.records;
+  let setRecords = modalProps?.props?.setRecords;
 
   const handlerBackClick = () => {
     dispatch(setModalInactive("confirmCancelBooking"));
@@ -40,6 +42,13 @@ function ConfirmCancelBooking() {
       () => {
         dispatch(setModalActive("successCancelBooking"));
         dispatch(setModalInactive("confirmCancelBooking"));
+        records[
+          records.findIndex((item) => item.bookingId === bookingId)
+        ].bookingStatus.payment = "Успешный возврат";
+        records[
+          records.findIndex((item) => item.bookingId === bookingId)
+        ].bookingStatus.cancellation = "cancelledTourists";
+        setRecords([...records]);
       },
       () => {
         dispatch(setModalActive("errorBookingModal"));
