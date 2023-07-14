@@ -1,5 +1,13 @@
 import { ISearchRequest } from "../../models/tourListModels/ISearchRequest";
 
+export enum ChipLabelType {
+  tourDuration = "Длительность тура",
+  price = "Цена",
+  recommendedAge = "Рекомендуемый возраст",
+  tourDate = "Дата",
+  maxPersonNumber = "Колличество человек",
+}
+
 const getChipLabels = (searchData: ISearchRequest): string[] => {
   const nonEmptySearchValues: string[] = [];
   Object.keys(searchData).forEach((key, index) => {
@@ -24,7 +32,7 @@ const getChipLabels = (searchData: ISearchRequest): string[] => {
         ) {
           break;
         }
-        nonEmptySearchValues.push("Длительность тура");
+        nonEmptySearchValues.push(ChipLabelType.tourDuration);
         break;
       case "complexity":
         searchData["complexity"].map((item) => {
@@ -46,7 +54,7 @@ const getChipLabels = (searchData: ISearchRequest): string[] => {
         ) {
           break;
         }
-        nonEmptySearchValues.push("Цена");
+        nonEmptySearchValues.push(ChipLabelType.price);
         break;
       case "recommendedAge":
         if (
@@ -61,7 +69,7 @@ const getChipLabels = (searchData: ISearchRequest): string[] => {
         ) {
           break;
         }
-        nonEmptySearchValues.push("Рекомендуемый возраст");
+        nonEmptySearchValues.push(ChipLabelType.recommendedAge);
         break;
       case "region":
         if (searchData["region"] === undefined || null || "") {
@@ -82,13 +90,13 @@ const getChipLabels = (searchData: ISearchRequest): string[] => {
         ) {
           break;
         }
-        nonEmptySearchValues.push("Дата");
+        nonEmptySearchValues.push(ChipLabelType.tourDate);
         break;
       case "maxPersonNumber":
         if (searchData["maxPersonNumber"] === 0 || undefined || null) {
           break;
         }
-        nonEmptySearchValues.push("Колличество человек");
+        nonEmptySearchValues.push(ChipLabelType.maxPersonNumber);
     }
   });
   return nonEmptySearchValues;
