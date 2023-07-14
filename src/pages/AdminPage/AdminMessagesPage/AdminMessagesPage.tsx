@@ -15,7 +15,12 @@ export const AdminMessagesPage = () => {
     <Stack padding={1} gap={1}>
       {userMessages &&
         userMessages.map((item, index) => (
-          <AdminComponent type="message" {...item} key={index} />
+          <AdminComponent
+            key={index}
+            props={{ ...item, type: "message" }}
+            arrayProps={userMessages}
+            setProps={setUserMessages}
+          />
         ))}
     </Stack>
   );

@@ -15,7 +15,12 @@ export const AdminVerifyTouroperatorPage = () => {
     <Stack padding={1} gap={1}>
       {creatorList &&
         creatorList.map((item, index) => (
-          <AdminComponent type="creator" {...item} key={index} />
+          <AdminComponent
+            key={index}
+            props={{ ...item, type: "creator" }}
+            arrayProps={creatorList}
+            setProps={setCreatorList}
+          />
         ))}
     </Stack>
   );

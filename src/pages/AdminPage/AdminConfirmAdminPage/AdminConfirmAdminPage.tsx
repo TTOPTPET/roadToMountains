@@ -14,8 +14,13 @@ export const AdminConfirmAdminPage = () => {
   return (
     <Stack padding={1} gap={1}>
       {adminList &&
-        adminList.map((admin, index) => (
-          <AdminComponent type="admin" {...admin} key={index} />
+        adminList.map((item, index) => (
+          <AdminComponent
+            key={index}
+            props={{ ...item, type: "admin" }}
+            arrayProps={adminList}
+            setProps={setAdminList}
+          />
         ))}
     </Stack>
   );
