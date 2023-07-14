@@ -4,6 +4,7 @@ import {
   Button,
   useTheme,
   useMediaQuery,
+  Stack,
 } from "@mui/material";
 import { DarkStyledTooltip } from "../../../config/MUI/styledComponents/StyledTooltip";
 
@@ -74,12 +75,20 @@ function UserInfoHeader({
       }}
     >
       <Box className="userInfo__header-title-wrapper" sx={{ display: "flex" }}>
-        <Typography
-          variant={lessThenSmall ? "h4" : "h3"}
-          sx={{ display: "flex", alignItems: "center" }}
-        >
-          {title}
-        </Typography>
+        <Stack>
+          <Typography
+            variant={lessThenSmall ? "h4" : "h3"}
+            sx={{ display: "flex", alignItems: "center" }}
+          >
+            {title}
+          </Typography>
+          <Typography variant={"caption"} color={"red"}>
+            {userInfo?.typeUser !== UserType.tourist &&
+            userInfo?.dataUser?.statusVerify === StatusVerify.notVerified
+              ? "Для публикации туров отправьте данные на проверку"
+              : ""}
+          </Typography>
+        </Stack>
         {userInfo &&
         userInfo?.typeUser !== UserType.tourist &&
         userInfo?.dataUser?.statusVerify === StatusVerify.verified ? (
