@@ -5,6 +5,8 @@ import {
   Box,
   Button,
   Skeleton,
+  useTheme,
+  useMediaQuery,
 } from "@mui/material";
 import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -29,6 +31,8 @@ import { useDispatch } from "react-redux";
 import { REFRESH_TOKEN, TOKEN } from "../../../config/types";
 import { useCookies } from "react-cookie";
 import NoLoginModal from "../../Modals/NoLoginModal/NoLoginModal";
+
+import "./DateRange.css";
 
 dayjs.extend(isBetween);
 
@@ -70,6 +74,11 @@ export const TourBooking: FC<ITourBookingProps> = ({
   const [datePickerValue, setDatePickerValue] = useState(
     handlerDateConverter(bookingDate)
   );
+
+  const theme = useTheme();
+
+  const lessThenBig = useMediaQuery(theme.breakpoints.down("lg"));
+  const lessThenSmall = useMediaQuery(theme.breakpoints.down("sm"));
 
   const [cookies] = useCookies([TOKEN, REFRESH_TOKEN]);
 
@@ -204,12 +213,13 @@ export const TourBooking: FC<ITourBookingProps> = ({
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <Stack
         direction={"row"}
-        gap={10}
+        // gap={10}
         flexWrap={"wrap"}
+        alignItems={"start"}
         mt={5}
         justifyContent={"space-between"}
       >
-        <div className="date">
+        <div className="customDatePickerWidth">
           {datePickerValue.length !== 0 ? (
             <DatePickerMemo />
           ) : (
@@ -221,7 +231,7 @@ export const TourBooking: FC<ITourBookingProps> = ({
             />
           )}
         </div>
-        <Stack direction={"column"} gap={2} mt={5}>
+        <Stack direction={"column"} gap={2} mt={"15px"}>
           <DatePicker
             value={dayjs(selectedDate?.date?.from)}
             onChange={(newValue) => handleDateChange("from", newValue)}
@@ -235,7 +245,10 @@ export const TourBooking: FC<ITourBookingProps> = ({
                   ...props.inputProps,
                   label: "Дата заезда",
                 }}
-                sx={{ color: "black" }}
+                sx={{
+                  color: "black",
+                  width: { lg: "300px", xs: "260px" },
+                }}
               />
             )}
           />
@@ -252,7 +265,7 @@ export const TourBooking: FC<ITourBookingProps> = ({
                   ...props.inputProps,
                   label: "Дата выезда",
                 }}
-                sx={{ color: "black" }}
+                sx={{ color: "black", width: { lg: "300px", xs: "260px" } }}
               />
             )}
           />
@@ -262,6 +275,7 @@ export const TourBooking: FC<ITourBookingProps> = ({
               type={"number"}
               InputProps={{ inputProps: { min: 0, max: 50 } }}
               error={errSize}
+              sx={{ width: { lg: "300px", xs: "260px" } }}
               value={bookingData?.size || undefined}
               onChange={(e) =>
                 setBookingData({
@@ -270,7 +284,17 @@ export const TourBooking: FC<ITourBookingProps> = ({
                 })
               }
             />
-            <Typography variant={"caption"}>
+            <Typography
+              variant={"caption"}
+              fontSize={
+                lessThenSmall
+                  ? "11px"
+                  : lessThenBig
+                  ? "14px !important"
+                  : "16px"
+              }
+              sx={{ m: "7px 15px 0" }}
+            >
               Мест свободно: {selectedDate?.bookingNumber || 0}
             </Typography>
             {errSize && (
@@ -286,12 +310,13 @@ export const TourBooking: FC<ITourBookingProps> = ({
         </Stack>
         <Box
           sx={{
-            width: "380px",
-            height: "270px",
+            width: { lg: "380px", md: "268px", sm: "100%", xs: "260px" },
+            height: { lg: "270px", md: "190px", xs: "170px" },
             backgroundColor: lightTurquoiseColor,
             borderRadius: 5,
+            mt: "15px",
           }}
-          padding={4}
+          padding={{ lg: "30px", md: "30px", xs: "20px" }}
         >
           <Typography variant={"h5"}>
             {tourInfo?.tourName || "Название тура"}
