@@ -23,12 +23,14 @@ import { IFilterProps } from "../FilterTypes/IFilterProps";
 import { ISearchRequest } from "../../../models/tourListModels/ISearchRequest";
 import { tourDuration } from "../Constants/tourDuration";
 import { getToursSorted } from "../../../API/tourListAPI/searchAPI/searchAPI";
+import getChipLabels from "../getChipLabels";
 
 export const ComplexFilter: FC<IFilterProps> = ({
   filters,
   searchData,
   setSearchData,
   setTourList,
+  setFiltersLabels,
 }) => {
   const [durationState, setDurationState] = useState<boolean>(true);
   const [durationLabel, setDurationLabel] = useState<string>("");
@@ -104,7 +106,10 @@ export const ComplexFilter: FC<IFilterProps> = ({
 
   const handlerConfirmClick = () => {
     dispatch(setModalInactive("filterModal"));
-    getToursSorted((value) => setTourList(value), searchData);
+    getToursSorted((value) => {
+      setTourList(value);
+      setFiltersLabels(getChipLabels(searchData));
+    }, searchData);
   };
 
   const handlerClearClick = () => {

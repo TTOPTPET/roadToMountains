@@ -1,4 +1,11 @@
-import { FC, useCallback, useEffect, useState } from "react";
+import {
+  FC,
+  useCallback,
+  useEffect,
+  useState,
+  Dispatch,
+  SetStateAction,
+} from "react";
 import { Autocomplete, Button, Stack, TextField } from "@mui/material";
 import { IFilterProps } from "../FilterTypes/IFilterProps";
 import { ISearchRequest } from "../../../models/tourListModels/ISearchRequest";
@@ -7,12 +14,15 @@ import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import dayjs, { Dayjs } from "dayjs";
 import { getToursSorted } from "../../../API/tourListAPI/searchAPI/searchAPI";
 import { mobile } from "../../../config/config";
+import getChipLabels from "../getChipLabels";
 
 export const BasicFilter: FC<IFilterProps> = ({
   filters,
   searchData,
   setSearchData,
   setTourList,
+  filtersLabels,
+  setFiltersLabels,
 }) => {
   const { regions } = filters;
 
@@ -60,6 +70,13 @@ export const BasicFilter: FC<IFilterProps> = ({
     } catch (error) {
       console.log("invalid Data format");
     }
+  };
+
+  const handlerSearchClick = () => {
+    getToursSorted((value) => {
+      setTourList(value);
+      setFiltersLabels(getChipLabels(searchData));
+    }, searchData);
   };
 
   return (
@@ -122,12 +139,7 @@ export const BasicFilter: FC<IFilterProps> = ({
         }
         label={"Количество человек"}
       />
-      <Button
-        variant="high"
-        onClick={() =>
-          getToursSorted((value) => setTourList(value), searchData)
-        }
-      >
+      <Button variant="high" onClick={handlerSearchClick}>
         Найти
       </Button>
     </Stack>
