@@ -10,13 +10,23 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import dayjs from "dayjs";
-import { useState } from "react";
+import { SetStateAction, useState, Dispatch, FC } from "react";
 import { IUserRecord } from "../../../models/userModels/IUserRecord";
 import { ReactComponent as NavigateIcon } from "../../../media/navigate_before.svg";
 import { TourDetails } from "../TourSummary/TourDetails";
 import SuccessMessageSendModal from "../../Modals/SuccessMessageSendModal/SuccessMessageSendModal";
 
-export const TourAccordion = ({ record }: { record: IUserRecord }) => {
+interface ITourAccordionProps {
+  record: IUserRecord;
+  records: IUserRecord[];
+  setRecords: Dispatch<SetStateAction<IUserRecord[]>>;
+}
+
+export const TourAccordion: FC<ITourAccordionProps> = ({
+  record,
+  records,
+  setRecords,
+}) => {
   const [expanded, setExpanded] = useState<string | false>(false);
 
   const theme = useTheme();
@@ -114,7 +124,11 @@ export const TourAccordion = ({ record }: { record: IUserRecord }) => {
           </Grid>
         </AccordionSummary>
         <AccordionDetails>
-          <TourDetails record={{ ...record, type: "record" }} />
+          <TourDetails
+            record={{ ...record, type: "record" }}
+            records={records}
+            setRecords={setRecords}
+          />
         </AccordionDetails>
         {/* <SuccessMessageSendModal /> */}
       </Accordion>

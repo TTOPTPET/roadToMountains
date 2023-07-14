@@ -11,12 +11,16 @@ export const AdminAccessTouristPage = () => {
     getTouristList((value) => setTouristList(value), undefined, false);
   }, []);
 
-  console.log(touristList);
   return (
     <Stack padding={1} gap={1}>
       {touristList &&
         touristList.map((item, index) => (
-          <AdminComponent type="tourist" {...item} key={index} />
+          <AdminComponent
+            key={index}
+            props={{ ...item, type: "tourist" }}
+            arrayProps={touristList}
+            setProps={setTouristList}
+          />
         ))}
     </Stack>
   );

@@ -34,6 +34,9 @@ import {
   USER_ROLE,
 } from "../../config/types";
 import { useCookies } from "react-cookie";
+import InputMask from "react-input-mask";
+import { JsxElement } from "typescript";
+import { cloneDeep } from "lodash";
 
 const registerTypes = [
   { id: UserType.creator, name: "туросоздатель" },
@@ -104,6 +107,7 @@ function Authorization() {
     key: keyof IUserRegister,
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
+    console.log(userRegisterData);
     setUserRegisterData({ ...userRegisterData, [key]: e.target.value });
   };
 
@@ -144,11 +148,14 @@ function Authorization() {
   };
 
   const handlerRegisterClick = () => {
+    const registerDataCopy = cloneDeep(userRegisterData);
+    registerDataCopy.phone = registerDataCopy.phone.replace(/[() -+-]/g, "");
+    registerDataCopy.phone = "8" + registerDataCopy.phone.substring(1);
     registerUser(
       () => {
         dispatch(setModalActive("enterMobileCodeModal"));
       },
-      userRegisterData,
+      registerDataCopy,
       (e) => {
         setErrReg(true);
         setErrorMessage("Что-то пошло не так, попробуйте позже!");
@@ -179,6 +186,20 @@ function Authorization() {
         }
       },
       false
+    );
+  };
+
+  const getPhoneTextField = (value: ITextProps): React.ReactNode => {
+    //@ts-ignore
+    return () => (
+      <TextField
+        color="secondary"
+        label={value.name}
+        name={value.name + "reg"}
+        autoComplete="new-password"
+        error={registerInputError["phone"]}
+        required={value.required}
+      />
     );
   };
 
@@ -261,32 +282,63 @@ function Authorization() {
                   AuthComponent("register") as unknown as {
                     [s: string]: ITextProps;
                   }
-                ).map(([key, value], index) => (
-                  <TextField
-                    color="secondary"
-                    key={index + "reg"}
-                    name={value.name + "reg"}
-                    label={value.name}
-                    type={value.type}
-                    autoComplete="new-password"
-                    error={
-                      key in registerErrorsDefault
-                        ? registerInputError[key]
-                        : false
-                    }
-                    required={value.required}
-                    value={userRegisterData[key as keyof IRegisterComponent]}
-                    onChange={(e) => {
-                      if (key in registerErrorsDefault && key !== "password") {
-                        handlerRegisterErrorChange(
-                          key as keyof RegisterErrors,
-                          registerValidation(value.type, e.target.value, key)
+                ).map(([key, value], index) =>
+                  value.type === "number" ? (
+                    <InputMask
+                      mask={"+7 (999) 999-99-99"}
+                      maskChar=" "
+                      value={userRegisterData[key as keyof IRegisterComponent]}
+                      onChange={(e) => {
+                        if (
+                          key in registerErrorsDefault &&
+                          key !== "password"
+                        ) {
+                          handlerRegisterErrorChange(
+                            key as keyof RegisterErrors,
+                            registerValidation(value.type, e.target.value, key)
+                          );
+                        }
+                        handlerUpdateRegisterField(
+                          key as keyof IUserRegister,
+                          e
                         );
+                      }}
+                    >
+                      {getPhoneTextField(value)}
+                    </InputMask>
+                  ) : (
+                    <TextField
+                      color="secondary"
+                      key={index + "reg"}
+                      name={value.name + "reg"}
+                      label={value.name}
+                      type={value.type}
+                      autoComplete="new-password"
+                      error={
+                        key in registerErrorsDefault
+                          ? registerInputError[key]
+                          : false
                       }
-                      handlerUpdateRegisterField(key as keyof IUserRegister, e);
-                    }}
-                  />
-                ))}
+                      required={value.required}
+                      value={userRegisterData[key as keyof IRegisterComponent]}
+                      onChange={(e) => {
+                        if (
+                          key in registerErrorsDefault &&
+                          key !== "password"
+                        ) {
+                          handlerRegisterErrorChange(
+                            key as keyof RegisterErrors,
+                            registerValidation(value.type, e.target.value, key)
+                          );
+                        }
+                        handlerUpdateRegisterField(
+                          key as keyof IUserRegister,
+                          e
+                        );
+                      }}
+                    />
+                  )
+                )}
             {!regState && (
               <Autocomplete
                 id="rolePicker"

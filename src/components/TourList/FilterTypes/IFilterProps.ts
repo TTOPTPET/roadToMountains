@@ -8,4 +8,6 @@ export interface IFilterProps {
   searchData: ISearchRequest;
   setSearchData: Dispatch<SetStateAction<ISearchRequest>>;
   setTourList: Dispatch<SetStateAction<ITour[]>>;
+  filtersLabels: string[];
+  setFiltersLabels: Dispatch<SetStateAction<string[]>>;
 }

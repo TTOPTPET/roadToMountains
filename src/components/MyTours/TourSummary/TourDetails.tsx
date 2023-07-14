@@ -8,24 +8,29 @@ import {
   Box,
 } from "@mui/material";
 import dayjs from "dayjs";
-import { FC } from "react";
+import { FC, Dispatch, SetStateAction } from "react";
 import { ITourBooking } from "../../../models/tourModels/ITourBooking";
 import { ITourBookingDate } from "../../../models/tourModels/ITourBookingDate";
 import { TourDetailsType } from "./tourDetailsType/tourDetailsType";
 import { useDispatch } from "react-redux";
 import { setModalActive } from "../../../redux/Modal/ModalReducer";
 import MapLeaflet from "../../MapLeaflet/MapLeaflet";
+import { IUserRecord } from "../../../models/userModels/IUserRecord";
 
 interface ITourDetailsProps {
   record: TourDetailsType;
   bookingData?: ITourBooking;
   selectedDate?: ITourBookingDate;
+  records?: IUserRecord[];
+  setRecords?: Dispatch<SetStateAction<IUserRecord[]>>;
 }
 
 export const TourDetails: FC<ITourDetailsProps> = ({
   record,
   bookingData,
   selectedDate,
+  records,
+  setRecords,
 }) => {
   const dispatch = useDispatch();
 
@@ -93,7 +98,6 @@ export const TourDetails: FC<ITourDetailsProps> = ({
       return "";
     }
   };
-
   switch (record.type) {
     case "record":
       return (
@@ -116,6 +120,8 @@ export const TourDetails: FC<ITourDetailsProps> = ({
                   dispatch(
                     setModalActive("confirmCancelBooking", {
                       bookingId: record.bookingId,
+                      records: records,
+                      setRecords: setRecords,
                     })
                   )
                 }

@@ -96,7 +96,12 @@ export const MyTours = () => {
       <Stack direction={"column"} gap={{ lg: "20px", xs: "10px" }}>
         {records &&
           records.map((record, index) => (
-            <TourAccordion key={index} record={record} />
+            <TourAccordion
+              key={index}
+              record={record}
+              records={records}
+              setRecords={setRecords}
+            />
           ))}
       </Stack>
       <ErrorBookingModal />

@@ -1,5 +1,6 @@
 import {
   Button,
+  Chip,
   Grid,
   Stack,
   Typography,
@@ -34,6 +35,7 @@ function TourListPage() {
     category: [],
     searchParam: searchParam.get("title"),
   });
+  const [filtersLabels, setFiltersLabels] = useState<string[]>([]);
 
   const dispatch = useDispatch();
 
@@ -90,12 +92,21 @@ function TourListPage() {
         searchData={searchData}
         setSearchData={setSearchData}
         setTourList={setTourList}
+        filtersLabels={filtersLabels}
+        setFiltersLabels={setFiltersLabels}
       />
+      <Stack direction={"row"} flexWrap={"wrap"} gap={2} mt={2}>
+        {filtersLabels.map((item, index) => (
+          <Chip key={index} variant={"outlined"} label={item} />
+        ))}
+      </Stack>
       <ComplexFilter
         filters={filters}
         searchData={searchData}
         setSearchData={setSearchData}
         setTourList={setTourList}
+        filtersLabels={filtersLabels}
+        setFiltersLabels={setFiltersLabels}
       />
       <Sorter tours={tourList} setTours={setTourList} />
       <Grid

@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useState, Dispatch, SetStateAction } from "react";
 import { IAdminComponent } from "./AdminFabricTypes/AdminFabricTypes";
 import {
   Accordion,
@@ -49,24 +49,75 @@ const messageTypes = [
   { id: MessageStatus.solved, name: "Решено" },
 ];
 
-export const AdminComponent: FC<IAdminComponent> = (props: IAdminComponent) => {
+type AdminComponentProps = {
+  props: IAdminComponent;
+  arrayProps: any[];
+  setProps: Dispatch<SetStateAction<any[]>>;
+};
+
+export const AdminComponent: FC<AdminComponentProps> = ({
+  props,
+  arrayProps,
+  setProps,
+}) => {
   const [expanded, setExpanded] = useState<boolean>(false);
   const [statusVerify, setStatusVerify] = useState<string>(
     VerifyStatus.verified
   );
   const [statusMessage, setStatusMessage] = useState<string>(undefined);
 
+  const changeBanStatus = (key: string) => {
+    const { type, ...propsValue } = props;
+    const index = arrayProps.findIndex((item) => item[key] === propsValue[key]);
+    //@ts-ignore
+    arrayProps[index].banStatus = !propsValue.banStatus;
+    setProps([...arrayProps]);
+  };
+
   const handlerUserBanClick = (touristId: string) => {
-    userBan((value) => value, touristId, undefined, false);
+    userBan(
+      () => {
+        if (props.type === "tourist") {
+          changeBanStatus("touristId");
+        }
+        if (props.type === "creator") {
+          changeBanStatus("creatorId");
+        }
+        if (props.type === "admin") {
+          changeBanStatus("adminId");
+        }
+      },
+      touristId,
+      undefined,
+      false
+    );
   };
 
   const handlerTourBanClick = (tourId: string) => {
-    tourBan((value) => value, tourId, undefined, false);
+    tourBan(
+      () => {
+        if (props.type === "tour") {
+          changeBanStatus("tourId");
+        }
+      },
+      tourId,
+      undefined,
+      false
+    );
   };
 
   const handlerMessageStatusClick = (messageId: string) => {
     changeMessageStatus(
-      (value) => value,
+      () => {
+        if (props.type === "message") {
+          const { type, ...propsValue } = props;
+          const index = arrayProps.findIndex(
+            (item) => item.messageId === propsValue.messageId
+          );
+          arrayProps[index].statusMessage = statusMessage;
+          setProps([...arrayProps]);
+        }
+      },
       { messageId: messageId, statusMessage: statusMessage },
       undefined,
       false
@@ -75,7 +126,16 @@ export const AdminComponent: FC<IAdminComponent> = (props: IAdminComponent) => {
 
   const handlerVerifyStatusClick = (creatorId: string) => {
     verifyCreator(
-      (value) => value,
+      () => {
+        if (props.type === "creator") {
+          const { type, ...propsValue } = props;
+          const index = arrayProps.findIndex(
+            (item) => item.creatorId === propsValue.creatorId
+          );
+          arrayProps[index].dataUser.statusVerify = statusVerify;
+          setProps([...arrayProps]);
+        }
+      },
       { messageId: creatorId, statusMessage: statusVerify },
       undefined,
       false
@@ -401,7 +461,7 @@ export const AdminComponent: FC<IAdminComponent> = (props: IAdminComponent) => {
               mt={4}
             >
               <Typography variant={"caption"}>
-                {getVerifyStatus(statusVerify)}:{" "}
+                <b>{getVerifyStatus(statusVerify)}</b>:{" "}
                 {dayjs(changeVerifyDate).format("D MMMM YYYY")}
               </Typography>
               <Autocomplete

@@ -15,7 +15,12 @@ export const AdminAccessTourPage = () => {
     <Stack padding={1} gap={1}>
       {tourList &&
         tourList.map((item, index) => (
-          <AdminComponent type="tour" {...item} key={index} />
+          <AdminComponent
+            key={index}
+            props={{ ...item, type: "tour" }}
+            arrayProps={tourList}
+            setProps={setTourList}
+          />
         ))}
     </Stack>
   );
