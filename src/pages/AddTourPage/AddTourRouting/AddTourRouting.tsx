@@ -3,7 +3,7 @@ import { Stack } from "@mui/system";
 import { useNavigate } from "react-router-dom";
 import { addTour } from "../../../API/addTourAPI/addTourAPI";
 import { editTour } from "../../../API/creatorAPI/editTour";
-import { addTourStepsMap } from "../AddTourPage";
+import { AddErrorSnackbarType, addTourStepsMap } from "../AddTourPage";
 import { Dispatch, SetStateAction } from "react";
 import { IAddTour } from "../../../models/addTourModels/IAddTour";
 
@@ -15,6 +15,8 @@ interface addTourRoutingProps {
   isEditing: boolean;
   tourId: string;
   setAddError: Dispatch<SetStateAction<boolean>>;
+  snackbar: AddErrorSnackbarType;
+  setSnackbar: Dispatch<SetStateAction<AddErrorSnackbarType>>;
 }
 
 export default function AddTourRouting({
@@ -25,6 +27,8 @@ export default function AddTourRouting({
   isEditing,
   tourId,
   setAddError,
+  snackbar,
+  setSnackbar,
 }: addTourRoutingProps) {
   const navigate = useNavigate();
 
@@ -41,7 +45,13 @@ export default function AddTourRouting({
           navigate("/creator/lk");
         },
         tourInfo,
-        () => setAddError(true),
+        () => {
+          setAddError(true);
+          setSnackbar({
+            ...snackbar,
+            open: !snackbar.open,
+          });
+        },
         false
       );
     }

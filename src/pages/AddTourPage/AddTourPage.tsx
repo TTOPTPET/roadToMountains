@@ -7,6 +7,9 @@ import { IFilter } from "../../models/tourListModels/IFilter";
 import { getFilters } from "../../API/tourListAPI";
 import { getMyTourById } from "../../API/creatorAPI/getMyTourById";
 import { IAddTour } from "../../models/addTourModels/IAddTour";
+import { Fade, Snackbar } from "@mui/material";
+import { TransitionProps } from "@mui/material/transitions";
+import { darkTurquoiseColor } from "../../config/MUI/color/color";
 
 export enum addTourStepsMap {
   first,
@@ -21,6 +24,15 @@ const filterDefault: IFilter = {
   maxPrice: 0,
 };
 
+export type AddErrorSnackbarType = {
+  open: boolean;
+  Transition: React.ComponentType<
+    TransitionProps & {
+      children: React.ReactElement<any, any>;
+    }
+  >;
+};
+
 function AddTourPage({ isEditing }: { isEditing: boolean }) {
   const { tourId } = useParams();
 
@@ -29,6 +41,10 @@ function AddTourPage({ isEditing }: { isEditing: boolean }) {
   const [filters, setFilters] = useState<IFilter>(filterDefault);
   const [isLoading, setLoading] = useState(true);
   const [addError, setAddError] = useState<boolean>(false);
+  const [snackbar, setSnackbar] = useState<AddErrorSnackbarType>({
+    open: false,
+    Transition: Fade,
+  });
 
   useEffect(() => {
     getFilters((value) => setFilters(value), undefined, false);
@@ -45,6 +61,13 @@ function AddTourPage({ isEditing }: { isEditing: boolean }) {
     }
   }, []);
 
+  const handlerSnackOnClose = () => {
+    setSnackbar({
+      ...snackbar,
+      open: !snackbar.open,
+    });
+  };
+
   if (isLoading) {
     return <AddTourSkeleton />;
   }
@@ -58,6 +81,8 @@ function AddTourPage({ isEditing }: { isEditing: boolean }) {
         isEditing={isEditing}
         tourId={tourId}
         setAddError={setAddError}
+        snackbar={snackbar}
+        setSnackbar={setSnackbar}
       />
       <AddTourSteps
         page={page}
@@ -67,6 +92,18 @@ function AddTourPage({ isEditing }: { isEditing: boolean }) {
         isEditing={isEditing}
         addError={addError}
         setAddError={setAddError}
+      />
+      <Snackbar
+        open={snackbar.open}
+        onClose={handlerSnackOnClose}
+        message={"Заполните недостающие поля"}
+        key={snackbar.Transition.name}
+        TransitionComponent={snackbar.Transition}
+        ContentProps={{
+          sx: {
+            background: darkTurquoiseColor,
+          },
+        }}
       />
     </>
   );
