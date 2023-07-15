@@ -15,6 +15,7 @@ import { IUserRecord } from "../../../models/userModels/IUserRecord";
 import { ReactComponent as NavigateIcon } from "../../../media/navigate_before.svg";
 import { TourDetails } from "../TourSummary/TourDetails";
 import SuccessMessageSendModal from "../../Modals/SuccessMessageSendModal/SuccessMessageSendModal";
+import ConditionChangedChip from "./ConditionChangedChip/ConditionChangedChip";
 
 interface ITourAccordionProps {
   record: IUserRecord;
@@ -28,7 +29,7 @@ export const TourAccordion: FC<ITourAccordionProps> = ({
   setRecords,
 }) => {
   const [expanded, setExpanded] = useState<string | false>(false);
-
+  console.log(record);
   const theme = useTheme();
 
   const lessThenBig = useMediaQuery(theme.breakpoints.down("lg"));
@@ -60,6 +61,7 @@ export const TourAccordion: FC<ITourAccordionProps> = ({
                     dayjs(record.tourDate.to).format("D MMMM YYYY")}
                 </Typography>
                 <Typography variant={"caption"}>ООО "Алтай тур"</Typography>
+                <ConditionChangedChip />
               </Stack>
             </Grid>
             <Grid item md={2} justifyContent={"right"}>
