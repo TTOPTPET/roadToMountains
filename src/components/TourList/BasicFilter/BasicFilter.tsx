@@ -1,11 +1,4 @@
-import {
-  FC,
-  useCallback,
-  useEffect,
-  useState,
-  Dispatch,
-  SetStateAction,
-} from "react";
+import { FC, useCallback, useEffect, useState } from "react";
 import { Autocomplete, Button, Stack, TextField } from "@mui/material";
 import { IFilterProps } from "../FilterTypes/IFilterProps";
 import { ISearchRequest } from "../../../models/tourListModels/ISearchRequest";
@@ -38,13 +31,6 @@ export const BasicFilter: FC<IFilterProps> = ({
   const handleWindowResize = useCallback((event) => {
     setWindowSize(window.innerWidth);
   }, []);
-
-  useEffect(() => {
-    window.addEventListener("resize", handleWindowResize);
-    return () => {
-      window.removeEventListener("resize", handleWindowResize);
-    };
-  }, [handleWindowResize]);
 
   const handleDateChange = (type: "from" | "to", value: Dayjs) => {
     try {
@@ -79,18 +65,25 @@ export const BasicFilter: FC<IFilterProps> = ({
     }, searchData);
   };
 
+  useEffect(() => {
+    window.addEventListener("resize", handleWindowResize);
+    return () => {
+      window.removeEventListener("resize", handleWindowResize);
+    };
+  }, [handleWindowResize]);
+
   return (
     <Stack direction={windowSize <= mobile ? "column" : "row"} gap={1}>
       <Autocomplete
         freeSolo
         disableClearable
+        value={searchData?.region ?? ""}
         onChange={(e, value) => setSearchData({ ...searchData, region: value })}
         options={regions.map((region) => region)}
         renderInput={(params) => (
           <TextField
             label={"Регион"}
             {...params}
-            value={searchData.region}
             onChange={(e) =>
               handleFieldChange<string>("region", e.target.value)
             }
@@ -100,7 +93,7 @@ export const BasicFilter: FC<IFilterProps> = ({
       />
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DatePicker
-          value={dayjs(searchData?.tourDate?.from || "")}
+          value={dayjs(searchData?.tourDate?.from ?? "")}
           onChange={(newValue) => handleDateChange("from", newValue)}
           renderInput={(props) => (
             <TextField
@@ -114,7 +107,7 @@ export const BasicFilter: FC<IFilterProps> = ({
           )}
         />
         <DatePicker
-          value={dayjs(searchData?.tourDate?.to || "")}
+          value={dayjs(searchData?.tourDate?.to ?? "")}
           onChange={(newValue) => handleDateChange("to", newValue)}
           renderInput={(props) => (
             <TextField
@@ -131,9 +124,7 @@ export const BasicFilter: FC<IFilterProps> = ({
       <TextField
         type={"number"}
         InputProps={{ inputProps: { min: 0 } }}
-        value={
-          searchData?.maxPersonNumber === 0 ? "" : searchData?.maxPersonNumber
-        }
+        value={!searchData?.maxPersonNumber ? "" : searchData?.maxPersonNumber}
         onChange={(e) =>
           handleFieldChange<number>("maxPersonNumber", +e.target.value)
         }

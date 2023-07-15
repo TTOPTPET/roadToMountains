@@ -48,7 +48,6 @@ function TourListPage() {
     const searchValue = searchData[key];
     if (searchValue instanceof Array) {
       const newArray = searchValue.filter((item) => item !== value);
-      console.log(newArray);
       setSearchData({
         ...searchData,
         [key]: newArray,
