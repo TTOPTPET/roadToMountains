@@ -371,9 +371,6 @@ export const mainThemes = createTheme(breakpoints, {
           backgroundColor: lightTurquoiseColor,
           borderRadius: "30px",
           height: "50px",
-          // "& > fieldset": {
-          //   borderColor: lightTurquoiseColor,
-          // },
           [breakpoints.breakpoints.down("sm")]: {
             height: "30px",
             borderRadius: "20px",
@@ -385,6 +382,34 @@ export const mainThemes = createTheme(breakpoints, {
       styleOverrides: {
         root: {
           width: "100%",
+          "& .MuiFormLabel-root": {
+            color: darkBlueColor,
+            opacity: "1",
+            fontSize: "16px",
+            lineHeight: "20px",
+            fontFamily: "Montserrat",
+            fontWeight: "400",
+            [breakpoints.breakpoints.down("sm")]: {
+              top: "-5px",
+              fontSize: "10px",
+              lineHeight: "12px",
+            },
+          },
+          "& label.Mui-focused": {
+            top: "2px",
+            [breakpoints.breakpoints.down("sm")]: {
+              top: "5px",
+            },
+          },
+          "& label.MuiFormLabel-filled": {
+            top: "2px",
+            [breakpoints.breakpoints.down("sm")]: {
+              top: "5px",
+            },
+          },
+          "& label.Mui-error": {
+            color: redColor,
+          },
           input: {
             width: "100%",
             height: "50px",
@@ -397,18 +422,7 @@ export const mainThemes = createTheme(breakpoints, {
             fontFamily: "Montserrat",
             fontWeight: "400",
             boxSizing: "border-box",
-            "&::label": {
-              color: darkBlueColor,
-              opacity: "1",
-              fontSize: "16px",
-              lineHeight: "20px",
-              fontFamily: "Montserrat",
-              fontWeight: "400",
-              [breakpoints.breakpoints.down("sm")]: {
-                fontSize: "10px",
-                lineHeight: "12px",
-              },
-            },
+
             [breakpoints.breakpoints.down("sm")]: {
               height: "30px",
               borderRadius: "20px",
