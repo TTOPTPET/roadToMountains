@@ -1,4 +1,4 @@
-import { createTheme, useTheme } from "@mui/material";
+import { createTheme } from "@mui/material";
 
 import {
   darkBlueColor,
@@ -494,6 +494,7 @@ export const mainThemes = createTheme(breakpoints, {
     MuiInputBase: {
       styleOverrides: {
         root: {
+          fontFamily: "Montserrat",
           padding: "0 15px 0 12px !important ",
           [breakpoints.breakpoints.down("sm")]: {
             padding: "0 8px 0 6px !important ",
@@ -566,7 +567,6 @@ export const mainThemes = createTheme(breakpoints, {
       styleOverrides: {
         root: {
           color: darkBlueColor,
-
           "&.Mui-checked": {
             color: darkBlueColor,
           },

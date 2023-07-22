@@ -7,6 +7,9 @@ import {
   Button,
   useTheme,
   useMediaQuery,
+  Menu,
+  MenuItem,
+  Fade,
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
@@ -29,6 +32,9 @@ import accIcon from "../../media/accountLinkIcon.svg";
 import adminIcon from "../../media/Icons/headerIcons/adminPanel.svg";
 import calendarIcon from "../../media/calendarIcon.svg";
 import { useEffect, useState } from "react";
+import MenuIcon from "../../media/menu-icon.svg";
+import StatIcon from "../../media/chart-box.svg";
+import CashIcom from "../../media/cash-icon.svg";
 
 const Header = () => {
   const [searchParamFromUrl] = useSearchParams();
@@ -38,6 +44,8 @@ const Header = () => {
   const [searchParam, setSearchParam] = useState<string>(
     searchParamFromUrl.get("title") || ""
   );
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
 
   const theme = useTheme();
 
@@ -50,8 +58,22 @@ const Header = () => {
 
   const navigate = useNavigate();
 
+  const handlerClickMenu = (event: React.MouseEvent<HTMLElement>) => {
+    if (open) {
+      setAnchorEl(null);
+    } else {
+      setAnchorEl(event.currentTarget);
+    }
+  };
+  const handlerCloseMenu = () => {
+    setAnchorEl(null);
+  };
+
   return (
-    <Paper variant="header" sx={{ width: "100%" }}>
+    <Paper
+      variant="header"
+      sx={{ width: "100vw", zIndex: 200, position: "relative" }}
+    >
       <Box
         className="header__wrapper"
         height={"100%"}
@@ -195,22 +217,70 @@ const Header = () => {
                         alignItems: "center",
                         textDecoration: "none",
                       }}
-                      component={Link}
-                      to="/creator/lk"
+                      component={Button}
+                      variant="textButton"
+                      onClick={handlerClickMenu}
                     >
                       <Box sx={{ height: { sm: "30px", xs: "20px" } }}>
                         <img
                           style={{ height: "100%" }}
-                          src={accIcon}
+                          src={MenuIcon}
                           alt="accIcon"
                         />
                       </Box>
                       {!lessThenSmall && (
                         <Typography variant="caption" sx={{ mt: "1px" }}>
-                          Профиль
+                          Меню
                         </Typography>
                       )}
                     </Box>
+                    <Menu
+                      id={"menu"}
+                      MenuListProps={{
+                        "aria-labelledby": "fade-button",
+                      }}
+                      anchorEl={anchorEl}
+                      open={open}
+                      onClose={handlerCloseMenu}
+                      TransitionComponent={Fade}
+                      style={{
+                        zIndex: 20,
+                      }}
+                    >
+                      <MenuItem
+                        style={{ gap: "10px" }}
+                        onClick={() => navigate("/creator/lk")}
+                      >
+                        <img
+                          src={accIcon}
+                          alt={"profile"}
+                          style={{ width: "26px" }}
+                        />
+                        Личный кабинет
+                      </MenuItem>
+                      <MenuItem
+                        style={{ gap: "10px" }}
+                        onClick={() => navigate("/creator/stats")}
+                      >
+                        <img
+                          src={StatIcon}
+                          alt={"profile"}
+                          style={{ width: "26px" }}
+                        />
+                        Статистика
+                      </MenuItem>
+                      <MenuItem
+                        style={{ gap: "10px" }}
+                        onClick={() => navigate("/creator/payment")}
+                      >
+                        <img
+                          src={CashIcom}
+                          alt={"profile"}
+                          style={{ width: "26px" }}
+                        />
+                        Финансовые настройки
+                      </MenuItem>
+                    </Menu>
                   </Box>
                 )}
               </Box>
