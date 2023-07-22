@@ -1,8 +1,5 @@
-import { useEffect } from "react";
-import { Box, Button, Paper, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../../redux/store";
 
 type editUserInfoProps = {
   fields: JSX.Element;

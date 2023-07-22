@@ -6,3 +6,8 @@
 .rdrDay:has(.rdrEndEdge) {
   cursor: pointer !important;
 }
+
+.MuiMenu-root .MuiPaper-root {
+  padding: 0px !important;
+  padding-top: 25px !important  ;
+}

@@ -7,6 +7,7 @@ import {
   Box,
   Paper,
   Autocomplete,
+  useMediaQuery,
 } from "@mui/material";
 import { AuthComponent } from "../../components/AuthorizationModules/AuthFabric/AuthFabic";
 import { IUserLogin } from "../../models/authModels/IUserLogin";
@@ -35,7 +36,6 @@ import {
 } from "../../config/types";
 import { useCookies } from "react-cookie";
 import InputMask from "react-input-mask";
-import { JsxElement } from "typescript";
 import { cloneDeep } from "lodash";
 
 const registerTypes = [
@@ -92,6 +92,8 @@ function Authorization() {
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
+
+  const media = useMediaQuery("(max-width: 600px)");
 
   const autocompleteChanged = (value: string) => {
     setUserRegisterData({ ...userRegisterData, typeUser: value as UserType });
@@ -245,161 +247,161 @@ function Authorization() {
   return (
     <Stack sx={{ m: "0 auto", gap: "50px" }}>
       <Typography variant="h3">{regState ? "Вход" : "Регистрация"}</Typography>
-      <Box>
-        <Paper
-          variant="bigPadding"
+      <Paper
+        variant="bigPadding"
+        sx={{
+          bgcolor: lightTurquoiseColor,
+          display: "flex",
+          alignItems: "center",
+          flexDirection: "column",
+        }}
+      >
+        <Stack
           sx={{
-            bgcolor: lightTurquoiseColor,
-            display: "flex",
-            alignItems: "center",
-            flexDirection: "column",
+            width: "100%",
+            gap: "15px",
+            mb: "15px",
           }}
         >
-          <Stack sx={{ width: "450px", gap: "15px", mb: "15px" }}>
-            {regState
-              ? Object.entries<ITextProps>(
-                  AuthComponent("login") as unknown as {
-                    [s: string]: ITextProps;
+          {regState
+            ? Object.entries<ITextProps>(
+                AuthComponent("login") as unknown as {
+                  [s: string]: ITextProps;
+                }
+              ).map(([key, value], index) => (
+                <TextField
+                  color="secondary"
+                  key={index + "log"}
+                  label={value.name}
+                  type={value.type}
+                  error={
+                    errAuth ||
+                    userLoginData[key as keyof ILoginComponent] === ""
                   }
-                ).map(([key, value], index) => (
+                  required={value.required}
+                  value={userLoginData[key as keyof ILoginComponent]}
+                  onChange={(e) =>
+                    handlerUpdateLoginField(key as keyof ILoginComponent, e)
+                  }
+                />
+              ))
+            : Object.entries<ITextProps>(
+                AuthComponent("register") as unknown as {
+                  [s: string]: ITextProps;
+                }
+              ).map(([key, value], index) =>
+                value.type === "number" ? (
+                  <InputMask
+                    mask={"+7 (999) 999-99-99"}
+                    maskChar=" "
+                    value={userRegisterData[key as keyof IRegisterComponent]}
+                    onChange={(e) => {
+                      if (key in registerErrorsDefault && key !== "password") {
+                        handlerRegisterErrorChange(
+                          key as keyof RegisterErrors,
+                          registerValidation(value.type, e.target.value, key)
+                        );
+                      }
+                      handlerUpdateRegisterField(key as keyof IUserRegister, e);
+                    }}
+                  >
+                    {getPhoneTextField(value)}
+                  </InputMask>
+                ) : (
                   <TextField
                     color="secondary"
-                    key={index + "log"}
+                    key={index + "reg"}
+                    name={value.name + "reg"}
                     label={value.name}
                     type={value.type}
+                    autoComplete="new-password"
                     error={
-                      errAuth ||
-                      userLoginData[key as keyof ILoginComponent] === ""
+                      key in registerErrorsDefault
+                        ? registerInputError[key]
+                        : false
                     }
                     required={value.required}
-                    value={userLoginData[key as keyof ILoginComponent]}
-                    onChange={(e) =>
-                      handlerUpdateLoginField(key as keyof ILoginComponent, e)
-                    }
-                  />
-                ))
-              : Object.entries<ITextProps>(
-                  AuthComponent("register") as unknown as {
-                    [s: string]: ITextProps;
-                  }
-                ).map(([key, value], index) =>
-                  value.type === "number" ? (
-                    <InputMask
-                      mask={"+7 (999) 999-99-99"}
-                      maskChar=" "
-                      value={userRegisterData[key as keyof IRegisterComponent]}
-                      onChange={(e) => {
-                        if (
-                          key in registerErrorsDefault &&
-                          key !== "password"
-                        ) {
-                          handlerRegisterErrorChange(
-                            key as keyof RegisterErrors,
-                            registerValidation(value.type, e.target.value, key)
-                          );
-                        }
-                        handlerUpdateRegisterField(
-                          key as keyof IUserRegister,
-                          e
+                    value={userRegisterData[key as keyof IRegisterComponent]}
+                    onChange={(e) => {
+                      if (key in registerErrorsDefault && key !== "password") {
+                        handlerRegisterErrorChange(
+                          key as keyof RegisterErrors,
+                          registerValidation(value.type, e.target.value, key)
                         );
-                      }}
-                    >
-                      {getPhoneTextField(value)}
-                    </InputMask>
-                  ) : (
-                    <TextField
-                      color="secondary"
-                      key={index + "reg"}
-                      name={value.name + "reg"}
-                      label={value.name}
-                      type={value.type}
-                      autoComplete="new-password"
-                      error={
-                        key in registerErrorsDefault
-                          ? registerInputError[key]
-                          : false
                       }
-                      required={value.required}
-                      value={userRegisterData[key as keyof IRegisterComponent]}
-                      onChange={(e) => {
-                        if (
-                          key in registerErrorsDefault &&
-                          key !== "password"
-                        ) {
-                          handlerRegisterErrorChange(
-                            key as keyof RegisterErrors,
-                            registerValidation(value.type, e.target.value, key)
-                          );
-                        }
-                        handlerUpdateRegisterField(
-                          key as keyof IUserRegister,
-                          e
-                        );
-                      }}
-                    />
-                  )
-                )}
-            {!regState && (
-              <Autocomplete
-                id="rolePicker"
-                onChange={(e, value) => autocompleteChanged(value?.id)}
-                options={registerTypes}
-                getOptionLabel={(option) => option.name}
-                renderInput={(params) => (
-                  <TextField {...params} label="Выбор роли" color="secondary" />
-                )}
-              />
-            )}
-          </Stack>
-          {(passwordErrorStatus || errAuth || errReg) && (
-            <Typography
-              variant="caption"
-              className="author__error"
-              sx={{ color: redColor, mb: "15px" }}
-            >
-              {errorMessage}
-            </Typography>
-          )}
-
-          {regState ? (
-            <Button ref={refBtn} onClick={() => handlerLoginClick()}>
-              Вход
-            </Button>
-          ) : (
-            <Button
-              ref={refBtn}
-              onClick={() => handlerRegisterClick()}
-              disabled={Object.values(registerInputError).some(
-                (value) => value !== false
+                      handlerUpdateRegisterField(key as keyof IUserRegister, e);
+                    }}
+                  />
+                )
               )}
-            >
-              Регистрация
-            </Button>
+          {!regState && (
+            <Autocomplete
+              id="rolePicker"
+              onChange={(e, value) => autocompleteChanged(value?.id)}
+              options={registerTypes}
+              getOptionLabel={(option) => option.name}
+              renderInput={(params) => (
+                <TextField {...params} label="Выбор роли" color="secondary" />
+              )}
+            />
           )}
-          <EnterMobileCodeModal
-            successCallback={(resp) => {
-              setCookies(TOKEN, resp.accessToken, { path: "/" });
-              setCookies(REFRESH_TOKEN, resp.refreshToken, { path: "/" });
-              setCookies(USER_ROLE, resp.role, { path: "/" });
-              setCookies(BAN_STATUS, resp.status, { path: "/" });
-              dispatch(setModalInactive("enterMobileCodeModal"));
-              navigate("/tours/all");
-            }}
-          />
-          <Box sx={{ display: "flex", alignItems: "center", mt: "10px" }}>
-            <Typography variant="caption">
-              {regState ? "Нет аккаунта?" : "Уже есть аккаунт?"}
-            </Typography>
-            <Button
-              variant="weakTextButton"
-              onClick={handlerOnTransition}
-              sx={{ textDecoration: "underline" }}
-            >
-              {regState ? "Зарегистрироваться" : "Войти"}
-            </Button>
-          </Box>
-        </Paper>
-      </Box>
+        </Stack>
+        {(passwordErrorStatus || errAuth || errReg) && (
+          <Typography
+            variant="caption"
+            className="author__error"
+            sx={{ color: redColor, mb: "15px" }}
+          >
+            {errorMessage}
+          </Typography>
+        )}
+
+        {regState ? (
+          <Button
+            ref={refBtn}
+            onClick={() => handlerLoginClick()}
+            style={{ width: media ? "100%" : "" }}
+          >
+            Вход
+          </Button>
+        ) : (
+          <Button
+            ref={refBtn}
+            onClick={() => handlerRegisterClick()}
+            disabled={Object.values(registerInputError).some(
+              (value) => value !== false
+            )}
+            style={{ width: media ? "100%" : "" }}
+          >
+            Регистрация
+          </Button>
+        )}
+        <EnterMobileCodeModal
+          successCallback={(resp) => {
+            setCookies(TOKEN, resp.accessToken, { path: "/" });
+            setCookies(REFRESH_TOKEN, resp.refreshToken, { path: "/" });
+            setCookies(USER_ROLE, resp.role, { path: "/" });
+            setCookies(BAN_STATUS, resp.status, { path: "/" });
+            dispatch(setModalInactive("enterMobileCodeModal"));
+            navigate("/tours/all");
+          }}
+        />
+        <Stack
+          direction={media ? "column" : "row"}
+          sx={{ display: "flex", alignItems: "center", mt: "10px" }}
+        >
+          <Typography variant="caption">
+            {regState ? "Нет аккаунта?" : "Уже есть аккаунт?"}
+          </Typography>
+          <Button
+            variant="weakTextButton"
+            onClick={handlerOnTransition}
+            sx={{ textDecoration: "underline" }}
+          >
+            {regState ? "Зарегистрироваться" : "Войти"}
+          </Button>
+        </Stack>
+      </Paper>
     </Stack>
   );
 }

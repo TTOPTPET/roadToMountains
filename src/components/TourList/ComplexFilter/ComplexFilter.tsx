@@ -168,7 +168,7 @@ export const ComplexFilter: FC<IFilterProps> = ({
                   }
                   value={cat}
                   control={<Checkbox onChange={handlerCategoryChange} />}
-                  label={cat}
+                  label={<Typography variant={"caption"}>{cat}</Typography>}
                 />
               ))}
             </RadioGroup>
@@ -190,7 +190,11 @@ export const ComplexFilter: FC<IFilterProps> = ({
                         }}
                       />
                     }
-                    label={duration.label}
+                    label={
+                      <Typography variant={"caption"}>
+                        {duration.label}
+                      </Typography>
+                    }
                   />
                 ) : (
                   <FormControlLabel
@@ -205,7 +209,11 @@ export const ComplexFilter: FC<IFilterProps> = ({
                         }}
                       />
                     }
-                    label={duration.label}
+                    label={
+                      <Typography variant={"caption"}>
+                        {duration.label}
+                      </Typography>
+                    }
                   />
                 )
               )}
@@ -247,7 +255,7 @@ export const ComplexFilter: FC<IFilterProps> = ({
                   }
                   value={compl}
                   control={<Checkbox onChange={handlerComplexityChange} />}
-                  label={compl}
+                  label={<Typography variant={"caption"}>{compl}</Typography>}
                 />
               ))}
             </RadioGroup>
