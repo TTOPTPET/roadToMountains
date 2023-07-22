@@ -105,7 +105,7 @@ function App() {
       <ThemeProvider theme={mainThemes}>
         <Header />
         <Suspense>
-          <Container sx={{ p: "35px 0 70px 0" }}>
+          <Container sx={{ p: "35px 0 70px 0", minHeight: "79vh" }}>
             <Routes>
               <Route
                 path={"/creator/lk"}

@@ -31,7 +31,7 @@ import { useCookies } from "react-cookie";
 import accIcon from "../../media/accountLinkIcon.svg";
 import adminIcon from "../../media/Icons/headerIcons/adminPanel.svg";
 import calendarIcon from "../../media/calendarIcon.svg";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import MenuIcon from "../../media/menu-icon.svg";
 import StatIcon from "../../media/chart-box.svg";
 import CashIcom from "../../media/cash-icon.svg";
@@ -44,8 +44,12 @@ const Header = () => {
   const [searchParam, setSearchParam] = useState<string>(
     searchParamFromUrl.get("title") || ""
   );
+  const [menuPosition, setMenuPosition] = useState<number>(0);
+  const [windowSize, setWindowSize] = useState<number>();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+
+  const menuRef = useRef<HTMLButtonElement | null>(null);
 
   const theme = useTheme();
 
@@ -58,6 +62,10 @@ const Header = () => {
 
   const navigate = useNavigate();
 
+  const handleWindowResize = useCallback((event) => {
+    setWindowSize(window.innerWidth);
+  }, []);
+
   const handlerClickMenu = (event: React.MouseEvent<HTMLElement>) => {
     if (open) {
       setAnchorEl(null);
@@ -68,6 +76,19 @@ const Header = () => {
   const handlerCloseMenu = () => {
     setAnchorEl(null);
   };
+
+  useEffect(() => {
+    window.addEventListener("resize", handleWindowResize);
+    return () => {
+      window.removeEventListener("resize", handleWindowResize);
+    };
+  }, [handleWindowResize]);
+
+  useEffect(() => {
+    if (menuRef.current) {
+      setMenuPosition(menuRef.current.getBoundingClientRect().left - 190);
+    }
+  }, [menuRef, windowSize]);
 
   return (
     <Paper
@@ -141,6 +162,7 @@ const Header = () => {
                   alignItems: "center",
                   gap: "11px",
                   justifyContent: "flex-end",
+                  height: "70px",
                 }}
               >
                 {userInfo.typeUser === UserType.tourist ? (
@@ -159,6 +181,7 @@ const Header = () => {
                       display: "flex",
                       gap: { sx: "22px", xs: "10px" },
                       alignItems: "center",
+                      height: "70px",
                     }}
                   >
                     {userInfo.typeUser === UserType.creator ? (
@@ -216,10 +239,15 @@ const Header = () => {
                         flexDirection: "column",
                         alignItems: "center",
                         textDecoration: "none",
+                        width: "70px",
+                        backgroundColor: open
+                          ? "rgba(255, 255, 255, 0.50)"
+                          : "transparent",
                       }}
                       component={Button}
-                      variant="textButton"
+                      variant={"fullButton"}
                       onClick={handlerClickMenu}
+                      ref={menuRef}
                     >
                       <Box sx={{ height: { sm: "30px", xs: "20px" } }}>
                         <img
@@ -236,20 +264,21 @@ const Header = () => {
                     </Box>
                     <Menu
                       id={"menu"}
-                      MenuListProps={{
-                        "aria-labelledby": "fade-button",
-                      }}
-                      anchorEl={anchorEl}
                       open={open}
                       onClose={handlerCloseMenu}
                       TransitionComponent={Fade}
-                      style={{
+                      style={{ left: menuPosition, top: "-485px" }}
+                      sx={{
                         zIndex: 20,
+                        marginTop: "-30px",
                       }}
                     >
                       <MenuItem
                         style={{ gap: "10px" }}
-                        onClick={() => navigate("/creator/lk")}
+                        onClick={() => {
+                          navigate("/creator/lk");
+                          handlerCloseMenu();
+                        }}
                       >
                         <img
                           src={accIcon}
@@ -260,7 +289,10 @@ const Header = () => {
                       </MenuItem>
                       <MenuItem
                         style={{ gap: "10px" }}
-                        onClick={() => navigate("/creator/stats")}
+                        onClick={() => {
+                          navigate("/creator/stats");
+                          handlerCloseMenu();
+                        }}
                       >
                         <img
                           src={StatIcon}
@@ -271,7 +303,10 @@ const Header = () => {
                       </MenuItem>
                       <MenuItem
                         style={{ gap: "10px" }}
-                        onClick={() => navigate("/creator/payment")}
+                        onClick={() => {
+                          navigate("/creator/payment");
+                          handlerCloseMenu();
+                        }}
                       >
                         <img
                           src={CashIcom}

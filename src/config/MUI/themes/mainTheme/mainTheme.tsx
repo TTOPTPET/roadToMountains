@@ -18,6 +18,7 @@ declare module "@mui/material/Button" {
     arrowButton: true;
     errorButton: true;
     addTourImage: true;
+    fullButton: true;
   }
 }
 
@@ -276,6 +277,29 @@ export const mainThemes = createTheme(breakpoints, {
         },
       },
       variants: [
+        {
+          props: { variant: "fullButton" },
+          style: {
+            height: "100%",
+            [breakpoints.breakpoints.down("lg")]: {
+              height: "100%",
+              padding: "0 10px",
+            },
+            [breakpoints.breakpoints.down("sm")]: {
+              height: "50px",
+              width: "50px",
+              padding: "0 10px",
+            },
+            "&:hover": { backgroundColor: "transparent" },
+            width: "auto",
+            borderRadius: 0,
+            backgroundColor: "transparent",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            cursor: "pointer",
+          },
+        },
         {
           props: { variant: "high" },
           style: {
