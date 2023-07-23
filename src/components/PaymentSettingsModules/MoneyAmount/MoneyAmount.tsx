@@ -12,6 +12,7 @@ export default function MoneyAmount({ accauntAmount }: MoneyAmountProps) {
       sx={{
         backgroundColor: whiteColor,
         boxShadow: "0",
+        mt: { lg: "40px", xs: "20px" },
       }}
     >
       <Stack
