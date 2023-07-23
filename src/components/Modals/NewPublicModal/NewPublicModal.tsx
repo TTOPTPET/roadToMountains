@@ -417,9 +417,15 @@ export default function NewPublicModal({
               Отменить
             </Button>
             <Button
-              disabled={Object.values(newPublicInputError).some(
-                (value) => value !== false
-              )}
+              disabled={
+                modal?.props?.newPublic
+                  ? Object.values(newPublicInputError).some(
+                      (value) => value !== false
+                    )
+                  : Object.values(newPublicInputError).some(
+                      (value) => value === true
+                    )
+              }
               onClick={() => {
                 if (modal?.props?.newPublic) {
                   postNewPublic(editedPublic, (resp) => {
