@@ -112,29 +112,7 @@ function BookingInfoModal({ selectedBooking }: BookingInfoModalProps) {
           <Typography variant={"caption"}>
             {selectedBooking &&
             selectedBooking?.bookingInfo[index]?.userInfo?.phone
-              ? `+${selectedBooking?.bookingInfo[
-                  index
-                ]?.userInfo?.phone.substring(
-                  0,
-                  1
-                )} (${selectedBooking?.bookingInfo[
-                  index
-                ]?.userInfo?.phone.substring(
-                  1,
-                  4
-                )}) ${selectedBooking?.bookingInfo[
-                  index
-                ]?.userInfo?.phone.substring(
-                  4,
-                  7
-                )}-${selectedBooking?.bookingInfo[
-                  index
-                ]?.userInfo?.phone.substring(
-                  7,
-                  9
-                )}-${selectedBooking?.bookingInfo[
-                  index
-                ]?.userInfo?.phone.substring(9, 11)}`
+              ? `${selectedBooking?.bookingInfo[index]?.userInfo?.phone}`
               : "Номер телефона"}
           </Typography>
 
@@ -190,9 +168,10 @@ export default BookingInfoModal;
 
 const checkAge = (stringAge: string) => {
   const age =
-    stringAge.length > 2 ? Number(stringAge.slice(-2)) : Number(stringAge);
-  const lastSymbol = Number(stringAge.slice(-1));
-
+    String(stringAge).length > 2
+      ? Number(String(stringAge).slice(-2))
+      : Number(String(stringAge));
+  const lastSymbol = Number(String(stringAge).slice(-1));
   if (
     (age >= 5 && age <= 20) ||
     (lastSymbol >= 5 && lastSymbol <= 9) ||
