@@ -88,10 +88,9 @@ const Header = () => {
 
   useEffect(() => {
     if (menuRef.current) {
-      console.log(menuRef.current.getBoundingClientRect());
       setMenuPosition(menuRef.current.getBoundingClientRect().right - 255);
     }
-  }, [menuRef, windowSize]);
+  }, [menuRef.current, windowSize]);
 
   return (
     <Paper
