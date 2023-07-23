@@ -56,7 +56,7 @@ const Footer = () => {
           </Typography>
         </Stack>
         <a
-          href="https://www.youtube.com/watch?v=WTdk6XJ2tnM&list=LL&index=20"
+          href="https://vk.com/way_to_mountains"
           rel={"noreferrer"}
           target={"_blank"}
           style={{ float: "right" }}
