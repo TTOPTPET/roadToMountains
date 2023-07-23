@@ -20,6 +20,8 @@ import HelpButton from "./components/HelpButton/HelpButton";
 import ErrorReportModal from "./components/Modals/ErrorReportModal/ErrorReportModal";
 import { lazyWithRetry } from "./tools/lazyWithRetry";
 import SuccessMessageSendModal from "./components/Modals/SuccessMessageSendModal/SuccessMessageSendModal";
+import ContactsPage from "./pages/ContactsPage/ContactsPage";
+import DocumentsPage from "./pages/DocumentsPage/DocumentsPage";
 
 const AdminPage = lazyWithRetry(() =>
   import("./pages/AdminPage/AdminPage").then(({ default: AdminPage }) => ({
@@ -192,6 +194,8 @@ function App() {
               <Route path={"/auth"} element={<Authorization />} />
               <Route path={"/tours/all"} element={<TourListPage />} />
               <Route path={"/tours/tour/:tourId"} element={<TourPage />} />
+              <Route path={"/contacts"} element={<ContactsPage />} />
+              <Route path={"/documents"} element={<DocumentsPage />} />
             </Routes>
           </Container>
         </Suspense>
