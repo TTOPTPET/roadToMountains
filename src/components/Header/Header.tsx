@@ -10,6 +10,8 @@ import {
   Menu,
   MenuItem,
   Fade,
+  Popper,
+  MenuList,
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
@@ -86,7 +88,8 @@ const Header = () => {
 
   useEffect(() => {
     if (menuRef.current) {
-      setMenuPosition(menuRef.current.getBoundingClientRect().left - 190);
+      console.log(menuRef.current.getBoundingClientRect());
+      setMenuPosition(menuRef.current.getBoundingClientRect().right - 255);
     }
   }, [menuRef, windowSize]);
 
@@ -239,6 +242,7 @@ const Header = () => {
                         flexDirection: "column",
                         alignItems: "center",
                         textDecoration: "none",
+                        position: "relative",
                         width: "70px",
                         backgroundColor: open
                           ? "rgba(255, 255, 255, 0.50)"
@@ -261,61 +265,66 @@ const Header = () => {
                           Меню
                         </Typography>
                       )}
+                      <Popper
+                        id={"menu"}
+                        open={open}
+                        anchorEl={menuRef.current}
+                        sx={{
+                          zIndex: 20,
+                          top: `-${moreThenSmall ? 40 : 60}px !important`,
+                          transform: `translate3d(${menuPosition}px, 70.4px, 0px) !important`,
+                        }}
+                      >
+                        {({ TransitionProps }) => (
+                          <Paper sx={{ padding: "5px", paddingTop: "40px" }}>
+                            <MenuList>
+                              <MenuItem
+                                style={{ gap: "10px" }}
+                                onClick={() => {
+                                  navigate("/creator/lk");
+                                  handlerCloseMenu();
+                                }}
+                              >
+                                <img
+                                  src={accIcon}
+                                  alt={"profile"}
+                                  style={{ width: "26px" }}
+                                />
+                                Личный кабинет
+                              </MenuItem>
+                              <MenuItem
+                                style={{ gap: "10px" }}
+                                onClick={() => {
+                                  navigate("/creator/stats");
+                                  handlerCloseMenu();
+                                }}
+                              >
+                                <img
+                                  src={StatIcon}
+                                  alt={"profile"}
+                                  style={{ width: "26px" }}
+                                />
+                                Статистика
+                              </MenuItem>
+                              <MenuItem
+                                style={{ gap: "10px" }}
+                                onClick={() => {
+                                  navigate("/creator/payment");
+                                  handlerCloseMenu();
+                                }}
+                              >
+                                <img
+                                  src={CashIcom}
+                                  alt={"profile"}
+                                  style={{ width: "26px" }}
+                                />
+                                Финансовые настройки
+                              </MenuItem>
+                            </MenuList>
+                          </Paper>
+                        )}
+                      </Popper>
                     </Box>
-                    <Menu
-                      id={"menu"}
-                      open={open}
-                      onClose={handlerCloseMenu}
-                      TransitionComponent={Fade}
-                      style={{ left: menuPosition, top: "-485px" }}
-                      sx={{
-                        zIndex: 20,
-                        marginTop: "-30px",
-                      }}
-                    >
-                      <MenuItem
-                        style={{ gap: "10px" }}
-                        onClick={() => {
-                          navigate("/creator/lk");
-                          handlerCloseMenu();
-                        }}
-                      >
-                        <img
-                          src={accIcon}
-                          alt={"profile"}
-                          style={{ width: "26px" }}
-                        />
-                        Личный кабинет
-                      </MenuItem>
-                      <MenuItem
-                        style={{ gap: "10px" }}
-                        onClick={() => {
-                          navigate("/creator/stats");
-                          handlerCloseMenu();
-                        }}
-                      >
-                        <img
-                          src={StatIcon}
-                          alt={"profile"}
-                          style={{ width: "26px" }}
-                        />
-                        Статистика
-                      </MenuItem>
-                      <MenuItem
-                        style={{ gap: "10px" }}
-                        onClick={() => {
-                          navigate("/creator/payment");
-                          handlerCloseMenu();
-                        }}
-                      >
-                        <img
-                          src={CashIcom}
-                          alt={"profile"}
-                          style={{ width: "26px" }}
-                        />
-                        Финансовые настройки
-                      </MenuItem>
-                    </Menu>
                   </Box>
                 )}
               </Box>
