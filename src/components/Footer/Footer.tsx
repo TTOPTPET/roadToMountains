@@ -41,7 +41,7 @@ const Footer = () => {
           <Typography
             variant={"caption"}
             component={Link}
-            to={"/"}
+            to={"/documents"}
             style={{ textDecoration: "none" }}
           >
             Юридическая информация
@@ -49,7 +49,7 @@ const Footer = () => {
           <Typography
             variant={"caption"}
             component={Link}
-            to={"/"}
+            to={"/contacts"}
             style={{ textDecoration: "none" }}
           >
             Контакты
