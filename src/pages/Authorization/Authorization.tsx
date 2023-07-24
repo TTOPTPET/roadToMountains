@@ -245,7 +245,7 @@ function Authorization() {
   }, []);
 
   return (
-    <Stack sx={{ m: "0 auto", gap: "50px" }}>
+    <Stack sx={{ gap: "50px" }}>
       <Typography variant="h3">{regState ? "Вход" : "Регистрация"}</Typography>
       <Paper
         variant="bigPadding"
@@ -254,6 +254,9 @@ function Authorization() {
           display: "flex",
           alignItems: "center",
           flexDirection: "column",
+          maxWidth: "600px",
+          width: "100%",
+          margin: "0 auto",
         }}
       >
         <Stack
