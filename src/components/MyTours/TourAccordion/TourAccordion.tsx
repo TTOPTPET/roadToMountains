@@ -61,7 +61,7 @@ export const TourAccordion: FC<ITourAccordionProps> = ({
                     dayjs(record.tourDate.to).format("D MMMM YYYY")}
                 </Typography>
                 <Typography variant={"caption"}>ООО "Алтай тур"</Typography>
-                <ConditionChangedChip />
+                {record?.statusUpdate && <ConditionChangedChip />}
               </Stack>
             </Grid>
             <Grid item md={2} justifyContent={"right"}>

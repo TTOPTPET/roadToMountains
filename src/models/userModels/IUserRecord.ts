@@ -1,6 +1,7 @@
 export interface IUserRecord {
   publicTourId?: string;
   bookingId?: number;
+  statusUpdate?: boolean;
   bookingStatus?: {
     payment: string;
     cancellation: string;
