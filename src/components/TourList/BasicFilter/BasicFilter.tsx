@@ -107,8 +107,16 @@ export const BasicFilter: FC<IFilterProps> = ({
           )}
         />
         <DatePicker
-          value={dayjs(searchData?.tourDate?.to ?? "")}
-          onChange={(newValue) => handleDateChange("to", newValue)}
+          value={dayjs(searchData?.tourDate?.to ?? "")
+            .subtract(23, "h")
+            .subtract(59, "m")
+            .subtract(59, "s")}
+          onChange={(newValue) =>
+            handleDateChange(
+              "to",
+              newValue.add(23, "h").add(59, "m").add(59, "s")
+            )
+          }
           renderInput={(props) => (
             <TextField
               {...props}
