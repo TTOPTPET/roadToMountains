@@ -165,6 +165,8 @@ export default function NewPublicModal({
     );
   }, [editedPublic]);
 
+  console.log(editedPublic);
+
   return (
     <Dialog
       className="newPublicModal"
@@ -303,23 +305,14 @@ export default function NewPublicModal({
                   }));
                   handlerNewPublicErrorChange(
                     "meetingTime",
-                    newPublicInputValidation(
-                      "meetingTime",
-                      newValue.toISOString()
-                    )
+                    newPublicInputValidation("meetingTime", String(newValue))
                   );
                 }}
                 renderInput={(props) => (
                   <TextField
                     color="secondary"
                     {...props}
-                    error={
-                      editedPublic?.meetingTime &&
-                      Boolean(
-                        dayjs(editedPublic?.tourDate?.from) <
-                          dayjs(editedPublic?.meetingTime)
-                      )
-                    }
+                    error={newPublicInputError.meetingTime}
                     inputProps={{
                       ...props.inputProps,
                       label: "Время встречи",

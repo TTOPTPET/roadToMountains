@@ -37,6 +37,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import MenuIcon from "../../media/menu-icon.svg";
 import StatIcon from "../../media/chart-box.svg";
 import CashIcom from "../../media/cash-icon.svg";
+import NotificationIcon from "../../media/notification.svg";
 
 const Header = () => {
   const [searchParamFromUrl] = useSearchParams();
@@ -91,6 +92,12 @@ const Header = () => {
       setMenuPosition(menuRef.current.getBoundingClientRect().right - 255);
     }
   }, [menuRef.current, windowSize]);
+
+  useEffect(() => {
+    if (open) {
+      setAnchorEl(null);
+    }
+  }, [location]);
 
   return (
     <Paper
@@ -318,6 +325,20 @@ const Header = () => {
                                   style={{ width: "26px" }}
                                 />
                                 Финансовые настройки
+                              </MenuItem>
+                              <MenuItem
+                                style={{ gap: "10px" }}
+                                onClick={() => {
+                                  navigate("/creator/notifications");
+                                  handlerCloseMenu();
+                                }}
+                              >
+                                <img
+                                  src={NotificationIcon}
+                                  alt={"notification"}
+                                  style={{ width: "26px" }}
+                                />
+                                Уведомления
                               </MenuItem>
                             </MenuList>
                           </Paper>
