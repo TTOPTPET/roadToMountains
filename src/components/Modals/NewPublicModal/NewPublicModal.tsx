@@ -12,11 +12,7 @@ import {
 import { SetStateAction, Dispatch, useState, useEffect } from "react";
 
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import {
-  DatePicker,
-  DateTimePicker,
-  LocalizationProvider,
-} from "@mui/x-date-pickers";
+import { DateTimePicker, LocalizationProvider } from "@mui/x-date-pickers";
 
 import dayjs, { Dayjs } from "dayjs";
 
@@ -165,8 +161,6 @@ export default function NewPublicModal({
     );
   }, [editedPublic]);
 
-  console.log(editedPublic);
-
   return (
     <Dialog
       className="newPublicModal"
@@ -217,6 +211,7 @@ export default function NewPublicModal({
             />
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DateTimePicker
+                label="Дата и время начала"
                 value={dayjs(editedPublic?.tourDate?.from)}
                 ampm={false}
                 onChange={(newValue) => {
@@ -238,12 +233,13 @@ export default function NewPublicModal({
                     error={newPublicInputError.tourDateFrom}
                     inputProps={{
                       ...props.inputProps,
-                      label: "Дата и время начала",
+                      placeholder: "",
                     }}
                   />
                 )}
               />
               <DateTimePicker
+                label="Дата и время конца"
                 value={dayjs(editedPublic?.tourDate?.to)}
                 ampm={false}
                 onChange={(newValue) => {
@@ -265,7 +261,7 @@ export default function NewPublicModal({
                     error={newPublicInputError.tourDateTo}
                     inputProps={{
                       ...props.inputProps,
-                      label: "Дата и время конца",
+                      placeholder: "",
                     }}
                   />
                 )}
@@ -289,6 +285,7 @@ export default function NewPublicModal({
             />
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DateTimePicker
+                label="Время встречи"
                 value={
                   (editedPublic?.meetingTime &&
                     dayjs(editedPublic?.meetingTime)) ||
@@ -315,7 +312,7 @@ export default function NewPublicModal({
                     error={newPublicInputError.meetingTime}
                     inputProps={{
                       ...props.inputProps,
-                      label: "Время встречи",
+                      placeholder: "",
                     }}
                   />
                 )}

@@ -233,6 +233,7 @@ export const TourBooking: FC<ITourBookingProps> = ({
         </div>
         <Stack direction={"column"} gap={2} mt={"15px"}>
           <DatePicker
+            label="Дата заезда"
             value={dayjs(selectedDate?.date?.from)}
             onChange={(newValue) => handleDateChange("from", newValue)}
             disableOpenPicker={true}
@@ -243,7 +244,7 @@ export const TourBooking: FC<ITourBookingProps> = ({
                 error={props.error && props.inputProps.value !== ""}
                 inputProps={{
                   ...props.inputProps,
-                  label: "Дата заезда",
+                  placeholder: "",
                 }}
                 sx={{
                   color: "black",
@@ -253,6 +254,7 @@ export const TourBooking: FC<ITourBookingProps> = ({
             )}
           />
           <DatePicker
+            label="Дата выезда"
             value={dayjs(selectedDate?.date?.to)}
             onChange={(newValue) => handleDateChange("to", newValue)}
             disableOpenPicker={true}
@@ -263,7 +265,7 @@ export const TourBooking: FC<ITourBookingProps> = ({
                 error={props.error && props.inputProps.value !== ""}
                 inputProps={{
                   ...props.inputProps,
-                  label: "Дата выезда",
+                  placeholder: "",
                 }}
                 sx={{ color: "black", width: { lg: "300px", xs: "260px" } }}
               />
