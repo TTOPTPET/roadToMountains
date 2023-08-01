@@ -8,6 +8,8 @@ import {
 
 import { useDispatch, useSelector } from "react-redux";
 
+import { useNavigate } from "react-router-dom";
+
 import {
   isModalActive,
   setModalInactive,
@@ -22,6 +24,8 @@ function SuccessBookingModal() {
     (state: RootState) => state.modal.activeModals
   );
 
+  const navigate = useNavigate();
+
   const dispatch = useDispatch();
 
   const modal = activeModals.find(
@@ -30,6 +34,7 @@ function SuccessBookingModal() {
 
   const handlerCloseClick = () => {
     dispatch(setModalInactive("successBookingModal"));
+    navigate("/tourist/lk");
   };
 
   const handlerPayClick = () => {
