@@ -93,6 +93,7 @@ export const BasicFilter: FC<IFilterProps> = ({
       />
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DatePicker
+          label="Дата заезда"
           value={dayjs(searchData?.tourDate?.from ?? "")}
           onChange={(newValue) => handleDateChange("from", newValue)}
           renderInput={(props) => (
@@ -101,12 +102,13 @@ export const BasicFilter: FC<IFilterProps> = ({
               error={props.error && props.inputProps.value !== ""}
               inputProps={{
                 ...props.inputProps,
-                label: "Дата заезда",
+                placeholder: "",
               }}
             />
           )}
         />
         <DatePicker
+          label="Дата выезда"
           value={dayjs(searchData?.tourDate?.to ?? "")
             .subtract(23, "h")
             .subtract(59, "m")
@@ -114,7 +116,7 @@ export const BasicFilter: FC<IFilterProps> = ({
           onChange={(newValue) =>
             handleDateChange(
               "to",
-              newValue.add(23, "h").add(59, "m").add(59, "s")
+              newValue && newValue.add(23, "h").add(59, "m").add(59, "s")
             )
           }
           renderInput={(props) => (
@@ -123,7 +125,7 @@ export const BasicFilter: FC<IFilterProps> = ({
               error={props.error && props.inputProps.value !== ""}
               inputProps={{
                 ...props.inputProps,
-                label: "Дата выезда",
+                placeholder: "",
               }}
             />
           )}

@@ -37,6 +37,7 @@ const StatisticSearch: FC<IStatisticSearchProps> = ({
   return (
     <Stack direction={"row"} columnGap={5}>
       <DatePicker
+        label="Дата начала"
         value={dayjs(statisticSearch?.dateFrom || "")}
         onChange={(newValue) => handlerChangeSearchField("dateFrom", newValue)}
         renderInput={(props) => (
@@ -45,12 +46,13 @@ const StatisticSearch: FC<IStatisticSearchProps> = ({
             error={props.error && props.inputProps.value !== ""}
             inputProps={{
               ...props.inputProps,
-              label: "Дата начала",
+              placeholder: "",
             }}
           />
         )}
       />
       <DatePicker
+        label="Дата конца"
         value={dayjs(statisticSearch?.dateTo || "")}
         onChange={(newValue) => handlerChangeSearchField("dateTo", newValue)}
         renderInput={(props) => (
@@ -59,7 +61,7 @@ const StatisticSearch: FC<IStatisticSearchProps> = ({
             error={props.error && props.inputProps.value !== ""}
             inputProps={{
               ...props.inputProps,
-              label: "Дата конца",
+              placeholder: "",
             }}
           />
         )}
