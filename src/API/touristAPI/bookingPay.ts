@@ -7,9 +7,13 @@ export const bookingPay = async (
   errorCallback?: () => void
 ) => {
   try {
-    let response = await axios.get(touristUrl + "/bookingPay", {
-      params: { bookingId },
-    });
+    let response = await axios.post(
+      touristUrl + "/bookingPay",
+      {},
+      {
+        params: { bookingId },
+      }
+    );
     successCallback(response?.data);
   } catch (e) {
     console.error(e);
