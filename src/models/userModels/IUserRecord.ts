@@ -6,6 +6,7 @@ export interface IUserRecord {
     payment: string;
     cancellation: string;
     past: boolean;
+    needPayment: boolean;
   };
   tourDate?: {
     from: string;

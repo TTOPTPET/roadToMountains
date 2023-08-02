@@ -8,6 +8,7 @@ import {
   SvgIcon,
   useTheme,
   useMediaQuery,
+  Button,
 } from "@mui/material";
 import dayjs from "dayjs";
 import { SetStateAction, useState, Dispatch, FC } from "react";
@@ -16,6 +17,10 @@ import { ReactComponent as NavigateIcon } from "../../../media/navigate_before.s
 import { TourDetails } from "../TourSummary/TourDetails";
 import SuccessMessageSendModal from "../../Modals/SuccessMessageSendModal/SuccessMessageSendModal";
 import ConditionChangedChip from "./ConditionChangedChip/ConditionChangedChip";
+
+import { redirect, useNavigate } from "react-router-dom";
+
+import { bookingPay } from "../../../API/touristAPI/bookingPay";
 
 interface ITourAccordionProps {
   record: IUserRecord;
@@ -31,6 +36,7 @@ export const TourAccordion: FC<ITourAccordionProps> = ({
   const [expanded, setExpanded] = useState<string | false>(false);
   console.log(record);
   const theme = useTheme();
+  const navigate = useNavigate();
 
   const lessThenBig = useMediaQuery(theme.breakpoints.down("lg"));
   const lessThenSmall = useMediaQuery(theme.breakpoints.down("sm"));
@@ -64,23 +70,56 @@ export const TourAccordion: FC<ITourAccordionProps> = ({
                 {record?.statusUpdate && <ConditionChangedChip />}
               </Stack>
             </Grid>
-            <Grid item md={2} justifyContent={"right"}>
+            <Grid item width={"fit-content"} justifyContent={"right"}>
               <Stack gap="5px">
-                <Typography
-                  variant={"button"}
-                  textAlign={"right"}
-                  sx={{
-                    position: lessThenSmall ? "absolute" : "",
-                    bottom: "20px",
-                    right: "0",
-                  }}
-                >
-                  {record.tourAmount}₽
-                </Typography>
+                {!record?.bookingStatus?.needPayment ? (
+                  <Stack
+                    direction="row"
+                    gap={2}
+                    alignItems={"center"}
+                    justifyContent={"right"}
+                  >
+                    <Button
+                      onClick={() =>
+                        bookingPay(record?.bookingId, (data) => {
+                          window.location.replace(data.paymentUrl);
+                        })
+                      }
+                    >
+                      Оплатить
+                    </Button>
+
+                    <Typography
+                      variant={"button"}
+                      textAlign={"right"}
+                      sx={{
+                        position: lessThenSmall ? "absolute" : "",
+                        bottom: "20px",
+                        right: "0",
+                      }}
+                    >
+                      {record.tourAmount}₽
+                    </Typography>
+                  </Stack>
+                ) : (
+                  <Typography
+                    variant={"button"}
+                    textAlign={"right"}
+                    sx={{
+                      position: lessThenSmall ? "absolute" : "",
+                      bottom: "20px",
+                      right: "0",
+                    }}
+                  >
+                    {record.tourAmount}₽
+                  </Typography>
+                )}
                 <Typography
                   variant={"caption"}
                   textAlign={"right"}
-                  sx={{ mt: lessThenSmall ? "5px" : "" }}
+                  sx={{
+                    mt: lessThenSmall ? "5px" : "",
+                  }}
                 >
                   {record.bookingStatus.payment}
                 </Typography>

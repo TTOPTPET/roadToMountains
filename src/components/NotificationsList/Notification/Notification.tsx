@@ -4,6 +4,12 @@ import dayjs from "dayjs";
 import { INotification } from "../../../models/notificationModels/INotification";
 import { whiteColor } from "../../../config/MUI/color/color";
 
+const notificationName = new Map<string, string>([
+  ["payForTour", "Оплата за тур"],
+  ["refundForTour", "Возврат за тур"],
+  ["penalty", "Неустойка"],
+]);
+
 export const Notification = (notification: INotification) => {
   return (
     <Box sx={{ width: "100%" }}>
@@ -16,10 +22,12 @@ export const Notification = (notification: INotification) => {
                 (notification?.notifData?.bookingId || "0")}
             </Typography>
             <Typography variant={"caption"} mt={2}>
-              {notification?.notifData?.paymentStatus || "Бронирование"}
+              {notification?.notifData?.paymentStatus
+                ? notificationName.get(notification?.notifData?.paymentStatus)
+                : "Неизвестный тип операции"}
             </Typography>
           </Grid>
-          <Grid item md={2.5}>
+          <Grid item md={3.5} mt={1}>
             <Typography variant={"caption"}>
               {dayjs(notification?.notifData?.tour?.tourDate?.from).format(
                 "D MMMM YYYY"
@@ -30,7 +38,7 @@ export const Notification = (notification: INotification) => {
                 )}
             </Typography>
           </Grid>
-          <Grid item md={1.5}>
+          <Grid item md={1.5} mt={1}>
             <Typography variant={"caption"}>
               {dayjs(notification?.createAt).format("D MMM YYYY")}
             </Typography>
