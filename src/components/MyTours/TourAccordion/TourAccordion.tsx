@@ -72,7 +72,7 @@ export const TourAccordion: FC<ITourAccordionProps> = ({
             </Grid>
             <Grid item width={"fit-content"} justifyContent={"right"}>
               <Stack gap="5px">
-                {!record?.bookingStatus?.needPayment ? (
+                {record?.bookingStatus?.needPayment ? (
                   <Stack
                     direction="row"
                     gap={2}
