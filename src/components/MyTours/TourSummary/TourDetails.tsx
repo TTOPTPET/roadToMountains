@@ -112,9 +112,7 @@ export const TourDetails: FC<ITourDetailsProps> = ({
             {!lessThenSmall && (
               <Button
                 disabled={
-                  record.bookingStatus.past || record.bookingStatus.cancellation
-                    ? true
-                    : false
+                  dayjs(record.tourDate.from).subtract(1, "day") < dayjs()
                 }
                 onClick={() =>
                   dispatch(
@@ -216,10 +214,7 @@ export const TourDetails: FC<ITourDetailsProps> = ({
                 <Button
                   sx={{ width: "100%" }}
                   disabled={
-                    record.bookingStatus.past ||
-                    record.bookingStatus.cancellation
-                      ? true
-                      : false
+                    dayjs(record.tourDate.from).subtract(1, "day") < dayjs()
                   }
                   onClick={() =>
                     dispatch(

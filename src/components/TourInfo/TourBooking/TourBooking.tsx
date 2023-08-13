@@ -170,11 +170,13 @@ export const TourBooking: FC<ITourBookingProps> = ({
       bookingData,
       (data) => {
         if (momentPay) {
+          window.location.replace(data?.paymentUrl);
           dispatch(setModalActive("successPayModal"));
         } else {
           dispatch(
             setModalActive("successBookingModal", {
               paymentDeadline: data?.paymentDeadline,
+              paymentUrl: data?.paymentUrl,
             })
           );
         }
@@ -351,7 +353,7 @@ export const TourBooking: FC<ITourBookingProps> = ({
               Забронировать
             </Button>
           ) : (
-            <Stack direction={"row"} gap={2}>
+            <Stack direction={"row"} gap={2} mt={"8px"}>
               <Button onClick={() => handlerPurchaseClick(true)}>
                 Оплатить
               </Button>

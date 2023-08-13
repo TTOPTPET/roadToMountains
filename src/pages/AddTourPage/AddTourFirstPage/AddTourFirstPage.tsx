@@ -210,8 +210,7 @@ export const AddTourFirstPage: FC<IAddTourFirstPageProps> = ({
             label={"Стоимость тура"}
             value={tourInfo?.price || ""}
             error={
-              (addError && tourInfo?.price === undefined) ||
-              tourInfo?.price === 0
+              (addError && tourInfo?.price === undefined) || tourInfo?.price < 1
             }
             required
             onChange={(e) =>
@@ -221,6 +220,14 @@ export const AddTourFirstPage: FC<IAddTourFirstPageProps> = ({
               })
             }
           />
+          {tourInfo?.price && tourInfo?.price < 1 ? (
+            <Typography
+              variant="caption"
+              sx={{ color: redColor, mt: "10px", textAlign: "center" }}
+            >
+              Минимальная стоимость - 1 рубль
+            </Typography>
+          ) : null}
         </Grid>
       </Grid>
     </Grid>
