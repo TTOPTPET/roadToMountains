@@ -30,6 +30,7 @@ import { StyledTextAreaAutosize } from "../../../config/MUI/styledComponents/Sty
 import { postNewPublic } from "../../../API/creatorAPI/postNewPublic";
 import { IPublicTour } from "../../../models/calendarModels/IPublicTour";
 import { editPublicTour } from "../../../API/creatorAPI/editPublicTour";
+import { redColor } from "../../../config/MUI/color/color";
 
 type NewPublicModalProps = {
   myTours: ITour[];
@@ -92,7 +93,7 @@ export default function NewPublicModal({
       case "maxPersonNum":
         return value ? false : true;
       case "tourAmount":
-        return value ? false : true;
+        return value && Number(value) >= 1 ? false : true;
       case "meetingTime":
         return value &&
           dayjs(value).isBefore(dayjs(editedPublic?.tourDate?.from))
@@ -378,11 +379,27 @@ export default function NewPublicModal({
                 </Typography>
               </Box>
             </Stack>
+            {Number(editedPublic?.tourAmount) < 1 &&
+            editedPublic?.tourAmount ? (
+              <Typography
+                variant="caption"
+                sx={{ color: redColor, mt: "10px", textAlign: "center" }}
+              >
+                Минимальная стоимость - 1 рубль
+              </Typography>
+            ) : null}
 
             {editedPublic?.tourDate && (
               <Typography
                 variant="caption"
-                sx={{ mt: "30px", textAlign: "center" }}
+                sx={{
+                  mt:
+                    Number(editedPublic?.tourAmount) < 1 &&
+                    editedPublic?.tourAmount
+                      ? "0px"
+                      : "30px",
+                  textAlign: "center",
+                }}
               >
                 Вы можете редактировать тур до{" "}
                 {dayjs(editedPublic?.tourDate?.from)

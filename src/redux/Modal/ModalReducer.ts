@@ -44,6 +44,7 @@ interface IActionProps {
     records?: IUserRecord[];
     setRecords?: Dispatch<SetStateAction<IUserRecord[]>>;
     paymentDeadline?: string;
+    paymentUrl?: string;
     tourDate?: {
       from: string;
       to: string;

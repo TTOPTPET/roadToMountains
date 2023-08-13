@@ -39,6 +39,7 @@ function SuccessBookingModal() {
 
   const handlerPayClick = () => {
     dispatch(setModalInactive("successBookingModal"));
+    window.location.replace(modal?.props?.paymentUrl);
   };
   return (
     <Dialog
