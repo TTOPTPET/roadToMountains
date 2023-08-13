@@ -13,9 +13,7 @@ export default function MoneyOutput({ accauntAmount }: MoneyOutputProps) {
 
   return (
     <>
-      <Typography variant="h5" sx={{ mt: "90px" }}>
-        Вывод средств
-      </Typography>
+      <Typography variant="h5">Вывод средств</Typography>
       <Paper
         sx={{
           backgroundColor: whiteColor,
@@ -44,6 +42,14 @@ export default function MoneyOutput({ accauntAmount }: MoneyOutputProps) {
             Слишком большая сумма
           </Typography>
         )}
+        {amount && Number(amount) < 100 && (
+          <Typography
+            variant="caption"
+            sx={{ color: redColor, mt: "10px", textAlign: "center" }}
+          >
+            Минимальная сумма вывода - 100 рублей
+          </Typography>
+        )}
 
         <Stack direction="row" justifyContent="flex-end">
           <Button
@@ -51,7 +57,10 @@ export default function MoneyOutput({ accauntAmount }: MoneyOutputProps) {
               mt: Number(accauntAmount) < Number(amount) ? "5px" : "30px",
             }}
             onClick={(amount) => postWithdrawal(String(amount))}
-            disabled={Number(accauntAmount) < Number(amount)}
+            disabled={
+              Number(accauntAmount) < Number(amount) ||
+              (amount && Number(amount) < 100)
+            }
           >
             Вывести
           </Button>

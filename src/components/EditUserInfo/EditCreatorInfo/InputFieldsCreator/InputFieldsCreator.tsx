@@ -61,7 +61,7 @@ function InputFieldsCreator({
           return (
             editedCreatorInfo?.dataUser?.creatorType === CreatorType.OOO && (
               <TextField
-                key={i}
+                key={"OOO" + i}
                 label={fromModelsToFieldsName.get(field)}
                 color="primary"
                 value={editedCreatorInfo?.dataUser?.fieldsCreator?.[field]}
@@ -92,7 +92,7 @@ function InputFieldsCreator({
           return (
             editedCreatorInfo?.dataUser?.creatorType === CreatorType.IP && (
               <TextField
-                key={i}
+                key={"IP" + i}
                 label={fromModelsToFieldsName.get(field)}
                 color="primary"
                 value={
@@ -124,7 +124,7 @@ function InputFieldsCreator({
           return (
             editedCreatorInfo?.dataUser?.creatorType === CreatorType.SELF && (
               <TextField
-                key={i}
+                key={"SELF" + i}
                 label={fromModelsToFieldsName.get(field)}
                 color="primary"
                 value={

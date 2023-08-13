@@ -20,9 +20,13 @@ function PaymentSettingsPage() {
   const [bankAccInfo, setBankAccInfo] = useState<IBankAccount>({});
 
   useEffect(() => {
-    getCardInfo((value) => {
-      setCardInfo(value);
-    });
+    getCardInfo(
+      (value) => {
+        setCardInfo(value);
+      },
+      () => {},
+      true
+    );
     getBankAccInfo(
       (value) => {
         setBankAccInfo(value);
@@ -32,6 +36,8 @@ function PaymentSettingsPage() {
     );
   }, []);
 
+  console.log(cardInfo);
+
   return (
     <>
       <Typography variant="h3" sx={{ mb: "50px" }}>
@@ -39,12 +45,7 @@ function PaymentSettingsPage() {
       </Typography>
       <Grid container justifyContent={"space-between"}>
         <Grid item xs={5.5}>
-          {cardInfo && (
-            <CardInfo
-              cardId={cardInfo.cardId}
-              statusConnectCard={cardInfo.statusConnectCard}
-            />
-          )}
+          {cardInfo && <CardInfo cardInfo={cardInfo} />}
           <MoneyOutput accauntAmount={bankAccInfo.accauntAmount} />
         </Grid>
         <Grid item xs={5}>
@@ -54,7 +55,7 @@ function PaymentSettingsPage() {
           />
         </Grid>
       </Grid>
-      <CardLostModal />
+      <CardLostModal creatorType={cardInfo?.creatorType} />
       <DeleteCardModal />
     </>
   );

@@ -13,8 +13,14 @@ import {
   setModalInactive,
 } from "../../../redux/Modal/ModalReducer";
 import { RootState } from "../../../redux/store";
+import { postFinanceInfo } from "../../../API/paymentAPI/postFinanceInfo";
+import { CreatorType } from "../../../models/userModels/IUserInfo";
 
-function CardLostModal() {
+type CardLostModalProps = {
+  creatorType: CreatorType;
+};
+
+function CardLostModal({ creatorType }: CardLostModalProps) {
   const activeModals = useSelector(
     (state: RootState) => state.modal.activeModals
   );
@@ -27,6 +33,9 @@ function CardLostModal() {
 
   const handlerConfirmClick = () => {
     dispatch(setModalInactive("cardLostModal"));
+    postFinanceInfo(creatorType, {}, (data) => {
+      // window.location.replace(data.connectUrl);
+    });
   };
 
   return (

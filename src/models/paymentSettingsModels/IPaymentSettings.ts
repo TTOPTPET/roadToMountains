@@ -1,3 +1,5 @@
+import { CreatorType } from "../userModels/IUserInfo";
+
 export enum StatusConnectCard {
   notLinked = "notLinked",
   linked = "linked",
@@ -19,9 +21,16 @@ export interface AccauntTransactions {
   price?: string;
 }
 
-export interface ICardInfo {
+export interface fieldsPaymentCreator {
+  bik?: string;
+  accountNumber?: string;
   cardId?: string;
   statusConnectCard?: StatusConnectCard;
+}
+
+export interface ICardInfo {
+  creatorType: CreatorType;
+  fieldsPaymentCreator: fieldsPaymentCreator;
 }
 
 export interface IBankAccount {
