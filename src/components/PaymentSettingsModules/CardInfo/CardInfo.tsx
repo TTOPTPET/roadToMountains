@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setModalActive } from "../../../redux/Modal/ModalReducer";
 
 import { whiteColor } from "../../../config/MUI/color/color";
@@ -72,9 +72,6 @@ export default function CardInfo({ cardInfo }: CardInfoProps) {
 
   const dispatch = useDispatch();
 
-  const { accountNumber, bik, cardId, statusConnectCard } =
-    cardInfo?.fieldsPaymentCreator;
-
   const [editedCardInfo, setEditedCardInfo] = useState(cardInfo);
 
   console.log(editedCardInfo);
@@ -93,8 +90,9 @@ export default function CardInfo({ cardInfo }: CardInfoProps) {
             boxShadow: "0",
           }}
         >
-          {statusConnectCard &&
-            statusConnectCard === StatusConnectCard.waitingBank && (
+          {cardInfo?.fieldsPaymentCreator?.statusConnectCard &&
+            cardInfo?.fieldsPaymentCreator?.statusConnectCard ===
+              StatusConnectCard.waitingBank && (
               <Box
                 sx={{
                   position: "absolute",
@@ -107,22 +105,25 @@ export default function CardInfo({ cardInfo }: CardInfoProps) {
               </Box>
             )}
           <Stack direction={"row"} alignItems={"center"} gap={"10px"}>
-            {statusConnectCard &&
-            statusConnectCard === StatusConnectCard.linked ? (
+            {cardInfo?.fieldsPaymentCreator?.statusConnectCard &&
+            cardInfo?.fieldsPaymentCreator?.statusConnectCard ===
+              StatusConnectCard.linked ? (
               <>
                 <img src={checked} alt="successfull" />
                 <Typography variant="h6">
                   Ваша карта успешно привязана
                 </Typography>
               </>
-            ) : statusConnectCard === StatusConnectCard.failedLink ? (
+            ) : cardInfo?.fieldsPaymentCreator?.statusConnectCard ===
+              StatusConnectCard.failedLink ? (
               <>
                 <img src={banIcon} alt="failed" />
                 <Typography variant="h6">
                   Неуспешная попытка привязки
                 </Typography>
               </>
-            ) : statusConnectCard === StatusConnectCard.notLinked ? (
+            ) : cardInfo?.fieldsPaymentCreator?.statusConnectCard ===
+              StatusConnectCard.notLinked ? (
               <>
                 <img src={alert} alt="notlinked" />
                 <Typography variant="h6">У Вас нет активной карты</Typography>
@@ -134,7 +135,7 @@ export default function CardInfo({ cardInfo }: CardInfoProps) {
               </>
             )}
           </Stack>
-          {cardId && (
+          {cardInfo?.fieldsPaymentCreator?.cardId && (
             <Paper sx={{ boxShadow: "0", p: "30px 20px", mt: "7px" }}>
               <Stack
                 direction={"row"}
@@ -142,7 +143,9 @@ export default function CardInfo({ cardInfo }: CardInfoProps) {
                 justifyContent={"space-between"}
               >
                 <Typography variant="caption">Карта</Typography>
-                <Typography variant="button">{cardId}</Typography>
+                <Typography variant="button">
+                  {cardInfo?.fieldsPaymentCreator?.cardId}
+                </Typography>
               </Stack>
             </Paper>
           )}
@@ -159,7 +162,8 @@ export default function CardInfo({ cardInfo }: CardInfoProps) {
             >
               Привязать новую карту
             </Button>
-            {statusConnectCard === StatusConnectCard.linked && (
+            {cardInfo?.fieldsPaymentCreator?.statusConnectCard ===
+              StatusConnectCard.linked && (
               <Button
                 onClick={() => {
                   dispatch(setModalActive("deleteCardModal"));
@@ -181,8 +185,9 @@ export default function CardInfo({ cardInfo }: CardInfoProps) {
             boxShadow: "0",
           }}
         >
-          {statusConnectCard &&
-            statusConnectCard === StatusConnectCard.waitingBank && (
+          {cardInfo?.fieldsPaymentCreator?.statusConnectCard &&
+            cardInfo?.fieldsPaymentCreator?.statusConnectCard ===
+              StatusConnectCard.waitingBank && (
               <Box
                 sx={{
                   position: "absolute",
@@ -195,17 +200,18 @@ export default function CardInfo({ cardInfo }: CardInfoProps) {
               </Box>
             )}
           <Stack direction={"row"} alignItems={"center"} gap={"10px"}>
-            {cardInfo.fieldsPaymentCreator.bik !==
-              editedCardInfo.fieldsPaymentCreator.bik ||
-            cardInfo.fieldsPaymentCreator.accountNumber !==
-              editedCardInfo.fieldsPaymentCreator.accountNumber ? (
+            {cardInfo?.fieldsPaymentCreator?.bik !==
+              editedCardInfo?.fieldsPaymentCreator?.bik ||
+            cardInfo?.fieldsPaymentCreator?.accountNumber !==
+              editedCardInfo?.fieldsPaymentCreator?.accountNumber ? (
               <>
                 <img src={clock} alt="waiting" />
                 <Typography variant="h6">
                   Обновите информацию о счете
                 </Typography>
               </>
-            ) : bik && accountNumber ? (
+            ) : cardInfo?.fieldsPaymentCreator?.bik &&
+              cardInfo?.fieldsPaymentCreator?.accountNumber ? (
               <>
                 <img src={checked} alt="successfull" />
                 <Typography variant="h6">Информация обновлена</Typography>
@@ -222,7 +228,7 @@ export default function CardInfo({ cardInfo }: CardInfoProps) {
             color="secondary"
             sx={{ mt: "10px" }}
             type="number"
-            value={editedCardInfo.fieldsPaymentCreator.bik}
+            value={editedCardInfo?.fieldsPaymentCreator?.bik}
             onChange={(e) => {
               handlerCardInfoErrorChange(
                 "bik",
@@ -246,7 +252,7 @@ export default function CardInfo({ cardInfo }: CardInfoProps) {
             color="secondary"
             sx={{ mt: "10px" }}
             type="number"
-            value={editedCardInfo.fieldsPaymentCreator.accountNumber}
+            value={editedCardInfo?.fieldsPaymentCreator?.accountNumber}
             onChange={(e) => {
               handlerCardInfoErrorChange(
                 "accountNumber",
@@ -273,21 +279,23 @@ export default function CardInfo({ cardInfo }: CardInfoProps) {
           >
             <Button
               onClick={() => {
-                postFinanceInfo(cardInfo.creatorType, {
-                  accountNumber: accountNumber,
-                  bik: bik,
+                postFinanceInfo(cardInfo?.creatorType, {
+                  accountNumber:
+                    editedCardInfo?.fieldsPaymentCreator?.accountNumber,
+                  bik: editedCardInfo?.fieldsPaymentCreator?.bik,
                 });
               }}
               sx={{ width: "100%" }}
               disabled={
-                (bik === editedCardInfo.fieldsPaymentCreator.bik &&
-                  accountNumber ===
-                    editedCardInfo.fieldsPaymentCreator.accountNumber) ||
+                (cardInfo?.fieldsPaymentCreator?.bik ===
+                  editedCardInfo?.fieldsPaymentCreator?.bik &&
+                  cardInfo?.fieldsPaymentCreator?.accountNumber ===
+                    editedCardInfo?.fieldsPaymentCreator?.accountNumber) ||
                 Object.values(cardInfoInputError).some(
                   (value) => value !== false
                 ) ||
-                !editedCardInfo.fieldsPaymentCreator.bik ||
-                !editedCardInfo.fieldsPaymentCreator.accountNumber
+                !editedCardInfo?.fieldsPaymentCreator?.bik ||
+                !editedCardInfo?.fieldsPaymentCreator?.accountNumber
               }
             >
               Обновить информацию о счете

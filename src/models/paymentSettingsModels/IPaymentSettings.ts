@@ -29,8 +29,8 @@ export interface fieldsPaymentCreator {
 }
 
 export interface ICardInfo {
-  creatorType: CreatorType;
-  fieldsPaymentCreator: fieldsPaymentCreator;
+  creatorType?: CreatorType;
+  fieldsPaymentCreator?: fieldsPaymentCreator;
 }
 
 export interface IBankAccount {

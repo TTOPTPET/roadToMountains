@@ -56,7 +56,7 @@ export default function MoneyOutput({ accauntAmount }: MoneyOutputProps) {
             sx={{
               mt: Number(accauntAmount) < Number(amount) ? "5px" : "30px",
             }}
-            onClick={(amount) => postWithdrawal(String(amount))}
+            onClick={() => postWithdrawal({ amount: Number(amount) })}
             disabled={
               Number(accauntAmount) < Number(amount) ||
               (amount && Number(amount) < 100)
