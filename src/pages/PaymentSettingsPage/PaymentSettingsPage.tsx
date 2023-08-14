@@ -25,14 +25,14 @@ function PaymentSettingsPage() {
         setCardInfo(value);
       },
       () => {},
-      true
+      false
     );
     getBankAccInfo(
       (value) => {
         setBankAccInfo(value);
       },
       undefined,
-      true
+      false
     );
   }, []);
 

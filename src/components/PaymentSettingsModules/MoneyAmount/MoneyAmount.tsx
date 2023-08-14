@@ -23,7 +23,10 @@ export default function MoneyAmount({ accauntAmount }: MoneyAmountProps) {
         <Typography variant="caption">Средств на счету:</Typography>
 
         <Typography variant="button">
-          {new Intl.NumberFormat("ru-RU").format(accauntAmount)}₽
+          {accauntAmount
+            ? new Intl.NumberFormat("ru-RU").format(accauntAmount)
+            : 0}
+          ₽
         </Typography>
       </Stack>
     </Paper>
