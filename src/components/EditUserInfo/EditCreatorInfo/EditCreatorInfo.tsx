@@ -35,6 +35,7 @@ import {
   setModalActive,
   setModalInactive,
 } from "../../../redux/Modal/ModalReducer";
+import ConfirmChangeCreatorTypeModal from "../../Modals/ConfirmChangeCreatorTypeModal/ConfirmChangeCreatorTypeModal";
 
 function EditCreatorInfo() {
   const creatorInfo = useSelector(
@@ -95,6 +96,12 @@ function EditCreatorInfo() {
       setEditedCreatorInfo(creatorInfo);
   }, [creatorInfo]);
 
+  const [radioFirstChange, setRadioFirstChange] = useState(true);
+
+  useEffect(() => {
+    setRadioFirstChange(true);
+  }, []);
+
   return (
     <>
       <EditUserInfo
@@ -146,13 +153,22 @@ function EditCreatorInfo() {
                 }
                 name="radio-buttons-group"
                 onChange={(e) => {
-                  setEditedCreatorInfo({
-                    ...editedCreatorInfo,
-                    dataUser: {
-                      ...editedCreatorInfo?.dataUser,
-                      creatorType: e.target.value as any,
-                    },
-                  });
+                  if (radioFirstChange) {
+                    setRadioFirstChange(false);
+                    dispatch(
+                      setModalActive("confirmChangeCreatorTypeModal", {
+                        creatorTypeRadio: e.target.value,
+                      })
+                    );
+                  } else {
+                    setEditedCreatorInfo({
+                      ...editedCreatorInfo,
+                      dataUser: {
+                        ...editedCreatorInfo?.dataUser,
+                        creatorType: e.target.value as any,
+                      },
+                    });
+                  }
                 }}
               >
                 <FormControlLabel
@@ -262,6 +278,9 @@ function EditCreatorInfo() {
           dispatch(setModalInactive("enterMobileCodeModal"));
           navigate("/creator/lk");
         }}
+      />
+      <ConfirmChangeCreatorTypeModal
+        setEditedCreatorInfo={setEditedCreatorInfo}
       />
     </>
   );

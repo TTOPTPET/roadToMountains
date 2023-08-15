@@ -25,7 +25,8 @@ type modalsId =
   | "deleteCardModal"
   | "noLoginModal"
   | "confirmCancelBooking"
-  | "successCancelBooking";
+  | "successCancelBooking"
+  | "confirmChangeCreatorTypeModal";
 
 enum actionTypes {
   SET_MODAL_ACTIVE = "SET_MODAL_ACTIVE",
@@ -45,6 +46,7 @@ interface IActionProps {
     setRecords?: Dispatch<SetStateAction<IUserRecord[]>>;
     paymentDeadline?: string;
     paymentUrl?: string;
+    creatorTypeRadio?: any;
     tourDate?: {
       from: string;
       to: string;

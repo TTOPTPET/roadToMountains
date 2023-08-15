@@ -27,7 +27,13 @@ export default function ContactsPage() {
         <Grid>
           <Typography variant={"h6"}>Социальные сети</Typography>
         </Grid>
-        <img src={vkIcon} alt="vk icon" style={{ width: "35px" }} />
+        <a
+          href="https://vk.com/way_to_mountains"
+          rel={"noreferrer"}
+          target={"_blank"}
+        >
+          <img src={vkIcon} alt="vk icon" style={{ width: "35px" }} />
+        </a>
       </Grid>
     </>
   );
