@@ -23,6 +23,30 @@ export const MyTours = () => {
   const [records, setRecords] = useState<IUserRecord[]>([]);
   const [tabValue, setTabValue] = useState<tabValues>(tabValues.upcomming);
 
+  const weights = [
+    "successPay",
+    "waitPay",
+    "failPay",
+    "waitReturn",
+    "failReturn",
+    "successReturn",
+  ].reverse();
+
+  const getWeight = (item) =>
+    weights.findIndex(
+      (weightedItem) =>
+        item.toLowerCase().indexOf(weightedItem.toLowerCase()) > -1
+    );
+
+  const sortedByDateRecords = records.sort((a, b) =>
+    a.tourDate.from > b.tourDate.from ? 1 : -1
+  );
+
+  const sortedRecords = sortedByDateRecords.sort(
+    (a, b) =>
+      getWeight(b.bookingStatus.payment) - getWeight(a.bookingStatus.payment)
+  );
+
   const theme = useTheme();
 
   const lessThenSmall = useMediaQuery(theme.breakpoints.down("sm"));
@@ -94,8 +118,8 @@ export const MyTours = () => {
         </Tabs>
       </Stack>
       <Stack direction={"column"} gap={{ lg: "20px", xs: "10px" }}>
-        {records &&
-          records.map((record, index) => (
+        {sortedRecords &&
+          sortedRecords.map((record, index) => (
             <TourAccordion
               key={index}
               record={record}

@@ -14,9 +14,7 @@ export const postFinanceInfo = async (
   errorCallback?: (prop: any) => void
 ) => {
   try {
-    let response = await axios.post(creatorUrl + "/finance", data, {
-      params: { creatorType },
-    });
+    let response = await axios.post(creatorUrl + "/finance", data, {});
     successCallback(response?.data);
   } catch (e) {
     console.error(e);

@@ -32,14 +32,13 @@ function SuccessBookingModal() {
     (modal) => modal.id === "successBookingModal"
   );
 
-  const handlerCloseClick = () => {
+  const handlerBookingClick = () => {
     dispatch(setModalInactive("successBookingModal"));
     navigate("/tourist/lk");
   };
 
-  const handlerPayClick = () => {
+  const handlerCloseClick = () => {
     dispatch(setModalInactive("successBookingModal"));
-    window.location.replace(modal?.props?.paymentUrl);
   };
   return (
     <Dialog
@@ -65,8 +64,8 @@ function SuccessBookingModal() {
           marginTop={"30px"}
           gap={1}
         >
-          <Button onClick={handlerPayClick}>Оплатить</Button>
-          <Button onClick={handlerCloseClick}>К бронированию</Button>
+          <Button onClick={handlerCloseClick}>Ок</Button>
+          <Button onClick={handlerBookingClick}>К бронированию</Button>
         </Stack>
       </DialogContent>
     </Dialog>
