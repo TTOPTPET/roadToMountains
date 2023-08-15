@@ -248,6 +248,17 @@ export const mainThemes = createTheme(breakpoints, {
             fontWeight: "400",
           },
         },
+        paper: {
+          padding: "5px",
+          fontSize: "16px",
+          borderRadius: "20px",
+          fontFamily: "Montserrat",
+          fontWeight: "400",
+          [breakpoints.breakpoints.down("lg")]: {
+            fontSize: "10px",
+            padding: "2px",
+          },
+        },
       },
     },
     MuiButton: {
@@ -305,7 +316,7 @@ export const mainThemes = createTheme(breakpoints, {
           style: {
             height: "50px",
             [breakpoints.breakpoints.down("lg")]: {
-              height: "50px",
+              height: "30px",
               padding: "0 10px",
             },
           },
@@ -395,7 +406,7 @@ export const mainThemes = createTheme(breakpoints, {
           backgroundColor: lightTurquoiseColor,
           borderRadius: "30px",
           height: "50px",
-          [breakpoints.breakpoints.down("sm")]: {
+          [breakpoints.breakpoints.down("lg")]: {
             height: "30px",
             borderRadius: "20px",
           },
@@ -413,7 +424,7 @@ export const mainThemes = createTheme(breakpoints, {
             lineHeight: "20px",
             fontFamily: "Montserrat",
             fontWeight: "400",
-            [breakpoints.breakpoints.down("sm")]: {
+            [breakpoints.breakpoints.down("lg")]: {
               top: "-5px",
               fontSize: "10px",
               lineHeight: "12px",
@@ -421,13 +432,13 @@ export const mainThemes = createTheme(breakpoints, {
           },
           "& label.Mui-focused": {
             top: "2px",
-            [breakpoints.breakpoints.down("sm")]: {
+            [breakpoints.breakpoints.down("lg")]: {
               top: "5px",
             },
           },
           "& label.MuiFormLabel-filled": {
             top: "2px",
-            [breakpoints.breakpoints.down("sm")]: {
+            [breakpoints.breakpoints.down("lg")]: {
               top: "5px",
             },
           },
@@ -447,7 +458,7 @@ export const mainThemes = createTheme(breakpoints, {
             fontWeight: "400",
             boxSizing: "border-box",
 
-            [breakpoints.breakpoints.down("sm")]: {
+            [breakpoints.breakpoints.down("lg")]: {
               height: "30px",
               borderRadius: "20px",
               fontSize: "10px",
@@ -520,7 +531,7 @@ export const mainThemes = createTheme(breakpoints, {
         root: {
           fontFamily: "Montserrat",
           padding: "0 15px 0 12px !important ",
-          [breakpoints.breakpoints.down("sm")]: {
+          [breakpoints.breakpoints.down("lg")]: {
             padding: "0 8px 0 6px !important ",
           },
         },

@@ -1,5 +1,12 @@
 import { FC, useCallback, useEffect, useState } from "react";
-import { Autocomplete, Button, Stack, TextField } from "@mui/material";
+import {
+  Autocomplete,
+  Button,
+  Stack,
+  TextField,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import { IFilterProps } from "../FilterTypes/IFilterProps";
 import { ISearchRequest } from "../../../models/tourListModels/ISearchRequest";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -20,6 +27,10 @@ export const BasicFilter: FC<IFilterProps> = ({
   const { regions } = filters;
 
   const [windowSize, setWindowSize] = useState<number>();
+
+  const theme = useTheme();
+
+  const lessThanMedium = useMediaQuery(theme.breakpoints.down("md"));
 
   const handleFieldChange = <T extends any>(
     key: keyof ISearchRequest,
@@ -73,7 +84,11 @@ export const BasicFilter: FC<IFilterProps> = ({
   }, [handleWindowResize]);
 
   return (
-    <Stack direction={windowSize <= mobile ? "column" : "row"} gap={1}>
+    <Stack
+      direction={lessThanMedium ? "column" : "row"}
+      gap={1}
+      alignItems={"end"}
+    >
       <Autocomplete
         freeSolo
         disableClearable
@@ -87,7 +102,10 @@ export const BasicFilter: FC<IFilterProps> = ({
             onChange={(e) =>
               handleFieldChange<string>("region", e.target.value)
             }
-            InputProps={{ ...params.InputProps, type: "search" }}
+            InputProps={{
+              ...params.InputProps,
+              type: "search",
+            }}
           />
         )}
       />

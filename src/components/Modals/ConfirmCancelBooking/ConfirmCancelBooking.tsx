@@ -44,7 +44,7 @@ function ConfirmCancelBooking() {
         dispatch(setModalInactive("confirmCancelBooking"));
         records[
           records.findIndex((item) => item.bookingId === bookingId)
-        ].bookingStatus.payment = "Успешный возврат";
+        ].bookingStatus.payment = "successReturn";
         records[
           records.findIndex((item) => item.bookingId === bookingId)
         ].bookingStatus.cancellation = "cancelledTourists";

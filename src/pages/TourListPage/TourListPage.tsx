@@ -42,7 +42,7 @@ function TourListPage() {
 
   const theme = useTheme();
 
-  const lessThanSmall = useMediaQuery(theme.breakpoints.down("sm"));
+  const moreThanSmall = useMediaQuery(theme.breakpoints.up("sm"));
 
   const clearSearchField = (key: keyof ISearchRequest, value: string) => {
     const searchValue = searchData[key];
@@ -112,9 +112,16 @@ function TourListPage() {
 
   return (
     <Stack gap={1}>
-      <Grid container alignItems={"center"} sx={{ mb: "50px" }}>
+      <Grid
+        container
+        justifyContent={"space-between"}
+        alignItems={"center"}
+        sx={{ mb: { lg: "50px", md: "30px", sm: "20px", xs: "10px" } }}
+      >
         <Grid item md={8}>
-          <Typography variant={"h3"}>Все туры</Typography>
+          <Typography variant={moreThanSmall ? "h3" : "h4"}>
+            Все туры
+          </Typography>
         </Grid>
         <Grid item md={4}>
           <Stack direction={"row"} justifyContent={"right"}>

@@ -34,8 +34,6 @@ function ErrorReportModal() {
 
   const [errorMessage, setErrorMessage] = useState("");
 
-  console.log(errorReportData);
-
   useEffect(() => {
     modal?.props?.tour
       ? setErrorReportData((errorReportData) => ({
