@@ -1,7 +1,8 @@
 import { Container, Stack, Typography, useMediaQuery } from "@mui/material";
 import { darkBlueColor } from "../../config/MUI/color/color";
 import { Link } from "react-router-dom";
-import { ReactComponent as VkIcon } from "../../media/vk-icon.svg";
+
+import vkIcon from "../../media/vk-icon-contactPage.svg";
 
 const Footer = () => {
   const media = useMediaQuery("(max-width: 680px)");
@@ -61,7 +62,7 @@ const Footer = () => {
           target={"_blank"}
           style={{ float: "right" }}
         >
-          <VkIcon />
+          <img src={vkIcon} alt="vk icon" style={{ width: "20px" }} />
         </a>
       </Stack>
     </Container>
