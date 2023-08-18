@@ -153,7 +153,7 @@ function EditCreatorInfo() {
                 }
                 name="radio-buttons-group"
                 onChange={(e) => {
-                  if (radioFirstChange) {
+                  if (radioFirstChange && creatorInfo?.dataUser?.creatorType) {
                     setRadioFirstChange(false);
                     dispatch(
                       setModalActive("confirmChangeCreatorTypeModal", {

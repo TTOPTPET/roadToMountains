@@ -158,10 +158,11 @@ function Authorization() {
       },
       registerDataCopy,
       (e) => {
+        console.log(e);
         setErrReg(true);
         setErrorMessage(
-          e?.response?.data?.Message
-            ? e?.response?.data?.Message
+          e?.response?.data?.typeError === "UserError"
+            ? e?.response?.data?.errorMessage
             : "Что-то пошло не так, попробуйте еще раз позже!"
         );
       },

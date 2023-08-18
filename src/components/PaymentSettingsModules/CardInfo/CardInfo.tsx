@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setModalActive } from "../../../redux/Modal/ModalReducer";
 
 import { whiteColor } from "../../../config/MUI/color/color";
@@ -23,8 +23,12 @@ import clock from "../../../media/clockVerify.svg";
 import alert from "../../../media/alertVerify.svg";
 import banIcon from "../../../media/ban-status-icon.svg";
 import reload from "../../../media/reloadIcon.svg";
-import { CreatorType } from "../../../models/userModels/IUserInfo";
+import {
+  CreatorType,
+  ICreatorInfo,
+} from "../../../models/userModels/IUserInfo";
 import { postFinanceInfo } from "../../../API/paymentAPI/postFinanceInfo";
+import { RootState } from "../../../redux/store";
 
 type CardInfoProps = {
   submitFuntion?: () => void;
@@ -44,6 +48,10 @@ const CardInfoErrorsDefault: CardInfoErrors = {
 export default function CardInfo({ cardInfo }: CardInfoProps) {
   const [cardInfoInputError, setCardInfoInputError] = useState<CardInfoErrors>(
     CardInfoErrorsDefault
+  );
+
+  const CreatorInfo: ICreatorInfo = useSelector(
+    (state: RootState) => state.userInfo.userInfo as ICreatorInfo
   );
 
   const cardInfoInputValidation = (
@@ -74,7 +82,30 @@ export default function CardInfo({ cardInfo }: CardInfoProps) {
 
   const [editedCardInfo, setEditedCardInfo] = useState(cardInfo);
 
-  console.log(editedCardInfo);
+  const generINN = (creatorInfo: ICreatorInfo) => {
+    switch (creatorInfo.dataUser.creatorType) {
+      case CreatorType.OOO:
+        return (
+          <Typography variant={"caption"}>
+            {creatorInfo.dataUser.fieldsCreator.innOOO}
+          </Typography>
+        );
+
+      case CreatorType.IP:
+        return (
+          <Typography variant={"caption"}>
+            {creatorInfo.dataUser.fieldsCreator.innIP}
+          </Typography>
+        );
+
+      case CreatorType.SELF:
+        return (
+          <Typography variant={"button"}>
+            {creatorInfo.dataUser.fieldsCreator.innSELF}
+          </Typography>
+        );
+    }
+  };
 
   return (
     <>
@@ -149,6 +180,16 @@ export default function CardInfo({ cardInfo }: CardInfoProps) {
               </Stack>
             </Paper>
           )}
+          <Paper sx={{ boxShadow: "0", p: "30px 20px", mt: "7px" }}>
+            <Stack
+              direction={"row"}
+              alignItems={"center"}
+              justifyContent={"space-between"}
+            >
+              <Typography variant="caption">ИНН</Typography>
+              {generINN(CreatorInfo)}
+            </Stack>
+          </Paper>
           <Stack
             direction={"row"}
             mt="20px"
@@ -271,6 +312,19 @@ export default function CardInfo({ cardInfo }: CardInfoProps) {
               editedCardInfo?.fieldsPaymentCreator?.accountNumber?.length !== 20
             }
           />
+          <Paper
+            sx={{ height: "50px", p: "15px 17px", mt: "10px", boxShadow: "0" }}
+          >
+            <Stack
+              direction={"row"}
+              justifyContent={"space-between"}
+              alignItems={"center"}
+            >
+              <Typography variant={"caption"}>ИНН</Typography>
+              {generINN(CreatorInfo)}
+            </Stack>
+          </Paper>
+
           <Stack
             direction={"row"}
             mt="20px"
