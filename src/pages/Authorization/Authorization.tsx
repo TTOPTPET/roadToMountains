@@ -109,7 +109,6 @@ function Authorization() {
     key: keyof IUserRegister,
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    console.log(userRegisterData);
     setUserRegisterData({ ...userRegisterData, [key]: e.target.value });
   };
 
@@ -160,7 +159,11 @@ function Authorization() {
       registerDataCopy,
       (e) => {
         setErrReg(true);
-        setErrorMessage("Что-то пошло не так, попробуйте позже!");
+        setErrorMessage(
+          e?.response?.data?.Message
+            ? e?.response?.data?.Message
+            : "Что-то пошло не так, попробуйте еще раз позже!"
+        );
       },
       false
     );
@@ -380,6 +383,7 @@ function Authorization() {
           </Button>
         )}
         <EnterMobileCodeModal
+          userRegisterData={userRegisterData}
           successCallback={(resp) => {
             setCookies(TOKEN, resp.accessToken, { path: "/" });
             setCookies(REFRESH_TOKEN, resp.refreshToken, { path: "/" });

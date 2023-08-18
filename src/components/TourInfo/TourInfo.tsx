@@ -79,6 +79,8 @@ export const TourInfo: FC<ITourInfoProps> = ({
     }
   };
 
+  console.log(tourInfo);
+
   return (
     <>
       <Stack direction={"row"} alignItems={"center"} gap={1} marginBottom={2}>
