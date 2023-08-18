@@ -1,5 +1,14 @@
-import { Box, Button, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { RootState } from "../../redux/store";
+import { UserType } from "../../models/userModels/IUserInfo";
 
 type editUserInfoProps = {
   fields: JSX.Element;
@@ -16,6 +25,14 @@ function EditUserInfo({
   linkTo,
   AvatarComponent,
 }: editUserInfoProps) {
+  const theme = useTheme();
+
+  const lessThanSmall = useMediaQuery(theme.breakpoints.down("sm"));
+  const moreThanSmall = useMediaQuery(theme.breakpoints.up("sm"));
+
+  const userInfo = useSelector((state: RootState) => state.userInfo.userInfo);
+
+  console.log(userInfo);
   return (
     <Box>
       <Box
@@ -25,29 +42,43 @@ function EditUserInfo({
           alignItems: "flex-start",
         }}
       >
-        <Typography variant="h3">{header}</Typography>
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            width: "132px",
-            gap: "10px",
-            mb: "10px",
-          }}
-        >
-          <Button onClick={() => submitFuntion()}>Сохранить</Button>
-          <Button component={Link} to={linkTo} sx={{ width: "100%" }}>
-            Отменить
-          </Button>
-        </Box>
+        <Typography variant={lessThanSmall ? "h4" : "h3"}>{header}</Typography>
+        {moreThanSmall && (
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              gap: { lg: "10px", sm: "5px" },
+              mb: "10px",
+            }}
+          >
+            <Button onClick={() => submitFuntion()}>Сохранить</Button>
+            <Button component={Link} to={linkTo} sx={{ width: "100%" }}>
+              Отменить
+            </Button>
+          </Box>
+        )}
       </Box>
-      <Box sx={{ mt: "10px", display: "flex", columnGap: "22px" }}>
-        <Box>
-          <AvatarComponent />
+      {userInfo.typeUser === UserType.creator ? (
+        <Box sx={{ mt: "10px", display: "flex", columnGap: "22px" }}>
+          <Box>
+            <AvatarComponent />
+          </Box>
+          <Box
+            sx={{
+              width: "700px",
+              display: "flex",
+              flexDirection: "column",
+              gap: "15px",
+            }}
+          >
+            {fields}
+          </Box>
         </Box>
+      ) : (
         <Box
           sx={{
-            width: "700px",
+            mt: moreThanSmall ? "" : "20px",
             display: "flex",
             flexDirection: "column",
             gap: "15px",
@@ -55,7 +86,26 @@ function EditUserInfo({
         >
           {fields}
         </Box>
-      </Box>
+      )}
+      {!moreThanSmall && (
+        <Box
+          sx={{
+            width: "212px",
+            m: "0 auto",
+            mt: "10px",
+            display: "flex",
+            justifyContent: "space-between",
+            flexDirection: "row",
+          }}
+        >
+          <Button onClick={() => submitFuntion()} sx={{ width: "101px" }}>
+            Сохранить
+          </Button>
+          <Button component={Link} to={linkTo} sx={{ width: "101px" }}>
+            Отменить
+          </Button>
+        </Box>
+      )}
     </Box>
   );
 }

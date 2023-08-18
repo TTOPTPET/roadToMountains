@@ -101,7 +101,15 @@ function EditTouristInfo() {
               )}
             />
             <FormControl>
-              <FormLabel id="demo-radio-buttons-group-label">Пол</FormLabel>
+              <FormLabel
+                id="demo-radio-buttons-group-label"
+                sx={{
+                  fontFamily: "Montserrat",
+                  fontSize: { lg: "16px", sm: "12px", xs: "10px" },
+                }}
+              >
+                Пол
+              </FormLabel>
               <RadioGroup
                 aria-labelledby="demo-radio-buttons-group-label"
                 value={

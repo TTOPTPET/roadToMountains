@@ -605,6 +605,25 @@ export const mainThemes = createTheme(breakpoints, {
           "&.Mui-checked": {
             color: darkBlueColor,
           },
+          [breakpoints.breakpoints.down("lg")]: {
+            padding: "5px 9px",
+          },
+          [breakpoints.breakpoints.down("md")]: {
+            padding: "2px 9px",
+          },
+        },
+      },
+    },
+    MuiFormControlLabel: {
+      styleOverrides: {
+        root: {
+          "& .MuiTypography-root": {
+            fontFamily: "Montserrat",
+            fontSize: "16px",
+            [breakpoints.breakpoints.down("lg")]: {
+              fontSize: "10px",
+            },
+          },
         },
       },
     },

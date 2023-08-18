@@ -1,4 +1,11 @@
-import { Autocomplete, IconButton, TextField, Typography } from "@mui/material";
+import {
+  Autocomplete,
+  IconButton,
+  TextField,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import { Box, Stack } from "@mui/system";
 import { Dispatch, SetStateAction, FC } from "react";
 import { lightTurquoiseColor } from "../../../config/MUI/color/color";
@@ -39,6 +46,13 @@ export const TouristBooking: FC<ITouristBookingProps> = ({
       }),
     });
   };
+
+  const theme = useTheme();
+
+  const lessThanSmall = useMediaQuery(theme.breakpoints.down("sm"));
+  const lessThanMedium = useMediaQuery(theme.breakpoints.down("md"));
+  const lessThanBig = useMediaQuery(theme.breakpoints.down("lg"));
+
   const handlerDeleteTourist = () => {
     setBookingData({
       ...bookingData,
@@ -64,7 +78,10 @@ export const TouristBooking: FC<ITouristBookingProps> = ({
       <Typography variant={"h5"} mb={2}>
         Турист
       </Typography>
-      <Stack direction={"row"} gap={4}>
+      <Stack
+        direction={lessThanSmall ? "column" : "row"}
+        gap={lessThanMedium ? 1 : lessThanBig ? 2 : 4}
+      >
         <TextField
           label={"ФИО"}
           color={"secondary"}

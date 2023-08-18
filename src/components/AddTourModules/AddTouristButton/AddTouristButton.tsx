@@ -2,7 +2,7 @@ import { Stack, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { Link } from "react-router-dom";
 import { lightTurquoiseColor } from "../../../config/MUI/color/color";
-import { ReactComponent as Plus } from "../../../media/plus-circle-outline.svg";
+import Plus from "../../../media/plus-circle-outline.svg";
 import { Dispatch, SetStateAction, FC } from "react";
 import "./svgStyling.css";
 import { ITourBooking } from "../../../models/tourModels/ITourBooking";
@@ -34,9 +34,16 @@ export const AddTouristButton: FC<IAddTouristButton> = ({
         })
       }
     >
-      <Stack direction={"row"}>
+      <Stack direction={"row"} gap={1} alignItems={"center"}>
         <Typography variant={"h5"}>Добавить туриста</Typography>
-        <Plus fill="none" className="plus" />
+        <Box
+          sx={{
+            width: { lg: "33px", xs: "20px" },
+            height: { lg: "33px", xs: "20px" },
+          }}
+        >
+          <img src={Plus} alt="plus" />
+        </Box>
       </Stack>
     </Box>
   );

@@ -171,7 +171,10 @@ function UserInfo({ header, fields, submitFuntion }: UserInfoProps) {
                           flexDirection: "column",
                           width:
                             userInfo.typeUser === UserType.tourist
-                              ? "190px"
+                              ? {
+                                  lg: "240px",
+                                  xs: "145px",
+                                }
                               : {
                                   lg: "265px",
                                   md: "200px",
