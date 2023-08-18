@@ -95,65 +95,69 @@ export const AddTourFirstPage: FC<IAddTourFirstPageProps> = ({
           <Attention text="Обращаем Ваше внимание, что все изменения будут применены только к предстоящим записям. Забронированные туры обслуживаются по старому тарифу." />
         </Grid>
         <Grid container item justifyContent={"space-between"} mt={2}>
-          <Stack direction={"column"}>
-            <Typography variant={"h6"} marginBottom={1}>
-              Регион проведения
-            </Typography>
-            <Autocomplete
-              freeSolo
-              disableClearable
-              options={filters.regions.map((region) => region)}
-              value={tourInfo?.region || ""}
-              renderInput={(params) => (
-                <TextField
-                  label={"Регион"}
-                  {...params}
-                  error={
-                    (addError && tourInfo?.region === undefined) ||
-                    tourInfo?.region === ""
-                  }
-                  onChange={(e) =>
-                    setTourInfo({ ...tourInfo, region: e.target.value })
-                  }
-                  InputProps={{ ...params.InputProps, type: "search" }}
-                />
-              )}
-              onChange={(e: any, value: string) =>
-                setTourInfo({ ...tourInfo, region: value })
-              }
-            />
-          </Stack>
-          <Stack direction={"column"}>
-            <Typography variant={"h6"}>Категория тура</Typography>
-            <RadioGroup
-              value={tourInfo?.category || ""}
-              onChange={(e) =>
-                setTourInfo({
-                  ...tourInfo,
-                  category: e.target.value,
-                })
-              }
-            >
-              {filters.category.map((category, index) => (
-                <FormControlLabel
-                  key={index}
-                  value={category}
-                  control={
-                    <Radio
-                      sx={{
-                        color:
-                          (addError && tourInfo?.category === undefined) ||
-                          tourInfo?.category === ""
-                            ? redColor
-                            : "",
-                      }}
-                    />
-                  }
-                  label={category}
-                />
-              ))}
-            </RadioGroup>
-          </Stack>
+          <Grid item md={6}>
+            <Stack direction={"column"}>
+              <Typography variant={"h6"} marginBottom={1}>
+                Регион проведения
+              </Typography>
+              <Autocomplete
+                freeSolo
+                disableClearable
+                options={filters.regions.map((region) => region)}
+                value={tourInfo?.region || ""}
+                renderInput={(params) => (
+                  <TextField
+                    label={"Регион"}
+                    {...params}
+                    error={
+                      (addError && tourInfo?.region === undefined) ||
+                      tourInfo?.region === ""
+                    }
+                    onChange={(e) =>
+                      setTourInfo({ ...tourInfo, region: e.target.value })
+                    }
+                    InputProps={{ ...params.InputProps, type: "search" }}
+                  />
+                )}
+                onChange={(e: any, value: string) =>
+                  setTourInfo({ ...tourInfo, region: value })
+                }
+              />
+            </Stack>
+          </Grid>
+          <Grid item md={4.5}>
+            <Stack direction={"column"}>
+              <Typography variant={"h6"}>Категория тура</Typography>
+              <RadioGroup
+                value={tourInfo?.category || ""}
+                onChange={(e) =>
+                  setTourInfo({
+                    ...tourInfo,
+                    category: e.target.value,
+                  })
+                }
+              >
+                {filters.category.map((category, index) => (
+                  <FormControlLabel
+                    key={index}
+                    value={category}
+                    control={
+                      <Radio
+                        sx={{
+                          color:
+                            (addError && tourInfo?.category === undefined) ||
+                            tourInfo?.category === ""
+                              ? redColor
+                              : "",
+                        }}
+                      />
+                    }
+                    label={category}
+                  />
+                ))}
+              </RadioGroup>
+            </Stack>
+          </Grid>
         </Grid>
         <Grid item container md={6}>
           <Typography variant={"h6"}>Рекомендуемый возраст</Typography>
