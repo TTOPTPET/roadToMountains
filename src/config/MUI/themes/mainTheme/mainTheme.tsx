@@ -614,6 +614,16 @@ export const mainThemes = createTheme(breakpoints, {
         },
       },
     },
+    MuiCheckbox: {
+      styleOverrides: {
+        root: {
+          color: darkBlueColor,
+          "&.Mui-checked": {
+            color: darkTurquoiseColor,
+          },
+        },
+      },
+    },
     MuiFormControlLabel: {
       styleOverrides: {
         root: {

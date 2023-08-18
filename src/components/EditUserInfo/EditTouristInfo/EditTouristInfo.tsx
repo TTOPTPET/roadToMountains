@@ -23,6 +23,8 @@ import {
 } from "../../../redux/Modal/ModalReducer";
 import EnterMobileCodeModal from "../../Modals/EnterMobileCodeModal/EnterMobileCodeModal";
 
+import InputMask from "react-input-mask";
+
 function EditTouristInfo() {
   const [regions, setRegions] = useState<string[]>([]);
   const touristInfo = useSelector(
@@ -48,6 +50,25 @@ function EditTouristInfo() {
     });
   };
 
+  const getPhoneTextField = (): React.ReactNode => {
+    //@ts-ignore
+    return () => (
+      <TextField
+        label="Номер телефона"
+        color="primary"
+        value={editedTouristInfo?.phone}
+        error={
+          editedTouristInfo?.phone.replace(/[() -+-]/g, "").length !== 11
+            ? true
+            : false
+        }
+      />
+    );
+  };
+
+  const re =
+    /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
   return (
     <>
       <EditUserInfo
@@ -64,21 +85,25 @@ function EditTouristInfo() {
                 })
               }
             />
-            <TextField
-              label="Номер телефона"
-              color="primary"
+
+            <InputMask
+              mask={"+7 (999) 999-99-99"}
+              maskChar=" "
               value={editedTouristInfo?.phone}
-              onChange={(e) =>
+              onChange={(e) => {
                 setEditedTouristInfo({
                   ...editedTouristInfo,
                   phone: e.target.value,
-                })
-              }
-            />
+                });
+              }}
+            >
+              {getPhoneTextField()}
+            </InputMask>
             <TextField
               label="Электронная почта"
               color="primary"
               value={editedTouristInfo?.email}
+              error={!re.test(editedTouristInfo?.email)}
               onChange={(e) =>
                 setEditedTouristInfo({
                   ...editedTouristInfo,
@@ -166,6 +191,12 @@ function EditTouristInfo() {
             }
           />
         )}
+        errored={
+          editedTouristInfo?.phone.replace(/[() -+-]/g, "").length !== 11 ||
+          !re.test(editedTouristInfo?.email)
+            ? true
+            : false
+        }
       />
       <EnterMobileCodeModal
         successCallback={(resp) => {

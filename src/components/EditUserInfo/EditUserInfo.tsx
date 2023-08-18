@@ -16,6 +16,7 @@ type editUserInfoProps = {
   header: string;
   linkTo: string;
   AvatarComponent: () => JSX.Element;
+  errored?: boolean;
 };
 
 function EditUserInfo({
@@ -24,6 +25,7 @@ function EditUserInfo({
   header,
   linkTo,
   AvatarComponent,
+  errored,
 }: editUserInfoProps) {
   const theme = useTheme();
 
@@ -52,7 +54,9 @@ function EditUserInfo({
               mb: "10px",
             }}
           >
-            <Button onClick={() => submitFuntion()}>Сохранить</Button>
+            <Button onClick={() => submitFuntion()} disabled={errored}>
+              Сохранить
+            </Button>
             <Button component={Link} to={linkTo} sx={{ width: "100%" }}>
               Отменить
             </Button>

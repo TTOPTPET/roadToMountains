@@ -9,7 +9,7 @@ import {
 import { useState } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
-import { confirmUserRegistration } from "../../../API/authAPI";
+import { confirmUserRegistration, registerUser } from "../../../API/authAPI";
 import { getUserInfo } from "../../../API/commonAPI";
 
 import {
@@ -18,26 +18,55 @@ import {
 } from "../../../redux/Modal/ModalReducer";
 import { RootState } from "../../../redux/store";
 import { useNavigate } from "react-router-dom";
+import { IUserRegister } from "../../../models/authModels/IUserRegister";
+import { cloneDeep } from "lodash";
+import { redColor } from "../../../config/MUI/color/color";
 
 type Props = {
   successCallback: (resp?: any) => void;
+  userRegisterData?: IUserRegister;
 };
 
-function EnterMobileCodeModal({ successCallback }: Props) {
+function EnterMobileCodeModal({ successCallback, userRegisterData }: Props) {
   const [confirmCode, setConfirmCode] = useState<string>("");
 
   const activeModals = useSelector(
     (state: RootState) => state.modal.activeModals
   );
 
+  const [errorMessage, setErrorMessage] = useState("");
+  const [errReg, setErrReg] = useState(false);
+
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
 
   const handlerConfirmClick = () => {
-    confirmUserRegistration({ confirmationCode: +confirmCode }, (resp) => {
-      successCallback(resp);
-    });
+    confirmUserRegistration(
+      { confirmationCode: +confirmCode },
+      (resp) => {
+        successCallback(resp);
+      },
+      () => {
+        setErrReg(true);
+        setErrorMessage("Неверный код, попробуйте еще раз!");
+      }
+    );
+  };
+
+  const handlerCodeClick = () => {
+    const registerDataCopy = cloneDeep(userRegisterData);
+    registerDataCopy.phone = registerDataCopy.phone.replace(/[() -+-]/g, "");
+    registerDataCopy.phone = "8" + registerDataCopy.phone.substring(1);
+    registerUser(
+      () => {},
+      registerDataCopy,
+      (e) => {
+        setErrReg(true);
+        setErrorMessage("Что-то пошло не так, попробуйте позже!");
+      },
+      false
+    );
   };
 
   return (
@@ -71,13 +100,19 @@ function EnterMobileCodeModal({ successCallback }: Props) {
           gap="5px"
         >
           <Button onClick={() => handlerConfirmClick()}>Отправить код</Button>
-          <Button
-            variant="weakTextButton"
-            onClick={() => handlerConfirmClick()}
-          >
+          <Button variant="weakTextButton" onClick={() => handlerCodeClick()}>
             Не приходит код?
           </Button>
         </Stack>
+        {errReg && (
+          <Typography
+            variant="caption"
+            className="author__error"
+            sx={{ color: redColor, textAlign: "center", mt: "5px" }}
+          >
+            {errorMessage}
+          </Typography>
+        )}
       </DialogContent>
     </Dialog>
   );

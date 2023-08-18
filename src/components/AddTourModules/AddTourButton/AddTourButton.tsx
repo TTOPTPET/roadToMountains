@@ -1,4 +1,4 @@
-import plus from "../../../media/plus-circle-outline.svg";
+import plus from "../../../media/plus-circle-outline-white.svg";
 import Box from "@mui/material/Box";
 import { darkTurquoiseColor } from "../../../config/MUI/color/color";
 import { Link } from "react-router-dom";
