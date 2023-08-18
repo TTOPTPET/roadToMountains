@@ -83,7 +83,7 @@ export default function TouristOrder({
             </Stack>
           </Stack>
           <Typography variant={"caption"} mr={2}>
-            {bookingInfo?.tourAmount || 0}₽
+            {bookingInfo?.tourAmount / 100 || 0}₽
           </Typography>
         </Stack>
       </Paper>

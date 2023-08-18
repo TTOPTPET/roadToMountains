@@ -67,7 +67,7 @@ function TourCardContentCreatorLk({
         }}
       >
         {new Intl.NumberFormat("ru-RU").format(
-          tour?.prices?.from || tour.price
+          tour?.prices?.from / 100 || tour.price / 100
         )}
         ₽
       </Typography>

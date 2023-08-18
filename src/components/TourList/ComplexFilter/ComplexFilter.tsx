@@ -229,11 +229,11 @@ export const ComplexFilter: FC<IFilterProps> = ({
               Стоимость
             </Typography>
             <Slider
-              max={maxPrice}
+              max={maxPrice / 100}
               marks={marks}
               value={[
-                searchData?.price?.from || 0,
-                searchData?.price?.to || maxPrice || 1000,
+                searchData?.price?.from / 100 || 0,
+                searchData?.price?.to / 100 || maxPrice / 100 || 1000,
               ]}
               onChange={(e, value) =>
                 handleChangeField("price", value as number[])

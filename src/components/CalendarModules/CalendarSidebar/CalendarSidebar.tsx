@@ -47,13 +47,13 @@ export default function CalendarSidebar({
           {(selectedPublic?.personNum || 0) + " человек"}
         </Typography>
         <Typography variant={"caption"}>
-          {selectedPublic?.tourAmount || 0}₽
+          {selectedPublic?.tourAmount / 100 || 0}₽
         </Typography>
         <Stack direction={"column"}>
           <Typography variant={"caption"}>Стоимость на платформе:</Typography>
           <Typography variant={"caption"}>
             {" "}
-            {selectedPublic?.tourAmountWithCommission || 0}₽
+            {selectedPublic?.tourAmountWithCommission / 100 || 0}₽
           </Typography>
         </Stack>
         <Stack

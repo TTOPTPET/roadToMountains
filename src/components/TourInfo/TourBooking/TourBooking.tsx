@@ -333,7 +333,7 @@ export const TourBooking: FC<ITourBookingProps> = ({
               : ""}
           </Typography>
           <Typography variant={"h5"} mt={2}>
-            {bookingData?.tourAmount || 0}₽
+            {bookingData?.tourAmount / 100 || 0}₽
           </Typography>
           <Typography variant={"caption"}>
             Оплатить бронирование необходимо в течение 3 часов

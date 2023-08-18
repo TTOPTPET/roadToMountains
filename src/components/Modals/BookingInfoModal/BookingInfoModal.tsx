@@ -119,7 +119,7 @@ function BookingInfoModal({ selectedBooking }: BookingInfoModalProps) {
           <Typography variant={"caption"}>
             {selectedBooking && selectedBooking?.bookingInfo[index]?.tourAmount
               ? `${new Intl.NumberFormat("ru-RU").format(
-                  selectedBooking?.bookingInfo[index]?.tourAmount
+                  selectedBooking?.bookingInfo[index]?.tourAmount / 100
                 )}₽`
               : "Стоимость тура"}
           </Typography>
