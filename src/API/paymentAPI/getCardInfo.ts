@@ -5,7 +5,7 @@ import { CreatorType } from "../../models/userModels/IUserInfo";
 import { creatorUrl } from "../../config/config";
 
 const cardInfoDefault: ICardInfo = {
-  creatorType: CreatorType.OOO,
+  creatorType: CreatorType.SELF,
   fieldsPaymentCreator: {
     cardId: "0000000000000000",
     statusConnectCard: StatusConnectCard.linked,
