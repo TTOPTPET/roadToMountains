@@ -94,6 +94,11 @@ export const TourAccordion: FC<ITourAccordionProps> = ({
                           window.location.replace(data.paymentUrl);
                         })
                       }
+                      sx={{
+                        position: lessThenSmall ? "absolute" : "relative",
+                        right: "0px",
+                        top: "0px",
+                      }}
                     >
                       Оплатить
                     </Button>
@@ -127,7 +132,10 @@ export const TourAccordion: FC<ITourAccordionProps> = ({
                   variant={"caption"}
                   textAlign={"right"}
                   sx={{
-                    mt: lessThenSmall ? "5px" : "",
+                    mt:
+                      lessThenSmall && !record?.bookingStatus?.needPayment
+                        ? "5px"
+                        : "",
                   }}
                 >
                   {fromModelsToPaymentName.get(record.bookingStatus.payment)}

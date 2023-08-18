@@ -273,7 +273,7 @@ export const TourDetails: FC<ITourDetailsProps> = ({
 
     case "tourInfo":
       return (
-        <Stack padding={3} gap={1}>
+        <Stack padding={lessThenSmall ? 1 : 3} gap={1}>
           <Typography variant={"h6"}>Количество человек</Typography>
           <Typography variant={"caption"}>
             {bookingData?.size} человека

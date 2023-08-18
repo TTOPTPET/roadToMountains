@@ -26,11 +26,11 @@ export const BasicFilter: FC<IFilterProps> = ({
 }) => {
   const { regions } = filters;
 
-  const [windowSize, setWindowSize] = useState<number>();
-
   const theme = useTheme();
 
   const lessThanMedium = useMediaQuery(theme.breakpoints.down("md"));
+
+  const moreThenSmall = useMediaQuery(theme.breakpoints.up("sm"));
 
   const handleFieldChange = <T extends any>(
     key: keyof ISearchRequest,
@@ -38,10 +38,6 @@ export const BasicFilter: FC<IFilterProps> = ({
   ) => {
     setSearchData({ ...searchData, [key]: e });
   };
-
-  const handleWindowResize = useCallback((event) => {
-    setWindowSize(window.innerWidth);
-  }, []);
 
   const handleDateChange = (type: "from" | "to", value: Dayjs) => {
     try {
@@ -76,18 +72,11 @@ export const BasicFilter: FC<IFilterProps> = ({
     }, searchData);
   };
 
-  useEffect(() => {
-    window.addEventListener("resize", handleWindowResize);
-    return () => {
-      window.removeEventListener("resize", handleWindowResize);
-    };
-  }, [handleWindowResize]);
-
   return (
     <Stack
       direction={lessThanMedium ? "column" : "row"}
       gap={1}
-      alignItems={"end"}
+      alignItems={lessThanMedium && moreThenSmall ? "center" : "end"}
     >
       <Autocomplete
         freeSolo
@@ -158,7 +147,11 @@ export const BasicFilter: FC<IFilterProps> = ({
         }
         label={"Количество человек"}
       />
-      <Button variant="high" onClick={handlerSearchClick}>
+      <Button
+        variant="high"
+        onClick={handlerSearchClick}
+        sx={{ width: lessThanMedium && moreThenSmall ? "160px" : "" }}
+      >
         Найти
       </Button>
     </Stack>

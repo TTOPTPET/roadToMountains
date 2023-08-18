@@ -43,7 +43,10 @@ function TouristInfo() {
             <Box
               className="userInfo__data-titles"
               sx={{
-                width: "190px",
+                width: {
+                  lg: "240px",
+                  xs: "145px",
+                },
                 display: "flex",
                 flexDirection: "column",
                 gap: "5px",
