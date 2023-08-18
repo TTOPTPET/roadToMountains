@@ -40,7 +40,7 @@ export default function RecentOperationItem({
               ? "-"
               : "+") +
               new Intl.NumberFormat("ru-RU").format(
-                Number(accauntTransaction.price)
+                Number(accauntTransaction.price) / 100
               ) +
               "₽"}
           </Typography>

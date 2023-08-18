@@ -297,12 +297,12 @@ export const TourInfo: FC<ITourInfoProps> = ({
           )}
           <Typography variant={"h5"} sx={{ mt: lessThenSmall ? "10px" : "" }}>
             {tourInfo?.price !== undefined
-              ? tourInfo?.price || 0
+              ? tourInfo?.price / 100 || 0
               : tourInfo?.prices?.from === tourInfo?.prices?.to
-              ? tourInfo?.prices?.from
-              : (tourInfo?.prices?.from || 0) +
+              ? tourInfo?.prices?.from / 100
+              : (tourInfo?.prices?.from / 100 || 0) +
                 " до " +
-                (tourInfo?.prices?.to || 1000000)}
+                (tourInfo?.prices?.to / 100 || 10000)}
             ₽
           </Typography>
           {addTourInfo ? (
@@ -335,7 +335,7 @@ export const TourInfo: FC<ITourInfoProps> = ({
           <Typography variant={"caption"}>
             {tourInfo?.insuranceInclude?.insuranceNumber
               ? `Страхование включено, до ${
-                  tourInfo?.insuranceInclude?.insuranceAmount || 0
+                  tourInfo?.insuranceInclude?.insuranceAmount / 100 || 0
                 }₽`
               : "Страхование не включено"}
           </Typography>

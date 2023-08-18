@@ -16,6 +16,7 @@ import { IFilter } from "../../../models/tourListModels/IFilter";
 import { StyledTextAreaAutosize } from "../../../config/MUI/styledComponents/StyledTextAreaAutosize";
 import { lightTurquoiseColor, redColor } from "../../../config/MUI/color/color";
 import { IAddTour } from "../../../models/addTourModels/IAddTour";
+import { NumericFormat } from "react-number-format";
 
 interface IAddTourFirstPageProps {
   images: any[];
@@ -37,6 +38,15 @@ export const AddTourFirstPage: FC<IAddTourFirstPageProps> = ({
   addError,
 }) => {
   const media = useMediaQuery("(max-width: 1200px)", { noSsr: true });
+
+  const materialUITextFieldProps = {
+    // type: "number",
+    fullWidth: true,
+    error: (addError && tourInfo?.price === undefined) || tourInfo?.price < 1,
+    InputProps: { inputProps: { min: 0 } },
+    label: "Стоимость тура",
+  };
+
   return (
     <Grid container justifyContent={media ? "center" : "space-between"}>
       <Grid item xs={5.2} minWidth={500}>
@@ -206,8 +216,23 @@ export const AddTourFirstPage: FC<IAddTourFirstPageProps> = ({
           <Typography variant={"h6"} marginTop={2}>
             Стоимость тура на человека
           </Typography>
-          <TextField
+          {/* @ts-ignore */}
+          <NumericFormat
             sx={{ marginTop: 1 }}
+            value={tourInfo?.price / 100 || 1}
+            decimalScale={2}
+            required
+            onValueChange={(values, sourceInfo) => {
+              setTourInfo({
+                ...tourInfo,
+                price: values.floatValue * 100,
+              });
+            }}
+            thousandSeparator=" "
+            customInput={TextField}
+            {...materialUITextFieldProps}
+          />
+          {/* <TextField
             fullWidth
             type={"number"}
             InputProps={{ inputProps: { min: 0 } }}
@@ -223,7 +248,7 @@ export const AddTourFirstPage: FC<IAddTourFirstPageProps> = ({
                 price: +e.target.value,
               })
             }
-          />
+          /> */}
           {tourInfo?.price && tourInfo?.price < 1 ? (
             <Typography
               variant="caption"

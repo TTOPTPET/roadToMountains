@@ -12,6 +12,7 @@ import { useState, FC, Dispatch, SetStateAction } from "react";
 import { redColor } from "../../../config/MUI/color/color";
 import MapLeaflet from "../../../components/MapLeaflet/MapLeaflet";
 import { IAddTour } from "../../../models/addTourModels/IAddTour";
+import { NumericFormat } from "react-number-format";
 
 const turnOnDefault: string[] = ["Не включено", "Включено"];
 
@@ -141,6 +142,13 @@ export const AddTourSecondPage: FC<IAddTourSecondPageProps> = ({
     }
   };
 
+  const materialUITextFieldProps = {
+    // type: "number",
+    fullWidth: true,
+    InputProps: { inputProps: { min: 0 } },
+    label: "Сумма страхования",
+  };
+
   return (
     <Stack gap={1}>
       <Typography variant={"h3"}>
@@ -263,7 +271,26 @@ export const AddTourSecondPage: FC<IAddTourSecondPageProps> = ({
                   })
                 }
               />
-              <TextField
+              <NumericFormat
+                sx={{ width: "75%" }}
+                disabled={insurance === turnOnDefault[0] ? true : false}
+                value={tourInfo?.insuranceInclude?.insuranceAmount / 100 || 1}
+                decimalScale={2}
+                required
+                onValueChange={(values, sourceInfo) => {
+                  setTourInfo({
+                    ...tourInfo,
+                    insuranceInclude: {
+                      ...tourInfo?.insuranceInclude,
+                      insuranceAmount: values.floatValue,
+                    },
+                  });
+                }}
+                thousandSeparator=" "
+                customInput={TextField}
+                {...materialUITextFieldProps}
+              />
+              {/* <TextField
                 label={"Сумма страхования"}
                 disabled={insurance === turnOnDefault[0] ? true : false}
                 type={"number"}
@@ -278,7 +305,7 @@ export const AddTourSecondPage: FC<IAddTourSecondPageProps> = ({
                     },
                   })
                 }
-              />
+              /> */}
             </Stack>
           </Stack>
 

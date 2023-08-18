@@ -43,7 +43,7 @@ export const Notification = (notification: INotification) => {
               {dayjs(notification?.createAt).format("D MMM YYYY")}
             </Typography>
             <Typography variant={"button"} mt={2}>
-              {(notification?.notifData?.amount || 0) + "₽"}
+              {(notification?.notifData?.amount / 100 || 0) + "₽"}
             </Typography>
           </Grid>
         </Grid>

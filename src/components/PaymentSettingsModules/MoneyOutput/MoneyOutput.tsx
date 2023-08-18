@@ -3,13 +3,21 @@ import React, { useState } from "react";
 import { Typography, Paper, TextField, Button, Stack } from "@mui/material";
 import { redColor, whiteColor } from "../../../config/MUI/color/color";
 import { postWithdrawal } from "../../../API/paymentAPI/postWithdrawal";
+import { NumericFormat } from "react-number-format";
 
 type MoneyOutputProps = {
   accauntAmount: number;
 };
 
 export default function MoneyOutput({ accauntAmount }: MoneyOutputProps) {
-  const [amount, setAmount] = useState("");
+  const [amount, setAmount] = useState(100);
+
+  const materialUITextFieldProps = {
+    color: "secondary",
+    error: Number(accauntAmount) < Number(amount),
+    InputProps: { inputProps: { min: 0 } },
+    label: "Сумма",
+  };
 
   return (
     <>
@@ -23,16 +31,27 @@ export default function MoneyOutput({ accauntAmount }: MoneyOutputProps) {
         }}
       >
         <Typography variant="h6">Сумма</Typography>
-
-        <TextField
+        {/* @ts-ignore */}
+        <NumericFormat
+          value={amount / 100 || 1}
+          sx={{ mt: "20px" }}
+          decimalScale={2}
+          onValueChange={(values, sourceInfo) => {
+            setAmount(values.floatValue * 100);
+          }}
+          thousandSeparator=" "
+          customInput={TextField}
+          {...materialUITextFieldProps}
+        />
+        {/* <TextField
           label="Сумма"
           color="secondary"
           sx={{ mt: "20px" }}
           type="number"
-          value={amount}
-          onChange={(e) => setAmount(e.target.value)}
+          value={amount / 100}
+          onChange={(e) => setAmount(e.target.value * 100)}
           error={Number(accauntAmount) < Number(amount)}
-        />
+        /> */}
 
         {Number(accauntAmount) < Number(amount) && (
           <Typography
@@ -42,7 +61,7 @@ export default function MoneyOutput({ accauntAmount }: MoneyOutputProps) {
             Слишком большая сумма
           </Typography>
         )}
-        {amount && Number(amount) < 100 && (
+        {amount && Number(amount) < 10000 && (
           <Typography
             variant="caption"
             sx={{ color: redColor, mt: "10px", textAlign: "center" }}
@@ -59,7 +78,7 @@ export default function MoneyOutput({ accauntAmount }: MoneyOutputProps) {
             onClick={() => postWithdrawal({ amount: Number(amount) })}
             disabled={
               Number(accauntAmount) < Number(amount) ||
-              (amount && Number(amount) < 100)
+              (amount && Number(amount) < 10000)
             }
           >
             Вывести

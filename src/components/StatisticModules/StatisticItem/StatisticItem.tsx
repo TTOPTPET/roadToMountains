@@ -51,7 +51,7 @@ const StatisticItem: FC<IStatisticItemProps> = ({ statistic }) => {
         </TableCell>
         <TableCell>{statistic?.tourName || ""}</TableCell>
         <TableCell>{getTourStatus(statistic?.tourStatus)}</TableCell>
-        <TableCell>{statistic?.tourAmount || ""}</TableCell>
+        <TableCell>{statistic?.tourAmount / 100 || ""}</TableCell>
         <TableCell>{statistic?.personNum || ""}</TableCell>
       </TableRow>
       <TableRow>

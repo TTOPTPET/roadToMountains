@@ -112,7 +112,7 @@ export const TourAccordion: FC<ITourAccordionProps> = ({
                         right: "0",
                       }}
                     >
-                      {record.tourAmount}₽
+                      {record.tourAmount / 100}₽
                     </Typography>
                   </Stack>
                 ) : (
@@ -125,7 +125,7 @@ export const TourAccordion: FC<ITourAccordionProps> = ({
                       right: "0",
                     }}
                   >
-                    {record.tourAmount}₽
+                    {record.tourAmount / 100}₽
                   </Typography>
                 )}
                 <Typography

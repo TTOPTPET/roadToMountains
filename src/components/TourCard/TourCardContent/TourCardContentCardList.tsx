@@ -182,7 +182,9 @@ function TourCardContentCardList({ tour }: TourCardProps) {
           className="tour-card__button-price"
         >
           <Button component={Link} to={`/tours/tour/${tour.tourId}`}>
-            {`от ${new Intl.NumberFormat("ru-RU").format(tour?.prices?.from)}₽`}
+            {`от ${new Intl.NumberFormat("ru-RU").format(
+              tour?.prices?.from / 100
+            )}₽`}
           </Button>
         </Box>
       </Box>

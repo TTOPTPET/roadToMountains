@@ -31,6 +31,7 @@ import { postNewPublic } from "../../../API/creatorAPI/postNewPublic";
 import { IPublicTour } from "../../../models/calendarModels/IPublicTour";
 import { editPublicTour } from "../../../API/creatorAPI/editPublicTour";
 import { redColor } from "../../../config/MUI/color/color";
+import { NumericFormat } from "react-number-format";
 
 type NewPublicModalProps = {
   myTours: ITour[];
@@ -161,6 +162,14 @@ export default function NewPublicModal({
       newPublicInputValidation("tourDateTo", editedPublic?.tourDate?.to)
     );
   }, [editedPublic]);
+
+  const materialUITextFieldProps = {
+    // type: "number",
+    color: "secondary",
+    error: newPublicInputError.tourAmount,
+    InputProps: { inputProps: { min: 0 } },
+    label: "Стоимость",
+  };
 
   return (
     <Dialog
@@ -350,7 +359,28 @@ export default function NewPublicModal({
             />
             <Stack direction={"row"} gap="14px" alignItems={"center"}>
               <Box>
-                <TextField
+                {/* @ts-ignore */}
+                <NumericFormat
+                  value={editedPublic?.tourAmount / 100 || 1}
+                  decimalScale={2}
+                  onValueChange={(values, sourceInfo) => {
+                    setEditedPublic((editedPublic) => ({
+                      ...editedPublic,
+                      tourAmount: values.floatValue * 100,
+                    }));
+                    handlerNewPublicErrorChange(
+                      "tourAmount",
+                      newPublicInputValidation(
+                        "tourAmount",
+                        String(values.floatValue)
+                      )
+                    );
+                  }}
+                  thousandSeparator=" "
+                  customInput={TextField}
+                  {...materialUITextFieldProps}
+                />
+                {/* <TextField
                   type={"number"}
                   color="secondary"
                   error={newPublicInputError.tourAmount}
@@ -367,14 +397,16 @@ export default function NewPublicModal({
                     );
                   }}
                   label={"Стоимость"}
-                />
+                /> */}
               </Box>
 
               <Box sx={{ flexGrow: "1" }}>
                 <Typography variant="caption">
                   Стоимость на платформе: <br />
                   {editedPublic?.tourAmount
-                    ? (editedPublic?.tourAmount * 1.03).toFixed(2)
+                    ? (editedPublic?.tourAmount * 1.03)
+                        .toFixed(2)
+                        .replace(/\B(?=(\d{3})+(?!\d))/g, " ")
                     : "-"}
                 </Typography>
               </Box>

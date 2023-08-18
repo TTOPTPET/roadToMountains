@@ -46,10 +46,10 @@ function PaymentSettingsPage() {
       <Grid container justifyContent={"space-between"}>
         <Grid item xs={5.5}>
           {cardInfo && <CardInfo cardInfo={cardInfo} />}
-          <MoneyOutput accauntAmount={bankAccInfo.accauntAmount} />
+          <MoneyOutput accauntAmount={bankAccInfo.accauntAmount / 100} />
         </Grid>
         <Grid item xs={5}>
-          <MoneyAmount accauntAmount={bankAccInfo.accauntAmount} />
+          <MoneyAmount accauntAmount={bankAccInfo.accauntAmount / 100} />
           <RecentOperations
             accauntTransactions={bankAccInfo.accauntTransactions}
           />
