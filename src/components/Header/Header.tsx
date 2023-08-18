@@ -16,7 +16,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import logo from "../../media/logo.svg";
-import { UserType } from "../../models/userModels/IUserInfo";
+import { ICreatorInfo, UserType } from "../../models/userModels/IUserInfo";
 import {
   Link,
   useLocation,
@@ -38,8 +38,13 @@ import MenuIcon from "../../media/menu-icon.svg";
 import StatIcon from "../../media/chart-box.svg";
 import CashIcom from "../../media/cash-icon.svg";
 import NotificationIcon from "../../media/notification.svg";
+import { DarkStyledTooltip } from "../../config/MUI/styledComponents/StyledTooltip";
 
 const Header = () => {
+  const CreatorInfo: ICreatorInfo = useSelector(
+    (state: RootState) => state.userInfo.userInfo as ICreatorInfo
+  );
+
   const [searchParamFromUrl] = useSearchParams();
 
   const [cookies] = useCookies([TOKEN, USER_ROLE, REFRESH_TOKEN, BAN_STATUS]);
@@ -312,20 +317,47 @@ const Header = () => {
                                 />
                                 Статистика
                               </MenuItem>
-                              <MenuItem
-                                style={{ gap: "10px" }}
-                                onClick={() => {
-                                  navigate("/creator/payment");
-                                  handlerCloseMenu();
-                                }}
-                              >
-                                <img
-                                  src={CashIcom}
-                                  alt={"profile"}
-                                  style={{ width: "26px" }}
-                                />
-                                Финансовые настройки
-                              </MenuItem>
+                              {!CreatorInfo?.dataUser?.creatorType ? (
+                                <DarkStyledTooltip
+                                  title="Заполните финансовую информацию для доступа на эту страницу"
+                                  arrow
+                                  placement="bottom"
+                                >
+                                  <span>
+                                    <MenuItem
+                                      disabled={true}
+                                      style={{ gap: "10px" }}
+                                      onClick={() => {
+                                        navigate("/creator/payment");
+                                        handlerCloseMenu();
+                                      }}
+                                    >
+                                      <img
+                                        src={CashIcom}
+                                        alt={"profile"}
+                                        style={{ width: "26px" }}
+                                      />
+                                      Финансовые настройки
+                                    </MenuItem>
+                                  </span>
+                                </DarkStyledTooltip>
+                              ) : (
+                                <MenuItem
+                                  style={{ gap: "10px" }}
+                                  onClick={() => {
+                                    navigate("/creator/payment");
+                                    handlerCloseMenu();
+                                  }}
+                                >
+                                  <img
+                                    src={CashIcom}
+                                    alt={"profile"}
+                                    style={{ width: "26px" }}
+                                  />
+                                  Финансовые настройки
+                                </MenuItem>
+                              )}
+
                               <MenuItem
                                 style={{ gap: "10px" }}
                                 onClick={() => {
