@@ -20,7 +20,7 @@ export default function RecentOperations({
 
   return (
     <Stack sx={{ height: "100%" }}>
-      <Typography variant="h5" sx={{ mt: { lg: "80px", xs: "100px" } }}>
+      <Typography variant="h5" sx={{ mt: { lg: "139px", xs: "100px" } }}>
         Последние операции
       </Typography>
       <Paper

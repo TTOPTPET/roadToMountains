@@ -112,7 +112,9 @@ export const TourDetails: FC<ITourDetailsProps> = ({
             {!lessThenSmall && (
               <Button
                 disabled={
-                  dayjs(record.tourDate.from).subtract(1, "day") < dayjs()
+                  dayjs(record.tourDate.from).subtract(1, "day") < dayjs() ||
+                  record.bookingStatus.payment === "successReturn" ||
+                  record.bookingStatus.payment === "failPay"
                 }
                 onClick={() =>
                   dispatch(
