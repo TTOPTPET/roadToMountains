@@ -16,7 +16,7 @@ export default function HelpButton() {
       }
     >
       <Paper variant="helpButton">
-        <img src={helpIcon} alt="helpIcon" />
+        <img src={helpIcon} alt="helpIcon" style={{ height: "100%" }} />
       </Paper>
     </Box>
   );

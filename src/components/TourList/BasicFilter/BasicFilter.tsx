@@ -77,6 +77,8 @@ export const BasicFilter: FC<IFilterProps> = ({
       direction={lessThanMedium ? "column" : "row"}
       gap={1}
       alignItems={lessThanMedium && moreThenSmall ? "center" : "end"}
+      width={{ sm: "100%", xs: "220px" }}
+      margin={"0 auto"}
     >
       <Autocomplete
         freeSolo

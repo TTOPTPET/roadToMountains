@@ -97,13 +97,6 @@ export default function CardInfo({ cardInfo }: CardInfoProps) {
             {creatorInfo.dataUser.fieldsCreator.innIP}
           </Typography>
         );
-
-      case CreatorType.SELF:
-        return (
-          <Typography variant={"button"}>
-            {creatorInfo.dataUser.fieldsCreator.innSELF}
-          </Typography>
-        );
     }
   };
 
@@ -115,7 +108,7 @@ export default function CardInfo({ cardInfo }: CardInfoProps) {
           sx={{
             backgroundColor: whiteColor,
             mt: "10px",
-            mb: "90px",
+            mb: "150px",
             p: "20px",
             position: "relative",
             boxShadow: "0",
@@ -180,16 +173,6 @@ export default function CardInfo({ cardInfo }: CardInfoProps) {
               </Stack>
             </Paper>
           )}
-          <Paper sx={{ boxShadow: "0", p: "30px 20px", mt: "7px" }}>
-            <Stack
-              direction={"row"}
-              alignItems={"center"}
-              justifyContent={"space-between"}
-            >
-              <Typography variant="caption">ИНН</Typography>
-              {generINN(CreatorInfo)}
-            </Stack>
-          </Paper>
           <Stack
             direction={"row"}
             mt="20px"

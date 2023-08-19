@@ -61,7 +61,7 @@ export default function MoneyOutput({ accauntAmount }: MoneyOutputProps) {
             Слишком большая сумма
           </Typography>
         )}
-        {amount && Number(amount) < 10000 && (
+        {Number(amount) < 10000 && (
           <Typography
             variant="caption"
             sx={{ color: redColor, mt: "10px", textAlign: "center" }}
