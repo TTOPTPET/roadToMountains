@@ -110,13 +110,15 @@ export const TourDetails: FC<ITourDetailsProps> = ({
             direction={"row"}
           >
             <Typography variant={"h6"}>Количество человек</Typography>
+
             {!lessThenSmall &&
               (record.bookingStatus.cancellation === "cancellationCreator" ||
               record.bookingStatus.cancellation === "cancellationAdmin" ? (
                 <Button
-                  // disabled={
-                  //   dayjs(record.tourDate.from).subtract(1, "day") < dayjs()
-                  // }
+                  disabled={
+                    
+                  record.bookingStatus.payment === "successReturn" 
+                  }
                   onClick={() => {
                     cancelBooking(
                       record.bookingId,
@@ -134,7 +136,9 @@ export const TourDetails: FC<ITourDetailsProps> = ({
               ) : (
                 <Button
                   disabled={
-                    dayjs(record.tourDate.from).subtract(1, "day") < dayjs()
+                    dayjs(record.tourDate.from).subtract(1, "day") < dayjs()||
+                  record.bookingStatus.payment === "successReturn" ||
+                  record.bookingStatus.payment === "failPay"
                   }
                   onClick={() =>
                     dispatch(

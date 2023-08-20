@@ -168,6 +168,21 @@ export const mainThemes = createTheme(breakpoints, {
             justifyContent: "center",
             alignItems: "center",
             cursor: "pointer",
+            padding: "15px",
+            [breakpoints.breakpoints.down("lg")]: {
+              width: "50px",
+              height: "50px",
+              padding: "10px",
+            },
+            [breakpoints.breakpoints.down("md")]: {
+              width: "40px",
+              height: "40px",
+              padding: "7px",
+            },
+            [breakpoints.breakpoints.down("sm")]: {
+              width: "40px",
+              height: "40px",
+            },
           },
         },
         {
