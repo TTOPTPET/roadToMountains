@@ -24,7 +24,7 @@ export default function MoneyAmount({ accauntAmount }: MoneyAmountProps) {
 
         <Typography variant="button">
           {accauntAmount
-            ? new Intl.NumberFormat("ru-RU").format(accauntAmount / 100)
+            ? new Intl.NumberFormat("ru-RU").format(accauntAmount)
             : 0}
           ₽
         </Typography>
