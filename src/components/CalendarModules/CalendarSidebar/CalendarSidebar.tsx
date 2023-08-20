@@ -171,7 +171,7 @@ export default function CalendarSidebar({
               sx={{ backgroundColor: whiteColor, borderRadius: 6, padding: 3 }}
             >
               <Typography variant={"button"} align={"center"}>
-                {selectedPublic?.publicTourProfit || 0}₽
+                {selectedPublic?.publicTourProfit / 100 || 0}₽
               </Typography>
             </Paper>
           </Box>

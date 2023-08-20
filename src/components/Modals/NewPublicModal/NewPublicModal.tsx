@@ -404,7 +404,7 @@ export default function NewPublicModal({
                 <Typography variant="caption">
                   Стоимость на платформе: <br />
                   {editedPublic?.tourAmount
-                    ? (editedPublic?.tourAmount * 1.03)
+                    ? ((editedPublic?.tourAmount / 100) * 1.03)
                         .toFixed(2)
                         .replace(/\B(?=(\d{3})+(?!\d))/g, " ")
                     : "-"}

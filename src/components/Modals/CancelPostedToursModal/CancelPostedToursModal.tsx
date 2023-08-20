@@ -22,7 +22,6 @@ import { redColor } from "../../../config/MUI/color/color";
 import { deletePostedTour } from "../../../API/creatorAPI/deletePostedTour";
 import ConfirmCancelPostedTourModal from "../ConfirmCancelPostedTourModal/ConfirmCancelPostedTourModal";
 import { deleteTour } from "../../../API/creatorAPI/deleteTour";
-import SuccessCancelPostedTourModal from "../SuccessCancelPostedTourModal/SuccessCancelPostedTourModal";
 
 interface CancelPostedToursModalProps {
   postedTours: ITour[];
@@ -159,7 +158,6 @@ function CancelPostedToursModal({
         tourId={tourId}
         setMyTours={setMyTours}
       />
-      <SuccessCancelPostedTourModal />
     </>
   );
 }
