@@ -5,8 +5,8 @@ export interface IUserRecord {
   bookingStatus?: {
     payment: string;
     cancellation:
-      | "cancellationCreator"
-      | "cancellationAdmin"
+      | "cancelledCreator"
+      | "cancelledAdmin"
       | "cancelledTourists";
     past: boolean;
     needPayment: boolean;

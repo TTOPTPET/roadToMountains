@@ -16,7 +16,9 @@ import { IUserRecord } from "../../../models/userModels/IUserRecord";
 import { ReactComponent as NavigateIcon } from "../../../media/navigate_before.svg";
 import { TourDetails } from "../TourSummary/TourDetails";
 import SuccessMessageSendModal from "../../Modals/SuccessMessageSendModal/SuccessMessageSendModal";
-import ConditionChangedChip from "./ConditionChangedChip/ConditionChangedChip";
+import ConditionChangedChip from "./Chips/CustomChip/ConditionChangedChip";
+import TourCancelledChip from "./Chips/CustomChip/TourCancelledChip";
+import {checkReturnPayment} from "../TourSummary/TourDetails";
 
 import { redirect, useNavigate } from "react-router-dom";
 
@@ -76,7 +78,8 @@ export const TourAccordion: FC<ITourAccordionProps> = ({
                     dayjs(record.tourDate.to).format("D MMMM YYYY")}
                 </Typography>
                 <Typography variant={"caption"}>ООО "Алтай тур"</Typography>
-                {record?.statusUpdate && <ConditionChangedChip />}
+                {!checkReturnPayment(record) && record?.statusUpdate && <ConditionChangedChip />}
+                {checkReturnPayment(record) && <TourCancelledChip/>}
               </Stack>
             </Grid>
             <Grid item width={"fit-content"} justifyContent={"right"}>

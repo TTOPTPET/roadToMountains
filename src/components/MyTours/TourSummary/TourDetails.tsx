@@ -26,6 +26,18 @@ interface ITourDetailsProps {
   setRecords?: Dispatch<SetStateAction<IUserRecord[]>>;
 }
 
+
+export const checkReturnPayment = (booking: IUserRecord) => {
+    return (booking.bookingStatus.cancellation === "cancelledCreator" ||
+        booking.bookingStatus.cancellation === "cancelledAdmin")
+}
+
+
+const checkPayForTour = (booking: IUserRecord) => {
+    return booking.bookingStatus.payment === "successPay"
+}
+
+
 export const TourDetails: FC<ITourDetailsProps> = ({
   record,
   bookingData,
@@ -99,6 +111,7 @@ export const TourDetails: FC<ITourDetailsProps> = ({
       return "";
     }
   };
+
   switch (record.type) {
     case "record":
       return (
@@ -110,14 +123,10 @@ export const TourDetails: FC<ITourDetailsProps> = ({
             direction={"row"}
           >
             <Typography variant={"h6"}>Количество человек</Typography>
-
-            {!lessThenSmall &&
-              (record.bookingStatus.cancellation === "cancellationCreator" ||
-              record.bookingStatus.cancellation === "cancellationAdmin" ? (
+            {!lessThenSmall && checkReturnPayment(record) ? (
                 <Button
                   disabled={
-                    
-                  record.bookingStatus.payment === "successReturn" 
+                  record.bookingStatus.payment !== "successPay"
                   }
                   onClick={() => {
                     cancelBooking(
@@ -152,7 +161,7 @@ export const TourDetails: FC<ITourDetailsProps> = ({
                 >
                   Отменить бронирование
                 </Button>
-              ))}
+              )}
           </Stack>
           <Stack
             justifyContent={"space-between"}
@@ -163,7 +172,7 @@ export const TourDetails: FC<ITourDetailsProps> = ({
             <Typography variant={"caption"}>
               {record?.bookingNumber || 0} человека
             </Typography>
-            {!lessThenSmall && (
+            {!lessThenSmall && !checkReturnPayment(record) && (
               <Typography variant={"caption"}>
                 до{" "}
                 {dayjs(record.tourDate.from)
