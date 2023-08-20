@@ -26,7 +26,8 @@ type modalsId =
   | "noLoginModal"
   | "confirmCancelBooking"
   | "successCancelBooking"
-  | "confirmChangeCreatorTypeModal";
+  | "confirmChangeCreatorTypeModal"
+  | "succesReturnMoney";
 
 enum actionTypes {
   SET_MODAL_ACTIVE = "SET_MODAL_ACTIVE",

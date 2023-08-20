@@ -16,6 +16,7 @@ import { useDispatch } from "react-redux";
 import { setModalActive } from "../../../redux/Modal/ModalReducer";
 import MapLeaflet from "../../MapLeaflet/MapLeaflet";
 import { IUserRecord } from "../../../models/userModels/IUserRecord";
+import { cancelBooking } from "../../../API/touristAPI/cancelBooking";
 
 interface ITourDetailsProps {
   record: TourDetailsType;
@@ -109,24 +110,45 @@ export const TourDetails: FC<ITourDetailsProps> = ({
             direction={"row"}
           >
             <Typography variant={"h6"}>Количество человек</Typography>
-            {!lessThenSmall && (
-              <Button
-                disabled={
-                  dayjs(record.tourDate.from).subtract(1, "day") < dayjs()
-                }
-                onClick={() =>
-                  dispatch(
-                    setModalActive("confirmCancelBooking", {
-                      bookingId: record.bookingId,
-                      records: records,
-                      setRecords: setRecords,
-                    })
-                  )
-                }
-              >
-                Отменить бронирование
-              </Button>
-            )}
+            {!lessThenSmall &&
+              (record.bookingStatus.cancellation === "cancellationCreator" ||
+              record.bookingStatus.cancellation === "cancellationAdmin" ? (
+                <Button
+                  // disabled={
+                  //   dayjs(record.tourDate.from).subtract(1, "day") < dayjs()
+                  // }
+                  onClick={() => {
+                    cancelBooking(
+                      record.bookingId,
+                      () => {
+                        dispatch(setModalActive("succesReturnMoney"));
+                      },
+                      () => {
+                        dispatch(setModalActive("errorBookingModal"));
+                      }
+                    );
+                  }}
+                >
+                  Оформить возврат
+                </Button>
+              ) : (
+                <Button
+                  disabled={
+                    dayjs(record.tourDate.from).subtract(1, "day") < dayjs()
+                  }
+                  onClick={() =>
+                    dispatch(
+                      setModalActive("confirmCancelBooking", {
+                        bookingId: record.bookingId,
+                        records: records,
+                        setRecords: setRecords,
+                      })
+                    )
+                  }
+                >
+                  Отменить бронирование
+                </Button>
+              ))}
           </Stack>
           <Stack
             justifyContent={"space-between"}
