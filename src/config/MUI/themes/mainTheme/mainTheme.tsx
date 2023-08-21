@@ -276,6 +276,33 @@ export const mainThemes = createTheme(breakpoints, {
         },
       },
     },
+    MuiCalendarOrClockPicker: {
+      styleOverrides: {
+        root: {
+          "& .MuiClockPicker-root": {
+            "& .MuiClock-root": {
+              "& .MuiClock-clock": {
+                "& .MuiClock-pin": {
+                  backgroundColor: darkTurquoiseColor,
+                },
+                "& .MuiClockPointer-root": {
+                  backgroundColor: darkTurquoiseColor,
+                  "& .MuiClockPointer-thumb": {
+                    backgroundColor: lightTurquoiseColor,
+                    border: `16px solid ${darkTurquoiseColor}`,
+                  },
+                },
+                "& .MuiClock-wrapper": {
+                  "& .Mui-selected": {
+                    backgroundColor: darkTurquoiseColor,
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    },
     MuiButton: {
       styleOverrides: {
         root: {
@@ -624,7 +651,7 @@ export const mainThemes = createTheme(breakpoints, {
             padding: "5px 9px",
           },
           [breakpoints.breakpoints.down("md")]: {
-            padding: "2px 9px",
+            padding: "3px 9px",
           },
         },
       },
@@ -635,6 +662,12 @@ export const mainThemes = createTheme(breakpoints, {
           color: darkBlueColor,
           "&.Mui-checked": {
             color: darkTurquoiseColor,
+          },
+          [breakpoints.breakpoints.down("lg")]: {
+            padding: "5px 9px",
+          },
+          [breakpoints.breakpoints.down("md")]: {
+            padding: "3px 9px",
           },
         },
       },
@@ -679,6 +712,9 @@ export const mainThemes = createTheme(breakpoints, {
       styleOverrides: {
         paper: {
           backgroundColor: whiteColor,
+          [breakpoints.breakpoints.down("sm")]: {
+            padding: "20px",
+          },
         },
       },
     },

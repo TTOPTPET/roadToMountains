@@ -4,6 +4,10 @@ import { Typography, Paper, TextField, Button, Stack } from "@mui/material";
 import { redColor, whiteColor } from "../../../config/MUI/color/color";
 import { postWithdrawal } from "../../../API/paymentAPI/postWithdrawal";
 import { NumericFormat } from "react-number-format";
+import MoneyOutputErrorModal from "../../Modals/MoneyOutputErrorModal/MoneyOutputErrorModal";
+import { setModalActive } from "../../../redux/Modal/ModalReducer";
+import { useDispatch } from "react-redux";
+import SuccsessMoneyOutputModal from "../../Modals/SuccsessMoneyOutputModal/SuccsessMoneyOutputModal";
 
 type MoneyOutputProps = {
   accauntAmount: number;
@@ -11,6 +15,7 @@ type MoneyOutputProps = {
 
 export default function MoneyOutput({ accauntAmount }: MoneyOutputProps) {
   const [amount, setAmount] = useState(100);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const materialUITextFieldProps = {
     color: "secondary",
@@ -18,6 +23,8 @@ export default function MoneyOutput({ accauntAmount }: MoneyOutputProps) {
     InputProps: { inputProps: { min: 0 } },
     label: "Сумма",
   };
+
+  const dispatch = useDispatch();
 
   return (
     <>
@@ -75,7 +82,22 @@ export default function MoneyOutput({ accauntAmount }: MoneyOutputProps) {
             sx={{
               mt: Number(accauntAmount) < Number(amount) ? "5px" : "30px",
             }}
-            onClick={() => postWithdrawal({ amount: Number(amount) })}
+            onClick={() =>
+              postWithdrawal(
+                { amount: Number(amount) },
+                () => {
+                  dispatch(setModalActive("succsessMoneyOutputModal"));
+                },
+                (e) => {
+                  setErrorMessage(
+                    e?.response?.data?.typeError === "UserError"
+                      ? e?.response?.data?.errorMessage
+                      : "Что-то пошло не так, попробуйте еще раз позже!"
+                  );
+                  dispatch(setModalActive("moneyOutputErrorModal"));
+                }
+              )
+            }
             disabled={
               Number(accauntAmount) < Number(amount) ||
               (amount && Number(amount) < 10000)
@@ -84,6 +106,8 @@ export default function MoneyOutput({ accauntAmount }: MoneyOutputProps) {
             Вывести
           </Button>
         </Stack>
+        <SuccsessMoneyOutputModal />
+        <MoneyOutputErrorModal errorMessage={errorMessage} />
       </Paper>
     </>
   );

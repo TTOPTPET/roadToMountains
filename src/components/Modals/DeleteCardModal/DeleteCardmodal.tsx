@@ -6,17 +6,29 @@ import {
   Stack,
 } from "@mui/material";
 
+import { Dispatch, SetStateAction } from "react";
+
 import { useDispatch, useSelector } from "react-redux";
 
 import { deleteCard } from "../../../API/paymentAPI/deleteCard";
 
 import {
   isModalActive,
+  setModalActive,
   setModalInactive,
 } from "../../../redux/Modal/ModalReducer";
 import { RootState } from "../../../redux/store";
+import { getCardInfo } from "../../../API/paymentAPI/getCardInfo";
+import { ICardInfo } from "../../../models/paymentSettingsModels/IPaymentSettings";
+type DeleteCardModalProps = {
+  setCardInfo: Dispatch<SetStateAction<ICardInfo>>;
+  setErrorMessage: Dispatch<SetStateAction<string>>;
+};
 
-function DeleteCardModal() {
+function DeleteCardModal({
+  setCardInfo,
+  setErrorMessage,
+}: DeleteCardModalProps) {
   const activeModals = useSelector(
     (state: RootState) => state.modal.activeModals
   );
@@ -25,6 +37,25 @@ function DeleteCardModal() {
 
   const handlerBackClick = () => {
     dispatch(setModalInactive("deleteCardModal"));
+  };
+
+  const handlerConfirmClick = () => {
+    dispatch(setModalInactive("deleteCardModal"));
+    deleteCard(
+      () => {
+        getCardInfo(
+          (value) => {
+            setCardInfo(value);
+          },
+          () => {},
+          false
+        );
+      },
+      (e) => {
+        setErrorMessage(e.response?.data?.detail?.Details);
+        dispatch(setModalActive("deleteCardErrorModal"));
+      }
+    );
   };
 
   return (
@@ -50,7 +81,7 @@ function DeleteCardModal() {
           gap={1}
         >
           <Button onClick={handlerBackClick}>Назад</Button>
-          <Button onClick={() => deleteCard()}>Да, удалить</Button>
+          <Button onClick={handlerConfirmClick}>Да, удалить</Button>
         </Stack>
       </DialogContent>
     </Dialog>

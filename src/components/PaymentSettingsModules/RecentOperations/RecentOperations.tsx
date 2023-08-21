@@ -12,9 +12,13 @@ type RecentOperationsProps = {
 export default function RecentOperations({
   accauntTransactions,
 }: RecentOperationsProps) {
-  const elements =
+  const sortedTransactions =
     accauntTransactions &&
-    accauntTransactions.map((item, i) => {
+    accauntTransactions.sort((a, b) => (a.createAt > b.createAt ? 1 : -1));
+
+  const elements =
+    sortedTransactions &&
+    sortedTransactions.map((item, i) => {
       return <RecentOperationItem accauntTransaction={item} key={i} />;
     });
 
