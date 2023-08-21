@@ -166,7 +166,9 @@ export default function NewPublicModal({
   const materialUITextFieldProps = {
     // type: "number",
     color: "secondary",
-    error: newPublicInputError.tourAmount,
+    error:
+      newPublicInputError.tourAmount ||
+      Number(editedPublic?.tourAmount / 100) < 10,
     InputProps: { inputProps: { min: 0 } },
     label: "Стоимость",
   };
@@ -361,7 +363,7 @@ export default function NewPublicModal({
               <Box>
                 {/* @ts-ignore */}
                 <NumericFormat
-                  value={editedPublic?.tourAmount / 100 || 1}
+                  value={editedPublic?.tourAmount / 100}
                   decimalScale={2}
                   onValueChange={(values, sourceInfo) => {
                     setEditedPublic((editedPublic) => ({
@@ -411,13 +413,13 @@ export default function NewPublicModal({
                 </Typography>
               </Box>
             </Stack>
-            {Number(editedPublic?.tourAmount) < 1 &&
+            {Number(editedPublic?.tourAmount / 100) < 10 &&
             editedPublic?.tourAmount ? (
               <Typography
                 variant="caption"
                 sx={{ color: redColor, mt: "10px", textAlign: "center" }}
               >
-                Минимальная стоимость - 1 рубль
+                Минимальная стоимость - 10 рублей
               </Typography>
             ) : null}
 
