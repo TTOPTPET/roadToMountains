@@ -10,7 +10,12 @@ import {
 import { IFilterProps } from "../FilterTypes/IFilterProps";
 import { ISearchRequest } from "../../../models/tourListModels/ISearchRequest";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import {
+  DatePicker,
+  LocalizationProvider,
+  PickersLocaleText,
+  ruRU,
+} from "@mui/x-date-pickers";
 import dayjs, { Dayjs } from "dayjs";
 import { getToursSorted } from "../../../API/tourListAPI/searchAPI/searchAPI";
 import { mobile } from "../../../config/config";
@@ -72,6 +77,11 @@ export const BasicFilter: FC<IFilterProps> = ({
     }, searchData);
   };
 
+  const customRuRULocaleText: Partial<PickersLocaleText<any>> = {
+    okButtonLabel: "Принять",
+    cancelButtonLabel: "Отмена",
+  };
+
   return (
     <Stack
       direction={lessThanMedium ? "column" : "row"}
@@ -100,7 +110,10 @@ export const BasicFilter: FC<IFilterProps> = ({
           />
         )}
       />
-      <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <LocalizationProvider
+        dateAdapter={AdapterDayjs}
+        localeText={customRuRULocaleText}
+      >
         <DatePicker
           label="Дата заезда"
           value={dayjs(searchData?.tourDate?.from ?? "")}

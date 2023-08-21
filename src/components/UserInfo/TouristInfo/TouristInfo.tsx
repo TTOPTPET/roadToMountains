@@ -63,8 +63,8 @@ function TouristInfo() {
                 gap: "3px",
               }}
             >
-              <Typography variant="caption">{sex}</Typography>
-              <Typography variant="caption">{region}</Typography>
+              <Typography variant="caption">{sex || "-"}</Typography>
+              <Typography variant="caption">{region || "-"}</Typography>
             </Box>
           </Box>
         </>

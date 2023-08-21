@@ -37,8 +37,6 @@ function PaymentSettingsPage() {
     );
   }, []);
 
-  console.log(cardInfo);
-
   return (
     <>
       <Typography variant="h3" sx={{ mb: "50px" }}>

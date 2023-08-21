@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, useState } from "react";
+import { ChangeEvent, FC, useEffect, useState } from "react";
 import {
   Button,
   Checkbox,
@@ -128,6 +128,7 @@ export const ComplexFilter: FC<IFilterProps> = ({
       category: [],
       complexity: [],
     });
+    setSliderInputValue([0, maxPrice / 100 || 1000]);
   };
 
   const marks = [
@@ -152,7 +153,15 @@ export const ComplexFilter: FC<IFilterProps> = ({
     },
   ];
 
-  console.log(maxPrice);
+  const [sliderInputValue, setSliderInputValue] = useState([
+    searchData?.price?.from / 100 || 0,
+    searchData?.price?.to / 100 || maxPrice / 100,
+  ]);
+
+  useEffect(() => {
+    setSliderInputValue((curValue) => [curValue[0], curValue[1] || maxPrice]);
+  }, [maxPrice]);
+
   return (
     <Dialog
       className="filters"
@@ -246,13 +255,14 @@ export const ComplexFilter: FC<IFilterProps> = ({
             <Slider
               max={maxPrice / 100}
               marks={marks}
-              value={[
-                searchData?.price?.from || 0,
-                searchData?.price?.to || maxPrice || 1000,
-              ]}
-              onChange={(e, value) =>
-                handleChangeField("price", value as number[])
-              }
+              value={sliderInputValue}
+              onChange={(e, value) => {
+                handleChangeField("price", [
+                  value[0] * 100,
+                  value[1] * 100,
+                ] as number[]);
+                setSliderInputValue(value as number[]);
+              }}
               valueLabelDisplay="auto"
               sx={{ ml: "15px" }}
             />

@@ -36,39 +36,20 @@ function CreatorLk() {
   }, []);
 
   const elements =
-    myTours && myTours.length ? (
-      myTours?.map((tour, i) => {
-        return (
-          <Grid key={i} item lg={3} md={3} sm={4}>
-            <TourCard
-              tour={tour}
-              key={tour.tourId}
-              tourCardType={"myTours"}
-              myTours={myTours}
-              setMyTours={setMyTours}
-            />
-          </Grid>
-        );
-      })
-    ) : (
-      //TODO: изменить дизайн надписи, когда нет туров
-      <>
-        <Grid item xs={2} sx={{ display: "flex" }}>
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              m: "0 auto",
-              fontFamily: "Jost",
-              fontWeight: "800",
-              fontSize: "40px",
-            }}
-          >
-            Еще нет созданных туров
-          </Box>
+    myTours &&
+    myTours?.map((tour, i) => {
+      return (
+        <Grid key={i} item lg={3} md={3} sm={4}>
+          <TourCard
+            tour={tour}
+            key={tour.tourId}
+            tourCardType={"myTours"}
+            myTours={myTours}
+            setMyTours={setMyTours}
+          />
         </Grid>
-      </>
-    );
+      );
+    });
 
   const skeleton = () => {
     return (

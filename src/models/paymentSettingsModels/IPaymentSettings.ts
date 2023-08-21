@@ -13,12 +13,24 @@ export enum AccauntTransactionsType {
   penalty = "penalty",
 }
 
+export enum AccauntTransactionsSuccsess {
+  successfully = "successfully",
+  notSuccessfully = "notSuccessfully",
+  waiting = "waiting",
+}
+
+export interface MetaPayment {
+  errorMessage?: string;
+}
+
 export interface AccauntTransactions {
   type?: AccauntTransactionsType;
-  success?: boolean;
+  success?: AccauntTransactionsSuccsess;
   createAt?: string;
   description?: string;
   price?: string;
+  orderId?: string;
+  metaPayment?: MetaPayment;
 }
 
 export interface fieldsPaymentCreator {

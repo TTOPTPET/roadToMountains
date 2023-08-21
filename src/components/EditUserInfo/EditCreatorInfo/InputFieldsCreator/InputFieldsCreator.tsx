@@ -1,5 +1,5 @@
 import { TextField } from "@mui/material";
-import React, { useEffect } from "react";
+import React, { useEffect, Dispatch, SetStateAction } from "react";
 import { fromModelsToFieldsName } from "../../../../config/types";
 import {
   CreatorType,
@@ -18,12 +18,14 @@ type inputFieldsCreatorProps = {
   creatorInfo: ICreatorInfo;
   editedCreatorInfo: ICreatorInfo;
   setEditedCreatorInfo: (ICreatorInfo) => void;
+  setInnError: Dispatch<SetStateAction<boolean>>;
 };
 
 function InputFieldsCreator({
   creatorInfo,
   editedCreatorInfo,
   setEditedCreatorInfo,
+  setInnError,
 }: inputFieldsCreatorProps) {
   useEffect(() => {
     if (
@@ -46,6 +48,8 @@ function InputFieldsCreator({
   }, [editedCreatorInfo.dataUser.creatorType]);
 
   const generFields = (editedCreatorInfo: ICreatorInfo) => {
+    const regexUR = /^[\d+]{10}$/;
+    const regexSELF = /^[\d+]{12}$/;
     switch (editedCreatorInfo.dataUser.creatorType) {
       case CreatorType.OOO:
         const fieldsOOO: TOOOFields[] = [
@@ -57,6 +61,9 @@ function InputFieldsCreator({
           "okvedOOO",
           "urAdress",
         ];
+        setInnError(
+          !regexUR.test(editedCreatorInfo?.dataUser?.fieldsCreator?.innOOO)
+        );
         return fieldsOOO.map((field, i) => {
           return (
             editedCreatorInfo?.dataUser?.creatorType === CreatorType.OOO && (
@@ -77,6 +84,12 @@ function InputFieldsCreator({
                     },
                   });
                 }}
+                inputProps={field === "innOOO" && { pattern: "^[d+]{10}$" }}
+                error={
+                  field === "innOOO" &&
+                  editedCreatorInfo.dataUser.fieldsCreator.innOOO &&
+                  !regexUR.test(editedCreatorInfo.dataUser.fieldsCreator.innOOO)
+                }
               />
             )
           );
@@ -88,6 +101,9 @@ function InputFieldsCreator({
           "adressIP",
           "ogrnipIP",
         ];
+        setInnError(
+          !regexUR.test(editedCreatorInfo?.dataUser?.fieldsCreator?.innIP)
+        );
         return fieldsIP.map((field, i) => {
           return (
             editedCreatorInfo?.dataUser?.creatorType === CreatorType.IP && (
@@ -110,6 +126,12 @@ function InputFieldsCreator({
                     },
                   });
                 }}
+                inputProps={field === "innIP" && { pattern: "^[d+]{10}$" }}
+                error={
+                  field === "innIP" &&
+                  editedCreatorInfo.dataUser.fieldsCreator.innIP &&
+                  !regexUR.test(editedCreatorInfo.dataUser.fieldsCreator.innIP)
+                }
               />
             )
           );
@@ -120,6 +142,9 @@ function InputFieldsCreator({
           "adressSELF",
           "pasportSELF",
         ];
+        setInnError(
+          !regexSELF.test(editedCreatorInfo?.dataUser?.fieldsCreator?.innSELF)
+        );
         return fieldsSELF.map((field, i) => {
           return (
             editedCreatorInfo?.dataUser?.creatorType === CreatorType.SELF && (
@@ -141,6 +166,14 @@ function InputFieldsCreator({
                       },
                     },
                   })
+                }
+                inputProps={field === "innSELF" && { pattern: "^[d+]{12}$" }}
+                error={
+                  field === "innSELF" &&
+                  editedCreatorInfo.dataUser.fieldsCreator.innSELF &&
+                  !regexSELF.test(
+                    editedCreatorInfo.dataUser.fieldsCreator.innSELF
+                  )
                 }
               />
             )
