@@ -33,7 +33,7 @@ function CardLostModal({ creatorType }: CardLostModalProps) {
 
   const handlerConfirmClick = () => {
     dispatch(setModalInactive("cardLostModal"));
-    postFinanceInfo(creatorType, {}, (data) => {
+    postFinanceInfo({}, (data) => {
       window.location.replace(data.connectUrl);
     });
   };

@@ -18,6 +18,7 @@ import DeleteCardModal from "../../components/Modals/DeleteCardModal/DeleteCardm
 function PaymentSettingsPage() {
   const [cardInfo, setCardInfo] = useState<ICardInfo>();
   const [bankAccInfo, setBankAccInfo] = useState<IBankAccount>({});
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     getCardInfo(
@@ -45,7 +46,13 @@ function PaymentSettingsPage() {
       </Typography>
       <Grid container justifyContent={"space-between"}>
         <Grid item xs={5.5}>
-          {cardInfo && <CardInfo cardInfo={cardInfo} />}
+          {cardInfo && (
+            <CardInfo
+              cardInfo={cardInfo}
+              setCardInfo={setCardInfo}
+              errorMessage={errorMessage}
+            />
+          )}
           <MoneyOutput accauntAmount={bankAccInfo.accauntAmount / 100} />
         </Grid>
         <Grid item xs={5}>
@@ -56,7 +63,10 @@ function PaymentSettingsPage() {
         </Grid>
       </Grid>
       <CardLostModal creatorType={cardInfo?.creatorType} />
-      <DeleteCardModal />
+      <DeleteCardModal
+        setCardInfo={setCardInfo}
+        setErrorMessage={setErrorMessage}
+      />
     </>
   );
 }

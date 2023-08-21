@@ -27,7 +27,10 @@ type modalsId =
   | "confirmCancelBooking"
   | "successCancelBooking"
   | "confirmChangeCreatorTypeModal"
-  | "succesReturnMoney";
+  | "succesReturnMoney"
+  | "moneyOutputErrorModal"
+  | "succsessMoneyOutputModal"
+  | "deleteCardErrorModal";
 
 enum actionTypes {
   SET_MODAL_ACTIVE = "SET_MODAL_ACTIVE",
@@ -48,6 +51,7 @@ interface IActionProps {
     paymentDeadline?: string;
     paymentUrl?: string;
     creatorTypeRadio?: any;
+    errorMessage?: string;
     tourDate?: {
       from: string;
       to: string;

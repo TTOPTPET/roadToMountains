@@ -43,7 +43,7 @@ export default function LocationMarker({
 
   return (
     <>
-      {positions.length && (
+      {positions && positions.length && (
         <>
           <Marker position={positions[0]} icon={Icon}>
             {/* <Tooltip permanent>Начало</Tooltip> */}

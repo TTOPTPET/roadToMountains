@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, Dispatch, SetStateAction } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setModalActive } from "../../../redux/Modal/ModalReducer";
 
@@ -29,10 +29,15 @@ import {
 } from "../../../models/userModels/IUserInfo";
 import { postFinanceInfo } from "../../../API/paymentAPI/postFinanceInfo";
 import { RootState } from "../../../redux/store";
+import { getCardInfo } from "../../../API/paymentAPI/getCardInfo";
+import DeleteCardErrorModal from "../../Modals/DeleteCardModal/DeleteCardErrorModal/DeleteCardErrorModal";
+import { DarkStyledTooltip } from "../../../config/MUI/styledComponents/StyledTooltip";
 
 type CardInfoProps = {
   submitFuntion?: () => void;
   cardInfo?: ICardInfo;
+  setCardInfo?: Dispatch<SetStateAction<ICardInfo>>;
+  errorMessage: string;
 };
 
 type CardInfoErrors = {
@@ -45,7 +50,11 @@ const CardInfoErrorsDefault: CardInfoErrors = {
   accountNumber: false,
 };
 
-export default function CardInfo({ cardInfo }: CardInfoProps) {
+export default function CardInfo({
+  cardInfo,
+  setCardInfo,
+  errorMessage,
+}: CardInfoProps) {
   const [cardInfoInputError, setCardInfoInputError] = useState<CardInfoErrors>(
     CardInfoErrorsDefault
   );
@@ -100,6 +109,8 @@ export default function CardInfo({ cardInfo }: CardInfoProps) {
     }
   };
 
+  console.log(cardInfo);
+
   return (
     <>
       <Typography variant="h5">Информация о Вашем счёте</Typography>
@@ -123,6 +134,15 @@ export default function CardInfo({ cardInfo }: CardInfoProps) {
                   top: "15px",
                   right: "15px",
                   cursor: "pointer",
+                }}
+                onClick={() => {
+                  getCardInfo(
+                    (value) => {
+                      setCardInfo(value);
+                    },
+                    () => {},
+                    false
+                  );
                 }}
               >
                 <img src={reload} alt="reload icon" />
@@ -159,20 +179,22 @@ export default function CardInfo({ cardInfo }: CardInfoProps) {
               </>
             )}
           </Stack>
-          {cardInfo?.fieldsPaymentCreator?.cardId && (
-            <Paper sx={{ boxShadow: "0", p: "30px 20px", mt: "7px" }}>
-              <Stack
-                direction={"row"}
-                alignItems={"center"}
-                justifyContent={"space-between"}
-              >
-                <Typography variant="caption">Карта</Typography>
-                <Typography variant="button">
-                  {cardInfo?.fieldsPaymentCreator?.cardId}
-                </Typography>
-              </Stack>
-            </Paper>
-          )}
+          {cardInfo?.fieldsPaymentCreator?.cardId &&
+            cardInfo?.fieldsPaymentCreator?.statusConnectCard !==
+              StatusConnectCard.notLinked && (
+              <Paper sx={{ boxShadow: "0", p: "30px 20px", mt: "7px" }}>
+                <Stack
+                  direction={"row"}
+                  alignItems={"center"}
+                  justifyContent={"space-between"}
+                >
+                  <Typography variant="caption">Карта</Typography>
+                  <Typography variant="button">
+                    {cardInfo?.fieldsPaymentCreator?.cardId}
+                  </Typography>
+                </Stack>
+              </Paper>
+            )}
           <Stack
             direction={"row"}
             mt="20px"
@@ -181,7 +203,12 @@ export default function CardInfo({ cardInfo }: CardInfoProps) {
           >
             <Button
               onClick={() => {
-                dispatch(setModalActive("cardLostModal"));
+                cardInfo?.fieldsPaymentCreator?.statusConnectCard !==
+                StatusConnectCard.notLinked
+                  ? dispatch(setModalActive("cardLostModal"))
+                  : postFinanceInfo({}, (data) => {
+                      window.location.replace(data.connectUrl);
+                    });
               }}
             >
               Привязать новую карту
@@ -197,6 +224,7 @@ export default function CardInfo({ cardInfo }: CardInfoProps) {
               </Button>
             )}
           </Stack>
+          <DeleteCardErrorModal errorMessage={errorMessage} />
         </Paper>
       ) : (
         <Paper
@@ -295,18 +323,29 @@ export default function CardInfo({ cardInfo }: CardInfoProps) {
               editedCardInfo?.fieldsPaymentCreator?.accountNumber?.length !== 20
             }
           />
-          <Paper
-            sx={{ height: "50px", p: "15px 17px", mt: "10px", boxShadow: "0" }}
+          <DarkStyledTooltip
+            title="ИНН можно изменить в личном кабинете"
+            arrow
+            placement="bottom"
           >
-            <Stack
-              direction={"row"}
-              justifyContent={"space-between"}
-              alignItems={"center"}
+            <Paper
+              sx={{
+                height: "50px",
+                p: "15px 17px",
+                mt: "10px",
+                boxShadow: "0",
+              }}
             >
-              <Typography variant={"caption"}>ИНН</Typography>
-              {generINN(CreatorInfo)}
-            </Stack>
-          </Paper>
+              <Stack
+                direction={"row"}
+                justifyContent={"space-between"}
+                alignItems={"center"}
+              >
+                <Typography variant={"caption"}>ИНН</Typography>
+                {generINN(CreatorInfo)}
+              </Stack>
+            </Paper>
+          </DarkStyledTooltip>
 
           <Stack
             direction={"row"}
@@ -316,11 +355,22 @@ export default function CardInfo({ cardInfo }: CardInfoProps) {
           >
             <Button
               onClick={() => {
-                postFinanceInfo(cardInfo?.creatorType, {
-                  accountNumber:
-                    editedCardInfo?.fieldsPaymentCreator?.accountNumber,
-                  bik: editedCardInfo?.fieldsPaymentCreator?.bik,
-                });
+                postFinanceInfo(
+                  {
+                    accountNumber:
+                      editedCardInfo?.fieldsPaymentCreator?.accountNumber,
+                    bik: editedCardInfo?.fieldsPaymentCreator?.bik,
+                  },
+                  () => {
+                    getCardInfo(
+                      (value) => {
+                        setCardInfo(value);
+                      },
+                      () => {},
+                      false
+                    );
+                  }
+                );
               }}
               sx={{ width: "100%" }}
               disabled={

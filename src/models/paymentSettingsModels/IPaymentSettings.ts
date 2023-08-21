@@ -3,7 +3,7 @@ import { CreatorType } from "../userModels/IUserInfo";
 export enum StatusConnectCard {
   notLinked = "notLinked",
   linked = "linked",
-  waitingBank = "waitingBank",
+  waitingBank = "waiting",
   failedLink = "failedLink",
 }
 

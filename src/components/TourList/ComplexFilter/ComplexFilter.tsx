@@ -12,6 +12,8 @@ import {
   Stack,
   TextField,
   Typography,
+  useMediaQuery,
+  useTheme,
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -34,6 +36,11 @@ export const ComplexFilter: FC<IFilterProps> = ({
 }) => {
   const [durationState, setDurationState] = useState<boolean>(true);
   const [durationLabel, setDurationLabel] = useState<string>("");
+
+  const theme = useTheme();
+
+  const lessThenSmall = useMediaQuery(theme.breakpoints.down("sm"));
+  const lessThenMid = useMediaQuery(theme.breakpoints.down("md"));
 
   const { maxPrice, category, complexity } = filters;
   const activeModals = useSelector(
@@ -129,8 +136,8 @@ export const ComplexFilter: FC<IFilterProps> = ({
       label: 0,
     },
     {
-      value: maxPrice,
-      label: maxPrice,
+      value: maxPrice / 100,
+      label: maxPrice / 100,
     },
   ];
 
@@ -144,6 +151,8 @@ export const ComplexFilter: FC<IFilterProps> = ({
       label: 120,
     },
   ];
+
+  console.log(maxPrice);
   return (
     <Dialog
       className="filters"
@@ -152,11 +161,17 @@ export const ComplexFilter: FC<IFilterProps> = ({
       fullWidth
       maxWidth={"lg"}
     >
-      <DialogContent>
-        <Grid container item direction={"row"} justifyContent={"space-between"}>
+      <DialogContent sx={{ p: lessThenSmall ? "0px" : "20px 24px" }}>
+        <Grid
+          container
+          item
+          direction={lessThenSmall ? "column" : "row"}
+          width={lessThenSmall ? "80%" : "100%"}
+          justifyContent={"space-between"}
+        >
           <Grid item sm={3}>
             <Typography variant={"h5"}>Категория тура</Typography>
-            <RadioGroup>
+            <RadioGroup sx={{ m: lessThenMid ? "7px 0" : "0px 0" }}>
               {category.map((cat, index) => (
                 <FormControlLabel
                   key={index}
@@ -175,7 +190,7 @@ export const ComplexFilter: FC<IFilterProps> = ({
           </Grid>
           <Grid item sm={4}>
             <Typography variant={"h5"}>Длительность тура</Typography>
-            <RadioGroup>
+            <RadioGroup sx={{ m: lessThenMid ? "7px 0" : "0px 0" }}>
               {tourDuration.map((duration, index) =>
                 tourDuration.length - 1 === index ? (
                   <FormControlLabel
@@ -232,18 +247,19 @@ export const ComplexFilter: FC<IFilterProps> = ({
               max={maxPrice / 100}
               marks={marks}
               value={[
-                searchData?.price?.from / 100 || 0,
-                searchData?.price?.to / 100 || maxPrice / 100 || 1000,
+                searchData?.price?.from || 0,
+                searchData?.price?.to || maxPrice || 1000,
               ]}
               onChange={(e, value) =>
                 handleChangeField("price", value as number[])
               }
               valueLabelDisplay="auto"
+              sx={{ ml: "15px" }}
             />
           </Grid>
           <Grid item sm={3}>
             <Typography variant={"h5"}>Сложность маршрута</Typography>
-            <RadioGroup>
+            <RadioGroup sx={{ m: lessThenMid ? "7px 0" : "0px 0" }}>
               {complexity.map((compl, index) => (
                 <FormControlLabel
                   key={index}
@@ -259,7 +275,7 @@ export const ComplexFilter: FC<IFilterProps> = ({
                 />
               ))}
             </RadioGroup>
-            <Typography variant={"h5"} marginTop={5}>
+            <Typography variant={"h5"} marginTop={lessThenSmall ? 0 : 5}>
               Рекомендуемый возраст
             </Typography>
             <Slider
@@ -273,6 +289,7 @@ export const ComplexFilter: FC<IFilterProps> = ({
                 handleChangeField("recommendedAge", value as number[])
               }
               valueLabelDisplay="auto"
+              sx={{ ml: "15px", width: "85%" }}
             />
           </Grid>
         </Grid>

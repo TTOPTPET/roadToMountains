@@ -1,11 +1,15 @@
 import { creatorUrl } from "../../config/config";
 import axios from "axios";
 
-export const deleteCard = async (errorCallback?: () => void) => {
+export const deleteCard = async (
+  successCallback: (prop?: any) => void,
+  errorCallback?: (prop?: any) => void
+) => {
   try {
-    await axios.delete(creatorUrl + "/finance/card");
+    let response = await axios.delete(creatorUrl + "/finance/card");
+    successCallback(response?.data);
   } catch (e) {
     console.error(e);
-    errorCallback && errorCallback();
+    errorCallback && errorCallback(e);
   }
 };
