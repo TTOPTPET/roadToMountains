@@ -202,6 +202,7 @@ export default function NewPublicModal({
                   ...editedPublic,
                   tourId: newValue?.tourId,
                   tour: { tourName: newValue?.tourName },
+                  tourAmount: newValue?.price,
                 }));
                 handlerNewPublicErrorChange(
                   "tourId",
