@@ -79,7 +79,9 @@ function InfoFieldsCreator({ creatorInfo }: fieldsCreatorProps) {
                 return (
                   creatorInfo?.dataUser?.creatorType === CreatorType.OOO && (
                     <Typography variant="caption" key={field}>
-                      {creatorInfo?.dataUser?.fieldsCreator?.[field]}
+                      {creatorInfo?.dataUser?.fieldsCreator?.[field]
+                        ? creatorInfo?.dataUser?.fieldsCreator?.[field]
+                        : "-"}
                     </Typography>
                   )
                 );
@@ -143,7 +145,9 @@ function InfoFieldsCreator({ creatorInfo }: fieldsCreatorProps) {
                 return (
                   creatorInfo?.dataUser?.creatorType === CreatorType.IP && (
                     <Typography variant="caption" key={field}>
-                      {creatorInfo?.dataUser?.fieldsCreator?.[field]}
+                      {creatorInfo?.dataUser?.fieldsCreator?.[field]
+                        ? creatorInfo?.dataUser?.fieldsCreator?.[field]
+                        : "-"}
                     </Typography>
                   )
                 );
@@ -206,7 +210,9 @@ function InfoFieldsCreator({ creatorInfo }: fieldsCreatorProps) {
                 return (
                   creatorInfo?.dataUser?.creatorType === CreatorType.SELF && (
                     <Typography variant="caption" key={field}>
-                      {creatorInfo?.dataUser?.fieldsCreator?.[field]}
+                      {creatorInfo?.dataUser?.fieldsCreator?.[field]
+                        ? creatorInfo?.dataUser?.fieldsCreator?.[field]
+                        : "-"}
                     </Typography>
                   )
                 );

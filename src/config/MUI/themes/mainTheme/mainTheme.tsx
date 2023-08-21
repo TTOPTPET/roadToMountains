@@ -300,6 +300,15 @@ export const mainThemes = createTheme(breakpoints, {
               },
             },
           },
+          "& .MuiCalendarPicker-root": {
+            "& .MuiPickersFadeTransitionGroup-root": {
+              "& .MuiButtonBase-root": {
+                "&.Mui-selected": {
+                  backgroundColor: darkTurquoiseColor,
+                },
+              },
+            },
+          },
         },
       },
     },
@@ -689,10 +698,13 @@ export const mainThemes = createTheme(breakpoints, {
       styleOverrides: {
         root: {
           backgroundColor: whiteColor,
-          borderRadius: 20,
+          borderRadius: 0,
           "&.MuiPaper-root": {
             borderRadius: 20,
             padding: 0,
+            "&.MuiAccordion-root": {
+              "&.Mui-expanded": { margin: "0" },
+            },
           },
           "&:before": {
             backgroundColor: "rgba(0,0,0,0)",

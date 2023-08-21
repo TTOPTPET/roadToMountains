@@ -36,6 +36,7 @@ import {
   setModalInactive,
 } from "../../../redux/Modal/ModalReducer";
 import ConfirmChangeCreatorTypeModal from "../../Modals/ConfirmChangeCreatorTypeModal/ConfirmChangeCreatorTypeModal";
+import InputMask from "react-input-mask";
 
 function EditCreatorInfo() {
   const creatorInfo = useSelector(
@@ -102,6 +103,27 @@ function EditCreatorInfo() {
     setRadioFirstChange(true);
   }, []);
 
+  const re =
+    /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+  const getPhoneTextField = (): React.ReactNode => {
+    //@ts-ignore
+    return () => (
+      <TextField
+        label="Номер телефона"
+        color="primary"
+        value={editedCreatorInfo?.phone}
+        error={
+          editedCreatorInfo?.phone.replace(/[() -+-]/g, "").length !== 11
+            ? true
+            : false
+        }
+      />
+    );
+  };
+
+  const [innError, setInnError] = useState(false);
+
   return (
     <>
       <EditUserInfo
@@ -118,21 +140,24 @@ function EditCreatorInfo() {
                 })
               }
             />
-            <TextField
-              label="Телефон"
-              color="primary"
+            <InputMask
+              mask={"+7 (999) 999-99-99"}
+              maskChar=" "
               value={editedCreatorInfo?.phone}
-              onChange={(e) =>
+              onChange={(e) => {
                 setEditedCreatorInfo({
                   ...editedCreatorInfo,
                   phone: e.target.value,
-                })
-              }
-            />
+                });
+              }}
+            >
+              {getPhoneTextField()}
+            </InputMask>
             <TextField
               label="Электронная почта"
               color="primary"
               value={editedCreatorInfo?.email}
+              error={!re.test(editedCreatorInfo?.email)}
               onChange={(e) =>
                 setEditedCreatorInfo({
                   ...editedCreatorInfo,
@@ -189,6 +214,7 @@ function EditCreatorInfo() {
               </RadioGroup>
             </FormControl>
             <InputFieldsCreator
+              setInnError={setInnError}
               creatorInfo={creatorInfo}
               editedCreatorInfo={editedCreatorInfo}
               setEditedCreatorInfo={(creatorInfo) =>
@@ -263,6 +289,11 @@ function EditCreatorInfo() {
             }
           />
         )}
+        errored={
+          editedCreatorInfo?.phone.replace(/[() -+-]/g, "").length !== 11 ||
+          (!re.test(editedCreatorInfo?.email) ? true : false) ||
+          innError
+        }
       />
       <EnterMobileCodeModal
         successCallback={(resp) => {

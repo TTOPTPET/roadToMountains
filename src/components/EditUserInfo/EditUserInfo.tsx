@@ -34,7 +34,6 @@ function EditUserInfo({
 
   const userInfo = useSelector((state: RootState) => state.userInfo.userInfo);
 
-  console.log(userInfo);
   return (
     <Box>
       <Box

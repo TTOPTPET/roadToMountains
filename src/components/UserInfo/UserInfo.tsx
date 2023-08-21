@@ -195,8 +195,12 @@ function UserInfo({ header, fields, submitFuntion }: UserInfoProps) {
                           gap: "3px",
                         }}
                       >
-                        <Typography variant="caption">{phone}</Typography>
-                        <Typography variant="caption">{email}</Typography>
+                        <Typography variant="caption">
+                          {phone || "-"}
+                        </Typography>
+                        <Typography variant="caption">
+                          {email || "-"}
+                        </Typography>
                       </Box>
                     </Box>
                   </Box>

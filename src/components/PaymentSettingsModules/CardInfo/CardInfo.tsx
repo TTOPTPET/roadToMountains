@@ -109,8 +109,6 @@ export default function CardInfo({
     }
   };
 
-  console.log(cardInfo);
-
   return (
     <>
       <Typography variant="h5">Информация о Вашем счёте</Typography>

@@ -49,10 +49,10 @@ const StatisticItem: FC<IStatisticItemProps> = ({ statistic }) => {
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
         </TableCell>
-        <TableCell>{statistic?.tourName || ""}</TableCell>
+        <TableCell>{statistic?.tourName || "Название тура"}</TableCell>
         <TableCell>{getTourStatus(statistic?.tourStatus)}</TableCell>
-        <TableCell>{statistic?.tourAmount / 100 || ""}</TableCell>
-        <TableCell>{statistic?.personNum || ""}</TableCell>
+        <TableCell>{statistic?.tourAmount / 100 || 0}</TableCell>
+        <TableCell>{statistic?.personNum || 0}</TableCell>
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={5}>
