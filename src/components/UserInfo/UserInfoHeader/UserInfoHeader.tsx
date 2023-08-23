@@ -5,6 +5,7 @@ import {
   useTheme,
   useMediaQuery,
   Stack,
+  Paper,
 } from "@mui/material";
 import { DarkStyledTooltip } from "../../../config/MUI/styledComponents/StyledTooltip";
 
@@ -17,6 +18,7 @@ import checked from "../../../media/checkedVerify.svg";
 import clock from "../../../media/clockVerify.svg";
 import alert from "../../../media/alertVerify.svg";
 import banIcon from "../../../media/ban-status-icon.svg";
+import orangeWarning from "../../../media/orange_warning_circle.svg";
 
 import {
   ITouristInfo,
@@ -34,6 +36,7 @@ import { sendVerified } from "../../../API/creatorAPI/sendVerified";
 import { setUserInfo } from "../../../redux/UserInfo/UserInfoReducer";
 import { useCookies } from "react-cookie";
 import { logout } from "../../../API/authAPI/logout";
+import { whiteColor } from "../../../config/MUI/color/color";
 
 type UserInfoHeaderProps = {
   submitFuntion?: () => void;
@@ -82,12 +85,34 @@ function UserInfoHeader({
           >
             {title}
           </Typography>
-          <Typography variant={"caption"} color={"red"}>
-            {userInfo?.typeUser !== UserType.tourist &&
-            userInfo?.dataUser?.statusVerify === StatusVerify.notVerified
-              ? "Для публикации туров отправьте данные на проверку"
-              : ""}
-          </Typography>
+
+          {userInfo?.typeUser !== UserType.tourist &&
+            userInfo?.dataUser?.statusVerify === StatusVerify.notVerified && (
+              <Paper
+                sx={{ p: "4px 8px", bgcolor: whiteColor, boxShadow: "none" }}
+              >
+                <Stack direction={"row"} gap={"4px"} alignItems={"center"}>
+                  <Box
+                    sx={{
+                      width: "14px",
+                      height: "14px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <img
+                      src={orangeWarning}
+                      alt="warning icon"
+                      style={{ width: "100%", height: "100%" }}
+                    />
+                  </Box>
+                  <Typography variant={"caption"}>
+                    Отправьте данные на подтверждение, чтобы продавать туры
+                  </Typography>
+                </Stack>
+              </Paper>
+            )}
         </Stack>
         {userInfo &&
         userInfo?.typeUser !== UserType.tourist &&
