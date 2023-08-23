@@ -1,4 +1,4 @@
-import { Box, Button, Grid, Typography } from "@mui/material";
+import { Box, Button, Grid, Stack, Typography } from "@mui/material";
 import { useState, useEffect } from "react";
 import { IPublicTour } from "../../models/calendarModels/IPublicTour";
 import { getPublicTours } from "../../API/calendarAPI/getPublicTours";
@@ -49,20 +49,22 @@ function TourCalendarPage() {
         Мои туры
       </Typography>
 
-      <Grid container spacing={8}>
-        <Grid item xs={8}>
-          <CalendarDatePicker
-            viewMonth={viewMonth}
-            setViewMonth={setViewMonth}
-          />
-          <Calendar
-            viewMonth={viewMonth}
-            publicTours={publicTours}
-            selectedPublic={selectedPublic}
-            setSelectedPublic={setSelectedPublic}
-          />
+      <Grid container spacing={8} height={"80vh"}>
+        <Grid item xs={8} height={"100%"}>
+          <Stack display={"flex"} direction={"column"} height={"100%"}>
+            <CalendarDatePicker
+              viewMonth={viewMonth}
+              setViewMonth={setViewMonth}
+            />
+            <Calendar
+              viewMonth={viewMonth}
+              publicTours={publicTours}
+              selectedPublic={selectedPublic}
+              setSelectedPublic={setSelectedPublic}
+            />
+          </Stack>
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={4} height={"100%"}>
           {selectedPublic ? (
             <CalendarSidebar
               selectedPublic={selectedPublic}

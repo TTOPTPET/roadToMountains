@@ -104,7 +104,11 @@ export const AddTourSecondPage: FC<IAddTourSecondPageProps> = ({
   };
 
   const handleFreeServices = (e: any) => {
-    if (e.keyCode === 13) {
+    if (
+      e.keyCode === 13 &&
+      e.target.value &&
+      !tourInfo?.tourServices?.freeServices.includes(e.target.value)
+    ) {
       setTourInfo({
         ...tourInfo,
         tourServices: {
@@ -119,7 +123,11 @@ export const AddTourSecondPage: FC<IAddTourSecondPageProps> = ({
   };
 
   const handleAdditionalServices = (e: any) => {
-    if (e.keyCode === 13) {
+    if (
+      e.keyCode === 13 &&
+      e.target.value &&
+      !tourInfo?.tourServices?.additionalServices.includes(e.target.value)
+    ) {
       setTourInfo({
         ...tourInfo,
         tourServices: {
@@ -134,7 +142,11 @@ export const AddTourSecondPage: FC<IAddTourSecondPageProps> = ({
   };
 
   const handleRecommendations = (e: any) => {
-    if (e.keyCode === 13) {
+    if (
+      e.keyCode === 13 &&
+      e.target.value &&
+      !tourInfo?.recommendations.includes(e.target.value)
+    ) {
       setTourInfo({
         ...tourInfo,
         recommendations: [...(tourInfo?.recommendations || []), e.target.value],
@@ -370,7 +382,7 @@ export const AddTourSecondPage: FC<IAddTourSecondPageProps> = ({
               ))}
           </Stack>
           <TextField
-            label={"Услуга"}
+            label={"Рекомендация"}
             sx={{ width: "75%" }}
             onKeyDown={handleRecommendations}
           />

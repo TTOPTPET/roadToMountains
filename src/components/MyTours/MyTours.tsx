@@ -125,6 +125,7 @@ export const MyTours = () => {
           <Tab value={tabValues.past} label={"Прошедшие"} />
         </Tabs>
       </Stack>
+
       {loading ? (
         <Box
           sx={{
@@ -138,15 +139,20 @@ export const MyTours = () => {
         </Box>
       ) : (
         <Stack direction={"column"} gap={{ lg: "20px", xs: "10px" }}>
-          {sortedRecords &&
-            sortedRecords.map((record, index) => (
-              <TourAccordion
-                key={index}
-                record={record}
-                records={records}
-                setRecords={setRecords}
-              />
-            ))}
+          {sortedRecords && sortedRecords.length > 0 ? (
+          sortedRecords.map((record, index) => (
+            <TourAccordion
+              key={index}
+              record={record}
+              records={records}
+              setRecords={setRecords}
+            />
+          ))
+        ) : (
+          <Typography mt={3} variant={lessThenSmall ? "h5" : "h4"}>
+            У вас еще нет записей
+          </Typography>
+        )}
         </Stack>
       )}
       <ErrorBookingModal />

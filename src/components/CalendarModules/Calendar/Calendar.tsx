@@ -22,7 +22,10 @@ export const Calendar = ({
   const dispatch = useDispatch();
 
   return (
-    <Paper variant="whiteBlue" sx={{ width: "100%", height: "65vh" }}>
+    <Paper
+      variant="whiteBlue"
+      sx={{ width: "100%", display: "flex", flexGrow: "3" }}
+    >
       <Grid container columns={21} sx={{ height: "100%" }}>
         <Grid container item xs={12} sx={{ height: "10%" }}>
           {[
