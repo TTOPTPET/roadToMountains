@@ -40,7 +40,7 @@ export default function RecentOperationItem({
       <AccordionSummary
         sx={{
           padding: "0",
-          height: "80px",
+          height: { lg: "80px", xs: "69px" },
           borderRadius: "35px",
           boxShadow: "none",
         }}
