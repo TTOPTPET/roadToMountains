@@ -87,7 +87,7 @@ function InputFieldsCreator({
                 inputProps={field === "innOOO" && { pattern: "^[d+]{10}$" }}
                 error={
                   field === "innOOO" &&
-                  editedCreatorInfo.dataUser.fieldsCreator.innOOO &&
+                  editedCreatorInfo?.dataUser?.fieldsCreator?.innOOO &&
                   !regexUR.test(editedCreatorInfo.dataUser.fieldsCreator.innOOO)
                 }
               />
@@ -129,7 +129,7 @@ function InputFieldsCreator({
                 inputProps={field === "innIP" && { pattern: "^[d+]{10}$" }}
                 error={
                   field === "innIP" &&
-                  editedCreatorInfo.dataUser.fieldsCreator.innIP &&
+                  editedCreatorInfo?.dataUser?.fieldsCreator?.innIP &&
                   !regexUR.test(editedCreatorInfo.dataUser.fieldsCreator.innIP)
                 }
               />
@@ -170,7 +170,7 @@ function InputFieldsCreator({
                 inputProps={field === "innSELF" && { pattern: "^[d+]{12}$" }}
                 error={
                   field === "innSELF" &&
-                  editedCreatorInfo.dataUser.fieldsCreator.innSELF &&
+                  editedCreatorInfo?.dataUser?.fieldsCreator?.innSELF &&
                   !regexSELF.test(
                     editedCreatorInfo.dataUser.fieldsCreator.innSELF
                   )
