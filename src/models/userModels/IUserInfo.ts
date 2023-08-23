@@ -58,6 +58,7 @@ export interface ICreatorOOOData {
   creatorType?: CreatorType.OOO;
   statusVerify?: StatusVerify;
   fieldsCreator?: ICreatorOOOFields;
+  dateBeforeSendConfirmation?: string;
 }
 
 export interface ICreatorIPData {
@@ -68,6 +69,7 @@ export interface ICreatorIPData {
   creatorType?: CreatorType.IP;
   statusVerify?: StatusVerify;
   fieldsCreator?: ICreatorIPFields;
+  dateBeforeSendConfirmation?: string;
 }
 export interface ICreatorSELFData {
   changeStatus?: boolean;
@@ -77,6 +79,7 @@ export interface ICreatorSELFData {
   creatorType?: CreatorType.SELF;
   statusVerify?: StatusVerify;
   fieldsCreator?: ICreatorSELFFields;
+  dateBeforeSendConfirmation?: string;
 }
 
 export interface ITouristData {

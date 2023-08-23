@@ -8,6 +8,7 @@ import {
   Paper,
   Autocomplete,
   useMediaQuery,
+  CircularProgress,
 } from "@mui/material";
 import { AuthComponent } from "../../components/AuthorizationModules/AuthFabric/AuthFabic";
 import { IUserLogin } from "../../models/authModels/IUserLogin";
@@ -86,6 +87,7 @@ function Authorization() {
   const [registerInputError, setRegisterInputError] = useState<RegisterErrors>(
     registerErrorsDefault
   );
+  const [loading, setLoading] = useState(false);
 
   const refBtn = useRef<HTMLButtonElement | null>(null);
 
@@ -180,9 +182,11 @@ function Authorization() {
         setCookies(BAN_STATUS, resp.status, { path: "/" });
         setErrAuth(false);
         setErrorMessage("");
+        setLoading(false);
         navigate("/tours/all");
       },
       (e) => {
+        setLoading(false);
         if (e.response.status >= 400 && e.response.status <= 500) {
           setErrAuth(true);
           setErrorMessage("Неверный логин или пароль!");
@@ -362,15 +366,25 @@ function Authorization() {
             {errorMessage}
           </Typography>
         )}
+        {}
 
         {regState ? (
-          <Button
-            ref={refBtn}
-            onClick={() => handlerLoginClick()}
-            style={{ width: media ? "100%" : "" }}
-          >
-            Вход
-          </Button>
+          loading ? (
+            <Box sx={{ display: "flex" }}>
+              <CircularProgress />
+            </Box>
+          ) : (
+            <Button
+              ref={refBtn}
+              onClick={() => {
+                handlerLoginClick();
+                setLoading(true);
+              }}
+              style={{ width: media ? "100%" : "" }}
+            >
+              Вход
+            </Button>
+          )
         ) : (
           <Button
             ref={refBtn}

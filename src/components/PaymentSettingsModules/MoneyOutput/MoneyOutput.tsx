@@ -19,10 +19,13 @@ export default function MoneyOutput({ accauntAmount }: MoneyOutputProps) {
 
   const materialUITextFieldProps = {
     color: "secondary",
-    error: Number(accauntAmount) < Number(amount),
+    error:
+      Number(accauntAmount) < Number(amount / 100) || Number(amount) < 10000,
     InputProps: { inputProps: { min: 0 } },
     label: "Сумма",
   };
+
+  console.log(accauntAmount);
 
   const dispatch = useDispatch();
 
@@ -44,6 +47,7 @@ export default function MoneyOutput({ accauntAmount }: MoneyOutputProps) {
           sx={{ mt: "20px" }}
           decimalScale={2}
           onValueChange={(values, sourceInfo) => {
+            console.log(values.floatValue);
             setAmount(values.floatValue * 100);
           }}
           thousandSeparator=" "
@@ -60,7 +64,7 @@ export default function MoneyOutput({ accauntAmount }: MoneyOutputProps) {
           error={Number(accauntAmount) < Number(amount)}
         /> */}
 
-        {Number(accauntAmount) < Number(amount) && (
+        {Number(accauntAmount) < Number(amount / 100) && (
           <Typography
             variant="caption"
             sx={{ color: redColor, mt: "10px", textAlign: "center" }}
@@ -80,7 +84,7 @@ export default function MoneyOutput({ accauntAmount }: MoneyOutputProps) {
         <Stack direction="row" justifyContent="flex-end">
           <Button
             sx={{
-              mt: Number(accauntAmount) < Number(amount) ? "5px" : "30px",
+              mt: Number(accauntAmount) < Number(amount / 100) ? "5px" : "30px",
             }}
             onClick={() =>
               postWithdrawal(
@@ -99,7 +103,7 @@ export default function MoneyOutput({ accauntAmount }: MoneyOutputProps) {
               )
             }
             disabled={
-              Number(accauntAmount) < Number(amount) ||
+              Number(accauntAmount) < Number(amount / 100) ||
               (amount && Number(amount) < 10000)
             }
           >

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Box, Typography } from "@mui/material";
+import { Box, CircularProgress, Typography } from "@mui/material";
 import {
   StatisticItem,
   StatisticSearch,
@@ -16,12 +16,19 @@ function StatisticPage() {
     dateFrom: dayjs(new Date()).date(1).toISOString(),
     dateTo: dayjs(new Date()).toISOString(),
   });
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    setLoading(true);
     getStatistic(
       statisticSearch,
-      (value) => setStatistic(value),
-      undefined,
+      (value) => {
+        setStatistic(value);
+        setLoading(false);
+      },
+      () => {
+        setLoading(false);
+      },
       false
     );
   }, []);
@@ -35,12 +42,25 @@ function StatisticPage() {
         setStatisticSearch={setStatisticSearch}
         setStatistic={setStatistic}
       />
-      <StatisticTable>
-        {statistic &&
-          statistic.map((item, index) => (
-            <StatisticItem key={index} statistic={item} />
-          ))}
-      </StatisticTable>
+      {loading ? (
+        <Box
+          sx={{
+            width: "100%",
+            display: "flex",
+            justifyContent: "center",
+            mt: "40px",
+          }}
+        >
+          <CircularProgress size={"80px"} />
+        </Box>
+      ) : (
+        <StatisticTable>
+          {statistic &&
+            statistic.map((item, index) => (
+              <StatisticItem key={index} statistic={item} />
+            ))}
+        </StatisticTable>
+      )}
     </Box>
   );
 }

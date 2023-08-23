@@ -19,6 +19,7 @@ import { ITour } from "../../models/tourCardModel/ITour";
 import TourCard from "../../components/TourCard/TourCard";
 import { useSearchParams } from "react-router-dom";
 import { ChipLabelType } from "../../components/TourList/getChipLabels";
+import TourListSkeleton from "./TourListSkeleton/TourListSkeleton";
 
 const filterDefault: IFilter = {
   regions: [],
@@ -37,12 +38,14 @@ function TourListPage() {
     searchParam: searchParam.get("title"),
   });
   const [filtersLabels, setFiltersLabels] = useState<string[]>([]);
+  const [loading, setLoading] = useState(false);
 
   const dispatch = useDispatch();
 
   const theme = useTheme();
 
   const moreThanSmall = useMediaQuery(theme.breakpoints.up("sm"));
+  const lessThenSmall = useMediaQuery(theme.breakpoints.down("sm"));
 
   const clearSearchField = (key: keyof ISearchRequest, value: string) => {
     const searchValue = searchData[key];
@@ -91,11 +94,17 @@ function TourListPage() {
   };
 
   useEffect(() => {
+    setLoading(true);
     getFilters((filter) => setFilters(filter), undefined, false);
     getToursSorted(
-      (search) => setTourList(search),
+      (search) => {
+        setTourList(search);
+        setLoading(false);
+      },
       searchData,
-      undefined,
+      () => {
+        setLoading(false);
+      },
       false
     );
   }, [filtersLabels]);
@@ -149,7 +158,12 @@ function TourListPage() {
         filtersLabels={filtersLabels}
         setFiltersLabels={setFiltersLabels}
       />
-      <Stack direction={"row"} flexWrap={"wrap"} gap={2}>
+      <Stack
+        direction={"row"}
+        flexWrap={"wrap"}
+        gap={{ lg: "15px", md: "10px", xs: "6px" }}
+        sx={lessThenSmall && { width: "220px", m: "0 auto" }}
+      >
         {filtersLabels.map((item, index) => (
           <Chip
             key={index}
@@ -174,7 +188,10 @@ function TourListPage() {
         justifyContent={{ sm: "flex-start", xs: "center" }}
         marginTop={1}
       >
-        {tourList &&
+        {loading ? (
+          <TourListSkeleton />
+        ) : (
+          tourList &&
           tourList
             .filter((tour) => tour.banStatus !== true)
             .map((tour, index) => (
@@ -191,7 +208,8 @@ function TourListPage() {
                   }}
                 />
               </Grid>
-            ))}
+            ))
+        )}
       </Grid>
     </Stack>
   );

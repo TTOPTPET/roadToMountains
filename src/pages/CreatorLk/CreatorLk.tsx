@@ -17,18 +17,18 @@ import SuccessDeleteTourModal from "../../components/Modals/SuccessDeleteTourMod
 
 function CreatorLk() {
   const [myTours, setMyTours] = useState<ITour[]>([]);
-  const [loadingStatus, setLoadingStatus] = useState<Boolean>(true);
+  const [loading, setLoading] = useState<Boolean>(true);
 
   const theme = useTheme();
 
   const moreThenMid = useMediaQuery(theme.breakpoints.up("md"));
 
   useEffect(() => {
-    setLoadingStatus(true);
+    setLoading(true);
     getMyTours(
       (value) => {
         setMyTours(value);
-        setLoadingStatus(false);
+        setLoading(false);
       },
       undefined,
       false
@@ -114,7 +114,7 @@ function CreatorLk() {
         <Grid item lg={3} md={3} sm={4}>
           <AddTourButton />
         </Grid>
-        {loadingStatus ? skeleton() : elements}
+        {loading ? skeleton() : elements}
       </Grid>
       <DeleteTourModal myTours={myTours} setMyTours={setMyTours} />
       <SuccessDeleteTourModal />
