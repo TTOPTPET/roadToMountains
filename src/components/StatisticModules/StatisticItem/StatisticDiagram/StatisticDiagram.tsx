@@ -79,6 +79,11 @@ const StatisticDiagram: FC<IStatisticDiagramProps> = ({ stat }) => {
               legend: {
                 display: false,
               },
+              tooltip: {
+                callbacks: {
+                  label: (value) => ` ${value.raw}${"%"}`,
+                },
+              },
             },
           }}
         />
