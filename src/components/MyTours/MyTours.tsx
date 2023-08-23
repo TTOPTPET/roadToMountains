@@ -5,6 +5,8 @@ import {
   Tab,
   useTheme,
   useMediaQuery,
+  Box,
+  CircularProgress,
 } from "@mui/material";
 import { SyntheticEvent, useEffect, useState } from "react";
 import { IUserRecord } from "../../models/userModels/IUserRecord";
@@ -22,6 +24,7 @@ enum tabValues {
 export const MyTours = () => {
   const [records, setRecords] = useState<IUserRecord[]>([]);
   const [tabValue, setTabValue] = useState<tabValues>(tabValues.upcomming);
+  const [loading, setLoading] = useState(false);
 
   const weights = [
     "successPay",
@@ -68,10 +71,15 @@ export const MyTours = () => {
   }, [tabValue]);
 
   const filterRecords = (past: boolean) => {
+    setLoading(true);
     getTouristRecords(
-      (value) =>
-        setRecords(value.filter((item) => item.bookingStatus.past === past)),
-      undefined,
+      (value) => {
+        setRecords(value.filter((item) => item.bookingStatus.past === past));
+        setLoading(false);
+      },
+      () => {
+        setLoading(false);
+      },
       false
     );
   };
@@ -117,17 +125,30 @@ export const MyTours = () => {
           <Tab value={tabValues.past} label={"Прошедшие"} />
         </Tabs>
       </Stack>
-      <Stack direction={"column"} gap={{ lg: "20px", xs: "10px" }}>
-        {sortedRecords &&
-          sortedRecords.map((record, index) => (
-            <TourAccordion
-              key={index}
-              record={record}
-              records={records}
-              setRecords={setRecords}
-            />
-          ))}
-      </Stack>
+      {loading ? (
+        <Box
+          sx={{
+            width: "100%",
+            display: "flex",
+            justifyContent: "center",
+            mt: "40px",
+          }}
+        >
+          <CircularProgress size={"80px"} />
+        </Box>
+      ) : (
+        <Stack direction={"column"} gap={{ lg: "20px", xs: "10px" }}>
+          {sortedRecords &&
+            sortedRecords.map((record, index) => (
+              <TourAccordion
+                key={index}
+                record={record}
+                records={records}
+                setRecords={setRecords}
+              />
+            ))}
+        </Stack>
+      )}
       <ErrorBookingModal />
       <ConfirmCancelBooking />
       <SuccessCancelBooking />

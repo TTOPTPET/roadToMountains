@@ -336,6 +336,13 @@ export const mainThemes = createTheme(breakpoints, {
         },
       },
     },
+    MuiCircularProgress: {
+      styleOverrides: {
+        root: {
+          color: darkTurquoiseColor,
+        },
+      },
+    },
     MuiButton: {
       styleOverrides: {
         root: {
