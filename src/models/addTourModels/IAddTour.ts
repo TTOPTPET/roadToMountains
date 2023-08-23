@@ -1,4 +1,5 @@
 export interface IAddTour {
+  id?: string;
   tourName?: string;
   tourDescription?: string;
   category?: string;

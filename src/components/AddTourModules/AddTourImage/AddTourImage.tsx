@@ -12,6 +12,7 @@ import { baseUrl } from "../../../config/config";
 import { ReactComponent as AddImageLogo } from "../../../media/add-image.svg";
 import { ReactComponent as DeleteIcon } from "../../../media/DeleteCreatorDocumentIcon.svg";
 import { IAddTour } from "../../../models/addTourModels/IAddTour";
+import { deleteToutPhoto } from "../../../API/addTourAPI/deleteToutPhoto";
 
 const MAXIMUM_UPLOAD = 100 * 1024 * 1024;
 
@@ -61,14 +62,15 @@ export const AddTourImage: FC<IAddTourImageProps> = ({
     if (isEditing) {
       if (tourInfo.photos.includes(images[index])) {
       }
-
-      setImage([
-        ...images.filter((item, i) => i !== index),
-        {
-          src: "",
-          loading: true,
-        },
-      ]);
+      deleteToutPhoto(images[index], tourInfo.id, () => {
+        setImage([
+          ...images.filter((item, i) => i !== index),
+          {
+            src: "",
+            loading: true,
+          },
+        ]);
+      });
     } else {
       setImage([
         ...images.filter((item, i) => i !== index),
