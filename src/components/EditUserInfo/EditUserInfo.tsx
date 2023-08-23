@@ -9,6 +9,7 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { RootState } from "../../redux/store";
 import { UserType } from "../../models/userModels/IUserInfo";
+import ChangePasswordModal from "../Modals/ChangePasswordModal/ChangePasswordModal";
 
 type editUserInfoProps = {
   fields: JSX.Element;
@@ -109,6 +110,7 @@ function EditUserInfo({
           </Button>
         </Box>
       )}
+      <ChangePasswordModal />
     </Box>
   );
 }

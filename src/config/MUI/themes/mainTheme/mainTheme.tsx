@@ -451,6 +451,7 @@ export const mainThemes = createTheme(breakpoints, {
         {
           props: { variant: "fileInput" },
           style: {
+            letterSpacing: "0px",
             backgroundColor: lightTurquoiseColor,
             width: "100%",
             height: "50px",

@@ -165,6 +165,17 @@ function EditCreatorInfo() {
                 })
               }
             />
+            <Button
+              variant="fileInput"
+              component="label"
+              onClick={() => {
+                dispatch(setModalActive("changePasswordModal"));
+              }}
+            >
+              <Typography variant="caption" sx={{ letterSpacing: "0px" }}>
+                Изменить пароль
+              </Typography>
+            </Button>
             <FormControl>
               <FormLabel id="demo-radio-buttons-group-label">
                 Тип организации
