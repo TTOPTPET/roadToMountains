@@ -85,7 +85,7 @@ function EnterMobileCodeModal({ successCallback, userRegisterData }: Props) {
           Вам отправлен одноразовый код подтверждения
         </Typography>
         <TextField
-          label="Код из почты"
+          label="Код c почты"
           color="secondary"
           value={confirmCode}
           type={"number"}

@@ -6,6 +6,8 @@ import {
   FormControlLabel,
   Radio,
   Autocomplete,
+  Button,
+  Typography,
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { ITouristInfo, Sex } from "../../../models/userModels/IUserInfo";
@@ -125,6 +127,17 @@ function EditTouristInfo() {
                 />
               )}
             />
+            <Button
+              variant="fileInput"
+              component="label"
+              onClick={() => {
+                dispatch(setModalActive("changePasswordModal"));
+              }}
+            >
+              <Typography variant="caption" sx={{ letterSpacing: "0px" }}>
+                Изменить пароль
+              </Typography>
+            </Button>
             <FormControl>
               <FormLabel
                 id="demo-radio-buttons-group-label"

@@ -38,6 +38,7 @@ import {
 import { useCookies } from "react-cookie";
 import InputMask from "react-input-mask";
 import { cloneDeep } from "lodash";
+import LostPasswordModal from "../../components/Modals/LostPasswordModal/LostPasswordModal";
 
 const registerTypes = [
   { id: UserType.creator, name: "туросоздатель" },
@@ -265,6 +266,7 @@ function Authorization() {
           maxWidth: "600px",
           width: "100%",
           margin: "0 auto",
+          pb: "20px",
         }}
       >
         <Stack
@@ -423,7 +425,17 @@ function Authorization() {
             {regState ? "Зарегистрироваться" : "Войти"}
           </Button>
         </Stack>
+        <Button
+          variant="weakTextButton"
+          onClick={() => {
+            dispatch(setModalActive("lostPasswordModal"));
+          }}
+          sx={{ textDecoration: "underline" }}
+        >
+          Забыли пароль?
+        </Button>
       </Paper>
+      <LostPasswordModal />
     </Stack>
   );
 }
