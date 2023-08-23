@@ -279,6 +279,17 @@ export const mainThemes = createTheme(breakpoints, {
     MuiCalendarOrClockPicker: {
       styleOverrides: {
         root: {
+          "& .MuiPickersToolbar-root": {
+            "& .MuiTypography-root": {
+              fontFamily: "Montserrat",
+            },
+            "& .MuiButtonBase-root": {
+              backgroundColor: whiteColor,
+            },
+            "& .MuiDateTimePickerToolbar-timeContainer": {
+              alignItems: "center",
+            },
+          },
           "& .MuiClockPicker-root": {
             "& .MuiClock-root": {
               "& .MuiClock-clock": {
@@ -305,6 +316,19 @@ export const mainThemes = createTheme(breakpoints, {
               "& .MuiButtonBase-root": {
                 "&.Mui-selected": {
                   backgroundColor: darkTurquoiseColor,
+                },
+              },
+              "& .MuiPickersCalendarHeader-label": {
+                fontFamily: "Montserrat",
+              },
+              "& .MuiYearPicker-root": {
+                "& .PrivatePickersYear-root": {
+                  "& .PrivatePickersYear-yearButton": {
+                    fontFamily: "Montserrat",
+                  },
+                  "& .Mui-selected": {
+                    backgroundColor: darkTurquoiseColor,
+                  },
                 },
               },
             },
