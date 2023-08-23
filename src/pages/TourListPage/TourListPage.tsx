@@ -45,6 +45,7 @@ function TourListPage() {
   const theme = useTheme();
 
   const moreThanSmall = useMediaQuery(theme.breakpoints.up("sm"));
+  const lessThenSmall = useMediaQuery(theme.breakpoints.down("sm"));
 
   const clearSearchField = (key: keyof ISearchRequest, value: string) => {
     const searchValue = searchData[key];
@@ -157,7 +158,12 @@ function TourListPage() {
         filtersLabels={filtersLabels}
         setFiltersLabels={setFiltersLabels}
       />
-      <Stack direction={"row"} flexWrap={"wrap"} gap={2}>
+      <Stack
+        direction={"row"}
+        flexWrap={"wrap"}
+        gap={{ lg: "15px", md: "10px", xs: "6px" }}
+        sx={lessThenSmall && { width: "220px", m: "0 auto" }}
+      >
         {filtersLabels.map((item, index) => (
           <Chip
             key={index}

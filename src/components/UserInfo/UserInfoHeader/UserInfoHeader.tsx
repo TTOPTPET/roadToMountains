@@ -37,6 +37,7 @@ import { setUserInfo } from "../../../redux/UserInfo/UserInfoReducer";
 import { useCookies } from "react-cookie";
 import { logout } from "../../../API/authAPI/logout";
 import { whiteColor } from "../../../config/MUI/color/color";
+import dayjs from "dayjs";
 
 type UserInfoHeaderProps = {
   submitFuntion?: () => void;
@@ -66,7 +67,6 @@ function UserInfoHeader({
   const lessThenMid = useMediaQuery(theme.breakpoints.down("md"));
 
   const navigate = useNavigate();
-
   return (
     <Box
       className="userInfo__header-wrapper"
@@ -108,7 +108,12 @@ function UserInfoHeader({
                     />
                   </Box>
                   <Typography variant={"caption"}>
-                    Отправьте данные на подтверждение, чтобы продавать туры
+                    Отправьте данные на подтверждение, чтобы продавать туры{" "}
+                    {userInfo &&
+                      userInfo?.dataUser?.dateBeforeSendConfirmation &&
+                      `до ${dayjs(
+                        userInfo?.dataUser?.dateBeforeSendConfirmation
+                      ).format("HH:mm DD-MM-YYYY")}`}
                   </Typography>
                 </Stack>
               </Paper>
@@ -184,7 +189,7 @@ function UserInfoHeader({
           userInfo?.typeUser !== UserType.tourist &&
           userInfo.dataUser?.statusVerify === StatusVerify.waitVerified ? (
           <DarkStyledTooltip
-            title="Отправте данные на проверку"
+            title="Отправьте данные на проверку"
             arrow
             placement="bottom"
           >

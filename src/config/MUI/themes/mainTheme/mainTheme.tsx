@@ -343,6 +343,31 @@ export const mainThemes = createTheme(breakpoints, {
         },
       },
     },
+    MuiChip: {
+      styleOverrides: {
+        root: {
+          "& .MuiChip-deleteIcon": {
+            [breakpoints.breakpoints.down("lg")]: {
+              fontSize: "16px",
+            },
+            [breakpoints.breakpoints.down("sm")]: {
+              fontSize: "12px",
+            },
+          },
+          [breakpoints.breakpoints.down("lg")]: {
+            height: "25px",
+            fontSize: "11px",
+          },
+          [breakpoints.breakpoints.down("md")]: {
+            height: "23px",
+          },
+          [breakpoints.breakpoints.down("sm")]: {
+            height: "20px",
+            fontSize: "9px",
+          },
+        },
+      },
+    },
     MuiButton: {
       styleOverrides: {
         root: {
