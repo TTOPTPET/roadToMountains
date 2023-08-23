@@ -46,22 +46,20 @@ export default function TouristOrder({
           justifyContent={"space-between"}
           alignItems={"center"}
         >
-          <Stack direction={"row"}>
+          <Stack direction={"row"} alignItems={"center"}>
             <Box
               sx={{
-                width: 64,
-                height: 64,
+                width: 20,
+                height: 20,
                 borderRadius: 30,
                 backgroundColor: darkTurquoiseColor,
                 color: "white",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
               }}
             >
-              <Typography
-                variant={"button"}
-                align={"center"}
-                marginY={"35%"}
-                color={"white"}
-              >
+              <Typography variant={"button"} align={"center"} color={"white"}>
                 {bookingInfo?.touristsInfo.length || 0}
               </Typography>
             </Box>
@@ -72,7 +70,6 @@ export default function TouristOrder({
               <Typography
                 variant={"caption"}
                 sx={{
-                  width: "150px",
                   whiteSpace: "nowrap",
                   overflow: "hidden",
                   textOverflow: "ellipsis",

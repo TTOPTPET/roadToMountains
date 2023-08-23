@@ -16,7 +16,13 @@ type Props = {
 
 function CalendarDatePicker({ viewMonth, setViewMonth }: Props) {
   return (
-    <Stack direction={"row"} justifyContent={"space-between"} mb={3}>
+    <Stack
+      direction={"row"}
+      justifyContent={"space-between"}
+      mb={3}
+      display={"flex"}
+      flexGrow={0}
+    >
       <Stack
         className="select_month"
         direction={"row"}

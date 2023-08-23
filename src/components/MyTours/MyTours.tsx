@@ -117,8 +117,12 @@ export const MyTours = () => {
           <Tab value={tabValues.past} label={"Прошедшие"} />
         </Tabs>
       </Stack>
-      <Stack direction={"column"} gap={{ lg: "20px", xs: "10px" }}>
-        {sortedRecords &&
+      <Stack
+        direction={"column"}
+        gap={{ lg: "20px", xs: "10px" }}
+        alignItems={"center"}
+      >
+        {sortedRecords && sortedRecords.length > 0 ? (
           sortedRecords.map((record, index) => (
             <TourAccordion
               key={index}
@@ -126,7 +130,12 @@ export const MyTours = () => {
               records={records}
               setRecords={setRecords}
             />
-          ))}
+          ))
+        ) : (
+          <Typography mt={3} variant={lessThenSmall ? "h5" : "h4"}>
+            У вас еще нет записей
+          </Typography>
+        )}
       </Stack>
       <ErrorBookingModal />
       <ConfirmCancelBooking />

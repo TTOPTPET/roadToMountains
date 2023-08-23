@@ -31,11 +31,16 @@ export default function CalendarSidebar({
   console.log(selectedPublic);
 
   return (
-    <>
-      <Typography variant={"h5"} sx={{ mb: 3, mt: 1 }}>
+    <Box
+      height={"100%"}
+      display={"flex"}
+      flexDirection={"column"}
+      overflow={"hidden"}
+    >
+      <Typography variant={"h5"} sx={{ mb: 3, mt: 1 }} flexGrow={0}>
         {selectedPublic?.tour?.tourName || "Название тура"}
       </Typography>
-      <Stack direction={"column"} gap={1} sx={{ height: "65vh" }}>
+      <Stack direction={"column"} gap={1} display={"flex"} flexGrow={3}>
         <Typography variant={"caption"}>
           {selectedPublic?.tourDate?.from && selectedPublic?.tourDate?.to
             ? dayjs(selectedPublic?.tourDate?.from).format("D MMMM YYYY") +
@@ -46,13 +51,18 @@ export default function CalendarSidebar({
         <Typography variant={"caption"}>
           {(selectedPublic?.personNum || 0) + " человек"}
         </Typography>
-        <Typography variant={"caption"}>
-          {selectedPublic?.tourAmount / 100 || 0}₽
-        </Typography>
         <Stack direction={"column"}>
-          <Typography variant={"caption"}>Стоимость на платформе:</Typography>
+          <Typography variant={"caption"}>Стоимость:</Typography>
+          <Typography variant={"caption"} fontWeight={"700"}>
+            {selectedPublic?.tourAmount / 100 || 0}₽
+          </Typography>
+        </Stack>
+
+        <Stack direction={"column"}>
           <Typography variant={"caption"}>
-            {" "}
+            Стоимость c комиссией платформы:
+          </Typography>
+          <Typography variant={"caption"} fontWeight={"700"}>
             {selectedPublic?.tourAmountWithCommission / 100 || 0}₽
           </Typography>
         </Stack>
@@ -61,6 +71,7 @@ export default function CalendarSidebar({
           gap={1}
           alignSelf={"end"}
           alignItems={"flex-end"}
+          flexShrink={2}
         >
           <Button
             disabled={
@@ -84,6 +95,7 @@ export default function CalendarSidebar({
                 </Typography>
               )}
             <Typography variant={"caption"} align={"right"}>
+              до{" "}
               {selectedPublic?.updateDeadline
                 ? dayjs(selectedPublic?.updateDeadline)
                     .add(-3, "day")
@@ -119,6 +131,7 @@ export default function CalendarSidebar({
                 </Typography>
               )}
             <Typography variant={"caption"} align={"right"}>
+              до{" "}
               {selectedPublic?.cancelDeadline
                 ? dayjs(selectedPublic?.cancelDeadline)
                     .add(-1, "day")
@@ -136,46 +149,41 @@ export default function CalendarSidebar({
             {errorMessage}
           </Typography>
         )}
-        <Stack sx={{ height: "100%" }}>
-          <Typography variant={"h6"}>
-            Заказы{" ("}
-            {selectedPublic?.bookingInfo
-              ? selectedPublic?.bookingInfo.length
-              : 0}
-            {")"}
-          </Typography>
-          <Stack
-            direction={"column"}
-            gap={1}
-            mt={2}
-            flex={1}
-            minHeight={"14vh"}
-            overflow={"scroll"}
-            sx={{ "&::-webkit-scrollbar": { width: "0" } }}
-          >
-            {selectedPublic?.bookingInfo &&
-              selectedPublic?.bookingInfo.map((booking, index) => (
-                <TouristOrder
-                  key={index}
-                  index={index}
-                  bookingInfo={booking}
-                  selectedPublic={selectedPublic}
-                />
-              ))}
-          </Stack>
-          <Typography variant={"h6"} mt={2}>
-            Доход
-          </Typography>
-          <Box sx={{ mt: 2 }}>
-            <Paper
-              sx={{ backgroundColor: whiteColor, borderRadius: 6, padding: 3 }}
-            >
-              <Typography variant={"button"} align={"center"}>
-                {selectedPublic?.publicTourProfit / 100 || 0}₽
-              </Typography>
-            </Paper>
-          </Box>
+        <Typography variant={"h6"}>
+          Заказы{" ("}
+          {selectedPublic?.bookingInfo ? selectedPublic?.bookingInfo.length : 0}
+          {")"}
+        </Typography>
+        <Stack
+          direction={"column"}
+          gap={1}
+          overflow={"scroll"}
+          sx={{ "&::-webkit-scrollbar": { width: "0" } }}
+          flexBasis={"1vh"}
+          flexShrink={3}
+          flexGrow={4}
+        >
+          {selectedPublic?.bookingInfo &&
+            selectedPublic?.bookingInfo.map((booking, index) => (
+              <TouristOrder
+                key={index}
+                index={index}
+                bookingInfo={booking}
+                selectedPublic={selectedPublic}
+              />
+            ))}
         </Stack>
+
+        <Typography variant={"h6"}>Доход</Typography>
+        <Box sx={{ mb: "2px" }}>
+          <Paper
+            sx={{ backgroundColor: whiteColor, borderRadius: 6, padding: 3 }}
+          >
+            <Typography variant={"button"} align={"center"}>
+              {selectedPublic?.publicTourProfit / 100 || 0}₽
+            </Typography>
+          </Paper>
+        </Box>
         <ConfirmCancelPostedTourModal
           setErrorMessage={setErrorMessage}
           setPublicTours={setPublicTours}
@@ -184,6 +192,6 @@ export default function CalendarSidebar({
         />
         <SuccessCancelPostedTourModal />
       </Stack>
-    </>
+    </Box>
   );
 }
