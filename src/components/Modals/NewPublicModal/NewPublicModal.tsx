@@ -12,7 +12,11 @@ import {
 import { SetStateAction, Dispatch, useState, useEffect } from "react";
 
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { DateTimePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import {
+  DateTimePicker,
+  LocalizationProvider,
+  PickersLocaleText,
+} from "@mui/x-date-pickers";
 
 import dayjs, { Dayjs } from "dayjs";
 
@@ -173,6 +177,11 @@ export default function NewPublicModal({
     label: "Стоимость",
   };
 
+  const customRuRULocaleText: Partial<PickersLocaleText<any>> = {
+    okButtonLabel: "Принять",
+    cancelButtonLabel: "Отмена",
+  };
+
   return (
     <Dialog
       className="newPublicModal"
@@ -222,7 +231,10 @@ export default function NewPublicModal({
                 />
               )}
             />
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <LocalizationProvider
+              dateAdapter={AdapterDayjs}
+              localeText={customRuRULocaleText}
+            >
               <DateTimePicker
                 label="Дата и время начала"
                 value={dayjs(editedPublic?.tourDate?.from)}

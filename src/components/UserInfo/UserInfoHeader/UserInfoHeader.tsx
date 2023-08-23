@@ -94,8 +94,8 @@ function UserInfoHeader({
                 <Stack direction={"row"} gap={"4px"} alignItems={"center"}>
                   <Box
                     sx={{
-                      width: "14px",
-                      height: "14px",
+                      width: "19px",
+                      height: "19px",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
